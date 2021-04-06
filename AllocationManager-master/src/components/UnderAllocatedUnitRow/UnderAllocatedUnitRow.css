@@ -1,0 +1,9 @@
+.unit {
+  border-radius: 10px;
+  /*background: rgb(189, 192, 202);*/
+  padding: 1px;
+  height: 50px;
+  width: 200px;
+  text-align: center;
+  display: inline-block; 
+}

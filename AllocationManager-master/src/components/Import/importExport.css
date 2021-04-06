@@ -1,0 +1,21 @@
+
+.restrict-card {
+	height: 800px;
+	overflow-y: overlay;
+}
+
+.form {
+	margin: 50px; 
+}
+
+.preview {
+	margin: 50px; 
+}
+
+.yearSelector {
+    width: 8%; 
+    display: inline-block; 
+	padding-left: 10px; 
+	margin-left: 40px; 
+}
+

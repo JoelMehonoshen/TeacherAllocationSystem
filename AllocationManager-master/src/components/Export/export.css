@@ -1,0 +1,36 @@
+
+.restrict-card {
+	height: 800px;
+	overflow-y: overlay;
+}
+
+.form {
+	margin: 50px; 
+}
+
+.preview {
+	margin: 50px; 
+}
+
+.form {
+	display: inline-block; 
+	padding-left: 10px; 
+	margin-left: 40px;
+	margin-top: 0px;  
+	width: 50%; 
+}
+
+.title { 
+	padding-left: 10px; 
+	margin: 40px;  
+}
+
+.manageYears {
+	display: inline-block; 
+	margin-left: 10px;
+}
+
+.button {
+	margin-top: 10px; 
+}
+

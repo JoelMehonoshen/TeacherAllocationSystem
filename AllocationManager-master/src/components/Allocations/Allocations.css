@@ -1,0 +1,54 @@
+
+.button {
+  margin: 5px
+}
+
+.header-cell {
+  background-color: #b5cfec
+}
+
+.cells-to-hide {
+  border: 0px !important
+}
+
+Table {
+  border-color: black
+}
+#rbutton5 {background-color: #73AD21; 
+  border: none;
+  color: Black;
+  padding: 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;border-radius: 25%;}
+#rcorners1 {
+  border-radius: 5px;
+  background: #73AD21;
+  padding: 5px; 
+  width: 220px;
+}
+
+h1 {
+  padding-left: 5px
+}
+
+Col {
+  border: black
+}
+
+.searchBar {
+  width: 45%; 
+  display: inline-block; 
+}
+
+.yearSelector {
+  width: 8%; 
+  display: inline-block; 
+  padding-left: 10px; 
+}
+
+.searchBars {
+  padding-bottom: 10px; 
+}

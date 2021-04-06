@@ -1,0 +1,21 @@
+.academicCard {
+    background-color: ghostwhite;
+    margin: 20px; 
+    padding: 20px;  
+    width: 400px;
+    border: "1px solid"; 
+    border-radius: 10px;
+    /* background-color: aqua */
+}
+
+.tag {
+    padding-top: 10px;
+    padding-bottom: 10px;  
+}
+
+.academicLoad {
+    margin-left: 10px; 
+    display: inline-block; 
+    width: 80px;
+    font-weight: normal; 
+  }

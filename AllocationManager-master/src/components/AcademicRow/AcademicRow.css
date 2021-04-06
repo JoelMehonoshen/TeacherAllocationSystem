@@ -1,0 +1,13 @@
+#rcorners {
+    border-radius: 10px;
+    /* background: #00407A; */
+    padding: 1px;
+    height: 50px;
+    width: 250px;
+    color: "black";
+    text-align: center;
+    display: "inline-block"; 
+  }
+#column {
+  width:275px;
+}

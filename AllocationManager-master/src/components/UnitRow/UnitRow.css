@@ -1,0 +1,27 @@
+#urcorners {
+    border-radius: 10px;
+    /*background: rgb(189, 192, 202);*/
+    padding: 1px;
+    height: 50px;
+    width: 390px;
+    text-align: center;
+    display: inline-block; 
+  }
+
+.yeeto {
+  padding-left: 10px; 
+  padding-top: 2px; 
+  display: inline-block;
+  width: 35%;
+}
+
+.select {
+  height: 5px; 
+}
+
+.close {
+  /* color:#a6a6a6;  */
+  /* display: inline-block;   */
+   padding-top: 7px; 
+  padding-right: 3px; 
+}
