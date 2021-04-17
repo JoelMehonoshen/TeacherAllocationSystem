@@ -46,22 +46,10 @@ Route.get('/help', ({view }) => {
 
 /* File Upload Routing */
 
-const Helpers = use('Helpers')
+Route.group(
+    () => {
+      Route.post('upload', 'FileController.upload');
+        }
+    );
 
-Route.post('upload', async ({ request }) => {
-  const spreadsheet = request.file('spreadsheet', {
-    types: ['text/csv'],
-    size: '2mb',
-    extnames: ['xlsx','csv']
-  })
 
-  await spreadsheet.move(Helpers.tmpPath('uploads'), {
-    name: 'TeachingData.csv',
-    overwrite: true
-  })
-
-  if (!spreadsheet.moved()) {
-    return spreadsheet.error()
-  }
-  return 'File moved'
-})
