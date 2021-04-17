@@ -44,6 +44,14 @@ Route.get('/help', ({view }) => {
     return view.render('help')
 })
 
+Route.get('/signup', ({view }) => {
+    return view.render('signup')
+})
+
+Route.get('/login', ({view }) => {
+    return view.render('login')
+})
+
 /* File Upload Routing */
 
 Route.group(
@@ -51,5 +59,17 @@ Route.group(
       Route.post('upload', 'FileController.upload');
         }
     );
+
+/*Logged in user Routes */
+Route
+  .post('login', 'UserController.login')
+  .middleware('guest')
+
+Route
+  .get('users/:id', 'UserController.show')
+  .middleware('auth')
+
+Route
+    .post('/users', 'UserController.store')
 
 
