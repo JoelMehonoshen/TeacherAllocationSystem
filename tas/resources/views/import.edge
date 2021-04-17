@@ -6,11 +6,17 @@
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Hello World
+        Import Spreadsheet
       </h1>
       <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
+        Import your spreadsheet, filled with details on Academics and Units.
       </p>
+
+      <form method="POST" action="Upload" enctype="multipart/form-data">
+        <input type="file" name="import_spreadsheet" />
+        <button type="submit"> Submit </button>
+      </form>
+
     </div>
   </section>
   </body>
