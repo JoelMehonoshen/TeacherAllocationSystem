@@ -52,24 +52,12 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-/* File Upload Routing */
-
-Route.group(
-    () => {
-      Route.post('upload', 'FileController.upload');
-        }
-    );
 
 /*Logged in user Routes */
-Route
-  .post('login', 'UserController.login')
-  .middleware('guest')
+Route.post('/auth/login', 'UserController.login')
+Route.post('/auth/signup', 'UserController.signup')
+Route.post('/auth/refresh', 'UserController.refresh')
+Route.get('/auth/whoami', 'UserController.whoami')
 
-Route
-  .get('users/:id', 'UserController.show')
-  .middleware('auth')
-
-Route
-    .post('/users', 'UserController.store')
 
 

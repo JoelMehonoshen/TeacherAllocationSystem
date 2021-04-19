@@ -4,56 +4,55 @@
 @!component('components.header')
   <body>
   <section class="section">
-      
     <div class="container">
       <h1 class="title">
         Sign Up
       </h1>
     </div>
+    <div  class="textbox-group">
+      <div class="field">
+          <label class="label">First Name</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="First ">
+      </div>
 
-    <div class="field">
-        <label class="label">First Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="First ">
-    </div>
+      <div class="field">
+          <label class="label">Last Name</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Last Name">
+      </div>
 
-    <div class="field">
-        <label class="label">Last Name</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Last Name">
-    </div>
-
-    </div>
-    <div class="field">
-        <label class="label">Academic Email</label>
-        <div class="control">
-          <input class="input" type="email" placeholder="Academic Email">
-        </div>
-    </div>
+      </div>
+      <div class="field">
+          <label class="label">Academic Email</label>
+          <div class="control">
+            <input class="input" type="email" placeholder="Academic Email">
+          </div>
+      </div>
+        {{--  //TODO: update password class to hide password  --}}
+      <div class="field">
+      <label class="label">Password</label>
+      <div class="control has-icons-left has-icons-right">
+          <input class="input" type="password" placeholder="Password">
+      </div>
+      </div>
+        {{--  //TODO: update password class to hide password  --}}
+      <div class="field">
+      <label class="label">Confirm Password</label>
+      <div class="control has-icons-left has-icons-right">
+          <input class="input" type="password" placeholder="Confirm Password">
+      </div>
+      </div>
       
-    <div class="field">
-    <label class="label">Password</label>
-    <div class="control has-icons-left has-icons-right">
-        <input class="input" type="password" placeholder="Password">
+      <div class="field is-grouped">
+      <div class="control">
+          <button class="button is-link">Submit</button>
+      </div>
+      <div class="control">
+          <button class="button is-link is-light">Cancel</button>
+      </div>
+      </div>
     </div>
-    </div>
-
-    <div class="field">
-    <label class="label">Confirm Password</label>
-    <div class="control has-icons-left has-icons-right">
-        <input class="input" type="password" placeholder="Confirm Password">
-    </div>
-    </div>
-    
-    <div class="field is-grouped">
-    <div class="control">
-        <button class="button is-link">Submit</button>
-    </div>
-    <div class="control">
-        <button class="button is-link is-light">Cancel</button>
-    </div>
-    </div>
-
   </section>
   </body>
 

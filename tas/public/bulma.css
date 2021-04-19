@@ -1,5 +1,13 @@
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
+
+/* Custom CSS Classes */
+.textbox-group {
+  margin-right: 20vw;
+  margin-left: 20vw;
+}
+
+/* End CSS Classes */
 .button, .input, .textarea, .select select, .file-cta,
 .file-name, .pagination-previous,
 .pagination-next,
