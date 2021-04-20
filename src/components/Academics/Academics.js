@@ -34,6 +34,9 @@ class Academics extends React.Component {
       manageTagsIsOpen: false, 
       manageYearsIsOpen: false,  
     }
+    this.populateYears();
+    this.populateTagOptions();
+    this.getTagSearch();  
   }
 
   
@@ -143,21 +146,6 @@ class Academics extends React.Component {
   render() {
 
     window.onbeforeunload=null; // Supress "reload page" warnings
-
-    if (!this.state.tagOptionsFetched) {
-      this.populateTagOptions();  
-      this.setState({tagOptionsFetched: true})
-    }
-
-    if (!this.state.yearOptionsFetched) {
-      this.populateYears();  
-      this.setState({yearOptionsFetched: true}); 
-    }
-
-    if (!this.state.tagSearchPerformed) {
-      this.getTagSearch();  
-      this.setState({tagSearchPerformed: true})
-    }
 
     if (this.state.selectedYear.value != 0) {
     return (

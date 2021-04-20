@@ -175,16 +175,16 @@ class AcademicCardRow extends React.Component {
 
                     <div>
 
-                        <p style={{display: "inline-flex", fontWeight: 650}}>
+                        <div style={{display: "inline-flex", fontWeight: 650}}>
                             Actual Load:  
                             <p style={{fontWeight: "normal", paddingLeft: 3}}> {(this.props.academic.ActualLoad).toFixed(1)}</p>
-                            <p style={{display: "inline-flex", fontWeight: 650, paddingLeft: 10}}>
+                            <div style={{display: "inline-flex", fontWeight: 650, paddingLeft: 10}}>
                                 Load Error:   
                                 <p style={{fontWeight: "normal", paddingLeft: 3}}> {(this.props.academic.LoadError).toFixed(1)}</p>
-                            </p>
-                        </p>  
+                            </div>
+                        </div>  
 
-                        <p style={{display: "inline-flex", fontWeight: 650}}>
+                        <div style={{display: "inline-flex", fontWeight: 650}}>
                             Load: 
                             <div className="academicLoad"> 
                             <Select
@@ -196,11 +196,11 @@ class AcademicCardRow extends React.Component {
                                 className="select"
                             />
                             </div>
-                            <p style={{display: "inline-flex", fontWeight: 650, paddingLeft: 10}}>
+                            <div style={{display: "inline-flex", fontWeight: 650, paddingLeft: 10}}>
                                 Unit Load:  
                                 <p style={{fontWeight: "normal", paddingLeft: 3}}>{(this.props.academic.UnitLoad).toFixed(1)}</p>
-                            </p>
-                        </p>
+                            </div>
+                        </div>
 
                     </div>
 
