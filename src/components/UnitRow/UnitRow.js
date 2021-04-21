@@ -1,12 +1,10 @@
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap"
+import { Col, Button } from "react-bootstrap"
 import "./UnitRow.css"
 import ColourPicker from "../ColourPicker/ColourPicker.js"
 import Select from "react-select"
-import { MDBCloseIcon } from "mdbreact"
 import RemoveUnitPopup from "../Allocations/components/RemoveUnitPopup.js"; 
 import Popup from "reactjs-popup"
-{/* format button and units */}
 
 class UnitRow extends React.Component {
 

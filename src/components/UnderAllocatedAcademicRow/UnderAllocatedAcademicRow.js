@@ -1,6 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap"
-import { Button,InputGroup,FormControl } from "react-bootstrap";
+import { Row } from "react-bootstrap"
 import ColourPicker from "../ColourPicker/ColourPicker.js"
 import "./UnderAllocatedAcademicRow.css"; 
 
@@ -14,28 +13,18 @@ class UnderAllocatedAcademicRow extends React.Component {
     }
     
     render() {
-        if (true) { 
-            
-            return (
-              <Row noGutters="True" style={{padding: 0.2, textAlign: "center"}}>
-                <p id="urcorners" style={ColourPicker(this.props.academic.LoadError)}>
-                    <div>
-                        {this.props.academic.Name} 
-                    </div>
-                    <div>
-                    {this.props.academic.Load}   |   {(this.props.academic.UnitLoad).toFixed(1)}   |   {(this.props.academic.ActualLoad).toFixed(1)}   |   {(this.props.academic.LoadError).toFixed(1)}
-                    </div>
-                </p>
-              </Row> 
-              
-            )}
-        else {
-            return (
-                <Row>
-                    <label>yeet2</label>
-                </Row>
-            )}
-        }
+        return (
+            <Row noGutters="True" style={{padding: 0.2, textAlign: "center"}}>
+            <p id="urcorners" style={ColourPicker(this.props.academic.LoadError)}>
+                <div>
+                    {this.props.academic.Name} 
+                </div>
+                <div>
+                {this.props.academic.Load}   |   {(this.props.academic.UnitLoad).toFixed(1)}   |   {(this.props.academic.ActualLoad).toFixed(1)}   |   {(this.props.academic.LoadError).toFixed(1)}
+                </div>
+            </p>
+            </Row> 
+        )}
 }
 
 export default UnderAllocatedAcademicRow; 

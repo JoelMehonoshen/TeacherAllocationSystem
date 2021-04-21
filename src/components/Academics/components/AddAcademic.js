@@ -61,7 +61,7 @@ class AddAcademic extends React.Component {
 
     clickHandlerAdd = () => {
         // Check if a year has been selected 
-        if (this.props.year.value == 0) {
+        if (this.props.year.value === 0) {
             alert("Please select a year before adding a new academic."); 
         }
 

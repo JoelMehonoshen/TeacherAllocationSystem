@@ -69,7 +69,7 @@ class AcademicCardRow extends React.Component {
             // Split and remove spaces from returned taglist 
             let fixedTags = results[0].Tags.split(":");
             fixedTags = fixedTags.filter(function (element) {
-                return element != ""; 
+                return element !== ""; 
             })
 
             this.setState({tags: fixedTags});  
@@ -140,14 +140,14 @@ class AcademicCardRow extends React.Component {
     }
 
     render() {
-        if (this.props.academic != null && this.state.tags != null) { 
+        if (this.props.academic !== null && this.state.tags !== null) { 
 
-            if (this.state.academicID != this.props.academic.AcademicID) {
+            if (this.state.academicID !== this.props.academic.AcademicID) {
               this.getTags(); 
             }
 
             // Check if the tags need to re-render
-            if (this.props.newUpdate == true) {
+            if (this.props.newUpdate === true) {
               this.getTags(); 
               this.props.updateFinishedMethod();  
             }

@@ -89,10 +89,10 @@ class Allocations extends React.Component {
     fetchResults(qString)
     .then(results => { 
       this.setState({loading: false});
-      if (filter == "academics") {
+      if (filter === "academics") {
         this.setState({underAllocatedAcademics: JSON.stringify(results)});
       }
-      else if (filter == "units") {
+      else if (filter === "units") {
         this.setState({underAllocatedUnits: JSON.stringify(results)});
       }
     })
@@ -106,7 +106,7 @@ class Allocations extends React.Component {
   handlerTagSearch = () => {  
     // Check if tags have been removed 
     if (this.state.selectedTags == null) {
-      this.state.selectedTags = ""; 
+        this.setState({selectedTags: ""});
     }
     this.getTagSearch(); 
   }
@@ -174,7 +174,7 @@ class Allocations extends React.Component {
       this.setState({tagSearchPerformed: true})
     }
 
-    if (this.state.selectedYear.value != 0) { 
+    if (this.state.selectedYear.value !== 0) { 
     return (
       <Container fluid>
         
