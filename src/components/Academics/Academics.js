@@ -147,7 +147,7 @@ class Academics extends React.Component {
 
     window.onbeforeunload=null; // Supress "reload page" warnings
 
-    if (this.state.selectedYear.value != 0) {
+    if (this.state.selectedYear.value !== 0) {
     return (
       <Container fluid>
 
