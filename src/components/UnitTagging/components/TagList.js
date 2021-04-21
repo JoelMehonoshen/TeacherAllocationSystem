@@ -15,8 +15,11 @@ export function TagList(props) {
                 props.tagList.map(tag => {
                     if (tag !== " ") {
                         return <TagRow tag = {tag} unitCode={props.unitCode} refreshMethod={props.refreshMethod} />
-                    } 
-                    return <div></div>
+                    }
+                    return (
+                        <div>
+                        </div>
+                    ) 
                     
                 })
             }

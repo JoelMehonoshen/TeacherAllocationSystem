@@ -2,7 +2,7 @@ import React from 'react';
 import './importExport.css';
 import {OutTable, ExcelRenderer} from 'react-excel-renderer';
 
-import { Col,Row, Fade, FormFeedback, Container, Card } from 'reactstrap';
+import { Col, Row, Fade, FormFeedback, Container, Card } from 'reactstrap';
 import { NavBar } from "../navBar/navBar.js";
 
 import mapYearsToOptions from "../helperFunctions/mapYearsToOptions.js"; 
@@ -111,7 +111,7 @@ class Import extends React.Component {
             for(let i = 7; i < cols.length;i++)
             {
                 
-                if(data[0][i] != null)
+                if(data[0][i] !== null)
                 {
                 //Call InsertUnit parsing 
                 let unitCode = data[0][i]
@@ -124,7 +124,7 @@ class Import extends React.Component {
             for(let i = 7; i < cols.length;i++)
             {
                 
-                if(data[0][i] != null)
+                if(data[0][i] !== null)
                 {
                 let unitCode = data[0][i]
                 let yearID = this.state.selectedYear.value; 
@@ -134,7 +134,7 @@ class Import extends React.Component {
                 let assignedLoad = data[5][i]
                 let allocatedLoad = data[6][i]
                 let loadError = data[7][i]
-                if(semester.toString() == "1 & 2") { 
+                if(semester.toString() === "1 & 2") { 
                     semester = 12; 
         
                 } 
@@ -149,12 +149,12 @@ class Import extends React.Component {
                 for(let i = 7; i < cols.length;i++)
             {
                 
-                if(data[0][i] != null)
+                if(data[0][i] !== null)
                 {
                 let unitCode = data[0][i]
                 let yearID = this.state.selectedYear.value; 
                 let semester = data[2][i]
-                if(semester.toString() == "1 & 2") { 
+                if(semester.toString() === "1 & 2") { 
                     semester = 12; 
             
                 } 
@@ -166,7 +166,7 @@ class Import extends React.Component {
             for(let i = 8; i < data.length;i++)
             {
                 
-                if(data[i][4] != null)
+                if(data[i][4] !== null)
                 {
                 //Academic
                 let name = data[i][0]
@@ -177,7 +177,7 @@ class Import extends React.Component {
                 }}
                 for(let i = 8; i < data.length;i++)
             {
-                if(data[i][4] != null)
+                if(data[i][4] !== null)
                 {
                 let name = data[i][0]
                 let yearID = this.state.selectedYear.value; 
@@ -193,7 +193,7 @@ class Import extends React.Component {
                 for (let j = 7; j < cols.length;j++)
                 {
                     let name = data[i][0]
-                    if(data[i][j] != null)
+                    if(data[i][j] !== null)
                     {
                     let allocation = data[i][j]
                     let unitCode = data[0][j]
@@ -207,7 +207,7 @@ class Import extends React.Component {
                 for(let i = 8; i < data.length;i++)
                 {
                     
-                    if(data[i][4] != null)
+                    if(data[i][4] !== null)
                     {
                     //Academic
                     let name = data[i][0]
@@ -263,8 +263,6 @@ class Import extends React.Component {
 
     return (
         <Container fluid>
-          {// NAVBAR
-        }
         <Row>
           <Col>
             <NavBar />

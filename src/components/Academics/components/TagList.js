@@ -12,8 +12,12 @@ export function TagList(props) {
             props.tagList.map(tag => {
                 if (tag !== " ") {
                     return <TagRow tag = {tag} academicID={props.academicID} refreshMethod={props.refreshMethod} />
-                } 
-                return <div></div>
+                }
+                return (
+                    <div>
+                    </div>
+                ) 
+                
             })
         }
         </div>

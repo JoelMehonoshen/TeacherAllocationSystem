@@ -15,7 +15,10 @@ export function TagList(props) {
                     if (tag !== " ") {
                         return <TagRow tag = {tag} unitCode={props.unitCode} refreshMethod={props.refreshMethod} refreshManageTags={props.refreshManageTags} />
                     } 
-                    
+                    return (
+                        <div>
+                        </div>
+                    )
                 })
             }
             </div>
