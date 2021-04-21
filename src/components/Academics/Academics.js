@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBar } from "../navBar/navBar.js";
 import { AcademicCardList } from "./components/AcademicCardList.js"
-import { Form, Button, Container, Row, Col } from "react-bootstrap"
+import { Form, Button, Container } from "react-bootstrap"
 import fetchResults from "../fetchResults/fetchResults.js"
 import fetchResultsNew from "../fetchResults/fetchResultsNew.js"; 
 import mapTagsToOptions from "../helperFunctions/mapTagsToOptions.js";

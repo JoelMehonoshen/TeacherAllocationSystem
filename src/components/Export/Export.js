@@ -1,7 +1,7 @@
 import React from 'react';
 import './export.css';
 
-import { Col,Row , Input, InputGroup, InputGroupAddon, FormGroup, Label, Button, Fade, FormFeedback, Container, Card } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 import { NavBar } from "../navBar/navBar.js";
 import XLSX from 'xlsx';
 import {saveAs} from 'file-saver';
@@ -186,7 +186,7 @@ import Select from "react-select";
       if (o < this.state.unitYearDetailsLength)
       {
       //semesters
-      if (this.state.unitYearDetails[o].SemesterID == 3){
+      if (this.state.unitYearDetails[o].SemesterID === 3){
         formatted[2][i] = "1 & 2"
       }
       else{
@@ -199,7 +199,7 @@ import Select from "react-select";
       //Name and Code
       for(let j = 0; j < this.state.unitDetails.length;j++)
       {
-        if (JSON.stringify(this.state.unitYearDetails[o].UnitID) == JSON.stringify(this.state.unitDetails[j][0].UnitID)){
+        if (JSON.stringify(this.state.unitYearDetails[o].UnitID) === JSON.stringify(this.state.unitDetails[j][0].UnitID)){
           formatted[0][i] = this.state.unitDetails[j][0].UnitCode;
           formatted[1][i] = this.state.unitDetails[j][0].UnitName;
           break;
@@ -234,7 +234,7 @@ import Select from "react-select";
         icopy = icopy - 26;
         lett++;
       }
-      var Letter = ""; 
+      Letter = ""; 
       if (lett > 0) {
       Letter = Letters[lett-1]+Letters[icopy-1]
       }
@@ -247,7 +247,7 @@ import Select from "react-select";
 
       for(let j = 0; j < JSON.parse(this.state.academicDetails.length);j++)
       {
-      if (JSON.stringify(this.state.academicYearDetails[o].AcademicID) == JSON.stringify(this.state.academicDetails[j][0].AcademicID)){
+      if (JSON.stringify(this.state.academicYearDetails[o].AcademicID) === JSON.stringify(this.state.academicDetails[j][0].AcademicID)){
           formatted[i][0] = this.state.academicDetails[j][0].Name;
           formatted[i][2] = this.state.academicDetails[j][0].School;
           break;
@@ -262,7 +262,7 @@ import Select from "react-select";
       icopy = icopy - 26;
       lett++;
     }
-    var Letter = ""; 
+    Letter = ""; 
     if (lett > 0) {
     Letter = Letters[lett-1]+Letters[icopy-1]
     }
@@ -280,7 +280,7 @@ import Select from "react-select";
         var actj = j-7
         for(let k = 0; k < JSON.parse(this.state.allocationDetails.length);k++)
         {
-        if (this.state.allocationDetails[k][0].AcademicAllocationCode == this.state.academicYearDetails[acti].AcademicAllocationCode && this.state.allocationDetails[k][0].UnitYearCode == this.state.unitYearDetails[actj].UnitYearCode){
+        if (this.state.allocationDetails[k][0].AcademicAllocationCode === this.state.academicYearDetails[acti].AcademicAllocationCode && this.state.allocationDetails[k][0].UnitYearCode === this.state.unitYearDetails[actj].UnitYearCode){
         formatted[i][j] = this.state.allocationDetails[k][0].AllocationAmount}
         }
       }

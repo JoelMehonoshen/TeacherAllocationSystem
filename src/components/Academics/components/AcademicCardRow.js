@@ -1,6 +1,6 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap"
-import { Button, Card } from "react-bootstrap";
+import { Row } from "react-bootstrap"
+import { Button } from "react-bootstrap";
 import Popup from "reactjs-popup"
 import { TagList } from "./TagList.js"; 
 import fetchResults from "../../fetchResults/fetchResults.js"; 
@@ -9,8 +9,6 @@ import AddTag from "./AddTag.js";
 import "./academicStyles.css"; 
 import RemoveAcademicPopup from "./RemoveAcademicPopup.js";
 import Select from "react-select";
-{/* format button and units */}
-{/*<UnitList list={props.academic.assignedUnits}/>*/}
 
 
 class AcademicCardRow extends React.Component {

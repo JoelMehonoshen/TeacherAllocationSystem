@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBar } from "../navBar/navBar.js";
 import { Jumbotron, Button } from "react-bootstrap"
-import { Row, Col, Container } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 
 export function homePage(props) {
 
@@ -11,6 +11,7 @@ export function homePage(props) {
       <Container fluid>
         <NavBar />
         <Jumbotron>
+          <center>
           <h1>Teaching Allocation System</h1>
           <p>
             A system for allocation management and optimization.
@@ -18,6 +19,7 @@ export function homePage(props) {
           <p>
             <Button href="/Allocations" variant="primary">Start Allocating</Button>
           </p>
+          </center>
         </Jumbotron>
       </Container>
     );
