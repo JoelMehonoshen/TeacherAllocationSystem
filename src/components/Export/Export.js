@@ -1,7 +1,7 @@
 import React from 'react';
 import './export.css';
 
-import { Col,Row , Input, InputGroup, InputGroupAddon, FormGroup, Label, Button, Fade, FormFeedback, Container, Card } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 import { NavBar } from "../navBar/navBar.js";
 import XLSX from 'xlsx';
 import {saveAs} from 'file-saver';

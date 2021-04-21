@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBar } from "../navBar/navBar.js";
 import { Jumbotron, Button } from "react-bootstrap"
-import { Row, Col, Container } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 
 export function homePage(props) {
 
