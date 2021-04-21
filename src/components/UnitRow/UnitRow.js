@@ -5,7 +5,6 @@ import ColourPicker from "../ColourPicker/ColourPicker.js"
 import Select from "react-select"
 import RemoveUnitPopup from "../Allocations/components/RemoveUnitPopup.js"; 
 import Popup from "reactjs-popup"
-{/* format button and units */}
 
 class UnitRow extends React.Component {
 

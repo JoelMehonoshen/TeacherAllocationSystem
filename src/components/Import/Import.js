@@ -2,7 +2,7 @@ import React from 'react';
 import './importExport.css';
 import {OutTable, ExcelRenderer} from 'react-excel-renderer';
 
-import { Jumbotron, Col,Row , Input, InputGroup, InputGroupAddon, FormGroup, Label, Button, Fade, FormFeedback, Container, Card } from 'reactstrap';
+import { Col,Row, Fade, FormFeedback, Container, Card } from 'reactstrap';
 import { NavBar } from "../navBar/navBar.js";
 
 import mapYearsToOptions from "../helperFunctions/mapYearsToOptions.js"; 

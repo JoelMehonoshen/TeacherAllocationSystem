@@ -6,8 +6,6 @@ import AddUnit from "../AddUnit/AddUnit.js";
 import { Button } from "react-bootstrap";
 import Popup from "reactjs-popup"
 import ColourPicker from "../ColourPicker/ColourPicker.js"
-{/* format button and units */}
-{/*<UnitList list={props.academic.assignedUnits}/>*/}
 
 
 class AcademicRow extends React.Component {
@@ -82,14 +80,14 @@ class AcademicRow extends React.Component {
     
     render() {
        
-        if (this.state.academicID != null && this.state.loading == false && this.props.academic.ActualLoad != null) {  
+        if (this.state.academicID !== null && this.state.loading === false && this.props.academic.ActualLoad !== null) {  
 
-            if (this.state.academicID != this.props.academic.AcademicID) {
+            if (this.state.academicID !== this.props.academic.AcademicID) {
               this.useUnitSearch(); 
             }
 
             // Check if the units need to re-render
-            if (this.props.newUpdate == true) {
+            if (this.props.newUpdate === true) {
               this.useUnitSearch();
               this.props.updateFinishedMethod();  
             }

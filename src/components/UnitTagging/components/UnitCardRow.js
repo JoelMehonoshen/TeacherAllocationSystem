@@ -60,14 +60,14 @@ class UnitCardRow extends React.Component {
         .then(results => {   
             this.setState({loading: false});  
 
-            if (results[0] == undefined) {
+            if (results[0] === undefined) {
                 return 0;  
             } 
 
             // Split and remove spaces from returned taglist 
             let fixedTags = results[0].Tags.split(":");
             fixedTags = fixedTags.filter(function (element) {
-                return element != ""; 
+                return element !== ""; 
             }) 
 
             this.setState({tags: fixedTags});
@@ -153,7 +153,7 @@ class UnitCardRow extends React.Component {
     valuesAcceptable = (value) => {
         const numbers =  /^[0-9]+([,.][0-9]+)?$/g; 
 
-        if (value != "" && value.match(numbers)) {
+        if (value !== "" && value.match(numbers)) {
             return true; 
         }
 
@@ -171,15 +171,15 @@ class UnitCardRow extends React.Component {
     }
 
     render() {
-        if (this.props.unit != null) {
+        if (this.props.unit !== null) {
 
-            if (this.state.unitCode != this.props.unit.UnitCode) {
+            if (this.state.unitCode !== this.props.unit.UnitCode) {
                 this.getTags(); 
                 this.setState({unitCode: this.props.unit.UnitCode});
             }
 
             // Check if tisNullhe tags need to re-render
-            if (this.props.newUpdate == true) {
+            if (this.props.newUpdate === true) {
               this.getTags(); 
               this.props.updateFinishedMethod();  
             }
