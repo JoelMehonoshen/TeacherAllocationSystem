@@ -52,7 +52,7 @@ class YearRow extends React.Component {
     valuesAcceptable = (value) => {
         const numbers =  /^[0-9]+([,.][0-9]+)?$/g; 
 
-        if (value != "" && value.match(numbers)) {
+        if (value !== "" && value.match(numbers)) {
             return true; 
         }
 

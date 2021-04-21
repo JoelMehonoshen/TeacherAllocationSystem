@@ -53,7 +53,7 @@ class ManageTags extends React.Component {
 
     clickHandlerAdd = () => {
         // Add the new tag to the tags table in the db
-        if (this.state.selectedNewTag != "") {
+        if (this.state.selectedNewTag !== "") {
             this.addTag(); 
             this.props.closeMethod(); 
             this.props.refreshMethod(); 

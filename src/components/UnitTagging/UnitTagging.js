@@ -1,7 +1,7 @@
 import React from "react";
 import { NavBar } from "../navBar/navBar.js";
 import { UnitCardList } from "./components/UnitCardList.js"
-import { Form, Button, Container, Row, Col } from "react-bootstrap"
+import { Form, Button, Container } from "react-bootstrap"
 import fetchResults from "../fetchResults/fetchResults.js"
 import fetchResultsNew from "../fetchResults/fetchResultsNew.js"; 
 import mapTagsToOptions from "../helperFunctions/mapTagsToOptions.js";
@@ -86,7 +86,7 @@ class UnitTagging extends React.Component {
   handlerTagSearch = (e) => {  
     // Check if tags have been removed
     if (this.state.selectedTags == null) {
-      this.state.selectedTags = ""; 
+        this.setState({selectedTags: ""});
     }
     this.getTagSearch();  
   }
@@ -159,7 +159,7 @@ class UnitTagging extends React.Component {
       this.setState({tagSearchPerformed: true})
     }
 
-    if (this.state.selectedYear.value != 0) {
+    if (this.state.selectedYear.value !== 0) {
     return (
       <Container fluid>
 
