@@ -12,7 +12,7 @@ export function TagList(props) {
             <div>
             {
                 props.tagList.map(tag => {
-                    if (tag != " ") {
+                    if (tag !== " ") {
                         return <TagRow tag = {tag} unitCode={props.unitCode} refreshMethod={props.refreshMethod} refreshManageTags={props.refreshManageTags} />
                     } 
                     

@@ -52,7 +52,7 @@ class ManageYears extends React.Component {
 
     clickHandlerAdd = () => {
         // Add the new year to the years table in the db 
-        if (this.state.selectedNewYear != "" && this.state.selectedMinimumLoad != "") {
+        if (this.state.selectedNewYear !== "" && this.state.selectedMinimumLoad !== "") {
             this.addYear(); 
             this.props.closeMethod(); 
             this.props.refreshMethod(); 

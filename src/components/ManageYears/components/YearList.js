@@ -8,7 +8,7 @@ export function YearList(props) {
             <div>
             {
                 props.yearList.map(year => {
-                    if (year != " ") {
+                    if (year !== " ") {
                         return <YearRow yearID = {year.value} 
                                         year={year.label} 
                                         minLoad={year.minLoad}
@@ -16,6 +16,10 @@ export function YearList(props) {
                                         refreshMethod={props.refreshMethod} 
                                         refreshManageYears={props.refreshManageYears} />
                     } 
+                    return (
+                        <div>
+                        </div>
+                    )
                     
                 })
             }
