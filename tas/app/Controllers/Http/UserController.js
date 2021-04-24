@@ -14,7 +14,7 @@ const password_options = {
 
 class UserController {
   /*
-    Validates that user credentials are valid then creates a new user and returns a JWT & a refresh token
+    Validates that user credentials are valid then creates a new user and returns a  token
   */
   async signup({ request, auth, response }) {
 
@@ -51,13 +51,10 @@ class UserController {
 
     // If all the above have passed then lets create the user and return their token
     try {
-      const userData = request.only(["email", "password"]);
+      const userData = request.only(["username", "email", "password" ]);
       const newUser = await User.create(userData);
-      const token = await auth.withRefreshToken().generate(newUser);
-      return response.status(200).json({
-        status: "success",
-        data: token,
-      });
+      await auth.login(newUser)
+      return response.redirect('/', true)
     } catch (error) {
       Logger.error(error);
       return response.status(400).json({
@@ -73,13 +70,10 @@ class UserController {
   */
   async login({ request, auth, response }) {
     try {
-      const token = await auth
-        .withRefreshToken()
-        .attempt(request.input("email"), request.input("password"));
-      return response.status(200).json({
-        status: "success",
-        data: token,
-      });
+      await auth.attempt(request.input("email"), request.input("password"));
+    
+      return response.route('/', true)
+
     } catch (error) {
       Logger.error(error);
       response.status(400).json({

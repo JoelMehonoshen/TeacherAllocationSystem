@@ -16,25 +16,22 @@ module.exports = {
   | Available Serializers - lucid, database
   |
   */
-  authenticator: 'jwt',
+  authenticator: 'session',
 
   /*
   |--------------------------------------------------------------------------
-  | Jwt
+  | Session
   |--------------------------------------------------------------------------
   |
-  | The jwt authenticator works by passing a jwt token on each HTTP request
-  | via HTTP `Authorization` header.
+  | Session authenticator makes use of sessions to authenticate a user.
+  | Session authentication is always persistent.
   |
   */
-  jwt: {
+  session: {
     serializer: 'lucid',
     model: 'App/Models/User',
-    scheme: 'jwt',
+    scheme: 'session',
     uid: 'email',
-    password: 'password',
-    options: {
-      secret: Env.get('APP_KEY')
-    }
+    password: 'password'
   }
 }

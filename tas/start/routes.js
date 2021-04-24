@@ -16,6 +16,8 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+// TODO: Put authenticated views behind auth
+//Authenticated Views
 Route.get('/', ({view }) => {
     return view.render('home')
 }).middleware(["auth"])
@@ -44,16 +46,17 @@ Route.get('/help', ({view }) => {
     return view.render('help')
 }).middleware(["auth"])
 
+// Unauthenticated views
 Route.get('/signup', ({view }) => {
     return view.render('signup')
-})
+}).middleware(['guest'])
 
 Route.get('/login', ({view }) => {
     return view.render('login')
-})
+}).middleware(['guest'])
 
 
-/*Logged in user Routes */
+//UserController Routes
 Route.post('/auth/login', 'UserController.login')
 Route.post('/auth/signup', 'UserController.signup')
 Route.post('/auth/refresh', 'UserController.refresh')

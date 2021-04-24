@@ -4,55 +4,52 @@
 @!component('components.header')
   <body>
   <section class="section">
+
     <div class="container">
       <h1 class="title">
         Sign Up
       </h1>
     </div>
+
+    <form method="POST" action="{{ route('UserController.signup') }}">      
+      {{ csrfField() }}
+
     <div  class="textbox-group">
       <div class="field">
-          <label class="label">First Name</label>
+          <label class="label">User Name</label>
           <div class="control">
-            <input class="input" type="text" placeholder="First ">
-      </div>
-
-      <div class="field">
-          <label class="label">Last Name</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Last Name">
-      </div>
-
-      </div>
+            <input class="input" type="text" name="username" placeholder="Username">
+          </div>
+      </div> 
       <div class="field">
           <label class="label">Academic Email</label>
           <div class="control">
-            <input class="input" type="email" placeholder="Academic Email">
+            <input class="input" type="email" name="email" placeholder="Academic Email">
           </div>
       </div>
-        {{--  //TODO: update password class to hide password  --}}
       <div class="field">
       <label class="label">Password</label>
-      <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" placeholder="Password">
+        <div class="control ">
+            <input class="input" type="password" name="password" placeholder="Password">
+        </div>
       </div>
-      </div>
-        {{--  //TODO: update password class to hide password  --}}
       <div class="field">
       <label class="label">Confirm Password</label>
-      <div class="control has-icons-left has-icons-right">
-          <input class="input" type="password" placeholder="Confirm Password">
-      </div>
+        <div class="control">
+            <input class="input" type="password" placeholder="Confirm Password">
+        </div>
       </div>
       
       <div class="field is-grouped">
-      <div class="control">
-          <button class="button is-link">Submit</button>
-      </div>
-      <div class="control">
-          <button class="button is-link is-light">Cancel</button>
-      </div>
+        <div class="control">
+            <input type="submit" value="Submit" class="button">
+        </div>
+        <div class="control">
+            <button class="button is-link is-light">Cancel</button>
+        </div>
       </div>
     </div>
+    </form>
   </section>
   </body>
 
