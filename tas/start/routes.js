@@ -31,7 +31,7 @@ Route.get('/academics', ({view }) => {
 }).middleware(["auth"])
 
 Route.get('/units', ({view }) => {
-    return view.render('allocations')
+    return view.render('units')
 }).middleware(["auth"])
 
 Route.get('/import', ({view }) => {
