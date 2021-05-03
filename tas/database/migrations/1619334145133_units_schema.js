@@ -7,9 +7,9 @@ class UnitsSchema extends Schema {
   up () {
     this.create('units', (table) => {
       table.increments()
-      table.int('semester')
+      table.integer('semester')
       table.string('name', 255)
-      table.int('students')
+      table.integer('students')
       table.timestamps()
     })
   }

@@ -84,28 +84,6 @@ class UserController {
   }
 
   /*
-    Generates a new JWT from a refresh token
-  */
-  async refresh({ request, auth, response }) {
-    try {
-      const token = await auth.generateForRefreshToken(
-        request.input("refresh_token")
-      );
-      return response.json({
-        status: "success",
-        data: token,
-      });
-    } catch (error) {
-      Logger.error(error);
-      response.status(400).json({
-        status: "error",
-        message:
-          "Failed to generate new token from refresh token. Please login again.",
-      });
-    }
-  }
-
-  /*
     Tests authentication & returns the logged in user
   */
   async whoami({ request, auth, response }) {
@@ -113,7 +91,7 @@ class UserController {
       return await auth.getUser();
     } catch (error) {
       Logger.error(error);
-      response.send("Missing or invalid jwt token");
+      response.send("Missing or invalid token");
     }
   }
 }
