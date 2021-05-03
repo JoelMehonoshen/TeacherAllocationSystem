@@ -16,7 +16,6 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-// TODO: Put authenticated views behind auth
 //Authenticated Views
 Route.get('/', ({view }) => {
     return view.render('home')
