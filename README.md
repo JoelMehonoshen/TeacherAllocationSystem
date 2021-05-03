@@ -6,7 +6,7 @@ TAS is an Adonisjs project built to dynamically allocate academics to units.
 
 ### Install AdonisJS CLI
 ```bash
-> npm i -g @adonisjs/cli
+npm i -g @adonisjs/cli
 ```
 
 ### Install Dependencies
