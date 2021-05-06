@@ -48,11 +48,25 @@ Route.get('/help', ({view }) => {
 // Unauthenticated views
 Route.get('/signup', ({view }) => {
     return view.render('signup')
-}).middleware(['guest'])
+})
 
 Route.get('/login', ({view }) => {
     return view.render('login')
-}).middleware(['guest'])
+})
+
+// Handle GET request
+Route.get('posts', async ({ view }) => {
+    return view.render('posts/index')
+  })
+
+Route.get('*', ({ view }) => {
+    return view.render("404");
+});
+
+// Handle POST request
+Route.post('posts', async ({ request }) => {
+    return request.body()
+  })
 
 
 //UserController Routes
