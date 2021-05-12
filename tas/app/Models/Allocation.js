@@ -4,6 +4,13 @@
 const Model = use('Model')
 
 class Allocation extends Model {
+    academics() {
+        return this.belongsTo("App/Models/Academic")
+    }
+
+    units() {
+        return this.belongsTo("App/Models/Unit")
+    }
 }
 
 module.exports = Allocation

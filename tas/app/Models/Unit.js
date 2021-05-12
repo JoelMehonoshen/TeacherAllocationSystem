@@ -4,8 +4,16 @@
 const Model = use('Model')
 
 class Unit extends Model {
+    academic_preferences() {
+        return this.hasMany("App/Models/AcademicPreference")
+    }
+
     allocations() {
-        return this.hasMany('App/Models/Allocation')
+        return this.hasMany("App/Model/Allocation")
+    }
+
+    tags() {
+        return this.hasMany("App/Models/Tag")
     }
 }
 

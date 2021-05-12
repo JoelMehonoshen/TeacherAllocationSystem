@@ -1,5 +1,7 @@
 'use strict'
 
+const AcademicController = require('../app/Controllers/Http/AcademicController')
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -21,17 +23,16 @@ Route.get('/', ({view }) => {
     return view.render('home')
 }).middleware(["auth"])
 
-Route.get('/allocations', ({view }) => {
-    return view.render('allocations')
-}).middleware(["auth"])
+Route.get('/allocations', 'AllocationController.render')
+.middleware(["auth"])
 
-Route.get('/academics', ({view }) => {
-    return view.render('academics')
-}).middleware(["auth"])
+Route.get('/academics', 'AcademicController.render')
+.middleware(["auth"])
 
-Route.get('/units', ({view }) => {
-    return view.render('units')
-}).middleware(["auth"])
+Route.get('/academics/addDummy', 'AcademicController.AddDummy')
+
+Route.get('/units', 'UnitController.render')
+.middleware(["auth"])
 
 Route.get('/import', ({view }) => {
     return view.render('import')
