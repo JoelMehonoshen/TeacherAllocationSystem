@@ -29,8 +29,6 @@ Route.get('/allocations', 'AllocationController.render')
 Route.get('/academics', 'AcademicController.render')
 .middleware(["auth"])
 
-Route.get('/academics/addDummy', 'AcademicController.AddDummy')
-
 Route.get('/units', 'UnitController.render')
 .middleware(["auth"])
 
@@ -55,16 +53,11 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-//If view doesn't exist, return 404
-Route.get('*', ({ view }) => {
-    return view.render("404");
-});
-
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
 Route.post('/auth/signup', 'UserController.signup')
-Route.post('/auth/refresh', 'UserController.refresh')
-Route.get('/auth/whoami', 'UserController.whoami').middleware(["auth"])
+Route.get('/auth/signout', 'UserController.signout')
 
 
-
+//academics functionality
+Route.get('/academics/addDummy', 'AcademicController.AddDummy')
