@@ -21,7 +21,7 @@ const Route = use('Route')
 //Authenticated Views
 Route.get('/', ({view }) => {
     return view.render('home')
-}).middleware(["auth"])
+})
 
 Route.get('/allocations', 'AllocationController.render')
 .middleware(["auth"])
@@ -55,7 +55,7 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-// Handle Route Not Found
+//If view doesn't exist, return 404
 Route.get('*', ({ view }) => {
     return view.render("404");
 });

@@ -1,28 +1,57 @@
 <!DOCTYPE html>
 <html>
-@!component('components.head', title="Teacher Allocation System")
-@!component('components.header')
-  <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title is-1">
-        Teacher Allocation System
-      </h1>
-      <p class="subtitle">
-      <h2> Hello {{ auth.user.username }}! </h2>
-      <p>Welcome to the Teacher Allocation System (TAS)</p> 
-      <h2 class="title is-2">
-        Getting Started {{randomVar}}
-      </h2>
-      <p class="subtitle">
-        TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learing technology then matches academics to units based on workloads, skill levels and other details.
-      </p>
-      <div class="buttons">
-        <a href="import" role="button" class="button is-primary">Start Importing</a>
-    </div>
-    </div>
-  </section>
-  </body>
-@include('partials.footer')
+@loggedIn
+  @!component('components.head', title="Teacher Allocation System")
+  @!component('components.header')
+    <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-1">
+          Teacher Allocation System
+        </h1>
+        <p class="subtitle">
+        <h2> Hello {{ auth.user.username }}! </h2>
+        <p>Welcome to the Teacher Allocation System (TAS)</p> 
+        <h2 class="title is-2">
+          Getting Started
+        </h2>
+        <p class="subtitle">
+          TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learing technology then matches academics to units based on workloads, skill levels and other details.
+        </p>
+        <div class="buttons">
+          <a href="import" role="button" class="button is-primary">Start Importing</a>
+      </div>
+      </div>
+    </section>
+    </body>
+  @include('partials.footer')
+@else
+  @!component('components.head', title="Teacher Allocation System")
+  @!component('components.headerauth')
+    <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-1">
+          Teacher Allocation System
+        </h1>
+        <p class="subtitle">
+          TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learing technology then matches academics to units to ensure the best outcome for your school.
+        </p>
+        <h2 class="title is-2">
+          Getting Started
+        </h2>
+        <div class="buttons">
+          <a class="button is-primary" href="signup">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light" href="login">
+            Log in
+          </a>
+        </div>
 
+      </div>
+    </section>
+    </body>
+  @include('partials.footer')
+@endloggedIn
 </html>
