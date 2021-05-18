@@ -55,20 +55,10 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-// Handle GET request
-Route.get('posts', async ({ view }) => {
-    return view.render('posts/index')
-  })
-
+// Handle Route Not Found
 Route.get('*', ({ view }) => {
     return view.render("404");
 });
-
-// Handle POST request
-Route.post('posts', async ({ request }) => {
-    return request.body()
-  })
-
 
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
