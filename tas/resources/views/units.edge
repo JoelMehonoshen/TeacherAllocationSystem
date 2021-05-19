@@ -5,9 +5,27 @@
   <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">
-          Units
-      </h1>
+      <div class="section is-small">
+        <div class="level">
+          <div class="container">
+            <h1 class="title">
+                Units
+            </h1>
+            <h2 class="subtitle">
+              Add and Search for Units
+            </h2>
+          </div>
+          <div class="level is-right">
+            @!component('components.addunitbutton')
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        @!component('components.searchbar', title="Find Unit")
+      </div>
+      <div class="section">
+        @!component('components.tiles')
+      </div>
     </div>
   </section>
   </body>
