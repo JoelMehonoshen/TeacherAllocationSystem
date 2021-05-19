@@ -16,6 +16,8 @@ const AcademicController = require('../app/Controllers/Http/AcademicController')
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
+
+const Helpers = use('Helpers')
 const Route = use('Route')
 
 //Authenticated Views
@@ -52,6 +54,22 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
+
+Route.post('upload', async ({ request }) => {
+    const Alloc = request.file('Allocation', {
+      size: '10mb'
+    })
+  
+    await Alloc.move(Helpers.tmpPath('uploads'), {
+      name: `${new Date().getTime()}.xlsm`
+    })
+  
+    if (!Alloc.moved()) {
+      return Alloc.error()
+    }
+    return 'File moved'
+  })
+  
 
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
