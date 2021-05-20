@@ -77,5 +77,5 @@ Route.post('/auth/signup', 'UserController.signup')
 Route.get('/auth/signout', 'UserController.signout')
 
 
-//academics functionality
+//academics testing functionality
 Route.get('/academics/addDummy', 'AcademicController.AddDummy')
