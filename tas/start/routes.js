@@ -68,7 +68,7 @@ Route.post('upload', async ({ request }) => {
       return Alloc.error()
     }
     return 'File moved'
-  })
+})
   
 
 //UserController Routes
