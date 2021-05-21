@@ -34,6 +34,9 @@ Route.get('/academics', 'AcademicController.render')
 Route.get('/units', 'UnitController.render')
 .middleware(["auth"])
 
+Route.post('/export', 'ExportController.render')
+.middleware(["auth"])
+
 Route.get('/import', ({view }) => {
     return view.render('import')
 }).middleware(["auth"])
@@ -46,6 +49,7 @@ Route.get('/help', ({view }) => {
     return view.render('help')
 }).middleware(["auth"])
 
+
 // Unauthenticated views
 Route.get('/signup', ({view }) => {
     return view.render('signup')
@@ -54,6 +58,8 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
+
+
 
 Route.post('upload', async ({ request }) => {
     const Alloc = request.file('Allocation', {

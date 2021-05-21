@@ -8,10 +8,21 @@
       <h1 class="title">
         Export
       </h1>
-    </div>
-  </section>
-  </body>
+      <h2>
+        Here you can export a years spreadsheet to an excel spreadsheet
+      </h2>
+      <form action="export" method="get">
+        <label for="years">Choose a year:</label>
 
+        <select name="years" id="years">
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+
+</div>
+  
 @include('partials.footer')
 
 </html>
