@@ -19,6 +19,8 @@ const AcademicController = require('../app/Controllers/Http/AcademicController')
 
 const Helpers = use('Helpers')
 const Route = use('Route')
+const ExcelJS = require('exceljs');
+const UploadController = require('../app/Controllers/Http/UploadController');
 
 //Authenticated Views
 Route.get('/', ({view }) => {
@@ -55,20 +57,7 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-Route.post('upload', async ({ request }) => {
-    const Alloc = request.file('Allocation', {
-      size: '10mb'
-    })
-  
-    await Alloc.move(Helpers.tmpPath('uploads'), {
-      name: `${new Date().getTime()}.xlsm`
-    })
-  
-    if (!Alloc.moved()) {
-      return Alloc.error()
-    }
-    return 'File moved'
-})
+Route.put('upload', 'UploadController.uploadFile')
   
 
 //UserController Routes
