@@ -20,7 +20,7 @@ const AcademicController = require('../app/Controllers/Http/AcademicController')
 const Helpers = use('Helpers')
 const Route = use('Route')
 const ExcelJS = require('exceljs');
-const UploadController = require('../app/Controllers/Http/UploadController');
+const ImportController = require('../app/Controllers/Http/ImportController');
 
 //Authenticated Views
 Route.get('/', ({view }) => {
@@ -57,7 +57,7 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-Route.put('upload', 'UploadController.uploadFile')
+Route.put('upload', 'ImportController.uploadFile')
   
 
 //UserController Routes
