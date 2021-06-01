@@ -10,6 +10,7 @@ class UnitSchema extends Schema {
       table.string('name')
       table.integer('year')
       table.integer('semester')
+      table.float('assignedLoad')
       table.primary(['id', 'year', 'semester'])
       table.timestamps()
     })

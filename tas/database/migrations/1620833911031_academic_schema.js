@@ -10,6 +10,7 @@ class AcademicSchema extends Schema {
       table.string('name')
       table.integer('year')
       table.string('school')
+      table.float('load')
       table.timestamps()
     })
   }
