@@ -12,7 +12,7 @@
         Import your spreadsheet, filled with details on Academics and Units.
       </p>
 
-      <form method="POST" action="upload?_method=PUT" enctype="multipart/form-data">
+      <form method="POST" action="upload" enctype="multipart/form-data">
         {{ csrfField() }}
         <input type="file" name="Allocation" />
         <button type="submit"> Submit </button>

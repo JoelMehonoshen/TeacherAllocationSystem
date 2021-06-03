@@ -6,13 +6,10 @@ const Schema = use('Schema')
 class UnitSchema extends Schema {
   up () {
     this.create('units', (table) => {
-      table.string('id')
-      table.string('name')
+      table.string('code', 7)
       table.integer('year')
       table.integer('semester')
-      table.float('assignedLoad')
-      table.primary(['id', 'year', 'semester'])
-      table.timestamps()
+      table.primary(['code', 'year', 'semester'])
     })
   }
 
