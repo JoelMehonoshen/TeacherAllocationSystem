@@ -63,20 +63,7 @@ Route.get('/login', ({view }) => {
 
 
 
-Route.post('upload', async ({ request }) => {
-    const Alloc = request.file('Allocation', {
-      size: '10mb'
-    })
-  
-    await Alloc.move(Helpers.tmpPath('uploads'), {
-      name: `${new Date().getTime()}.xlsm`
-    })
-  
-    if (!Alloc.moved()) {
-      return Alloc.error()
-    }
-    return 'File moved'
-})
+Route.put('upload', 'ImportController.uploadFile')
   
 
 //UserController Routes
