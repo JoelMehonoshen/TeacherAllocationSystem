@@ -8,7 +8,9 @@ class AcademicSchema extends Schema {
     this.create('academics', (table) => {
       table.increments('id')
       table.string('name')
+      table.integer('year')
       table.string('school')
+      table.float('load')
       table.timestamps()
     })
   }
