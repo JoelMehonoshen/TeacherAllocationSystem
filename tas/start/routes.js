@@ -36,7 +36,7 @@ Route.get('/academics', 'AcademicController.render')
 Route.get('/units', 'UnitController.render')
 .middleware(["auth"])
 
-Route.post('/export', 'ExportController.render')
+Route.post('/export', 'ExportController.export')
 .middleware(["auth"])
 
 Route.get('/import', ({view }) => {

@@ -11,15 +11,19 @@
       <h2>
         Here you can export a years spreadsheet to an excel spreadsheet
       </h2>
-      <form action="export" method="get">
+      <form action="export" method="post">
+        {{ csrfField() }}
+
         <label for="years">Choose a year:</label>
 
         <select name="years" id="years">
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
+          <option value=2021>2021</option>
+          <option value=2020>2020</option>
         </select>
         <input type="submit" value="Submit">
       </form>
+
+      <a href="template2.xlsx" download="template2.xlsx">Download</a>
 
 </div>
   
