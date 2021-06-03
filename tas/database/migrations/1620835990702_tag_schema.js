@@ -11,7 +11,7 @@ class TagSchema extends Schema {
         table.integer('unit_semester')
         table.string('tag')
         table.primary(['unit_code', 'unit_year', 'unit_semester', 'tag'])
-        table.foreign(['unit_code', 'unit_year', 'unit_semester']).references(['code', 'year', 'semester']).inTable('units')
+        table.foreign(['unit_code', 'unit_year', 'unit_semester']).references(['id', 'year', 'semester']).inTable('units')
     })
   }
 
