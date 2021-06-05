@@ -21,7 +21,6 @@ class AcademicController {
         if (data.rows[0] == null) {
             return view.render('academics', {selectResponse: "No Academics have been registered"})
         }
-
         return view.render('academics', {selectResponse: data.rows[0].school})
     }
 }
