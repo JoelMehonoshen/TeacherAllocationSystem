@@ -2,8 +2,6 @@
 
 const Academic = use("App/Models/Academic");
 
-const Database = use('Database');
-
 class AcademicController {
 
     async AddDummy({request, auth, response}) {
@@ -15,14 +13,11 @@ class AcademicController {
         return response.redirect('/academics', true)
     }
 
-    async render({request, response, view}) {
-        //logic goes here
-        const data = await Academic.all()
-        if (data.rows[0] == null) {
-            return view.render('academics', {selectResponse: "No Academics have been registered"})
-        }
-        return view.render('academics', {selectResponse: data.rows[0].school})
-    }
+    async render ({ view }) {
+        const academics = await Academic.all()
+      
+        return view.render('academics', { academics: academics.toJSON()})
+      }
 }
 
 module.exports = AcademicController

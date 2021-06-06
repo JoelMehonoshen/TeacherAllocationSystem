@@ -5,14 +5,65 @@
   <body>
   <section class="section">
     <div class="container">
-      <h1 class="title">
-        Academics
-      </h1>
-      <p class="subtitle">
-        {{selectResponse}}
-      </p>
+      <div class="section is-small">
+        <div class="level">
+          <div class="container">
+            <h1 class="title">
+                Academics
+            </h1>
+            <h2 class="subtitle">
+              Add and Search for Academics
+            </h2>
+          </div>
+          <div class="level is-right">
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        @!component('components.searchbar', title="Find Academic")
+      </div>
+      <div class="section">
+        <p>
+          @each(academic in academics)
+              <section class="hero is-success is-small">
+                <div class="hero-body">
+                  <div class="columns is-10">
+                    <div class="column is-four-fifths">
+                      <p class="title">
+                      {{ academic.name }}
+                      </p>
+                      <p class="subtitle">
+                        {{ academic.school }}
+                      </p>
+                    </div>
+                    <div class="column">
+                      <p class="subtitle">
+                        Semester: {{ academic.year }}
+                      </p>
+                      <p class="subtitle">
+                        Load: {{ academic.load }}
+                      </p>
+                  </div>
+                </div>
+            </section>
+          @else
+            <section class="hero is-danger">
+              <div class="hero-body">
+                <p class="title">
+                  No Results
+                </p>
+                <p class="subtitle">
+                  Please add a academic or import spreadsheet
+                </p>
+              </div>
+            </section>
+          @endeach
+        </p>
+      </div>
     </div>
   </section>
   </body>
-  @include('partials.footer')
-</html>
+
+@include('partials.footer')
+
+</html> 
