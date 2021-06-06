@@ -61,11 +61,8 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-
-
 Route.put('upload', 'ImportController.uploadFile')
   
-
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
 Route.post('/auth/signup', 'UserController.signup')

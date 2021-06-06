@@ -1,13 +1,12 @@
 'use strict'
 
 const Unit = use("App/Models/Unit");
-const Database = use('Database');
 
 class UnitController {
 
     async AddUnit({response}) {
         const Unit = new Unit()
-        Unit.code = "IFBTEST"
+        Unit.code = "TEST"
         Unit.year="2021"
         Unit.semester="1"
         Unit.load="1"
@@ -27,14 +26,10 @@ class UnitController {
     //     }
     //   }
 
-    async render({request, response, view}) {
-        const allUnits = JSON.stringify(await Unit.all()) 
-        if (allUnits == undefined) {
-            //TODO: Test this
-            return view.render('units', {results: "No Units have been registered"})
-        }else{
-            return view.render('units', {results: allUnits})
-        }
-    }
+    async render ({ view }) {
+        const units = await Unit.all()
+      
+        return view.render('units', { units: units.toJSON()})
+      }
 }
 module.exports = UnitController

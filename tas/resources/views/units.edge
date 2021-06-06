@@ -25,7 +25,40 @@
       </div>
       <div class="section">
         <p>
-        {{results}}
+          @each(unit in units)
+            <section class="hero is-success">
+              <div class="hero-body">
+                <div class="columns is-10">
+                  <div class="column is-four-fifths">
+                    <p class="title">
+                    {{ unit.id }}
+                    </p>
+                    <p class="subtitle">
+                      {{ unit.name }}
+                    </p>
+                  </div>
+                  <div class="column">
+                    <p class="subtitle">
+                      Semester: {{ unit.semester }}
+                    </p>
+                    <p class="subtitle">
+                      Load: {{ unit.assignedLoad }}
+                    </p>
+                </div>
+              </div>
+          </section>
+          @else
+            <section class="hero is-danger">
+              <div class="hero-body">
+                <p class="title">
+                  No Results
+                </p>
+                <p class="subtitle">
+                  Please add a unit or import spreadsheet
+                </p>
+              </div>
+            </section>
+          @endeach
         </p>
       </div>
     </div>
