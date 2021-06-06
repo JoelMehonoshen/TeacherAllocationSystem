@@ -1,11 +1,15 @@
 'use strict'
 
-class AllocationController {
-    render({request, view}) {
-        //logic goes here
+const Allocation = use("App/Models/Allocation");
+const Academic = use("App/Models/Academic");
 
-        return view.render('allocations', {})
-    }
+class AllocationController {
+    async render ({ view }) {
+        const allocations = await Allocation.all()
+        const academics = await Academic.all()
+
+        return view.render('allocations', { allocations: allocations.toJSON(), academics: academics.toJSON()})
+      }
 }
 
 module.exports = AllocationController
