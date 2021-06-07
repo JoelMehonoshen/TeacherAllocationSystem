@@ -16,10 +16,8 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-            
         <form method="POST" action="{{ route('UnitController.addunit') }}">  
             {{csrf}}
-
             <div class="field">
             <label class="label">Unit Code</label>
                 <div class="control">
