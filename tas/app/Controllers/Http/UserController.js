@@ -66,7 +66,7 @@ class UserController {
   }
 
   /*
-    Logs in a user to the service and returns a JWT & a refresh token
+    Logs in a user to the service and returns a session token
   */
   async login({ request, auth, response }) {
     try {

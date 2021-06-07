@@ -1,18 +1,21 @@
 'use strict'
 
 const Unit = use("App/Models/Unit");
+const Database = use('Database')
 
 class UnitController {
 
-    async AddUnit({response}) {
-        const Unit = new Unit()
-        Unit.code = "TEST"
-        Unit.year="2021"
-        Unit.semester="1"
-        Unit.load="1"
-        console.log(unit)
-        await unit.save()
-        return response.redirect('/Units', true)
+    async addunit({ request, response }) {
+        const userId = await Database
+        .table('units')
+        .insert({   id: request.input("id"), 
+                    name: request.input("name"),
+                    year: request.input("year"),
+                    semester: request.input("semester"),
+                    assignedLoad: request.input("load") 
+                })
+
+        return response.route('/units', true)
     }
     
     // async UnitQuery (request, response, view) {

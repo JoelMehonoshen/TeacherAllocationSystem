@@ -61,12 +61,17 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
+//Import routes
 Route.put('upload', 'ImportController.uploadFile')
   
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
 Route.post('/auth/signup', 'UserController.signup')
 Route.get('/auth/signout', 'UserController.signout')
+
+//add routes
+Route.post('/units/addunit', 'UnitController.addunit')
+.middleware(["auth"])
 
 
 //academics testing functionality

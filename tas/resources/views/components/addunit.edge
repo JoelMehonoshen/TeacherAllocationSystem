@@ -16,40 +16,63 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-          <div class="field">
+            
+        <form method="POST" action="{{ route('UnitController.addunit') }}">  
+            {{csrf}}
+
+            <div class="field">
             <label class="label">Unit Code</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Unit Code">
+                <div class="control">
+                    <input class="input" type="text" name="id" placeholder="Unit Code">
+                </div>
             </div>
+            <div class="field">
+            <label class="label">Unit Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" placeholder="Unit Name">
+                </div>
+            </div>
+            <div class="field">
+            <label class="label">Unit Load</label>
+                <div class="control">
+                    <input class="input" type="text" name="load" placeholder="Unit Load">
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Year</label>
+                        <p class="control">
+                            <span class="select">
+                                <select class="select" name="year">
+                                    <option>2021</option>
+                                    <option>2020</option>
+                                    <option>2019</option>
+                                    <option>2018</option>
+                                </select>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Semester</label>
+                        <p class="control">
+                            <span class="select">
+                            <select class="select" name="semester">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            </span>
+                        </p>
+                    </div> 
+            </div>     
         </div>
-        <div class="field">
-            <label class="label">Year</label>
-            <p class="control">
-                <span class="select">
-                <select>
-                    <option>2021</option>
-                    <option>2020</option>
-                    <option>2019</option>
-                    <option>2018</option>
-                </select>
-                </span>
-            </p>
-        </div>
-        <div class="field">
-            <label class="label">Semester</label>
-            <p class="control">
-                <span class="select">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                </select>
-                </span>
-            </p>
-        </div>        
-        </section>  
-          <footer class="modal-card-foot">
-              <button class="button is-link">Add Unit</button>
-              <button class="button is-link is-light" data-dismiss="modal">Cancel</button>
-          </footer>
-      </div>
+            </section>  
+            <footer class="modal-card-foot">
+                <input type="submit" value="Add Unit" class="button">
+                <button class="button is-link is-light" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
 </div>
