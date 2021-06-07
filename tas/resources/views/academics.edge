@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="section">
-        @!component('components.searchbar', title="Find Academic")
+        @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('AcademicController.render'))
       </div>
       <div class="section">
         <p>

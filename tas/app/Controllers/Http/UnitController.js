@@ -6,7 +6,7 @@ const Database = use('Database')
 class UnitController {
 
     async addunit({ request, response }) {
-        const userId = await Database
+        Database
         .table('units')
         .insert({   id: request.input("id"), 
                     name: request.input("name"),
@@ -18,21 +18,19 @@ class UnitController {
         return response.route('/units', true)
     }
     
-    // async UnitQuery (request, response, view) {
-    //    const results= await Database
-    //       .table('units')
-    //       .where('unit_code', request.search)
-    //     if(results.rows[0] == null){
-    //         return view.render('units', {results: "No Search Results"})
-    //     }else{
-    //         return view.render('units', {selectResponse: data.rows[0]})
-    //     }
-    //   }
+    async render ({ request, view }) {
+       if (request.input("search")) {
+        const units = await Database
+        .from('units')
+        .where('id', request.input("search"))
+        .orWhere('name', request.input("search"))
 
-    async render ({ view }) {
+        return view.render('units', { units: units})
+          
+       } else {
         const units = await Unit.all()
-      
         return view.render('units', { units: units.toJSON()})
+       }   
       }
 }
 module.exports = UnitController

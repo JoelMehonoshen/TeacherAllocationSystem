@@ -32,8 +32,12 @@ Route.get('/allocations', 'AllocationController.render')
 
 Route.get('/academics', 'AcademicController.render')
 .middleware(["auth"])
+Route.post('/academics', 'AcademicController.render')
+.middleware(["auth"])
 
 Route.get('/units', 'UnitController.render')
+.middleware(["auth"])
+Route.post('/units', 'UnitController.render')
 .middleware(["auth"])
 
 Route.post('/export', 'ExportController.render')
@@ -50,6 +54,12 @@ Route.get('/export', ({view }) => {
 Route.get('/help', ({view }) => {
     return view.render('help')
 }).middleware(["auth"])
+
+//add routes
+Route.post('/units/addunit', 'UnitController.addunit')
+.middleware(["auth"])
+Route.post('/units/addacademic', 'AcademicController.addacademic')
+.middleware(["auth"])
 
 
 // Unauthenticated views

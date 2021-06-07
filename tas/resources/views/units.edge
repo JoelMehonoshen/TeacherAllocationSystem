@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="section">
-          @!component('components.searchbar', title="Find Unit")
+          @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('UnitController.render'))
         </div>
         <div class="section">
           <p>
