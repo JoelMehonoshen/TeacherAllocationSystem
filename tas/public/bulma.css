@@ -5277,6 +5277,7 @@ button.dropdown-item.is-active {
   overflow: hidden;
   position: fixed;
   z-index: 40;
+
 }
 
 .modal.is-active {
@@ -5294,6 +5295,8 @@ button.dropdown-item.is-active {
   overflow: auto;
   position: relative;
   width: 100%;
+  top: 25%;
+  bottom: 50%;
 }
 
 @media screen and (min-width: 769px) {

@@ -29,6 +29,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.1.0",
     "exceljs": "^4.2.1",
+    "modules": "^0.4.0",
     "pg": "^8.6.0",
     "validator": "^13.6.0"
   },

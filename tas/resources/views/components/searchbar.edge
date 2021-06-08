@@ -1,20 +1,23 @@
-<div class="field has-addons has-addons-centered">
-  <p class="control">
-    <span class="select">
-      <select>
-        <option>2021</option>
-        <option>2020</option>
-        <option>2019</option>
-        <option>2018</option>
-      </select>
-    </span>
-  </p>
-  <p class="control is-expanded">
-    <input class="input" type="text" placeholder="{{title}}">
-  </p>
-  <p class="control">
-    <a class="button is-primary">
-      Search
-    </a>
-  </p>
-</div>
+<form method="GET" action="{{ route }}">  
+  {{csrf}}
+  <div class="field has-addons has-addons-centered">
+    <p class="control">
+      <span class="select">
+        <select>
+          <option>2021</option>
+          <option>2020</option>
+          <option>2019</option>
+          <option>2018</option>
+        </select>
+      </span>
+    </p>
+    <p class="control is-expanded">
+      <input class="input" type="text" name="search" placeholder="{{title}}">
+    </p>
+    <p class="control">
+      <button class="button is-primary" type="submit">
+        Search
+      </button>
+    </p>
+  </div>
+</form>
