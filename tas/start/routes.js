@@ -46,8 +46,12 @@ Route.post('/units', 'UnitController.render')
 Route.post('/units/addunit', 'UnitController.addunit')
 .middleware(["auth"])
 
+<<<<<<< HEAD
 //file handling
 Route.post('/export', 'ExportController.render')
+=======
+Route.post('/export', 'ExportController.export')
+>>>>>>> c3bd8774d3878219645b02ffb5516c7d469b9864
 .middleware(["auth"])
 Route.get('/import', ({view }) => {
     return view.render('import')
