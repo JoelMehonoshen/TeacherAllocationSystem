@@ -16,11 +16,12 @@
             </h2>
           </div>
           <div class="level is-right">
+            @!component('components.addacademic', csrf=csrfField())
           </div>
         </div>
       </div>
       <div class="section">
-        @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('AcademicController.render'))
+        @!component('components.searchbar', title="Find Academic", csrf=csrfField(), route=route('AcademicController.render'))
       </div>
       <div class="section">
         <p>
@@ -96,7 +97,7 @@
                 No Results
               </p>
               <p class="subtitle">
-                Please add a academic or import spreadsheet
+                Please add an academic or import spreadsheet
               </p>
             </div>
           </section>

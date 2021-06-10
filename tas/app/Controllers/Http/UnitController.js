@@ -6,9 +6,10 @@ const Database = use('Database')
 class UnitController {
 
     async addunit({ request, response }) {
-        Database
-        .table('units')
-        .insert({   id: request.input("id"), 
+       await Database
+       .table('units')
+       .insert({   
+                    id: request.input("id"), 
                     name: request.input("name"),
                     year: request.input("year"),
                     semester: request.input("semester"),

@@ -3,15 +3,16 @@
 const Academic = use("App/Models/Academic");
 const Database = use('Database')
 
+
 class AcademicController {
 
     async addacademic({ request, response }) {
-        Database
+        await Database
         .table('academics')
         .insert({   name: request.input("name"),
                     year: request.input("year"),
-                    semester: request.input("school"),
-                    assignedLoad: request.input("load") 
+                    school: request.input("school"),
+                    load: request.input("load") 
                 })
 
         return response.route('/academics', true)
