@@ -24,25 +24,39 @@
       </div>
       <div class="section">
         <p>
-          @each(allocation in allocations)
+          @each(allocAcademic in allocAcademics)
+            @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
+              <section class="hero is-danger is-small">
+            @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
               <section class="hero is-success is-small">
+            @else
+              <section class="hero is-warning is-small">
+            @endif
                 <div class="hero-body">
                   <div class="columns is-10">
                     <div class="column is-four-fifths">
                       <p class="title">
-                      {{ allocation.name }}
+                        {{ allocAcademic.name }}
                       </p>
-                      <p class="subtitle">
-                        {{ allocation.school }}
-                      </p>
+                      <div class="column">
+                        <p class="subtitle">
+                          Requested Load: {{ allocAcademic.requestedLoad }}
+                        </p>
+                        <p class="subtitle">
+                          Actual Load: {{ allocAcademic.actualLoad}}
+                        </p>
+                      </div>
                     </div>
                     <div class="column">
-                      <p class="subtitle">
-                        Load: {{ allocation.load }}
-                      </p>
+                      @each(unit in allocAcademic.allocUnits)
+                          <p class="subtitle">
+                            Unit: {{ unit.unit_code }}, 
+                            Load: {{ unit.load }}
+                          </p>
+                      @endeach
+                    </div>
                   </div>
-                </div>
-            </section>
+              </section>
           @else
             <section class="hero is-danger">
               <div class="hero-body">
@@ -50,7 +64,7 @@
                   No Results
                 </p>
                 <p class="subtitle">
-                  Please add a allocation or import spreadsheet
+                  Please add an allocation or import spreadsheet
                 </p>
               </div>
             </section>
