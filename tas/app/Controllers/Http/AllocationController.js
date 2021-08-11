@@ -11,6 +11,19 @@ class AllocationController {
       .select('academics.id', 'allocations.unit_code', 'allocations.load')
       .join('allocations', 'academics.id', '=', 'allocations.id')
 
+    const unitsUnalloc = await Database
+    .from('units')
+    .select('units.id')
+    .whereNotIn('units.id',
+        Database.from('allocations')
+        .select('allocations.unit_code')
+    )
+    
+
+    console.log(JSON.stringify(unitsUnalloc))
+    console.log("\n\n\n\n")
+
+
     var allocAcademics = []
     for (var i = 0; i < academics.length; i++) {
       var teacher = {
@@ -36,7 +49,7 @@ class AllocationController {
       allocAcademics.push(teacher)
     }
     console.log(JSON.stringify(allocAcademics))
-    return view.render('allocations', { allocAcademics: allocAcademics })
+    return view.render('allocations', { allocAcademics: allocAcademics , unitsUnalloc: unitsUnalloc})
   }
 }
 
