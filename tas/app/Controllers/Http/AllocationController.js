@@ -18,10 +18,7 @@ class AllocationController {
         Database.from('allocations')
         .select('allocations.unit_code')
     )
-    
-
-    console.log(JSON.stringify(unitsUnalloc))
-    console.log("\n\n\n\n")
+  
 
 
     var allocAcademics = []
@@ -48,7 +45,6 @@ class AllocationController {
       teacher.allocUnits = units
       allocAcademics.push(teacher)
     }
-    console.log(JSON.stringify(allocAcademics))
     return view.render('allocations', { allocAcademics: allocAcademics , unitsUnalloc: unitsUnalloc})
   }
 }
