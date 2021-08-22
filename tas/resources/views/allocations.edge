@@ -2,7 +2,14 @@
 <html>
 @!component('components.head', title="Teacher Allocation System")
 @!component('components.header')
-  <body>
+<body>
+{{--  Warning Message for Unallocated units  --}}
+<div>
+  @if(unitsUnalloc)
+    @!component('components.unallocatedwarning', unitsUnalloc=unitsUnalloc)
+  @endif
+</div>
+{{--  Title and Search Bar--}}
   <section class="section">
     <div class="container">
       <div class="section is-small">
@@ -19,15 +26,10 @@
           </div>
         </div>
       </div>
-      <div>
-            @each(unit in unitsUnalloc)
-                <p>{{unit.id}} is not allocated!</p>
-            @endeach
-      </div>
       <div class="section">
         @!component('components.searchbar', title="Find allocation")
+{{-- Display All Allocations --}}
       </div>
-      <div class="section">
         <p>
           @each(allocAcademic in allocAcademics)
             @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
