@@ -1,0 +1,37 @@
+<form method ="POST" action="{{route('AllocationController.update')}}">
+    <input type="submit" value="Save" class="button is-primary">
+    @each(allocAcademic in allocAcademics)
+    @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
+      <section class="hero is-danger is-small">
+    @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
+      <section class="hero is-success is-small">
+    @else
+       <section class="hero is-warning is-small">
+    @endif
+    <div class="hero-body">
+      <div class="columns is-10">
+        <div class="column is-four-fifths">
+          <p class="title">
+            <input class="input" type="text" name="academicName" placeholder="{{ allocAcademic.name }}">
+          </p>
+          <div class="column">
+            <p class="subtitle">
+              <input class="input" type="text" name="requestedLoad" placeholder="Requested Load: {{ allocAcademic.requestedLoad }}">
+            </p>
+            <p class="subtitle">
+              <input class="input" type="number" name="actualLoad" placeholder="Actual Load: {{ allocAcademic.actualLoad}}">
+            </p>
+          </div>
+        </div>
+        <div class="column">
+          @each(unit in allocAcademic.allocUnits)
+              <p class="subtitle">
+                <input class="input" type="number" name="unitCode" placeholder="Unit: {{ unit.unit_code }}">
+                <input class="input" type="number" name="unitLoad" placeholder="Load: {{ unit.load }}">
+              </p>
+          @endeach
+        </div>
+      </div>
+  </section>
+</form>
+@endeach

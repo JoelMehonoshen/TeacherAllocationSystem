@@ -18,24 +18,45 @@
               <h1 class="title">Allocations</h1>
               <h2 class="subtitle">Add and Search for Allocations</h2>
             </div>
-            {{--  Edit button  --}}
-            @set('editmode','false')
-            <div class="level is-right">
-              <button 
-                id ='button'
-                type="button"
-                class="button is-primary" 
-                onclick= @set('editMode','true')
-                > Edit
-              </button>
-            </div>
           </div>
         </div>
         <div class="section">
           @!component('components.searchbar', title="Find allocation")
         </div>
-  {{-- Display Allocations --}}
-      @!component('components.displayallocations', allocAcademics=allocAcademics, editMode)
+        {{--  Edit button  --}}
+        <div class="tab">
+          <button class="button is-primary" onclick="EditMode(event,'editMode')">Edit</button>
+        </div>
+        {{-- Display Allocations --}}
+        <div id="display" class="tabcontent">
+          @!component('components.displayallocations', allocAcademics=allocAcademics)
+        </div>
+        <div id="editMode" class="tabcontent">
+          @!component('components.editallocations', allocAcademics=allocAcademics)
+        </div>
+        {{--  Edit Script  --}}
+          <script>
+            function EditMode(evt, mode) {
+              // Declare all variables
+              var i, tabcontent, tablinks;
+
+              // Get all elements with class="tabcontent" and hide them
+              tabcontent = document.getElementsByClassName("tabcontent");
+              for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+              }
+
+              // Get all elements with class="tablinks" and remove the class "active"
+              tablinks = document.getElementsByClassName("tablinks");
+              for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+              }
+
+              // Show the current tab, and add an "active" class to the button that opened the tab
+              document.getElementById(mode).style.display = "block";
+              evt.currentTarget.className += " active";
+              }           
+           </script>
     <section>
   </body>
   @include('partials.footer')
