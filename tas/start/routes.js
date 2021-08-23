@@ -29,6 +29,8 @@ Route.get('/', ({view }) => {
 //allocations
 Route.get('/allocations', 'AllocationController.render')
 .middleware(["auth"])
+Route.post('/allocations/update', 'AllocationControler.update')
+.middleware(["auth"])
 
 //academics
 Route.get('/academics', 'AcademicController.render')
