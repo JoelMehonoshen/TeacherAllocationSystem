@@ -77,6 +77,9 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
+Route.get('/login_error', ({view }) => {
+    return view.render('login_error')
+})
 
 
 
