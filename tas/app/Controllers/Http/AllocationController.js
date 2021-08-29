@@ -3,12 +3,39 @@
 const Database = use('Database')
 
 class AllocationController {
+  // update the databse with new allocations and academics
+  async update({response, request}){
+    console.log(request)
+    await Database
+    .from('academics')
+    .where('id',request.input("academicID"))
+    .update({
+       name:request.input("name"),
+       load:request.input("requestedLoad")
+      })
+    if(request.input("unit")){
+      for (var i = 0; i < request.input("allocationID").length; i++) {
+        await Database
+         .from('allocations')
+         .where('allocation_id',request.input("allocationID")[i])
+         .update({
+           unit_code:request.input("unit")[i],
+           load:request.input("unitLoad")[i]
+         })
+    }}
+
+    return response.route('/allocations', true)
+  }
+
   async render({ view }) {
     // Retrieves required information from each table
-    const academics = await Database.select('id', 'name','load').from('academics').distinct('id')
+    const academics = await Database
+      .select('id', 'name','load')
+      .from('academics')
+      .distinct('id')
     const allocations = await Database
       .from('academics')
-      .select('academics.id', 'allocations.unit_code', 'allocations.load')
+      .select('allocations.unit_code', 'allocations.load','allocations.id', 'allocations.allocation_id')
       .join('allocations', 'academics.id', '=', 'allocations.id')
     const unitsUnalloc = await Database
     .from('units')
@@ -31,11 +58,12 @@ class AllocationController {
         if (teacher.id == allocations[j].id) {
           units.push(
             {
+              allocation_id: allocations[j].allocation_id,
               unit_code: allocations[j].unit_code,
               load: allocations[j].load
             }
           )
-          totalLoad += parseInt(allocations[j].load)
+          totalLoad += parseFloat(allocations[j].load)
         }
       }
       teacher.actualLoad = totalLoad
@@ -43,27 +71,6 @@ class AllocationController {
       allocAcademics.push(teacher)
     }
     return view.render('allocations', { allocAcademics: allocAcademics , unitsUnalloc: unitsUnalloc})
-  }
-  // update the databse with new allocations and academics
-  async update({view, request}){
-    //TODO: the form will sent multiple 'names' and ids and stuff, we need to iterate through each one and update
-    //update academics table
-    Database
-    .from('academics')
-    .where('id',request.input('id'))
-    .update(
-      {name:request.input('name')},
-      {load:request.input('load')},
-    )
-    //need to do fore each unit assigned to one academic 
-    //update allocations table
-    Database
-    .from('allocations')
-    .where('id',request.input('id'))
-    .update(
-      {}
-    )
-    return response.route('/allocations', true)
   }
 }
 

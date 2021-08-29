@@ -21,42 +21,10 @@
           </div>
         </div>
         <div class="section">
-          @!component('components.searchbar', title="Find allocation")
-        </div>
-        {{--  Edit button  --}}
-        <div class="tab">
-          <button class="button is-primary" onclick="EditMode(event,'editMode')">Edit</button>
+          @!component('components.searchbar', title="Find allocation", csrf=csrfField())
         </div>
         {{-- Display Allocations --}}
-        <div id="display" class="tabcontent">
-          @!component('components.displayallocations', allocAcademics=allocAcademics)
-        </div>
-        <div id="editMode" class="tabcontent">
-          @!component('components.editallocations', allocAcademics=allocAcademics)
-        </div>
-        {{--  Edit Script  --}}
-          <script>
-            function EditMode(evt, mode) {
-              // Declare all variables
-              var i, tabcontent, tablinks;
-
-              // Get all elements with class="tabcontent" and hide them
-              tabcontent = document.getElementsByClassName("tabcontent");
-              for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-              }
-
-              // Get all elements with class="tablinks" and remove the class "active"
-              tablinks = document.getElementsByClassName("tablinks");
-              for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-              }
-
-              // Show the current tab, and add an "active" class to the button that opened the tab
-              document.getElementById(mode).style.display = "block";
-              evt.currentTarget.className += " active";
-              }           
-           </script>
+        @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
     <section>
   </body>
   @include('partials.footer')

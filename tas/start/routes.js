@@ -29,7 +29,7 @@ Route.get('/', ({view }) => {
 //allocations
 Route.get('/allocations', 'AllocationController.render')
 .middleware(["auth"])
-Route.post('/allocations/update', 'AllocationControler.update')
+Route.post('/allocations/update', 'AllocationController.update')
 .middleware(["auth"])
 
 //academics
@@ -37,7 +37,7 @@ Route.get('/academics', 'AcademicController.render')
 .middleware(["auth"])
 Route.post('/academics', 'AcademicController.render')
 .middleware(["auth"])
-Route.post('/units/addacademic', 'AcademicController.addacademic')
+Route.post('/academics/addacademic', 'AcademicController.addacademic')
 .middleware(["auth"])
 
 //units
