@@ -39,6 +39,8 @@ Route.post('/academics', 'AcademicController.render')
 .middleware(["auth"])
 Route.post('/academics/addacademic', 'AcademicController.addacademic')
 .middleware(["auth"])
+Route.post('/academics/updateacademic', 'AcademicController.updateacademic')
+.middleware(["auth"])
 
 //units
 Route.get('/units', 'UnitController.render')

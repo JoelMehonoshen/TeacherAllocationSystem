@@ -1,0 +1,42 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button 
+    type="button"
+    class="button is-small is-link" 
+    data-toggle="modal"
+    data-target="#{{academic.id}}"
+    >     
+    <i class= "fa fa-edit"></i>
+</button>
+
+<div id="{{academic.id}}" class="modal">
+  <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Edit Academic Details</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="academics/updateacademic"> 
+            {{csrf}}
+            <input type="hidden" name="academicID" value="{{academic.id}}">
+            <div class="field">
+                <label class="label">Academic Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" value="{{academic.name}}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Requested Load</label>
+                <div class="control">
+                    <input class="input" type="number" min="0" step=".1" name="load" value="{{ academic.load }}">
+                </div>
+            </div>
+            </section>  
+            <footer class="modal-card-foot">
+                <input type="submit" value="Update Allocation" class="button is-link">
+                <button class="button is-danger" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
+</div>
