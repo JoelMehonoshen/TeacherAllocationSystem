@@ -11,6 +11,7 @@ class AcademicPreferenceSchema extends Schema {
         table.integer('unit_year')
         table.integer('unit_semester')
         table.primary(['id', 'unit_code', 'unit_year', 'unit_semester'])
+        table.foreign(['unit_code', 'unit_year', 'unit_semester']).references(['id', 'year', 'semester']).inTable('units')
     })
   }
 

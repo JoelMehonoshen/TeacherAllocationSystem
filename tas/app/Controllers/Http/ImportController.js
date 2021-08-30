@@ -161,9 +161,14 @@ class ImportController {
             await unit.save()
         })
 
+        console.log(units)
         academicsList.forEach((academicImport) => {
             academicImport.save()
         })
+
+
+        // //https://github.com/exceljs/exceljs#columns
+
 
         return
     }
