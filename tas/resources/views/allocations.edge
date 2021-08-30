@@ -1,66 +1,31 @@
 <!DOCTYPE html>
 <html>
-@!component('components.head', title="Teacher Allocation System")
-@!component('components.header')
+  @!component('components.head', title="Teacher Allocation System")
+  @!component('components.header')
   <body>
-  <section class="section">
-    <div class="container">
-      <div class="section is-small">
-        <div class="level">
-          <div class="container">
-            <h1 class="title">
-                Allocations
-            </h1>
-            <h2 class="subtitle">
-              Add and Search for Allocations
-            </h2>
-          </div>
-          <div class="level is-right">
+  {{--  Warning Message for Unallocated units  --}}
+    <div>
+      @if(unitsUnalloc)
+        @!component('components.unallocatedwarning', unitsUnalloc=unitsUnalloc)
+      @endif
+    </div>
+  {{--  Title, Search Bar--}}
+    <section class="section">
+      <div class="container">
+        <div class="section is-small">
+          <div class="level">
+            <div class="container">
+              <h1 class="title">Allocations</h1>
+              <h2 class="subtitle">Add and Search for Allocations</h2>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="section">
-        @!component('components.searchbar', title="Find allocation")
-      </div>
-      <div class="section">
-        <p>
-          @each(allocation in allocations)
-              <section class="hero is-success is-small">
-                <div class="hero-body">
-                  <div class="columns is-10">
-                    <div class="column is-four-fifths">
-                      <p class="title">
-                      {{ allocation.name }}
-                      </p>
-                      <p class="subtitle">
-                        {{ allocation.school }}
-                      </p>
-                    </div>
-                    <div class="column">
-                      <p class="subtitle">
-                        Load: {{ allocation.load }}
-                      </p>
-                  </div>
-                </div>
-            </section>
-          @else
-            <section class="hero is-danger">
-              <div class="hero-body">
-                <p class="title">
-                  No Results
-                </p>
-                <p class="subtitle">
-                  Please add a allocation or import spreadsheet
-                </p>
-              </div>
-            </section>
-          @endeach
-        </p>
-      </div>
-    </div>
-  </section>
+        <div class="section">
+          @!component('components.searchbar', title="Find allocation", csrf=csrfField())
+        </div>
+        {{-- Display Allocations --}}
+        @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
+    <section>
   </body>
-
-@include('partials.footer')
-
+  @include('partials.footer')
 </html> 

@@ -23,7 +23,6 @@ class ExportController {
 
     async export({request, response, view}){
         this.ExportWorksheet(2021)
-        console.log("it worked");
         view.render("export", {filename: "template2.xlsx"})
     }
 }
