@@ -75,11 +75,13 @@ class UserController {
       return response.route('/', true)
 
     } catch (error) {
-      Logger.error(error);
-      response.status(400).json({
-        status: "error",
-        message: "Invalid credentials.",
-      });
+      return response.route('/login_error', true)
+
+      // Logger.error(error);
+      // response.status(400).json({
+      //   status: "error",
+      //   message: "Invalid credentials.",
+      // });
     }
   }
 
