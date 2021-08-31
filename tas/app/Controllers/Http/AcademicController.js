@@ -19,13 +19,13 @@ class AcademicController {
     }
 
     async updateacademic({response, request}){
-        console.log(request)
+        //console.log(request)
         await Database
         .from('academics')
         .where('id',request.input("academicID"))
         .update({
            name:request.input("name"),
-           load:request.input("requestedLoad")
+           load:request.input("load")
           })    
         return response.route('/academics', true)
       }

@@ -93,7 +93,7 @@
             @endif
             <div class="column is-narrow">
                 {{--  Edit button  --}}
-                @!component('components.editAcademic', csrf=csrf, academic=academic)
+                @!component('components.editAcademic', csrf=csrfField(), academic=academic)
               </div>
         </div>
         @else
