@@ -49,6 +49,8 @@ Route.post('/units', 'UnitController.render')
 .middleware(["auth"])
 Route.post('/units/addunit', 'UnitController.addunit')
 .middleware(["auth"])
+Route.post('/units/updateunit', 'UnitController.updateunit')
+.middleware(["auth"])
 
 //file handling
 Route.post('/export', 'ExportController.render')

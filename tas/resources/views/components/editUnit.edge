@@ -22,7 +22,7 @@
             <div class="field">
                 <label class="label">Unit Code</label>
                 <div class="control">
-                    <input class="input" type="text" name="name" value="{{unit.id}}">
+                    <input class="input" type="text" name="unitID" value="{{unit.id}}">
                 </div>
             </div>
             <div class="field">
@@ -34,26 +34,27 @@
             <div class="field">
                 <label class="label">Unit Load</label>
                 <div class="control">
-                    <input class="input" type="number" min="0" step=".1" name="load" value="{{ unit.load }}">
+                    <input class="input" type="number" min="0" name="load" value="{{ unit.assignedLoad }}">
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Semester</label>
-                <div class="control">
-                    <input type="radio" id="1" name="semester"
-                    @if(unit.semester == 1)
-                        checked
-                    @endif
-                    >
-                    <label for="1">1</label><br>
-                    <input type="radio" id="2" name="semester"
-                    @if(unit.semester == 2)
-                        checked
-                    @endif
-                    >
-                    <label for="2">2</label><br>
-                </div>
-            </div>
+            {{--  <div class="field">--}}
+            {{--    <label class="label">Semester</label>--}}
+            {{--    <div class="control">--}}
+            {{--        <input type="radio" id="1" name="semester" value="1"--}}
+            {{--        @if(unit.semester == 1)--}}
+            {{--            checked--}}
+            {{--        @endif--}}
+            {{--        >--}}
+            {{--        <label for="1">1</label><br>--}}
+            {{--        <input type="radio" id="2" name="semester" value="2"--}}
+            {{--        @if(unit.semester == 2)--}}
+            {{--            checked--}}
+            {{--        @endif--}}
+            {{--        >--}}
+            {{--        <label for="2">2</label><br>--}}
+            {{--    </div>--}}
+            {{--</div>  --}}
+            <input type="hidden" name="semester" value="{{unit.semester}}">
             </section>  
             <footer class="modal-card-foot">
                 <input type="submit" value="Update Allocation" class="button is-link">

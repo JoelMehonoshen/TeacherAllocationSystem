@@ -33,5 +33,18 @@ class UnitController {
         return view.render('units', { units: units.toJSON()})
        }   
       }
+
+    async updateunit({response, request}){
+        //console.log(request)
+        await Database
+        .from('units')
+        .where({id:request.input("unitID"), semester:request.input("semester")})
+        .update({
+           name:request.input("name"),
+           id:request.input("id"),
+           assignedLoad:request.input("load")
+          })    
+        return response.route('/units', true)
+    }
 }
 module.exports = UnitController
