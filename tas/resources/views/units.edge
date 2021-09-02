@@ -99,6 +99,10 @@
                   </section> 
                 </div>
                 @endif
+                <div class="column is-narrow">
+                    {{--  Edit button  --}}
+                    @!component('components.editUnit', csrf=csrfField(), unit=unit)
+                </div>
             @else
               <section class="hero is-danger">
                 <div class="hero-body">

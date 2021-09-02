@@ -1,85 +1,31 @@
 <!DOCTYPE html>
 <html>
-@!component('components.head', title="Teacher Allocation System")
-@!component('components.header')
+  @!component('components.head', title="Teacher Allocation System")
+  @!component('components.header')
   <body>
-  <section class="section">
-    <div class="container">
-      <div class="section is-small">
-        <div class="level">
-          <div class="container">
-            <h1 class="title">
-                Allocations
-            </h1>
-            <h2 class="subtitle">
-              Add and Search for Allocations
-            </h2>
-          </div>
-          <div class="level is-right">
+  {{--  Warning Message for Unallocated units  --}}
+    <div>
+      @if(unitsUnalloc)
+        @!component('components.unallocatedwarning', unitsUnalloc=unitsUnalloc)
+      @endif
+    </div>
+  {{--  Title, Search Bar--}}
+    <section class="section">
+      <div class="container">
+        <div class="section is-small">
+          <div class="level">
+            <div class="container">
+              <h1 class="title">Allocations</h1>
+              <h2 class="subtitle">Add and Search for Allocations</h2>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-            @each(unit in unitsUnalloc)
-                <p>{{unit.id}} is not allocated!</p>
-            @endeach
-      </div>
-      <div class="section">
-        @!component('components.searchbar', title="Find allocation")
-      </div>
-      <div class="section">
-        <p>
-          @each(allocAcademic in allocAcademics)
-            @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
-              <section class="hero is-danger is-small">
-            @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
-              <section class="hero is-success is-small">
-            @else
-              <section class="hero is-warning is-small">
-            @endif
-                <div class="hero-body">
-                  <div class="columns is-10">
-                    <div class="column is-four-fifths">
-                      <p class="title">
-                        {{ allocAcademic.name }}
-                      </p>
-                      <div class="column">
-                        <p class="subtitle">
-                          Requested Load: {{ allocAcademic.requestedLoad }}
-                        </p>
-                        <p class="subtitle">
-                          Actual Load: {{ allocAcademic.actualLoad}}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="column">
-                      @each(unit in allocAcademic.allocUnits)
-                          <p class="subtitle">
-                            Unit: {{ unit.unit_code }}, 
-                            Load: {{ unit.load }}
-                          </p>
-                      @endeach
-                    </div>
-                  </div>
-              </section>
-          @else
-            <section class="hero is-danger">
-              <div class="hero-body">
-                <p class="title">
-                  No Results
-                </p>
-                <p class="subtitle">
-                  Please add an allocation or import spreadsheet
-                </p>
-              </div>
-            </section>
-          @endeach
-        </p>
-      </div>
-    </div>
-  </section>
+        <div class="section">
+          @!component('components.searchbar', title="Find allocation", csrf=csrfField())
+        </div>
+        {{-- Display Allocations --}}
+        @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
+    <section>
   </body>
-
-@include('partials.footer')
-
+  @include('partials.footer')
 </html> 

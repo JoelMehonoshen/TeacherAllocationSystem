@@ -29,13 +29,17 @@ Route.get('/', ({view }) => {
 //allocations
 Route.get('/allocations', 'AllocationController.render')
 .middleware(["auth"])
+Route.post('/allocations/update', 'AllocationController.update')
+.middleware(["auth"])
 
 //academics
 Route.get('/academics', 'AcademicController.render')
 .middleware(["auth"])
 Route.post('/academics', 'AcademicController.render')
 .middleware(["auth"])
-Route.post('/units/addacademic', 'AcademicController.addacademic')
+Route.post('/academics/addacademic', 'AcademicController.addacademic')
+.middleware(["auth"])
+Route.post('/academics/updateacademic', 'AcademicController.updateacademic')
 .middleware(["auth"])
 
 //units
@@ -44,6 +48,8 @@ Route.get('/units', 'UnitController.render')
 Route.post('/units', 'UnitController.render')
 .middleware(["auth"])
 Route.post('/units/addunit', 'UnitController.addunit')
+.middleware(["auth"])
+Route.post('/units/updateunit', 'UnitController.updateunit')
 .middleware(["auth"])
 
 //file handling
@@ -74,6 +80,9 @@ Route.get('/signup', ({view }) => {
 })
 Route.get('/login', ({view }) => {
     return view.render('login')
+})
+Route.get('/login_error', ({view }) => {
+    return view.render('login_error')
 })
 
 

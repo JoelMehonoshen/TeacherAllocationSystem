@@ -26,6 +26,7 @@
       <div class="section">
         <p>
           @each(academic in academics)
+          <div>
             @if(academic.load == 1)
               <div class="mb-4">
                 <section class="hero is-success is-small">
@@ -90,6 +91,11 @@
             </section>
             </div>
             @endif
+            <div class="column is-narrow">
+                {{--  Edit button  --}}
+                @!component('components.editAcademic', csrf=csrfField(), academic=academic)
+              </div>
+        </div>
         @else
           <section class="hero is-danger">
             <div class="hero-body">

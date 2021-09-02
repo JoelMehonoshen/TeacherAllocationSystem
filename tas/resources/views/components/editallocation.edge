@@ -1,0 +1,57 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button 
+    type="button"
+    class="button is-small is-link" 
+    data-toggle="modal"
+    data-target="#{{allocAcademic.id}}"
+    >     
+    <i class= "fa fa-edit"></i>
+</button>
+
+<div id="{{allocAcademic.id}}" class="modal">
+  <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Edit Allocation Details</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="{{ route('AllocationController.update') }}"> 
+            {{csrf}}
+            <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
+            <div class="field">
+                <label class="label">Academic Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" value="{{ allocAcademic.name }}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Requested Load</label>
+                <div class="control">
+                    <input class="input" type="number" min="0" step=".1" name="requestedLoad" value="{{ allocAcademic.requestedLoad }}">
+                </div>
+            </div>
+            @each(unit in allocAcademic.allocUnits)
+            <input type="hidden" name="allocationID" value="{{unit.allocation_id}}">
+                <div class="field">
+                    <label class="label">Unit:</label>
+                    <div class="control">
+                        <input class="input" type="text" name="unit" value="{{ unit.unit_code }}">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Load:</label>
+                    <div class="control">
+                        <input class="input" type="number" min="0" step=".1" name="unitLoad" value="{{ unit.load }}">
+                    </div>
+                </div>                
+            @endeach
+            </section>  
+            <footer class="modal-card-foot">
+                <input type="submit" value="Update Allocation" class="button is-link">
+                <button class="button is-danger" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
+</div>

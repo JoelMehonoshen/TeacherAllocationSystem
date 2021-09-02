@@ -17,6 +17,18 @@ class AcademicController {
 
         return response.route('/academics', true)
     }
+
+    async updateacademic({response, request}){
+        //console.log(request)
+        await Database
+        .from('academics')
+        .where('id',request.input("academicID"))
+        .update({
+           name:request.input("name"),
+           load:request.input("load")
+          })    
+        return response.route('/academics', true)
+      }
     
     async render ({ request, view }) {
        if (request.input("search")) {

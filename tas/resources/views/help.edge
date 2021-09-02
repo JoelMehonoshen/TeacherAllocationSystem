@@ -1,17 +1,161 @@
 <!DOCTYPE html>
 <html>
+  
 @!component('components.head', title="Teacher Allocation System")
 @!component('components.header')
-  <body>
+<body>  
   <section class="section">
     <div class="container">
       <h1 class="title">
         Help
       </h1>
-    </div>
-  </section>
-  </body>
+      <p class="subtitles">
+        <b>Here is the guide to Teacher Allocation System.</b>
+      </p>
+      <p class="subheading">
+        You can start with allocating academics with the <b>Start Importing Button</b>.</p>      </p>
 
-@include('partials.footer')
+      <div class="tab">
+        <button class="tablinks" onclick="openfunc(event, 'Import')" id="defaultOpen">Import</button>
+        <button class="tablinks" onclick="openfunc(event, 'Export')">Export</button>
+        <button class="tablinks" onclick="openfunc(event, 'Colour Tags')">Colour Tags</button>
+        <button class="tablinks" onclick="openfunc(event, 'Allocations')">Allocations</button>
+        <button class="tablinks" onclick="openfunc(event, 'Academics')">Academics</button>
+        <button class="tablinks" onclick="openfunc(event, 'Units')">Units</button>
+      </div>
+    </div>
+    
+    
+    <!-- Tab content -->
+<div id="Import" class="tabcontent">
+  <h3><b> Import: </b></h3>
+  <p>You can import your spreadsheet filled with the details of the academics and Units by:</p>
+  <ol>
+    <li> Click on the <b>Choose file</b> button.</li>
+    <li> Select an excel file from your local computer(make sure its an xml file).</li>
+    <li> Submit the excel file by clicking on the <b>Submit</b> button.</li>
+  </ol>
+</div>
+
+
+<div id="Export" class="tabcontent">
+
+  <h3><b> Export: </b></h3>
+  <p>You can export a year's spreadsheet to an excel spreadsheet by:</p>
+  <ol>
+    <li> Choose a year you want to export the spreadsheet from the drop down option.</li>
+    <li> Then click on the <b>Submit</b> button.</li>
+    <li> Click in the download. Your spreadsheet will be download in an excel file.</li>
+  </ol>
+</div>
+
+<div id="Colour Tags" class="tabcontent">
+
+  <h3><b> Colour Tags: </b></h3>
+  <p>Coloured Tags corresponds to the relation between the request load and the actual load.</p>
+  <dl>
+    <dt style ="color: red"> <b>Red Tag:</b></dt>
+    <li> The actual load is more than the requested load.</li>
+    
+    <dt style ="color: orange"><b>Orange Tag:</b></dt>
+    <li> The actual load is less than the requested load.</li>
+
+    <dt style="color:green"><b>Green Tag:</b></dt>
+    <li> The actual load matches the requested load.</li>
+
+  </dl>
+</div>
+
+  <div id="Allocations" class="tabcontent">
+
+    <h3><b> Allocations: </b></h3>
+    <p>You can either search or add for Allocations:</p>
+    <ol>
+      <dt> <b><u>Search Allocation:</u></b></dt>
+      <li> Choose a year you want to search for allocation from the drop down option.</li>
+      <li> Then click on the <b>Search</b> button.</li>
+      <li> You can also search for a particular allocation from the search bar. Then click on the <b>Search</b> button.</li>
+    </ol>
+    <dt> <b><u>Add Allocation:</u></b></dt>
+
+  </div>
+
+  <div id="Academics" class="tabcontent">
+
+    <h3><b> Academics: </b></h3>
+    <p>You can either search or add academics:</p>
+    <dt> <b><u>Search Academics:</u></b></dt>
+    <ol>
+      <li> Choose a year you want to view the academic data from the drop down option.</li>
+      <li> Then click on the <b>Search</b> button.</li>
+      <li> You can even view less or more data by removing or entering tags from the <b>Find academic</b> search bar.</li>
+    </ol>
+    <dt> <b><u>Add Academics:</u></b></dt>
+    <p> You can add academics by selecting the <b> Add Academic +</b> button.</p>
+    <ol>
+      <li> Fill out the following details to add an academic.</li>      
+      
+      <li> After filling out the details click on the Add academic button.</li>
+      <li> Your academic is successfully added.</li>
+    </ol>
+  </div>
+
+  <div id="Units" class="tabcontent">
+
+    <h3><b> Units: </b></h3>
+    <p>You can either search or add Units:</p>
+    <dt> <b><u>Search Units:</u></b></dt>
+    <ol>
+      <li> Choose a year you want to view the units data from the drop down option.</li>
+      <li> Then click in the <b>Search</b> button.</li>
+      <li> You can even view less or more data by removing or entering tags from the <b>Find Unit</b> search bar .</li>
+    </ol>
+    <dt> <b><u>Add Units:</u></b></dt>
+    <p> You can add units by selecting the <b> Add Units +</b> button.</p>
+    <ol>
+      <li> Fill out the following details to add a unit.</li>      
+      
+      <li> After filling out the details click on the Add unit button.</li>
+      <li> Your unit is successfully added.</li>
+    </ol>
+  </div>
+
+
+
+<script>
+  function openfunc(evt, functionality) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = " none ";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace("active", "");
+    }
+    document.getElementById(functionality).style.display = "block";
+    evt.currentTarget.className += "active";
+  }
+  document.getElementById("defaultOpen").click();
+  </script>
+
+
+  </section>
+
+  
+
+
+
+
+
+
+  </body>
+  
+  
+  
+
+
+
+  @include('partials.footer')
 
 </html>
