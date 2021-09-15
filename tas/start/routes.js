@@ -81,10 +81,15 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
+
+// error pages
 Route.get('/login_error', ({view }) => {
     return view.render('login_error')
 })
+Route.get('/401', ({view }) => {
+    return view.render('401')
+})
+Route.get('/404', ({view }) => {
+    return view.render('404')
+})
 
-
-
-  

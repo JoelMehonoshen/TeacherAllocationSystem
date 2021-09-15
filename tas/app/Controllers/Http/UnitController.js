@@ -35,7 +35,6 @@ class UnitController {
       }
 
     async updateunit({response, request}){
-        //console.log(request)
         await Database
         .from('units')
         .where({id:request.input("unitID"), semester:request.input("semester")})

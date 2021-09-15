@@ -19,7 +19,6 @@ class AcademicController {
     }
 
     async updateacademic({response, request}){
-        //console.log(request)
         await Database
         .from('academics')
         .where('id',request.input("academicID"))

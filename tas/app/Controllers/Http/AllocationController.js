@@ -5,7 +5,6 @@ const Database = use('Database')
 class AllocationController {
   // update the databse with new allocations and academics
   async update({response, request}){
-    console.log(request)
     await Database
     .from('academics')
     .where('id',request.input("academicID"))
