@@ -83,13 +83,14 @@ Route.get('/login', ({view }) => {
 })
 
 // error pages
-Route.get('/login_error', ({view }) => {
-    return view.render('login_error')
-})
 Route.get('/401', ({view }) => {
     return view.render('401')
 })
 Route.get('/404', ({view }) => {
     return view.render('404')
 })
+Route.get('/error', ({view }) => {
+    return view.render('error')
+})
+
 

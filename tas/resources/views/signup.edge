@@ -17,28 +17,46 @@
       <div class="field">
           <label class="label">User Name</label>
           <div class="control">
-            <input class="input" type="text" name="username" placeholder="Username">
+            <input class="input" type="text" name="username" placeholder="Username" value="{{ old('username', '') }}">
           </div>
       </div> 
       <div class="field">
           <label class="label">Academic Email</label>
           <div class="control">
-            <input class="input" type="email" name="email" placeholder="Academic Email">
+            <input class="input" type="text" name="email" placeholder="Academic Email" value="{{ old('email', '') }}">
+            @if(flashMessage('InvalidEmail'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('InvalidEmail')}}
+              </section>
+            @elseif(flashMessage('EmailExists'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('EmailExists')}}
+              </section>
+            @endif
           </div>
       </div>
       <div class="field">
       <label class="label">Password</label>
-        <div class="control ">
-            <input class="input" type="password" name="password" placeholder="Password">
-        </div>
+        <div>
+            <input class="input" type="password" name="password" placeholder="Password" value="{{ old('password', '') }}">
+            @if(flashMessage('InvalidPassword'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('InvalidPassword')}}
+              </section>
+             @endif
+          </div>
       </div>
       <div class="field">
       <label class="label">Confirm Password</label>
         <div class="control">
-            <input class="input" type="password" placeholder="Confirm Password">
+            <input class="input" type="password" name="confirmPassword" placeholder="Confirm Password">
+            @if(flashMessage('PasswordDoesNotMatch'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('PasswordDoesNotMatch')}}
+              </section>
+            @endif
         </div>
       </div>
-      
       <div class="field is-grouped">
         <div class="control">
             <input type="submit" value="Submit" class="button">
