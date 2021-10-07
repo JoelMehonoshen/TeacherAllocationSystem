@@ -4,51 +4,54 @@
     type="button"
     class="button is-primary" 
     data-toggle="modal"
-    data-target="#AcademicsForm"
-    > Add Allocation + 
+    data-target="#AllocationForm"
+    > Add Allocation
 </button>
 
-<div id="AcademicsForm" class="modal">
+<div id="AllocationForm" class="modal">
   <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">Add Academic</p>
+          <p class="modal-card-title">Add Allocations</p>
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="{{ route('AcademicController.addacademic') }}">  
+        <form method="POST" action="{{ route('AllocationController.add') }}">  
             {{csrf}}
             <div class="field">
             <label class="label">Academic Name</label>
                 <div class="control">
-                    <input class="input" type="text" name="name" placeholder="Academic Name">
+                    <div class="select">
+                        <select>
+                            <option> Dr Second Academic </option>
+                            <option> Dr Third Academic </option>
+                            <option> Dr Fourth Academic </option>
+                            <option> Dr Fifth Academic </option>
+                            <option> Dr Sixth Academic </option>
+                            <option> Dr Seventh Academic </option>
+                            <option> Dr Eighth Academic </option>
+                            <option> Dr Nineth Academic </option>
+                            <option> Dr Tenth Academic </option>
+                            <option> D First Academic </option>
+                            <option> D Second Academic </option>
+                            <option> D Third Academic </option>
+                            <option> D Fourth Academic </option>
+                        </select>
+                      </div>
                 </div>
             </div>
             <div class="field">
-                <label class="label">School</label>
+                <label class="label">Requested Load</label>
                     <div class="control">
-                        <input class="input" type="text" name="school" placeholder="School">
+                        <input class="input" type="number" step=".1" min="0" name="requested" placeholder="1.0">
                     </div>
                 </div>
             <div class="field">
-            <label class="label">Academic Load</label>
+            <label class="label">Actual Load</label>
                 <div class="control">
-                    <input class="input" type="text" name="load" placeholder="Academic Load">
+                    <input class="input" disabled=true type="text" name="actual" placeholder="calculating...">
                 </div>
             </div>
-                <div class="field">
-                    <label class="label">Year</label>
-                    <p class="control">
-                        <span class="select">
-                            <select class="select" name="year">
-                                <option>2021</option>
-                                <option>2020</option>
-                                <option>2019</option>
-                                <option>2018</option>
-                            </select>
-                        </span>
-                    </p>
-                </div>
             </section>  
             <footer class="modal-card-foot">
                 <input type="submit" value="Add Academic" class="button is-link">
