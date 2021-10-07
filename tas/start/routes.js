@@ -39,6 +39,8 @@ Route.post('/academics', 'AcademicController.render')
 .middleware(["auth"])
 Route.post('/academics/addacademic', 'AcademicController.addacademic')
 .middleware(["auth"])
+Route.post('/academics/updateacademic', 'AcademicController.updateacademic')
+.middleware(["auth"])
 
 //units
 Route.get('/units', 'UnitController.render')
@@ -46,6 +48,8 @@ Route.get('/units', 'UnitController.render')
 Route.post('/units', 'UnitController.render')
 .middleware(["auth"])
 Route.post('/units/addunit', 'UnitController.addunit')
+.middleware(["auth"])
+Route.post('/units/updateunit', 'UnitController.updateunit')
 .middleware(["auth"])
 
 //file handling
@@ -77,10 +81,16 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
-Route.get('/login_error', ({view }) => {
-    return view.render('login_error')
+
+// error pages
+Route.get('/401', ({view }) => {
+    return view.render('401')
+})
+Route.get('/404', ({view }) => {
+    return view.render('404')
+})
+Route.get('/error', ({view }) => {
+    return view.render('error')
 })
 
 
-
-  

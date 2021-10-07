@@ -1,0 +1,59 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button 
+    type="button"
+    class="button is-primary" 
+    data-toggle="modal"
+    data-target="#AcademicsForm"
+    > Add Allocation + 
+</button>
+
+<div id="AcademicsForm" class="modal">
+  <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Academic</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="{{ route('AcademicController.addacademic') }}">  
+            {{csrf}}
+            <div class="field">
+            <label class="label">Academic Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" placeholder="Academic Name">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">School</label>
+                    <div class="control">
+                        <input class="input" type="text" name="school" placeholder="School">
+                    </div>
+                </div>
+            <div class="field">
+            <label class="label">Academic Load</label>
+                <div class="control">
+                    <input class="input" type="text" name="load" placeholder="Academic Load">
+                </div>
+            </div>
+                <div class="field">
+                    <label class="label">Year</label>
+                    <p class="control">
+                        <span class="select">
+                            <select class="select" name="year">
+                                <option>2021</option>
+                                <option>2020</option>
+                                <option>2019</option>
+                                <option>2018</option>
+                            </select>
+                        </span>
+                    </p>
+                </div>
+            </section>  
+            <footer class="modal-card-foot">
+                <input type="submit" value="Add Academic" class="button is-link">
+                <button class="button is-danger" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
+</div>
