@@ -22,7 +22,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async handle (error, { request, response }) {
-    response.status(400).redirect('/error')
+    // response.status(400).redirect('/error')
   }
 
   /**

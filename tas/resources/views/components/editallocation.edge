@@ -17,7 +17,7 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="{{ route('AllocationController.update') }}"> 
+        <form method="POST" action="{{ route('AllocationController.updateAllocation') }}"> 
             {{csrf}}
             <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
             <div class="field">

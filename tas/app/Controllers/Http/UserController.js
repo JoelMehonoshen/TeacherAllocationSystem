@@ -1,7 +1,5 @@
 "use strict";
 const Exception = use("App/Exceptions/Handler");
-const Logger = use("Logger");
-
 const User = use("App/Models/User");
 const Logger = use("Logger");
 const validator = require("validator");

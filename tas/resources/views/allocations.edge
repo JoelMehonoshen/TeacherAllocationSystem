@@ -19,7 +19,7 @@
               <h2 class="subtitle">Add and Search for Allocations</h2>
             </div>
             <div class="level is-right">
-              @!component('components.addallocation', csrf=csrfField())
+              @!component('components.addallocation', csrf=csrfField(), academics=academicList, units=unitList)
             </div>
           </div>
         </div>
