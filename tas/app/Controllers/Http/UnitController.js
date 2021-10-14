@@ -23,8 +23,8 @@ class UnitController {
        if (request.input("search")) {
         const units = await Database
         .from('units')
-        .where('id', request.input("search"))
-        .orWhere('name', request.input("search"))
+        .where('id', "like", "%"+request.input("search")+"%")
+        .orWhere('name', "like", "%"+request.input("search")+"%")
 
         return view.render('units', { units: units})
           

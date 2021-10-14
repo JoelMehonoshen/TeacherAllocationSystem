@@ -33,7 +33,7 @@ class AcademicController {
        if (request.input("search")) {
         const academics = await Database
         .from('academics')
-        .where('name', request.input("search"))
+        .where('name', "like", "%"+request.input("search")+"%")
       
         return view.render('academics', { academics: academics})
           
