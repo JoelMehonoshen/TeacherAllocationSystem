@@ -5,7 +5,7 @@
   <body>
   {{--  Warning Message for Unallocated units  --}}
     <div>
-      @if(unitsUnalloc)
+      @if(unitsUnalloc > 0)
         @!component('components.unallocatedwarning', unitsUnalloc=unitsUnalloc)
       @endif
     </div>
@@ -18,10 +18,13 @@
               <h1 class="title">Allocations</h1>
               <h2 class="subtitle">Add and Search for Allocations</h2>
             </div>
+            <div class="level is-right">
+              @!component('components.addallocation', csrf=csrfField(), academics=academicList, units=unitList)
+            </div>
           </div>
         </div>
         <div class="section">
-          @!component('components.searchbar', title="Find allocation", csrf=csrfField())
+          @!component('components.searchbar', title="Find allocation", csrf=csrfField(), route=route('AllocationController.render'))
         </div>
         {{-- Display Allocations --}}
         @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)

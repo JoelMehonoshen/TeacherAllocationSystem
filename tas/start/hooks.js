@@ -1,19 +1,14 @@
 const { hooks } = require('@adonisjs/ignitor')
+// const Logger = use('Logger') //TODO: Fix logger installation
 
 hooks.after.providersBooted(() => {
   const Exception = use('Exception')
 
-  Exception.handle('InvalidSessionException', async (error, { response, session }) => {
-    session.withErrors(error.messages).flashAll()
-    await session.commit()
-    return response.redirect('401')
-  })
-
-  Exception.handle('HttpException', async (error, { response, session }) => {
-    session.withErrors(error.messages).flashAll()
-    await session.commit()
-    return response.redirect('404')
-  })
-
+  // Exception.handle('GenericException', async (error, { response, session }) => {
+  //   session.withErrors(error.messages).flashAll()
+  //   await session.commit()
+  //   console.log(error)
+  //   return response.redirect('/home')
+  // })
 
 })

@@ -9,118 +9,143 @@
       <h1 class="title">
         Help
       </h1>
-      <p class="subtitles">
+      <p class="subtitles" style="font-size:150%;">
         <b>Here is the guide to Teacher Allocation System.</b>
       </p>
-      <p class="subheading">
+      <p class="subheading" style="font-size:150%;">
         You can start with allocating academics with the <b>Start Importing Button</b>.</p>      </p>
 
-      <div class="tab">
-        <button class="tablinks" onclick="openfunc(event, 'Import')" id="defaultOpen">Import</button>
-        <button class="tablinks" onclick="openfunc(event, 'Export')">Export</button>
-        <button class="tablinks" onclick="openfunc(event, 'Colour Tags')">Colour Tags</button>
-        <button class="tablinks" onclick="openfunc(event, 'Allocations')">Allocations</button>
-        <button class="tablinks" onclick="openfunc(event, 'Academics')">Academics</button>
-        <button class="tablinks" onclick="openfunc(event, 'Units')">Units</button>
+      <div class="tab" align = "center">
+        <br>
+        
+        <button class="tablinks" onclick="openfunc(event, 'Import')" style="font-size:150%;" id="defaultOpen" >Import</button>
+        <button class="tablinks" onclick="openfunc(event, 'Export')" style="font-size:150%;">Export</button>
+        <button class="tablinks" onclick="openfunc(event, 'Colour Tags')" style="font-size:150%;">Colour Tags</button>
+        <button class="tablinks" onclick="openfunc(event, 'Allocations')" style="font-size:150%;">Allocations</button>
+        <button class="tablinks" onclick="openfunc(event, 'Academics')" style="font-size:150%;">Academics</button>
+        <button class="tablinks" onclick="openfunc(event, 'Units')" style="font-size:150%;">Units</button>
+        
       </div>
     </div>
-    
-    
+    <br>
+<div class="container"> 
     <!-- Tab content -->
-<div id="Import" class="tabcontent">
-  <h3><b> Import: </b></h3>
-  <p>You can import your spreadsheet filled with the details of the academics and Units by:</p>
-  <ol>
-    <li> Click on the <b>Choose file</b> button.</li>
-    <li> Select an excel file from your local computer(make sure its an xml file).</li>
-    <li> Submit the excel file by clicking on the <b>Submit</b> button.</li>
-  </ol>
+<div id="Import" class="tabcontent" align = "center">
+  
+  <h3><b style="font-size:200%;"> Import </b></h3>
+  
+  <p style="font-size:160%;">You can import your spreadsheet filled with the details of the academics and Units by:</p>
+ 
+ <hr>
+    <li style="font-size:160%;" align = "left"> Click on the <b>Choose file</b> button.</li>
+    <li style="font-size:160%;" align = "left" > Select an excel file from your local computer(make sure its an xml file).</li>
+    <li style="font-size:160%;" align = "left"> Submit the excel file by clicking on the <b>Submit</b> button.</li>
+  
 </div>
 
 
-<div id="Export" class="tabcontent">
+<div id="Export" class="tabcontent" align = "center">
 
-  <h3><b> Export: </b></h3>
-  <p>You can export a year's spreadsheet to an excel spreadsheet by:</p>
-  <ol>
-    <li> Choose a year you want to export the spreadsheet from the drop down option.</li>
-    <li> Then click on the <b>Submit</b> button.</li>
-    <li> Click in the download. Your spreadsheet will be download in an excel file.</li>
-  </ol>
+  <h3><b style="font-size:200%;"> Export </b></h3>
+  <p style="font-size:160%;">You can export a year's spreadsheet to an excel spreadsheet by:</p>
+  <hr>
+  
+    <li style="font-size:160%;" align = "left"> Choose a year you want to export the spreadsheet from the drop down option.</li>
+    <li style="font-size:160%;" align = "left"> Then click on the <b>Submit</b> button.</li>
+    <li style="font-size:160%;"align = "left"> Click in the download. Your spreadsheet will be download in an excel file.</li>
+  
 </div>
 
-<div id="Colour Tags" class="tabcontent">
+<div id="Colour Tags" class="tabcontent" align = "center">
 
-  <h3><b> Colour Tags: </b></h3>
-  <p>Coloured Tags corresponds to the relation between the request load and the actual load.</p>
+  <h3><b style="font-size:200%;"> Colour Tags </b></h3>
+  <p style="font-size:160%;">Coloured Tags corresponds to the relation between the request load and the actual load.</p>
+  <hr>
   <dl>
-    <dt style ="color: red"> <b>Red Tag:</b></dt>
-    <li> The actual load is more than the requested load.</li>
-    
-    <dt style ="color: orange"><b>Orange Tag:</b></dt>
-    <li> The actual load is less than the requested load.</li>
-
-    <dt style="color:green"><b>Green Tag:</b></dt>
-    <li> The actual load matches the requested load.</li>
+    <dt style ="color: red" > <b style="font-size:180%;">Red Tag:</b></dt>
+    <li style="font-size:160%;"> The actual load is more than the requested load.</li>
+    <hr>
+    <dt style ="color: orange"><b style="font-size:180%;">Orange Tag:</b></dt>
+    <li style="font-size:160%;"> The actual load is less than the requested load.</li>
+    <hr>
+    <dt style="color:green" ><b style="font-size:180%;">Green Tag:</b></dt>
+    <li style="font-size:160%;"> The actual load matches the requested load.</li>
 
   </dl>
 </div>
 
-  <div id="Allocations" class="tabcontent">
+  <div id="Allocations" class="tabcontent" align = "center">
 
-    <h3><b> Allocations: </b></h3>
-    <p>You can either search or add for Allocations:</p>
-    <ol>
-      <dt> <b><u>Search Allocation:</u></b></dt>
-      <li> Choose a year you want to search for allocation from the drop down option.</li>
-      <li> Then click on the <b>Search</b> button.</li>
-      <li> You can also search for a particular allocation from the search bar. Then click on the <b>Search</b> button.</li>
-    </ol>
-    <dt> <b><u>Add Allocation:</u></b></dt>
-
-  </div>
-
-  <div id="Academics" class="tabcontent">
-
-    <h3><b> Academics: </b></h3>
-    <p>You can either search or add academics:</p>
-    <dt> <b><u>Search Academics:</u></b></dt>
-    <ol>
-      <li> Choose a year you want to view the academic data from the drop down option.</li>
-      <li> Then click on the <b>Search</b> button.</li>
-      <li> You can even view less or more data by removing or entering tags from the <b>Find academic</b> search bar.</li>
-    </ol>
-    <dt> <b><u>Add Academics:</u></b></dt>
-    <p> You can add academics by selecting the <b> Add Academic +</b> button.</p>
-    <ol>
-      <li> Fill out the following details to add an academic.</li>      
+    <h3><b style="font-size:200%;"> Allocations </b></h3>
+    <p style="font-size:160%;">You can either search or add for Allocations:</p>
+    <hr>
+    
+      <dt > <b style="font-size:180%;"><u>Search Allocation</u></b></dt>
+      <br>
+      <li style="font-size:160%;" align = "left"> Choose a year you want to search for allocation from the drop down option.</li>
+      <li style="font-size:160%;" align = "left"> Then click on the <b>Search</b> button.</li>
+      <li style="font-size:160%;" align = "left"> You can also search for a particular allocation from the search bar. Then click on the <b>Search</b> button.</li>
+    
+    <hr>
+    <dt  > <b style="font-size:180%;"><u>Add Allocation </u></b></dt>
+    <br>
+    <p style="font-size:160%;" align = "left"> You can allocate academics by selecting the <b> Add Allocation +</b> button.</p>
+    
+      <li style="font-size:160%;" align = "left"> Fill out the following details to allocate an academic.</li>      
       
-      <li> After filling out the details click on the Add academic button.</li>
-      <li> Your academic is successfully added.</li>
-    </ol>
+      <li style="font-size:160%;" align = "left"> After filling out the details click on the Add allocate button.</li>
+      <li style="font-size:160%;" align = "left"> Your academic is successfully allocated.</li>
+
   </div>
 
-  <div id="Units" class="tabcontent">
+  <div id="Academics" class="tabcontent" align = "center">
 
-    <h3><b> Units: </b></h3>
-    <p>You can either search or add Units:</p>
-    <dt> <b><u>Search Units:</u></b></dt>
-    <ol>
-      <li> Choose a year you want to view the units data from the drop down option.</li>
-      <li> Then click in the <b>Search</b> button.</li>
-      <li> You can even view less or more data by removing or entering tags from the <b>Find Unit</b> search bar .</li>
-    </ol>
-    <dt> <b><u>Add Units:</u></b></dt>
-    <p> You can add units by selecting the <b> Add Units +</b> button.</p>
-    <ol>
-      <li> Fill out the following details to add a unit.</li>      
+    <h3><b style="font-size:200%;" > Academics </b></h3>
+    <p style="font-size:160%;">You can either search or add academics:</p>
+    <hr>
+    <dt> <b style="font-size:180%;"><u>Search Academics</u></b></dt>
+    <br>
+    
+      <li style="font-size:160%;" align = "left"> Choose a year you want to view the academic data from the drop down option.</li>
+      <li style="font-size:160%;" align = "left"> Then click on the <b>Search</b> button.</li>
+      <li style="font-size:160%;" align = "left"> You can even view less or more data by removing or entering tags from the <b>Find academic</b> search bar.</li>
+    
+    <hr>
+    <dt> <b style="font-size:180%;"><u>Add Academics</u></b></dt>
+    <br>  
+    <p style="font-size:160%;" align = "left"> You can add academics by selecting the <b> Add Academic +</b> button.</p>
+    
+      <li style="font-size:160%;" align = "left"> Fill out the following details to add an academic.</li>      
       
-      <li> After filling out the details click on the Add unit button.</li>
-      <li> Your unit is successfully added.</li>
-    </ol>
+      <li style="font-size:160%;" align = "left"> After filling out the details click on the Add academic button.</li>
+      <li style="font-size:160%;" align = "left"> Your academic is successfully added.</li>
+    
   </div>
 
+  <div id="Units" class="tabcontent" align = "center">
 
+    <h3><b style="font-size:200%;"> Units </b></h3>
+    <p style="font-size:160%;">You can either search or add Units:</p>
+    <hr>
+    <dt  > <b style="font-size:180%;"><u>Search Units</u></b></dt>
+    <br>
+      <li style="font-size:160%;" align = "left"> Choose a year you want to view the units data from the drop down option.</li>
+      <li style="font-size:160%;" align = "left"> Then click in the <b>Search</b> button.</li>
+      <li style="font-size:160%;" align = "left"> You can even view less or more data by removing or entering tags from the <b>Find Unit</b> search bar .</li>
+    
+    <hr>
+    <dt> <b style="font-size:180%;"><u>Add Units</u></b></dt>
+    <br>
+    <p style="font-size:160%;" align = "left"> You can add units by selecting the <b> Add Units +</b> button.</p>
+    
+      <li style="font-size:160%;" align = "left"> Fill out the following details to add a unit.</li>      
+      
+      <li style="font-size:160%;" align = "left"> After filling out the details click on the Add unit button.</li>
+      <li style="font-size:160%;" align = "left"> Your unit is successfully added.</li>
+    
+  </div>
+
+</div>
 
 <script>
   function openfunc(evt, functionality) {

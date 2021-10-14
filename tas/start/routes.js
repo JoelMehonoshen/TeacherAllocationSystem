@@ -29,7 +29,11 @@ Route.get('/', ({view }) => {
 //allocations
 Route.get('/allocations', 'AllocationController.render')
 .middleware(["auth"])
-Route.post('/allocations/update', 'AllocationController.update')
+Route.post('/allocations', 'AllocationController.render')
+.middleware(["auth"])
+Route.post('/allocations/updateallocation', 'AllocationController.updateAllocation')
+.middleware(["auth"])
+Route.post('/allocations/addallocation', 'AllocationController.addAllocation')
 .middleware(["auth"])
 
 //academics

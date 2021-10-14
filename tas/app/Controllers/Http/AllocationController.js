@@ -3,8 +3,8 @@
 const Database = use('Database')
 
 class AllocationController {
-  // update the databse with new allocations and academics
-  async update({response, request}){
+  // update the database with new allocations and academics
+  async updateAllocation({response, request}){
     await Database
     .from('academics')
     .where('id',request.input("academicID"))
@@ -26,23 +26,75 @@ class AllocationController {
     return response.route('/allocations', true)
   }
 
-  async render({ view }) {
-    // Retrieves required information from each table
-    const academics = await Database
+  async addAllocation ({response, request}){
+    try {
+      var academicID = await Database
+        .from(academics)
+        .select('id')
+        .where('name', request.input("name"))
+      await Database
+        .table("allocations").insert({
+          id: academicID,
+          code: request.input("unit"),
+          year: request.input("year"),
+          semester: request.input("semester"),
+          load: request.input("load"),
+        });
+      return response.route("/allocations", true); 
+    } catch (error) {
+      Logger.error(error);
+      throw new Exception();
+    }
+  }
+
+  async render({ view, request }) {
+    //Get units, needed for adding allocations
+    var unitList = await Database
+      .select('*')
+      .from('units')
+    var academicList = await Database
+      .select('*')
+      .from('academics',)
+
+    if (request.input("search")) {
+      // Retrieves search information from each table
+      var academics = await Database
       .select('id', 'name','load')
       .from('academics')
       .distinct('id')
-    const allocations = await Database
+      .where('name', request.input("search"))
+
+      var allocations = await Database
       .from('academics')
       .select('allocations.unit_code', 'allocations.load','allocations.id', 'allocations.allocation_id')
       .join('allocations', 'academics.id', '=', 'allocations.id')
-    const unitsUnalloc = await Database
-    .from('units')
-    .select('units.id')
-    .whereNotIn('units.id',
-        Database.from('allocations')
-        .select('allocations.unit_code')
-    )
+
+      var unitsUnalloc = await Database
+      .from('units')
+      .select('units.id')
+      .whereNotIn('units.id',
+          Database.from('allocations')
+          .select('allocations.unit_code')
+        )
+    }else{
+      // Retrieves all information from each table
+      var academics = await Database
+        .select('id', 'name','load')
+        .from('academics')
+        .distinct('id')
+      var allocations = await Database
+        .from('academics')
+        .select('allocations.unit_code', 'allocations.load','allocations.id', 'allocations.allocation_id')
+        .join('allocations', 'academics.id', '=', 'allocations.id')
+      var unitsUnalloc = await Database
+      .from('units')
+      .select('units.id')
+      .whereNotIn('units.id',
+          Database.from('allocations')
+          .select('allocations.unit_code')
+      )
+    }
+
     // Coorelates academics and their allocations based on id
     var allocAcademics = []
     for (var i = 0; i < academics.length; i++) {
@@ -69,7 +121,7 @@ class AllocationController {
       teacher.allocUnits = units
       allocAcademics.push(teacher)
     }
-    return view.render('allocations', { allocAcademics: allocAcademics , unitsUnalloc: unitsUnalloc})
+    return view.render('allocations', { allocAcademics: allocAcademics , unitsUnalloc: unitsUnalloc, academicList: academicList, unitList:unitList})
   }
 }
 
