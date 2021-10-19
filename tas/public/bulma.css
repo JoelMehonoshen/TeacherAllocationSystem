@@ -7,6 +7,11 @@
   margin-left: 20vw;
 }
 
+.footer{
+  height: 2% !important ;
+  padding-bottom: 5% !important;
+}
+
 /* End CSS Classes */
 .button, .input, .textarea, .select select, .file-cta,
 .file-name, .pagination-previous,

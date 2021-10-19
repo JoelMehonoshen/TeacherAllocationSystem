@@ -16,7 +16,7 @@ class AcademicController {
       });
       return response.route("/academics", true);
     } catch (error) {
-      Logger.error(error);
+      Logger.error('Add Academics' + error);
       throw new Exception();
     }
   }
@@ -31,7 +31,7 @@ class AcademicController {
         });
       return response.route("/academics", true);
     } catch (error) {
-      Logger.error(error);
+      Logger.error('Update Academics',  error);
       throw new Exception();
     }
   }

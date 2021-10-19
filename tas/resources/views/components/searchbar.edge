@@ -4,10 +4,9 @@
     <p class="control">
       <span class="select">
         <select>
-          <option>2021</option>
-          <option>2020</option>
-          <option>2019</option>
-          <option>2018</option>
+          @each(year in years)
+          <option>{{ year }}</option>
+          @endeach
         </select>
       </span>
     </p>
@@ -17,6 +16,9 @@
     <p class="control">
       <button class="button is-primary" type="submit">
         Search
+      </button>
+      <button class="button is-warning" href='/allocations'>
+        Clear
       </button>
     </p>
   </div>
