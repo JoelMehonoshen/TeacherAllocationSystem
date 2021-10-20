@@ -62,9 +62,10 @@ Route.post('/export', 'ExportController.render')
 Route.get('/import', ({view }) => {
     return view.render('import')
 }).middleware(["auth"])
-Route.get('/export', ({view }) => {
-    return view.render('export')
-}).middleware(["auth"])
+Route.get('/export', 'ExportController.render')
+.middleware(['auth']);
+Route.get('/exportSheet', 'ExportController.export')
+.middleware(['auth']);
 Route.put('upload', 'ImportController.uploadFile')
 
 //UserController Routes

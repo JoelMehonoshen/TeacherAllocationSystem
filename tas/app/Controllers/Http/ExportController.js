@@ -12,23 +12,110 @@ const Database = use("Database");
 class ExportController {
   async ExportWorksheet(year) {
     const workbook = new Excel.Workbook();
-    await workbook.xlsx.readFile("template.xlsx");
+    await workbook.xlsx.readFile("public/template.xlsx");
 
     const sheet = workbook.worksheets[0];
-    await workbook.xlsx.writeFile("template2.xlsx");
 
-    worksheet.insertRow(1, [3, "Sam", "jim"]);
+    const cell = sheet.getCell("A1")
+    
+    const academicsDB = await Academic.all();
+    const academics = academicsDB.toJSON();
+
+    const unitsDB = await Unit.all();
+    const units = unitsDB.toJSON();
+
+
+    for (let i = 0; i < academics.length; i++) {
+        const academicNameCell = sheet.getCell("A"+(i+9).toString())
+        academicNameCell.value = academics[i].name
+
+        sheet.getCell("C"+(i+9).toString()).value = "CS"
+        sheet.getCell("D"+(i+9).toString()).value = academics[i].load
+        sheet.getCell("E"+(i+9).toString()).value = {formula: "D"+(9+i).toString()+"*$C$2"}
+        sheet.getCell("F"+(i+9).toString()).value = {formula: "SUMPRODUCT(H$6:"+this.hex(units.length+7)+"$6,H9:"+this.hex(units.length+7)+"9)"}
+        sheet.getCell("G"+(i+9).toString()).value = {formula: "F"+(9+i).toString()+"-E"+(9+i).toString() }
+    }
+    const bodies = sheet.getCell("A"+(academics.length+9+1).toString());
+    bodies.value = "" + academics.length.toString()+" Bodies";
+
+    sheet.getColumn('G').values = ["Code", "Name", "Sem", "Students", "Share", "Assigned Load", "Allocated Load"]
+
+    for (let i = 0; i < units.length; i++) {
+        const allocs = await Database.from("academics")
+        .select("academics.name", "allocations.load")
+        .join("allocations", "academics.id", "=", "allocations.id")
+        .where(
+          "allocations.unit_code", units[i].id
+        );
+        var allocCol = new Array(8).fill("")
+        allocCol[0] = units[i].id
+        allocCol[1] = units[i].name
+        allocCol[5] = {
+            formula: "MAX(LOG10("+this.hex(i+7)+"4/7),$C$6)*"+this.hex(i+7)+"5"
+        }
+        allocCol[6] = {
+            formula: "SUM("+this.hex(i+7)+"9:"+this.hex(i+7)+"49)"
+        }
+        allocCol[7] = {
+            formula: "IF("+this.hex(i+7)+"5<>0,"+this.hex(i+7)+"7-1,"+this.hex(i+7)+"7)"
+        }
+        for (let j = 0; j < academics.length; j++) {
+            let pushed = false
+            for ( let k = 0; k < allocs.length; k++) {
+                if (allocs[k].name == academics[j].name) {
+                    allocCol.push(allocs[k].load)
+                    pushed = true
+                }
+            }
+            if (!pushed) {
+                allocCol.push("")
+            }
+        }
+        //console.log(units[i].id)
+        //console.log(allocs)
+        //console.log(allocCol)
+        const unitCodeCol = sheet.getColumn(i+8);
+        unitCodeCol.values = allocCol
+    }
+
+    
+    await workbook.xlsx.writeFile("public/template2.xlsx");
   }
 
-  async export({ request, response, view }) {
+  
+
+  hex(a) {
+    const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // First figure out how many digits there are.
+    a += 1; // This line is funky
+    var c = 0;
+    var x = 1;      
+    while (a >= x) {
+        c++;
+        a -= x;
+        x *= 26;
+    }
+
+    // Now you can do normal base conversion.
+    var s = "";
+    for (var i = 0; i < c; i++) {
+        s = alpha.charAt(a % 26) + s;
+        a = Math.floor(a/26);
+    }
+
+    return s;
+    }
+
+  async render({ request, view }) {
     try {
-      this.ExportWorksheet(2021);
-      view.render("export", { filename: "template2.xlsx" });
+        await this.ExportWorksheet(2021);
+        return view.render("export", { filename: "template2.xlsx" });
     } catch (error) {
       Logger.error(error);
       throw new Exception();
     }
   }
+
 }
 
 module.exports = ExportController;
