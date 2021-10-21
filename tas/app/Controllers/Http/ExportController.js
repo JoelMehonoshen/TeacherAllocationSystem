@@ -15,8 +15,6 @@ class ExportController {
     await workbook.xlsx.readFile("public/template.xlsx");
 
     const sheet = workbook.worksheets[0];
-
-    const cell = sheet.getCell("A1")
     
     const academicsDB = await Academic.all();
     const academics = academicsDB.toJSON();
@@ -38,7 +36,20 @@ class ExportController {
     const bodies = sheet.getCell("A"+(academics.length+9+1).toString());
     bodies.value = "" + academics.length.toString()+" Bodies";
 
-    sheet.getColumn('G').values = ["Code", "Name", "Sem", "Students", "Share", "Assigned Load", "Allocated Load"]
+    sheet.getColumn('G').values = ["Code", "Name", "Semester", "Students", "Share", "Assigned Load", "Allocated Load"]
+    sheet.getCell("C2").value = {
+        formula: this.hex(units.length+7+1)+"6/D"+(academics.length+9+1).toString() 
+    }
+
+    sheet.getCell("C"+(academics.length+9+1).toString()).value = "Total:"
+    sheet.getCell("D"+(academics.length+9+1).toString()).value = {
+        formula: "SUM(D9:D"+(academics.length+9).toString()+")"
+    }
+
+    sheet.getCell(this.hex(units.length+7).toString() + "6").value = "Total:";
+    sheet.getCell(this.hex(units.length+7+1).toString() + "6").value = {
+        formula: "SUM(H6:"+this.hex(units.length+7-1)+"6)"
+    };
 
     for (let i = 0; i < units.length; i++) {
         const allocs = await Database.from("academics")
@@ -50,9 +61,10 @@ class ExportController {
         var allocCol = new Array(8).fill("")
         allocCol[0] = units[i].id
         allocCol[1] = units[i].name
-        allocCol[5] = {
-            formula: "MAX(LOG10("+this.hex(i+7)+"4/7),$C$6)*"+this.hex(i+7)+"5"
-        }
+        allocCol[2] = units[i].semester
+        allocCol[3] = units[i].students
+        allocCol[4] = units[i].share
+        allocCol[5] = units[i].assignedLoad
         allocCol[6] = {
             formula: "SUM("+this.hex(i+7)+"9:"+this.hex(i+7)+"49)"
         }

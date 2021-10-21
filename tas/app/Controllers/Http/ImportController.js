@@ -10,11 +10,13 @@ const Allocation = use("App/Models/Allocation");
 const Database = use("Database");
 
 class UnitImport {
-  constructor(code, name, year, semester) {
+  constructor(code, name, year, semester, students, share) {
     this.code = code;
     this.name = name;
     this.year = year;
     this.semester = semester;
+    this.students = students;
+    this.share = share;
   }
 }
 
@@ -109,6 +111,8 @@ class ImportController {
     const unitsCodeRow = sheet.getRow(1);
     const unitsNameRow = sheet.getRow(2);
     const unitsSemRow = sheet.getRow(3);
+    const unitsStudentsRow = sheet.getRow(4);
+    const unitsShareRow = sheet.getRow(5);
     const unitsLoadRow = sheet.getRow(6);
 
     let academicsList = [];
@@ -124,7 +128,9 @@ class ImportController {
             unitsCodeRow.getCell(colNumber).text,
             unitsNameRow.getCell(colNumber).text,
             year,
-            unitsSemRow.getCell(colNumber).value
+            unitsSemRow.getCell(colNumber).value,
+            unitsStudentsRow.getCell(colNumber).value,
+            unitsShareRow.getCell(colNumber).value
           );
           allocs.push({ UnitImport: unitImport, load: cell.value });
         }
@@ -135,11 +141,7 @@ class ImportController {
 
     let units = [];
 
-    for (
-      let colNumber = 8;
-      colNumber < unitsCodeRow.values.length;
-      colNumber++
-    ) {
+    for (let colNumber = 8; colNumber < unitsCodeRow.values.length; colNumber++) {
       if (unitsCodeRow.getCell(colNumber).text === "") {
         break;
       }
@@ -149,6 +151,8 @@ class ImportController {
           name: unitsNameRow.getCell(colNumber).text,
           year: year,
           semester: 1,
+          students: unitsStudentsRow.getCell(colNumber).value,
+          share: unitsShareRow.getCell(colNumber).value,
           load: unitsLoadRow.getCell(colNumber).result,
         });
         units.push({
@@ -156,6 +160,8 @@ class ImportController {
           name: unitsNameRow.getCell(colNumber).text,
           year: year,
           semester: 2,
+          students: unitsStudentsRow.getCell(colNumber).value,
+          share: unitsShareRow.getCell(colNumber).value,
           load: unitsLoadRow.getCell(colNumber).result,
         });
       } else {
@@ -164,17 +170,21 @@ class ImportController {
           name: unitsNameRow.getCell(colNumber).text,
           year: year,
           semester: unitsSemRow.getCell(colNumber).value,
+          students: unitsStudentsRow.getCell(colNumber).value,
+          share: unitsShareRow.getCell(colNumber).value,
           load: unitsLoadRow.getCell(colNumber).result,
         });
       }
     }
 
-    units.forEach(async ({ code, name, year, semester, load }) => {
+    units.forEach(async ({ code, name, year, semester, students, share, load }) => {
       const unit = new Unit();
       unit.id = code;
       unit.name = name;
       unit.year = year;
       unit.semester = semester;
+      unit.students = students;
+      unit.share = share;
       unit.assignedLoad = load;
       await unit.save();
     });
