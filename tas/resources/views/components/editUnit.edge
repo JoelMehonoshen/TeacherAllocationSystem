@@ -31,25 +31,37 @@
                     <input class="input" type="text" name="name" value="{{unit.name}}">
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Semester</label>
-                <div class="control">
-                    <input class="input" type="number" min="1" Max="2" name="semester" value="{{ unit.semester }}">
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Semester</label>
+                        <p class="control">
+                            <span class="select">
+                            <select class="select" name="semester" value= "{{ unit.semester }}">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Students</label>
+                        <div class="control">
+                            <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Share</label>
+                        <div class="control">
+                            <input class="input" type="number" min="0" name="load" value="{{ unit.share }}" step="any">
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Students</label>
-                <div class="control">
-                    <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Share</label>
-                <div class="control">
-                    <input class="input" type="number" min="0" name="load" value="{{ unit.share }}">
-                </div>
-            </div>
-            <input type="hidden" name="semester" value="{{unit.semester}}">
             </section>  
             <footer class="modal-card-foot">
                 <input type="submit" value="Update Allocation" class="button is-link">

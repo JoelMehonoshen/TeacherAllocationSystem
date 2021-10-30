@@ -27,6 +27,7 @@ class AllocationController {
   // TODO: All endpoints need to use the validator
   // https://legacy.adonisjs.com/docs/4.1/validator
   // adding a new allocation
+  // TODO: Need to update all the database. queries to the below format becauses the below translates to raw sql
   async addAllocation({ response, request }) {
     try {
       const newAllocation = new Allocation();
