@@ -36,8 +36,7 @@ class UserController {
       }
     } catch (error) {
       if (error == "InvalidPassword") {
-        const message =
-          "Password needs to be at least 8 characters and contain one lowercase, uppercase, number and symbol.";
+        const message ="Password needs to be at least 8 characters and contain one lowercase, uppercase, number and symbol.";
         session.withErrors(message).flash({ InvalidPassword: message });
         console.log("InvalidPassword");
       } else if (error == "InvalidEmail") {
@@ -45,8 +44,7 @@ class UserController {
         session.withErrors(message).flash({ InvalidEmail: message });
         console.log("InvalidEmail");
       } else if (error == "EmailExists") {
-        const message =
-          "Account with this email already exists, please sign in.";
+        const message ="Account with this email already exists, please sign in.";
         session.withErrors(message).flash({ EmailExists: message });
         console.log("EmailExists");
       } else if (error == "PasswordDoesNotMatch") {
