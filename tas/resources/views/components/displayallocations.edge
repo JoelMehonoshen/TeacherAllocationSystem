@@ -1,7 +1,7 @@
 {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assignedl oad  --}}
 @each(allocAcademic in allocAcademics)
 {{--  Display Mode (not a form)  --}}
-<div id="display" class="tabcontent">
+<div class="box">
   @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
     <section class="hero is-danger is-small">
   @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
