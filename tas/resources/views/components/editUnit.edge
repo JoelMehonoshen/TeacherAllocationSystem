@@ -32,6 +32,12 @@
                 </div>
             </div>
             <div class="field">
+                <label class="label">Semester</label>
+                <div class="control">
+                    <input class="input" type="number" min="1" Max="2" name="semester" value="{{ unit.semester }}">
+                </div>
+            </div>
+            <div class="field">
                 <label class="label">Students</label>
                 <div class="control">
                     <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
@@ -40,7 +46,7 @@
             <div class="field">
                 <label class="label">Share</label>
                 <div class="control">
-                    <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
+                    <input class="input" type="number" min="0" name="load" value="{{ unit.share }}">
                 </div>
             </div>
             <input type="hidden" name="semester" value="{{unit.semester}}">
