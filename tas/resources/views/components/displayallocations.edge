@@ -10,32 +10,34 @@
     <section class="hero is-warning is-small">
   @endif
     <div class="hero-body">
-      <div class="columns is-10">
-        <div class="column is-three-quarters">
-          <p class="title">
-            {{ allocAcademic.name }}
-          </p>
-        <div class="column">
-          <p class="subtitle">
-            Requested Load: {{ allocAcademic.requestedLoad }}
-          </p>
-          <p class="subtitle">
-            Actual Load: {{ allocAcademic.actualLoad}}
-          </p>
+      <div class="columns">
+        <div class="column is-one-half">
+          <div class="columns">
+            <div class="column is-one-fifth">
+              @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
+            </div>
+            <div class="column">
+              <p class="title">
+                {{ allocAcademic.name }}
+              </p>
+              <p class="subtitle">
+                Requested Load: {{ allocAcademic.requestedLoad }}
+              </p>
+              <p class="subtitle">
+                Actual Load: {{ allocAcademic.actualLoad}}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="column is-four-fiths">
-        @each(unit in allocAcademic.allocUnits)
-          <p class="subtitle">
-            Unit: {{ unit.unit_code }}, 
-            Load: {{ unit.load }}
-          </p>
-        @endeach
-      </div>
-      <div class="column is-narrow">
-        {{--  Edit button  --}}
-        @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
-      </div>
+        <div class="column is-half">
+          @each(unit in allocAcademic.allocUnits)
+            <p class="subtitle">
+              Unit: {{ unit.unit_code }}, 
+              Load: {{ unit.load }}
+            </p>
+          @endeach
+        </div>
+
       </div>
     </div>
   </section>
