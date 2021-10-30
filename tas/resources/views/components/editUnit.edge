@@ -32,28 +32,17 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">Unit Load</label>
+                <label class="label">Students</label>
                 <div class="control">
-                    <input class="input" type="number" min="0" name="load" value="{{ unit.assignedLoad }}">
+                    <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
                 </div>
             </div>
-            {{--  <div class="field">--}}
-            {{--    <label class="label">Semester</label>--}}
-            {{--    <div class="control">--}}
-            {{--        <input type="radio" id="1" name="semester" value="1"--}}
-            {{--        @if(unit.semester == 1)--}}
-            {{--            checked--}}
-            {{--        @endif--}}
-            {{--        >--}}
-            {{--        <label for="1">1</label><br>--}}
-            {{--        <input type="radio" id="2" name="semester" value="2"--}}
-            {{--        @if(unit.semester == 2)--}}
-            {{--            checked--}}
-            {{--        @endif--}}
-            {{--        >--}}
-            {{--        <label for="2">2</label><br>--}}
-            {{--    </div>--}}
-            {{--</div>  --}}
+            <div class="field">
+                <label class="label">Share</label>
+                <div class="control">
+                    <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
+                </div>
+            </div>
             <input type="hidden" name="semester" value="{{unit.semester}}">
             </section>  
             <footer class="modal-card-foot">

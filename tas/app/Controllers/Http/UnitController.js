@@ -29,7 +29,6 @@ class UnitController {
         const units = await Database.from("units")
           .where('id', "like", "%"+request.input("search")+"%")
           .orWhere('name', "like", "%"+request.input("search")+"%")
-
         return view.render("units", { units: units });
       } else {
         const units = await Unit.all();
@@ -52,6 +51,7 @@ class UnitController {
           name: request.input("name"),
           id: request.input("id"),
           assignedLoad: request.input("load"),
+          students: request.input("students")
         });
       return response.route("/units", true);
     } catch (error) {
