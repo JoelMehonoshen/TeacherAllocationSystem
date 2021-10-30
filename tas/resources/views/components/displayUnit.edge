@@ -1,98 +1,48 @@
 @each(unit in units)
-              @if(unit.assignedLoad == 1)
-                <div class="mb-4">
-                  <section class="hero is-success is-small">
-                    <div class="hero-body">
-                      <div class="columns is-10">
-                        <div class="column is-four-fifths">
-                          <p class="title">
-                          {{ unit.id }}
-                          </p>
-                          <p class="subtitle">
-                            {{ unit.name }}
-                          </p>
-                        </div>
-                        <div class="column">
-                          <p class="subtitle">
-                            Semester: {{ unit.semester }}
-                          </p>
-                          <p class="subtitle">
-                            Load: {{ unit.assignedLoad }}
-                          </p>
-                      </div>
-                      <div class="column is-narrow">
-                        {{--  Edit button  --}}
-                        @!component('components.editUnit', csrf=csrf, unit=unit)
-                    </div>
-                    </div>
-                  </section>
-                </div> 
-              @elseif(unit.assignedLoad > 1)
-                <div class="mb-4">
-                  <section class="hero is-danger is-small">
-                    <div class="hero-body">
-                      <div class="columns is-10">
-                        <div class="column is-four-fifths">
-                          <p class="title">
-                          {{ unit.id }}
-                          </p>
-                          <p class="subtitle">
-                            {{ unit.name }}
-                          </p>
-                        </div>
-                        <div class="column">
-                          <p class="subtitle">
-                            Semester: {{ unit.semester }}
-                          </p>
-                          <p class="subtitle">
-                            Load: {{ unit.assignedLoad }}
-                          </p>
-                      </div>
-                      <div class="column is-narrow">
-                        {{--  Edit button  --}}
-                        @!component('components.editUnit', csrf=csrf, unit=unit)
-                    </div>
-                    </div>
-                  </section>
-                </div>
-              @else
-                <div class="mb-4">
-                  <section class="hero is-warning is-small">
-                    <div class="hero-body">
-                      <div class="columns is-10">
-                        <div class="column is-four-fifths">
-                          <p class="title">
-                          {{ unit.id }}
-                          </p>
-                          <p class="subtitle">
-                            {{ unit.name }}
-                          </p>
-                        </div>
-                        <div class="column">
-                          <p class="subtitle">
-                            Semester: {{ unit.semester }}
-                          </p>
-                          <p class="subtitle">
-                            Load: {{ unit.assignedLoad }}
-                          </p>
-                      </div>
-                      <div class="column is-narrow">
-                        {{--  Edit button  --}}
-                        @!component('components.editUnit', csrf=csrf, unit=unit)
-                    </div>
-                    </div>
-                  </section> 
-                </div>
-                @endif
-            @else
-              <section class="hero is-danger">
-                <div class="hero-body">
-                  <p class="title">
-                    No Results
-                  </p>
-                  <p class="subtitle">
-                    Please add a unit or import spreadsheet
-                  </p>
-                </div>
-              </section>
-            @endeach
+<div id="display" class="tabcontent">
+  @if(unit.assignedLoad == 1)
+    <section class="hero is-success is-small">
+  @elseif(unit.assignedLoad > 1)
+    <section class="hero is-danger is-small">
+  @else
+    <section class="hero is-warning is-small">
+  @endif
+  <div class="hero-body">
+    <div class="columns is-10">
+      <div class="column is-four-fifths">
+        <p class="title">
+          {{ unit.id }}
+        </p>
+        <p class="subtitle">
+          {{ unit.name }}
+        </p>
+      </div>
+      <div class="column">
+        <p class="subtitle">
+          Semester: {{ unit.semester }}
+        </p>
+        <p class="subtitle">
+          Load: {{ unit.assignedLoad }}
+        </p>
+      </div>
+      <div class="column is-narrow">
+        {{--  Edit button  --}}
+        @!component('components.editUnit', csrf=csrf, unit=unit)
+      </div>
+    </div>
+  </div>
+  </section>
+</div>
+{{--  if theres no units, display a warning  --}}
+@else
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <p class="title">
+        No Results
+      </p>
+      <p class="subtitle">
+        Please add a unit or import spreadsheet
+      </p>
+    </div>
+  </section>
+@endeach
