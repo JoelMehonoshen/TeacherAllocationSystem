@@ -8,12 +8,12 @@ const Database = use("Database");
 class AcademicController {
   async addacademic({ request, response }) {
     try {
-      await Database.table("academics").insert({
-        name: request.input("name"),
-        year: request.input("year"),
-        school: request.input("school"),
-        load: request.input("load"),
-      });
+      const newAcademic = new Academic();
+      newAcademic.name = request.input("name")
+      newAcademic.year = request.input("year")
+      newAcademic.school = request.input("school")
+      newAcademic.load = request.input("load")
+      await newAcademic.save()
       return response.route("/academics", true);
     } catch (error) {
       Logger.error('Add Academics' + error);
@@ -39,7 +39,9 @@ class AcademicController {
   async render({ request, view }) {
     try {
       if (request.input("search")) {
-        const academics = await Database.from("academics").where('name', "like", "%"+request.input("search")+"%");
+        const academics = await Database
+        .from("academics")
+        .where('name', "like", "%"+request.input("search")+"%");
         return view.render("academics", { academics: academics });
       } else {
         const academics = await Academic.all();

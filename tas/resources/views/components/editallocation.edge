@@ -47,6 +47,24 @@
                     </div>
                 </div>                
             @endeach
+            {{--  Tags  --}}
+            <div class="field">
+                <label class="label">Tags:</label>
+                <div class="field has-addons has-addons-centered">
+                    <input class="input" type="text" name="tag">
+                    <button class="button is-primary">+</button>
+                </div>
+                <div class="field is-grouped is-grouped-multiline">
+                    @each(tag in tags)
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <a class="tag is-link">"{{ tag.content }}"</a>
+                                <a class="tag is-delete"></a>
+                            </div>
+                        </div>
+                    @endeach
+                </div>
+            </div>
             </section>  
             <footer class="modal-card-foot">
                 <input type="submit" value="Update Allocation" class="button is-link">
