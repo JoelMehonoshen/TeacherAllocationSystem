@@ -101,6 +101,7 @@ class AllocationController {
         id: academics[i].id,
         name: academics[i].name,
         requestedLoad: academics[i].load,
+
       };
       var units = [];
       var tags = [];
@@ -125,7 +126,7 @@ class AllocationController {
       }
       teacher.actualLoad = totalLoad;
       teacher.allocUnits = units;
-      allocAcademics.push(tags);
+      teacher.tags = tags;
       allocAcademics.push(teacher);
     }
 
