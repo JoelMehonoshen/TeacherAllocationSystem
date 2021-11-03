@@ -15,6 +15,10 @@ class Academic extends Model {
     loads() {
         return this.hasMany("App/Models/Load")
     }
+
+    tags() {
+        return this.hasMany("App/Models/Tag")
+    }
 }
 
 module.exports = Academic

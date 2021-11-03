@@ -3,6 +3,9 @@
 const Database = use("Database");
 const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
+const Tag = use("App/Models/Tag");
+
+// TODO: get rid of the raw sql, change everything (except like sql statements) to use the ORM
 class AllocationController {
   // update the database with new allocations and academics
   async updateAllocation({ response, request }) {
@@ -12,7 +15,8 @@ class AllocationController {
         name: request.input("name"),
         load: request.input("requestedLoad"),
       });
-    if (request.input("unit")) {
+
+      if (request.input("unit")) {
       for (var i = 0; i < request.input("allocationID").length; i++) {
         await Database.from("allocations")
           .where("allocation_id", request.input("allocationID")[i])
@@ -22,6 +26,25 @@ class AllocationController {
           });
       }
     }
+
+    if(request.input("tags")){
+      //sanitise tag input 
+      var strTags = request.input("tags").replace(/\s/g, '');
+      var tags= strTags.split('#')
+      var allocation_id = parseInt(request.input("allocationID"))
+
+        for(var i=0; i < tags.length; i++){
+          try {
+            const newTag = new Tag();
+            newTag.tag = tags[i]
+            newTag.allocation_id = allocation_id
+            newTag.type = "allocation"
+            await newTag.save();
+          } catch (error) {
+            Logger.error(`Add Allocation (${error})`);
+          }
+        }
+      }
     return response.route("/allocations", true);
   }
   // TODO: All endpoints need to use the validator
@@ -70,7 +93,6 @@ class AllocationController {
         );
       var tags = await Database.from("tags")
         .select("*")
-
     } else {
       // Retrieves all information from each table
       var academics = await Database.select("id", "name", "load")
@@ -144,7 +166,6 @@ class AllocationController {
       academicList: academicList,
       unitList: unitList,
       years: years,
-      tags: tags
     });
   }
 }

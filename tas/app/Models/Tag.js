@@ -7,6 +7,12 @@ class Tag extends Model {
     unit() {
         return this.belongsTo("App/Models/Unit")
     }
+    Allocation() {
+        return this.belongsTo("App/Models/Academic")
+    }
+    Academic() {
+        return this.belongsTo("App/Models/Allocation")
+    }
 }
 
 module.exports = Tag

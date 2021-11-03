@@ -11,6 +11,10 @@ class Allocation extends Model {
     units() {
         return this.belongsTo("App/Models/Unit")
     }
+
+    tags() {
+        return this.hasMany("App/Models/Tag")
+    }
 }
 
 module.exports = Allocation

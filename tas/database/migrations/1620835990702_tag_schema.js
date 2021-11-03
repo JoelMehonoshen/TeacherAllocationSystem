@@ -11,7 +11,7 @@ class TagSchema extends Schema {
       table.integer('unit_id').nullable()
       table.integer('academic_id').nullable()
       table.integer('allocation_id').nullable()
-      table.string('tag').unique()
+      table.string('tag')
       table.timestamps()
     })
   }
