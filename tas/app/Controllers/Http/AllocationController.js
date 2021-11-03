@@ -62,13 +62,15 @@ class AllocationController {
           "allocations.allocation_id"
         )
         .join("allocations", "academics.id", "=", "allocations.id");
-
       var unitsUnalloc = await Database.from("units")
         .select("units.id")
         .whereNotIn(
           "units.id",
           Database.from("allocations").select("allocations.unit_code")
         );
+      var tags = await Database.from("tags")
+        .select("*")
+
     } else {
       // Retrieves all information from each table
       var academics = await Database.select("id", "name", "load")
@@ -88,6 +90,8 @@ class AllocationController {
           "units.id",
           Database.from("allocations").select("allocations.unit_code")
         );
+      var tagslist = await Database.from("tags")
+      .select("*")
     }
 
     // Coorelates academics and their allocations based on id
@@ -99,6 +103,7 @@ class AllocationController {
         requestedLoad: academics[i].load,
       };
       var units = [];
+      var tags = [];
       var totalLoad = 0;
       for (var j = 0; j < allocations.length; j++) {
         if (teacher.id == allocations[j].id) {
@@ -109,11 +114,21 @@ class AllocationController {
           });
           totalLoad += parseFloat(allocations[j].load);
         }
+        //get tags associated with the allocation
+        for (var x = 0; x < tagslist.length; x++) {
+          if(tagslist.allocation_id[x] == allocations[j].id){
+            tags.push({
+              tags: tagslist[x].tag
+            })
+          }
+        }
       }
       teacher.actualLoad = totalLoad;
       teacher.allocUnits = units;
+      allocAcademics.push(tags);
       allocAcademics.push(teacher);
     }
+
     let years = [];
     let currentYear = new Date().getFullYear() + 1;
     let earliestYear = currentYear - 5;
@@ -121,12 +136,14 @@ class AllocationController {
       years.push(currentYear);
       currentYear -= 1;
     }
+
     return view.render("allocations", {
       allocAcademics: allocAcademics,
       unitsUnalloc: unitsUnalloc,
       academicList: academicList,
       unitList: unitList,
       years: years,
+      tags: tags
     });
   }
 }
