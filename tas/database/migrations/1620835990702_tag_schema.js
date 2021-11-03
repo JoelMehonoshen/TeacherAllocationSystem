@@ -6,12 +6,13 @@ const Schema = use('Schema')
 class TagSchema extends Schema {
   up () {
     this.create('tags', (table) => {
-        table.string('unit_code', 7)
-        table.integer('unit_year')
-        table.integer('unit_semester')
-        table.string('tag')
-        table.primary(['unit_code', 'unit_year', 'unit_semester', 'tag'])
-        table.foreign(['unit_code', 'unit_year', 'unit_semester']).references(['id', 'year', 'semester']).inTable('units')
+      table.increments('id')
+      table.enu('type', ['unit', 'academic', 'allocation'])
+      table.integer('unit_id').nullable()
+      table.integer('academic_id').nullable()
+      table.integer('allocation_id').nullable()
+      table.string('tag').unique()
+      table.timestamps()
     })
   }
 
