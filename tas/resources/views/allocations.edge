@@ -26,14 +26,10 @@
         <div class="section">
           @!component('components.searchbar', title="Find allocation", csrf=csrfField(), years=years, route=route('AllocationController.render'))
         </div>
+        <div class="continer">
         {{-- Display Allocations --}}
         @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        </div>
     <section>
   </body>
   @include('partials.footer')

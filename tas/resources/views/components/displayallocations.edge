@@ -11,7 +11,7 @@
   @endif
     <div class="hero-body">
       <div class="columns">
-        <div class="column is-one-half">
+        <div class="column is-half">
           <div class="columns">
             <div class="column is-one-fifth">
               @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
@@ -36,6 +36,15 @@
               Load: {{ unit.load }}
             </p>
           @endeach
+          <div class="field is-grouped is-grouped-multiline">
+            @each(tag in allocAcademic.tags)
+            <div class="control">
+              <div class="tags has-addons">
+                <a class="tag is-info">{{tag.tag}}</a>
+              </div>
+            </div>
+            @endeach
+          </div>
         </div>
       </div>
     </div>

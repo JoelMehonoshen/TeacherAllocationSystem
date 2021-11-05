@@ -4,6 +4,7 @@ const Logger = use("Logger");
 
 const Academic = use("App/Models/Academic");
 const Database = use("Database");
+const Tag = use("App/Models/Tag");
 
 class AcademicController {
   async addacademic({ request, response }) {
@@ -29,6 +30,20 @@ class AcademicController {
           name: request.input("name"),
           load: request.input("load"),
         });
+
+        if(request.input("tags")){
+          //sanitise tag input 
+          var strTags = request.input("tags").replace(/\s/g, '');
+          var tags= strTags.split('#')
+          //first item in tags list is empty, so skipping it with i=1
+          for(var x=1; x < tags.length; x++){      
+            const newTag = new Tag();
+            newTag.tag = tags[x]
+            newTag.academic_id = request.input("academicID")
+            newTag.type = "academic"
+            await newTag.save();
+          }
+        }
       return response.route("/academics", true);
     } catch (error) {
       Logger.error('Update Academics',  error);
@@ -39,14 +54,18 @@ class AcademicController {
   async render({ request, view }) {
     try {
       if (request.input("search")) {
-        const academics = await Database
+        var academics = await Database
+        .select("*")
         .from("academics")
-        .where('name', "like", "%"+request.input("search")+"%");
-        return view.render("academics", { academics: academics });
+        .where("academics.name",'like',"%"+request.input("search")+"%")
+
       } else {
-        const academics = await Academic.all();
-        return view.render("academics", { academics: academics.toJSON() });
+        var academics = await Database
+        .select("academics.name","academics.id","academics.year","academics.school","academics.load")
+        .from("academics")
       }
+      console.log(academics)
+      return view.render("academics", { academics: academics });
     } catch (error) {
       Logger.error(error);
       throw new Exception();

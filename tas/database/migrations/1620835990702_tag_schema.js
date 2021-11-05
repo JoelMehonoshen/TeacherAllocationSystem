@@ -3,6 +3,7 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
+// TODO: Need to revist how tags are done to reduce duplicates in the db
 class TagSchema extends Schema {
   up () {
     this.create('tags', (table) => {

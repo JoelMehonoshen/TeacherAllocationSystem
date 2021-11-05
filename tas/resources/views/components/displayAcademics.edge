@@ -8,23 +8,35 @@
     <section class="hero is-warning is-small">
   @endif
   <div class="hero-body">
-    <div class="columns is-10">
-      <div class="column is-four-fifths">
-        <p class="title">
-          {{ academic.name }}
-        </p>
-        <p class="subtitle">
-          {{ academic.school }}
-        </p>
+    <div class="columns">
+      <div class="column is-half">
+        <div class="columns">
+          <div class="column is-one-fifth">
+            @!component('components.editAcademic', csrf=csrf, academic=academic)
+          </div>
+          <div class="column">
+            <p class="title">
+              {{ academic.name }}
+            </p>
+            <p class="subtitle">
+              {{ academic.school }}
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="column">
+      <div class="column is-half">
         <p class="subtitle">
           Requested Load: {{ academic.load }}
         </p>
+        <div class="field is-grouped is-grouped-multiline">
+        @each(tag in academic.Tags)
+          <div class="control">
+            <div class="tags has-addons">
+              <a class="tag is-info">{{tag}}</a>
+            </div>
+          </div>
+        @endeach
       </div>
-      <div class="column is-narrow">
-        {{--  Edit button  --}}
-        @!component('components.editAcademic', csrf=csrf, academic=academic)
       </div>
     </div>
   </div>
