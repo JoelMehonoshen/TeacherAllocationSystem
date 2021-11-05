@@ -69,7 +69,8 @@ class AllocationController {
   }
 
   async render({ view, request }) {
-    try{
+      try{
+
       //Get units, needed for adding allocations
       var unitList = await Database.select("*").from("units");
       var academicList = await Database.select("*").from("academics");
