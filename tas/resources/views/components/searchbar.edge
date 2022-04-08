@@ -1,0 +1,25 @@
+<form method="GET" action="{{ route }}">  
+  {{csrf}}
+  <div class="field has-addons has-addons-centered">
+    <p class="control">
+      <span class="select">
+        <select>
+          @each(year in years)
+          <option>{{ year }}</option>
+          @endeach
+        </select>
+      </span>
+    </p>
+    <p class="control is-expanded">
+      <input class="input" type="text" name="search" placeholder="{{title}}">
+    </p>
+    <p class="control">
+      <button class="button is-primary" type="submit">
+        Search
+      </button>
+      <button class="button is-warning" href="allocations">
+        Clear
+      </button>
+    </p>
+  </div>
+</form>

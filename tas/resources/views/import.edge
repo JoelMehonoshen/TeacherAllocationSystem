@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+@!component('components.head', title="Teacher Allocation System")
+@!component('components.header')
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Import Spreadsheet
+      </h1>
+      <p class="subtitle">
+        Import your spreadsheet, filled with details on Academics and Units.
+      </p>
+
+      <form method="POST" action="upload?_method=PUT" enctype="multipart/form-data">
+        {{ csrfField() }}
+        <input type="file" name="Allocation" />
+        <button type="submit"> Submit </button>
+      </form>
+    </div>
+  </section>
+  </body>
+
+@include('partials.footer')
+
+</html>

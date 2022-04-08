@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  @!component('components.head', title="Teacher Allocation System")
+  @!component('components.header')
+  <body>
+  {{--  Warning Message for Unallocated units  --}}
+    <div>
+      @if(unitsUnalloc > 0)
+        @!component('components.unallocatedwarning', unitsUnalloc=unitsUnalloc)
+      @endif
+    </div>
+  {{--  Title, Search Bar--}}
+    <section class="section">
+      <div class="container">
+        <div class="section is-small">
+          <div class="level">
+            <div class="container">
+              <h1 class="title">Allocations</h1>
+              <h2 class="subtitle">Add and Search for Allocations</h2>
+            </div>
+            <div class="level is-right">
+              @!component('components.addallocation', csrf=csrfField(), academics=academicList, units=unitList, years=years)
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          @!component('components.searchbar', title="Find allocation", csrf=csrfField(), years=years, route=route('AllocationController.render'))
+        </div>
+
+        <div class="container">
+        {{-- Display Allocations --}}
+        @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
+        </div>
+    </div>
+    </section>
+  </body>
+  @include('partials.footer')
+</html> 

@@ -1,0 +1,57 @@
+@each(unit in units)
+<div class="box">
+  @if(unit.assignedLoad == 1)
+    <section class="hero is-success is-small">
+  @elseif(unit.assignedLoad > 1)
+    <section class="hero is-danger is-small">
+  @else
+    <section class="hero is-warning is-small">
+  @endif
+    <div class="hero-body">
+      <div class="columns">
+        <div class="column is-one-half">
+          <div class="columns">
+            <div class="column is-one-fifth">
+              @!component('components.editUnit', csrf=csrf, unit=unit)
+            </div>
+            <div class="column">
+              <p class="title">
+                {{ unit.id }}
+              </p>
+              <p class="subtitle">
+                {{ unit.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="column is-half">
+          <p class="subtitle">
+            Semester: {{ unit.semester }}
+          </p>
+          <p class="subtitle">
+            Students: {{ unit.students }}
+          </p>
+          <p class="subtitle">
+            Share: {{ unit.share }}
+          </p>
+          <p class="subtitle">
+            Assigned Load: {{ unit.assignedLoad }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{{--  if theres no units, display a warning  --}}
+@else
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <p class="title">
+        No Results
+      </p>
+      <p class="subtitle">
+        Please add a unit or import spreadsheet
+      </p>
+    </div>
+  </section>
+@endeach

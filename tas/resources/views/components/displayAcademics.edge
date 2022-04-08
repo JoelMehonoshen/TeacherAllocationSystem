@@ -1,0 +1,57 @@
+@each(academic in academics)
+<div class="box">
+  @if(academic.load == 1)
+    <section class="hero is-success is-small">
+  @elseif(academic.load > 1)
+    <section class="hero is-danger is-small">
+  @else 
+    <section class="hero is-warning is-small">
+  @endif
+  <div class="hero-body">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="columns">
+          <div class="column is-one-fifth">
+            @!component('components.editAcademic', csrf=csrf, academic=academic)
+          </div>
+          <div class="column">
+            <p class="title">
+              {{ academic.name }}
+            </p>
+            <p class="subtitle">
+              {{ academic.school }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <p class="subtitle">
+          Requested Load: {{ academic.load }}
+        </p>
+        <div class="field is-grouped is-grouped-multiline">
+        @each(tag in academic.Tags)
+          <div class="control">
+            <div class="tags has-addons">
+              <a class="tag is-info">{{tag}}</a>
+            </div>
+          </div>
+        @endeach
+      </div>
+      </div>
+    </div>
+  </div>
+  </section>
+</div>
+{{-- if theres no academics, display a warning  --}}
+@else
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <p class="title">
+        No Results
+      </p>
+      <p class="subtitle">
+        Please add an academic or import spreadsheet
+      </p>
+    </div>
+  </section>
+@endeach

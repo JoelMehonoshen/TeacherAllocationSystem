@@ -1,0 +1,72 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button type="button" class="button is-primary" data-toggle="modal" data-target="#AllocationForm"> Add Allocation +
+</button>
+
+<div id="AllocationForm" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Add Allocation</p>
+      <button class="delete" aria-label="close" data-dismiss="modal"></button>
+    </header>
+    <section class="modal-card-body">
+      <form method="POST" action="{{ route('AllocationController.addAllocation') }}">
+        {{csrf}}
+        <div class="field">
+          <label class="label">Academic Name</label>
+          <div class="control">
+            <div class="select">
+              <select name="academic" style="width: 100vw !important">
+                @each(academic in academics)
+                <option value="{{ academic.id }}">{{ academic.name }}</option>
+                @endeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Unit</label>
+          <div class="control">
+            <div class="select">
+              <select name="unit" style="width: 100vw !important">
+                @each(unit in units)
+                <option value="{{ unit.id }}">{{ unit.id }} | {{ unit.name }}</option>
+                @endeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Load</label>
+          <div class="control">
+            <input class="input" type="number" step=".1" min="0" name="load" style="width: 100vw !important">
+          </div>
+        </div>
+        <label class="label">Semester</label>
+        <p class="control">
+          <span class="select">
+            <select class="select" name="semester" style="width: 100vw !important">
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </span>
+        </p>
+        <label class="label">Year</label>
+        <p class="control">
+          <span class="select">
+            <select class="select" name="year" style="width: 100vw !important">
+                @each(year in years)
+                <option>{{ year }}</option>
+                @endeach
+            </select>
+          </span>
+        </p>
+    </section>
+    <footer class="modal-card-foot">
+      <input type="submit" value="Add Allocation" class="button is-link">
+      <button class="button is-danger" data-dismiss="modal">Cancel</button>
+    </footer>
+    </form>
+  </div>
+</div>

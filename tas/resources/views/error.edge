@@ -1,0 +1,41 @@
+{{--  Generic Error Page   --}}
+<!DOCTYPE html>
+<html>
+    @!component('components.head', title="Teacher Allocation System")
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item">
+            <img src="TAS.png" height="200">
+          </a>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      </nav>    <body>
+        <div class="section">
+            <section class="hero is-info is-medium">
+                <div class="hero-body">
+                    <div class="columns">
+                        <div class="column is-three-quarters">
+                            <p class="title">
+                            Error! ):
+                            </p>
+                            <i class="fas fa-frown"></i>
+                            <p class="subtitle">
+                            Sorry, something has gone wrong! Please try again or contact the site administrator.
+                            </p>
+                            <button class="button is-link" onclick="goBack()">Go Back</button>
+                            <script>
+                                function goBack() {
+                                  window.history.back();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

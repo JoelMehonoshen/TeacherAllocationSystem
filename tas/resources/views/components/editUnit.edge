@@ -1,0 +1,72 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button 
+    type="button"
+    class="button is-small is-link" 
+    data-toggle="modal"
+    data-target="#{{unit.id}}"
+    >     
+    <i class= "fa fa-edit"></i>
+</button>
+
+<div id="{{unit.id}}" class="modal">
+  <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Edit unit Details</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="units/updateunit"> 
+            {{csrf}}
+            <div class="field">
+                <label class="label">Unit Code</label>
+                <div class="control">
+                    <input class="input" type="text" name="unitID" value="{{unit.id}}">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Unit Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" value="{{unit.name}}">
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Semester</label>
+                        <p class="control">
+                            <span class="select">
+                            <select class="select" name="semester" value= "{{ unit.semester }}">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Students</label>
+                        <div class="control">
+                            <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">Share</label>
+                        <div class="control">
+                            <input class="input" type="number" min="0" name="load" value="{{ unit.share }}" step="any">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </section>  
+            <footer class="modal-card-foot">
+                <input type="submit" value="Update Allocation" class="button is-link">
+                <button class="button is-danger" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
+</div>
