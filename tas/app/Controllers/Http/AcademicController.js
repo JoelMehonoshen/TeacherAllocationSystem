@@ -14,6 +14,11 @@ class AcademicController {
       newAcademic.year = request.input("year")
       newAcademic.school = request.input("school")
       newAcademic.load = request.input("load")
+
+      //TODO This line for adding academic preferences works but needs to be implemented on DB
+      newAcademic.academic_preferences = request.input("academic_preferences")
+      //newAcademic.academic_preferences2 = request.input("academic_preferences2")
+
       await newAcademic.save()
       return response.route("/academics", true);
     } catch (error) {
@@ -32,11 +37,11 @@ class AcademicController {
         });
 
         if(request.input("tags")){
-          //sanitise tag input 
+          //sanitise tag input
           var strTags = request.input("tags").replace(/\s/g, '');
           var tags= strTags.split('#')
           //first item in tags list is empty, so skipping it with i=1
-          for(var x=1; x < tags.length; x++){      
+          for(var x=1; x < tags.length; x++){
             const newTag = new Tag();
             newTag.tag = tags[x]
             newTag.academic_id = request.input("academicID")

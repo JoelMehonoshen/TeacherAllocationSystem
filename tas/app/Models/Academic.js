@@ -9,7 +9,7 @@ class Academic extends Model {
     }
 
     allocations() {
-        return this.hasMany("App/Model/Allocation")
+        return this.hasMany("App/Models/Allocation")
     }
 
     loads() {

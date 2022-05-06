@@ -5,7 +5,7 @@ const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
 const Tag = use("App/Models/Tag");
 
-// TODO: get rid of the raw sql, change everything (except like sql statements) to use the ORM
+// TODO:(OLD) get rid of the raw sql, change everything (except like sql statements) to use the ORM
 class AllocationController {
   // update the database with new allocations and academics
   async updateAllocation({ response, request }) {
@@ -28,13 +28,13 @@ class AllocationController {
         }
       }
       if(request.input("tags")){
-        //sanitise tag input 
+        //sanitise tag input
         var strTags = request.input("tags").replace(/\s/g, '');
         var tags= strTags.split('#')
         //for each allocationID that comes through (each unit the academic is assigned to) create a tag for that allocation
         for (var i = 0; i < request.input("allocationID").length; i++) {
           //first item in tags list is empty, so skipping it with i=1
-          for(var x=1; x < tags.length; x++){      
+          for(var x=1; x < tags.length; x++){
               const newTag = new Tag();
               newTag.tag = tags[x]
               newTag.allocation_id = request.input("allocationID")[i]
@@ -50,7 +50,7 @@ class AllocationController {
       Logger.error(`Update Allocation (${error})`);
     }
   }
-  // TODO: All endpoints need to use the validator
+  // TODO:(OLD) All endpoints need to use the validator
   // https://legacy.adonisjs.com/docs/4.1/validator
   // adding a new allocation
   async addAllocation({ response, request }) {

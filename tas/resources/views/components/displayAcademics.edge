@@ -4,7 +4,7 @@
     <section class="hero is-success is-small">
   @elseif(academic.load > 1)
     <section class="hero is-danger is-small">
-  @else 
+  @else
     <section class="hero is-warning is-small">
   @endif
   <div class="hero-body">
@@ -28,6 +28,9 @@
         <p class="subtitle">
           Requested Load: {{ academic.load }}
         </p>
+
+        {{--This part here doesn't seem to display anything --}}
+
         <div class="field is-grouped is-grouped-multiline">
         @each(tag in academic.Tags)
           <div class="control">

@@ -1,11 +1,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<button 
+<button
     type="button"
-    class="button is-primary" 
+    class="button is-primary"
     data-toggle="modal"
     data-target="#AcademicsForm"
-    > Add Academic + 
+    > Add Academic +
 </button>
 
 <div id="AcademicsForm" class="modal">
@@ -16,7 +16,7 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="{{ route('AcademicController.addacademic') }}">  
+        <form method="POST" action="{{ route('AcademicController.addacademic') }}">
             {{csrf}}
             <div class="field">
             <label class="label">Academic Name</label>
@@ -36,6 +36,18 @@
                     <input class="input" type="text" name="load" placeholder="Academic Load">
                 </div>
             </div>
+            <div class="field">
+                        <label class="label">First Academic Preference</label>
+                            <div class="control">
+                                <input class="input" type="text" name="academic_preferences" placeholder="E.g. CAB201">
+                            </div>
+                        </div>
+            <div class="field">
+                                    <label class="label">Second Academic Preference</label>
+                                        <div class="control">
+                                            <input class="input" type="text" name="academic_preferences" placeholder="E.g. CAB202">
+                                        </div>
+                                    </div>
                 <div class="field">
                     <label class="label">Year</label>
                     <p class="control">
@@ -49,7 +61,7 @@
                         </span>
                     </p>
                 </div>
-            </section>  
+            </section>
             <footer class="modal-card-foot">
                 <input type="submit" value="Add Academic" class="button is-link">
                 <button class="button is-danger" data-dismiss="modal">Cancel</button>

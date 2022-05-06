@@ -28,6 +28,7 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.1.0",
+    "dependencies": "^0.0.1",
     "exceljs": "^4.2.1",
     "modules": "^0.4.0",
     "pg": "^8.6.0",
