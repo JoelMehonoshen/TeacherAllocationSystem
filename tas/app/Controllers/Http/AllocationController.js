@@ -22,8 +22,8 @@ class AllocationController {
         await Database.from("allocations")
           .where("allocation_id", request.input("allocationID")[i])
           .update({
-            unit_code: request.input("unit")[i],
-            load: request.input("unitLoad")[i],
+            unit_code: request.input("unit"),
+            load: request.input("unitLoad"),
           });
         }
       }
