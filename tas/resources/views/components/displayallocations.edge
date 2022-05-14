@@ -1,14 +1,79 @@
 {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assignedl oad  --}}
+<div style="width:100%; display:block;">
+<div class="list-outter">
+  <div class="list-title-block">
+    <div class="alloc-arrow margin-8"></div>
+    <div class="alloc-name margin-8">Name</div>
+    <div class="alloc-load margin-8">Prefered Load</div>
+    <div class="alloc-load margin-8">Actual Load</div>
+    <div class="alloc-load margin-8">Status</div>
+    <div class="alloc-tag margin-8">Tags</div>
+    <div class="alloc-action margin-8">Actions</div>
+  </div>
+ </div>
+</div>
 @each(allocAcademic in allocAcademics)
 {{--  Display Mode (not a form)  --}}
-<div class="box">
+<div>
+  {{--
   @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
-    <section class="hero is-danger is-small">
+    <section class="allocation-list-card hero is-danger is-small">
   @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
-    <section class="hero is-success is-small">
+    <section class="allocation-list-card hero is-success is-small">
   @else
     <section class="hero is-warning is-small">
   @endif
+  --}}
+<div class="list-outter">
+ <div class="list-visible">
+    <div class="alloc-arrow margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+    <div class="alloc-name margin-8">{{ allocAcademic.name }}</div>
+    <div class="alloc-load margin-8">00{{ allocAcademic.requestedLoad }}</div>
+    <div class="alloc-load margin-8">00{{ allocAcademic.actualLoad }}</div>
+    @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
+    <div class="alloc-load">
+      <div class="alloc-stat-red alloc-stat margin-8"></div>
+    </div>
+    @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
+    <div class="alloc-load">
+      <div class="alloc-stat-green alloc-stat margin-8"></div>
+    </div>
+    @else
+    <div class="alloc-load">
+      <div class="alloc-stat-yellow alloc-stat margin-8"></div>
+    </div>
+    @endif
+
+    <div class="alloc-tag margin-8">
+      @each(tag in allocAcademic.tags)
+      <div class="control">
+        <div class="tags has-addons">
+          <a class="tag is-info">{{tag.tag}}</a>
+        </div>
+      </div>
+      @endeach
+    </div>
+    <div class="alloc-action margin-8">
+      @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
+    </div>
+    
+ </div>
+ <div class="list-collapse">
+  <div class="list-visible-inner">
+    <div class="alloc-name bold">Unit</div>
+    <div class="alloc-load bold">Load</div>
+  </div>
+  @each(unit in allocAcademic.allocUnits)
+  <div class="list-visible-inner">
+    <div class="alloc-name">{{ unit.unit_code }}</div>
+    <div class="alloc-load">00{{ unit.load }}</div>
+  </div>
+  @endeach
+</div>
+  
+
+  </div>
+  {{--
     <div class="hero-body">
       <div class="columns">
         <div class="column is-half">
@@ -50,6 +115,7 @@
     </div>
   </section>
 </div>
+--}}
 {{--  if theres no allocations, display a warning  --}}
 @else
   <section class="hero is-danger">
@@ -63,3 +129,24 @@
     </div>
   </section>
 @endeach
+
+<script>
+var coll = document.getElementsByClassName("list-visible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var arrow = this.firstChild.nextElementSibling.firstChild;
+    arrow.classList.toggle("arrow-down");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      arrow.classList.toggle("arrow-normal");
+    } else {
+      content.style.display = "block";
+      
+    }
+  });
+}
+</script>

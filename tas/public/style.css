@@ -57,9 +57,28 @@ html,body{
     border:none;
     cursor: pointer;
     font-size: medium;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    margin:8px;
+}
+
+.button-cancel{
+    padding:10px 32px 10px 32px;
+    background-color: #ff0000;
+    color: white;
+    border:none;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin:8px;
+}
+
+.button-cancel:hover{
+    background-color: #bb0000;
+    color: white;
 }
 
 .button-blue:hover{
@@ -76,6 +95,79 @@ html,body{
 .button-unavailable:hover{
     background-color: grey;
     color: lightgrey;
+}
+
+.list-action-button{
+    background-color: transparent;
+    color: black;
+    border:none;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 10px;
+    border:none;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.list-action-button:hover{
+    color: blue;
+}
+
+.searchbar-select{
+    padding:8.2px 16px;
+    border:1px lightgray solid;
+    font-size: medium;
+    cursor:pointer;
+    position: relative;
+    right:1px;
+}
+
+.search-input{
+    padding:9px 10px;
+    border:1px lightgray solid;
+    font-size: medium;
+    min-width:300px;
+    width:500px;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.searchbar-button{
+    padding:11.5px 32px;
+    color:white;
+    cursor: pointer;
+    border:none;
+    background-color: #175e9c;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: medium;
+    position: relative;
+    right:2px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.searchbar-button:hover{
+    background-color: #1d7dd1;
+    color: white;
+}
+
+.searchbar-clear-button{
+    padding:10.3px 8px;
+    color:black;
+    border:none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: medium;
+    position: relative;
+}
+
+.searchbar-clear-button:hover{
+    color:blue;
+}
+
+.searchbar-wrapper{
+    width:100%;
+    padding:0px 0px 32px 0px;
 }
 
 .full-width{
@@ -179,6 +271,11 @@ html,body{
     margin-left:8px;
 }
 
+.page-subtitle{
+    font-size: large;
+    margin-left:8px;
+}
+
 .icon{
     padding-right:32px;
 }
@@ -204,4 +301,131 @@ html,body{
 
 .file-icon{
     margin-bottom:12px;
+}
+
+.list-outter{
+    margin:0px 0px;
+    border-bottom: 1px solid lightgray;
+}
+
+.list-visible{
+    width: 100%;
+    height:fit-content;
+    background-color: rgb(249, 249, 249);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.list-visible-inner{
+    width: auto;
+    height:fit-content;
+    display: flex;
+    align-items: center;
+    border-bottom:1px lightgrey solid ;
+    flex:1;
+    margin:0% 3%;
+    padding:8px 0px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.list-collapse{
+    width: 100%;
+    height:fit-content;
+    background-color: rgb(234, 234, 234);
+    display:none;
+    overflow: hidden;
+    padding:3%;
+    align-items: center; 
+    justify-content: center;
+}
+
+.list-title-block{
+    width: 100%;
+    background-color:rgb(249, 249, 249);
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding:12px 0px;
+}
+
+.alloc-name{
+    width:15%;
+}
+
+.alloc-load{
+    width:10%;
+}
+
+.alloc-units{
+    width:20%;
+}
+
+@keyframes arrow-spin-down {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(90deg);}
+}
+
+@keyframes arrow-spin-up {
+    from {transform: rotate(90deg);}
+    to {transform: rotate(0deg);}
+}
+
+.alloc-arrow{
+    width: 3%;
+    text-align: center;
+}
+
+.arrow-normal{
+    animation-name: arrow-spin-up;
+    animation-duration: 500ms;
+    transform: rotate(0deg);
+}
+
+.arrow-down{
+    animation-name: arrow-spin-down;
+    animation-duration: 500ms;
+    transform: rotate(90deg);
+}
+
+.alloc-row{
+    display: flex;
+}
+
+.alloc-stat{
+    width:25px;
+}
+
+.alloc-stat-green{
+    height: 15px;
+    background-color: green;
+    border-radius: 10px;
+}
+
+.alloc-stat-red{
+    height: 15px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+.alloc-stat-yellow{
+    height: 15px;
+    background-color: yellow;
+    border-radius: 10px;
+}
+
+.alloc-action{
+    width: 10%;
+}
+
+.alloc-tag{
+    width:25%;
+}
+
+.margin-8{
+    margin:8px;
 }

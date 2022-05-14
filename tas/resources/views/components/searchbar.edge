@@ -1,25 +1,30 @@
+<div class="searchbar-wrapper">
 <form method="GET" action="{{ route }}">  
   {{csrf}}
-  <div class="field has-addons has-addons-centered">
+  
+  <div class="field has-addons">
     <p class="control">
-      <span class="select">
-        <select>
+      <div class="">
+        <input class="search-input" type="text" name="search" placeholder="{{title}}">
+      </div>
+      <span class="">
+        <select class="searchbar-select">
+          <option value="" disabled selected >Year</option>
           @each(year in years)
           <option>{{ year }}</option>
           @endeach
         </select>
       </span>
     </p>
-    <div class="control is-expanded" style="padding:32px 0px;">
-      <input class="input" type="text" name="search" placeholder="{{title}}">
-    </div>
-    <p class="control">
-      <button class="button is-primary" type="submit">
-        Search
+    
+    <p class="has-addons">
+      <button class="searchbar-button" type="submit">
+        <i class="fa fa-search" aria-hidden="true"></i>
       </button>
-      <button class="button is-warning" href="allocations">
-        Clear
+      <button class="searchbar-clear-button" href="allocations">
+        Reset
       </button>
     </p>
   </div>
 </form>
+</div>
