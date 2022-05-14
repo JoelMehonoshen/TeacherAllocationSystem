@@ -1,0 +1,15 @@
+<form action="export" method="post">
+    {{csrf}}
+
+    
+    <div class="input-group">
+
+    <select class="input-select" id="year-select" style="margin:32px 0px;" name="years" id="years">
+      <option value="" disabled selected >Please Select A Year</option>
+      <option value=2021>2021</option>
+      <option value=2020>2020</option>
+    </select>
+    <br><br>
+    <a href="template2.xlsx" class="button-blue" style="float:right; " download="export.xlsx">Export</a>
+    </div>
+  </form>

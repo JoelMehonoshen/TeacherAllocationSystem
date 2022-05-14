@@ -2,7 +2,44 @@
 <html>
 @loggedIn
   @!component('components.head', title="Teacher Allocation System")
-  @!component('components.header')
+  @include('partials/sidebar')
+  <body class="make-flex">
+    
+    <section class="dashboard-content dd-font">
+      <h1 class="page-title">Home</h1>
+      
+      <div class="dashboard-col">
+        <div class="dashboard-card">
+          <h2 class="dashboard-title">Hi, {{ auth.user.username }}</h2>
+          <p class="dashboard-paragraph">
+            TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
+        </div>
+      </div>
+
+      <div class="dashboard-col">
+
+      <div class="dashboard-card card-half">
+        <h2 class="dashboard-title">Import</h2>
+        <p class="dashboard-paragraph">Import a spreadsheet to get started.</p>
+
+        @!component('components.csvimporter', csrf=csrfField())
+
+      </div>
+
+      <div class="dashboard-card card-half">
+        <h2 class="dashboard-title">Export</h2>
+        <p class="dashboard-paragraph">Export to a spreadsheet.</p>
+
+        @!component('components.csvexport', csrf=csrfField())
+      
+
+      </div>
+      </div>
+
+    </section>
+  </body>
+
+  {{--
     <body>
     <section class="section">
       <div class="container">
@@ -24,10 +61,32 @@
       </div>
     </section>
     </body>
-  @include('partials.footer')
+--}}
+
 @else
+
   @!component('components.head', title="Teacher Allocation System")
-  @!component('components.headerauth')
+  <body class="make-flex">
+    <div class="home-login-container">
+      <div class="home-login-card">
+        <h1 class="login-title">Login to TAS</h1>
+        <form method="POST" action="{{ route('UserController.login') }}">      
+          {{ csrfField() }}
+          <div class="input-group">
+            <input class="login-input" type="text" name="email" placeholder="Email">
+          </div>
+          <div class="input-group">
+            <input class="login-input" type="password" name="password" placeholder="Password">
+          </div>
+          <div class="input-group">
+            <input class="button-100" type="submit" value="Submit">
+          </div>
+          </form>
+        <p class="login-sign-up-prompt">Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
+      </div>
+    </div>
+  </body>
+    {{--
     <body>
     <section class="section">
       <div class="container">
@@ -51,6 +110,6 @@
       </div>
     </section>
     </body>
-  @include('partials.footer')
+    --}}
 @endloggedIn
 </html>

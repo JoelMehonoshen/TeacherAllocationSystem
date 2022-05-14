@@ -1,0 +1,69 @@
+<form method="POST" action="upload?_method=PUT" enctype="multipart/form-data">
+    {{csrf}}
+    <label class="drop-zone" id="drop-zone" for="uploader">
+    <span id="">
+        <i class="fa fa-file-o file-icon" aria-hidden="true" style="font-size:4em;"></i>
+        <p id="drag-prompt">Drag and drop or click to browse your files</p>
+    </span>
+    <input type="file" id="uploader" hidden name="Allocation" />
+    </label>
+    <button type="submit" id="import-btn" class="button-blue full-width button-unavailable" style="float:right;"> Import </button>
+    <script>
+      var $dropzone = document.querySelector('.drop-zone');
+      var input = document.getElementById('uploader');
+      var text = document.getElementById('drag-prompt');
+      var button = document.getElementById('import-btn');
+      var extension;
+      var valid_extensions = ["xlsx","csv","xls"];
+
+      function checkFile(ex){
+        valid = false;
+
+        valid_extensions.forEach(extension => {
+          if(ex == extension){
+            valid = true;
+          }
+        });
+
+        if(valid){
+            button.classList.remove('button-unavailable');
+          } else {
+            text.innerHTML = 'Invalid File Type';
+            button.classList.add('button-unavailable');
+        }
+
+      }
+
+      $dropzone.ondrop = function (e) {
+        e.preventDefault();
+        input.files = e.dataTransfer.files;
+      };
+
+      $dropzone.ondragover = function (e) { 
+        e.preventDefault(); 
+        this.classList.add('dragover');
+      };
+      $dropzone.ondragleave = function (e) { 
+          e.preventDefault();
+          this.classList.remove('dragover');
+      };
+
+      $dropzone.ondrop = function (e) {
+          e.preventDefault();
+          //this.classList.remove('dragover');
+          input.files = e.dataTransfer.files;
+          text.innerHTML = input.value;
+          extension =  input.value.split('.').pop();
+          checkFile(extension);
+      }
+
+      input.addEventListener('change', function (){
+        text.innerHTML = input.value;
+        extension =  input.value.split('.').pop();
+        checkFile(extension);
+      })
+
+    
+
+    </script>
+  </form>
