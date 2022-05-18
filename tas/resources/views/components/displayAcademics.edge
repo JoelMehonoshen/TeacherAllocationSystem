@@ -18,6 +18,7 @@
             <p class="title">
               {{ academic.name }}
             </p>
+
             <p class="subtitle">
               {{ academic.school }}
             </p>
@@ -28,7 +29,10 @@
         <p class="subtitle">
           Requested Load: {{ academic.load }}
         </p>
-
+        {{--Added this in to display their prefered unit --}}
+                    <p class="subtitle">
+                      Academic Preference: {{ academic.academic_preference }}
+                    </p>
         {{--This part here doesn't seem to display anything --}}
 
         <div class="field is-grouped is-grouped-multiline">

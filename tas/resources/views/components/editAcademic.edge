@@ -1,11 +1,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<button 
+<button
     type="button"
-    class="button is-small is-link" 
+    class="button is-small is-link"
     data-toggle="modal"
     data-target="#{{academic.id}}"
-    >     
+    >
     <i class= "fa fa-edit"></i>
 </button>
 
@@ -17,7 +17,7 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="academics/updateacademic"> 
+        <form method="POST" action="academics/updateacademic">
             {{csrf}}
             <input type="hidden" name="academicID" value="{{academic.id}}">
             <div class="field">
@@ -38,10 +38,10 @@
                 <div class="field has-addons has-addons-centered">
                     <input class="input" type="text" name="tags">
                 </div>
-            </div>            
-            </section>  
+            </div>
+            </section>
             <footer class="modal-card-foot">
-                <input type="submit" value="Update Allocation" class="button is-link">
+                <input type="submit" value="Update Academic" class="button is-link">
                 <button class="button is-danger" data-dismiss="modal">Cancel</button>
             </footer>
         </form>

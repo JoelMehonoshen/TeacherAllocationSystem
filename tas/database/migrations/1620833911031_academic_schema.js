@@ -11,6 +11,7 @@ class AcademicSchema extends Schema {
       table.integer('year')
       table.string('school')
       table.float('load')
+      table.string('academic_preference', 7)
       table.timestamps()
     })
   }

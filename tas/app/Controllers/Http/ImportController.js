@@ -98,7 +98,7 @@ class ImportController {
     const workbook = new Excel.Workbook();
     await workbook.xlsx.readFile("tmp/uploads/uploadedData.xlsm"); //TODO:(OLD) This should include a date prefix of some kind so files can be versioned
 
-    const year = 2021; //TODO:(OLD) change this to be dynamic later
+    const year = 2022; //TODO:(OLD) change this to be dynamic later
 
     //should flush <year> entries in the database here
     //might need to only delete when replacing as some values may not be present when importing

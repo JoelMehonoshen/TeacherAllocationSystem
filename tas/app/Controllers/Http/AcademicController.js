@@ -14,10 +14,8 @@ class AcademicController {
       newAcademic.year = request.input("year")
       newAcademic.school = request.input("school")
       newAcademic.load = request.input("load")
+      newAcademic.academic_preference = request.input("academic_preference")
 
-      //TODO This line for adding academic preferences works but needs to be implemented on DB
-      newAcademic.academic_preferences = request.input("academic_preferences")
-      //newAcademic.academic_preferences2 = request.input("academic_preferences2")
 
       await newAcademic.save()
       return response.route("/academics", true);
@@ -66,7 +64,7 @@ class AcademicController {
 
       } else {
         var academics = await Database
-        .select("academics.name","academics.id","academics.year","academics.school","academics.load")
+        .select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
         .from("academics")
       }
       console.log(academics)
