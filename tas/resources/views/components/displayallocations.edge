@@ -1,17 +1,18 @@
-{{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assignedl oad  --}}
 <div style="width:100%; display:block;">
-<div class="list-outter">
-  <div class="list-title-block">
-    <div class="alloc-arrow margin-8"></div>
-    <div class="alloc-name margin-8">Name</div>
-    <div class="alloc-load margin-8">Prefered Load</div>
-    <div class="alloc-load margin-8">Actual Load</div>
-    <div class="alloc-load margin-8">Status</div>
-    <div class="alloc-tag margin-8">Tags</div>
-    <div class="alloc-action margin-8">Actions</div>
+<div class="table-outter">
+  <div class="table-title-block">
+    <div class="table-section--xx-small margin-8"></div>
+    <div class="table-section--medium margin-8">Name</div>
+    <div class="table-section--medium margin-8">Prefered Load</div>
+    <div class="table-section--medium margin-8">Actual Load</div>
+    <div class="table-section--medium margin-8">Status</div>
+    <div class="table-section--x-large margin-8">Tags</div>
+    <div class="table-section--small margin-8">Actions</div>
   </div>
  </div>
 </div>
+
+{{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
 @each(allocAcademic in allocAcademics)
 {{--  Display Mode (not a form)  --}}
 <div>
@@ -24,27 +25,27 @@
     <section class="hero is-warning is-small">
   @endif
   --}}
-<div class="list-outter">
- <div class="list-visible">
-    <div class="alloc-arrow margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-    <div class="alloc-name margin-8">{{ allocAcademic.name }}</div>
-    <div class="alloc-load margin-8">00{{ allocAcademic.requestedLoad }}</div>
-    <div class="alloc-load margin-8">00{{ allocAcademic.actualLoad }}</div>
+<div class="table-outter">
+ <div class="table-static">
+    <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+    <div class="table-section--medium margin-8">{{ allocAcademic.name }}</div>
+    <div class="table-section--medium">{{ allocAcademic.requestedLoad }}</div>
+    <div class="table-section--medium">{{ allocAcademic.actualLoad }}</div>
     @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
-    <div class="alloc-load">
-      <div class="alloc-stat-red alloc-stat margin-8"></div>
+    <div class="table-section--small">
+      <div class="table-section--stat stat-red margin-8"></div>
     </div>
     @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
-    <div class="alloc-load">
-      <div class="alloc-stat-green alloc-stat margin-8"></div>
+    <div class="table-section--small">
+      <div class="table-section--stat stat-green margin-8"></div>
     </div>
     @else
-    <div class="alloc-load">
-      <div class="alloc-stat-yellow alloc-stat margin-8"></div>
+    <div class="table-section--small">
+      <div class="table-section--stat stat-yellow margin-8"></div>
     </div>
     @endif
 
-    <div class="alloc-tag margin-8">
+    <div class="table-section--x-large margin-8">
       @each(tag in allocAcademic.tags)
       <div class="control">
         <div class="tags has-addons">
@@ -53,20 +54,20 @@
       </div>
       @endeach
     </div>
-    <div class="alloc-action margin-8">
+    <div class="table-section--small margin-8">
       @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
     </div>
     
  </div>
- <div class="list-collapse">
-  <div class="list-visible-inner">
-    <div class="alloc-name bold">Unit</div>
-    <div class="alloc-load bold">Load</div>
+ <div class="table-collapse">
+  <div class="table-collapse--inner">
+    <div class="table-section--medium font-weight-bold">Unit</div>
+    <div class="table-section--medium font-weight-bold">Load</div>
   </div>
   @each(unit in allocAcademic.allocUnits)
-  <div class="list-visible-inner">
-    <div class="alloc-name">{{ unit.unit_code }}</div>
-    <div class="alloc-load">00{{ unit.load }}</div>
+  <div class="table-collapse--inner">
+    <div class="table-section--medium">{{ unit.unit_code }}</div>
+    <div class="table-section--medium">{{ unit.load }}</div>
   </div>
   @endeach
 </div>
@@ -131,7 +132,7 @@
 @endeach
 
 <script>
-var coll = document.getElementsByClassName("list-visible");
+var coll = document.getElementsByClassName("table-static");
 var i;
 
 for (i = 0; i < coll.length; i++) {
