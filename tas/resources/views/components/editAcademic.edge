@@ -2,16 +2,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <button 
     type="button"
-    class="button is-small is-link" 
+    class="dd-button--hyperlink" 
     data-toggle="modal"
     data-target="#{{academic.id}}"
     >     
-    <i class= "fa fa-edit"></i>
+    <i class= "fa fa-edit"></i>&nbsp; Edit
 </button>
 
 <div id="{{academic.id}}" class="modal">
   <div class="modal-background"></div>
-      <div class="modal-card">
+      <div class="modal-card pop-up">
         <header class="modal-card-head">
           <p class="modal-card-title">Edit Academic Details</p>
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
@@ -41,8 +41,8 @@
             </div>            
             </section>  
             <footer class="modal-card-foot">
-                <input type="submit" value="Update Allocation" class="button is-link">
-                <button class="button is-danger" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Update Academic" class="dd-button--round button-blue-fill margin-8">
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>  
             </footer>
         </form>
     </div>

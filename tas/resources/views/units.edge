@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
   @!component('components.head', title="Teacher Allocation System")
-  @!component('components.header')
+  @include('partials/sidebar')
+  <body class="flex-container">
+    <div class="main-content dd-font">
+      {{--  Title, Search Bar--}}
+      <div class="level">
+        <div>
+          <h1 class="page-title">Units</h1>
+          <h2 class="page-subtitle">Add and Search for Units</h2>
+        </div>
+              
+      @!component('components.addunit', csrf=csrfField())
+      </div>
+
+      @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('UnitController.render'))
+
+      <div>
+        {{-- Display Units --}}
+        @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units)
+      </div>
+
+    </div>
+  </body>
+{{--
   <body>
-  {{--  Title, Search Bar  --}}
   <section class="section">
     <div class="container">
       <div class="section is-small">
@@ -20,7 +41,6 @@
       <div class="section">
         @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('UnitController.render'))
       </div>
-      {{--  Display Units  --}}
       @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units)
       <br>
       <br>
@@ -30,5 +50,5 @@
       <br>
     </section>
   </body>
-  @include('partials.footer')
+  --}}
 </html> 

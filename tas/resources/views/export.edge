@@ -1,34 +1,15 @@
 <!DOCTYPE html>
 <html>
 @!component('components.head', title="Teacher Allocation System")
-@!component('components.header')
-  <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Export
-      </h1>
-      <h2>
-        Here you can export a years spreadsheet to an excel spreadsheet
-      </h2>
-      <form action="export" method="post">
-        {{ csrfField() }}
+@include('partials/sidebar')
 
-        <label for="years">Choose a year:</label>
+<body class="flex-container">
 
-        <select name="years" id="years">
-          <option value=2021>2021</option>
-          <option value=2020>2020</option>
-        </select>
-      </form>
-      <a href="template2.xlsx" download="export.xlsx">
-        <img src="download.png" alt="W3Schools" width="104" height="142">
-      </a>
+  <div class="dashboard-card">
+    <h2 class="dashboard-title">Export</h2>
+    <p class="dashboard-paragraph">Export to a spreadsheet.</p>
+    @!component('components.csvexport', csrf=csrfField())
+  </div>
 
-      
-
-</div>
-  
-@include('partials.footer')
-
+</body>
 </html>

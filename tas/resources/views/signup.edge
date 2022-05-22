@@ -1,8 +1,56 @@
 <!DOCTYPE html>
 <html>
 @!component('components.head', title="Teacher Allocation System")
-@!component('components.headerauth')
-  <body>
+
+<body class="flex-container">
+  <div class="home-background flex-container flex-center img-cover">
+    <div class="login-card white-transparent-fill">
+      <h1 class="dd-title font-weight-light padding-24">Sign Up</h1>
+      <form method="POST" action="{{ route('UserController.signup') }}">      
+        {{ csrfField() }}
+        <div class="input-group">
+          <input class="text-input" type="text" name="username" placeholder="Username" value="{{ old('username', '') }}">
+        </div>
+        <div class="input-group">
+          <input class="text-input" type="text" name="email" placeholder="Academic Email" value="{{ old('email', '') }}">
+          @if(flashMessage('InvalidEmail'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('InvalidEmail')}}
+              </section>
+            @elseif(flashMessage('EmailExists'))
+              <section class="notification is-danger is-small is-light small-font-size">
+                {{ flashMessage('EmailExists')}}
+              </section>
+            @endif
+        </div>
+        <div class="input-group">
+          <input class="text-input" type="password" name="password" placeholder="Password" value="{{ old('password', '') }}">
+          @if(flashMessage('InvalidPassword'))
+            <section class="notification is-danger is-small is-light small-font-size">
+              {{ flashMessage('InvalidPassword')}}
+            </section>
+          @endif
+        </div>
+        <div class="input-group">
+          <input class="text-input" type="password" name="confirmPassword" placeholder="Confirm Password">
+          @if(flashMessage('PasswordDoesNotMatch'))
+            <section class="notification is-danger is-small is-light small-font-size">
+              {{ flashMessage('PasswordDoesNotMatch')}}
+            </section>
+          @endif
+        </div>
+        <div class="input-group">
+          <input class="dd-button--round button-blue-fill full-width" type="submit" value="Submit">
+        </div>
+        </form>
+      <p class="font-med padding-24">Already have an account? <a href="/">Login here</a></p>
+    </div>
+  </div>
+</body>
+
+
+ {{--
+  <body class="flex-container">
   <section class="section">
 
     <div class="container">
@@ -69,7 +117,5 @@
     </form>
   </section>
   </body>
-
-@include('partials.footer')
-
+  --}}
 </html>

@@ -507,7 +507,9 @@ html,body{
 }
 
 
-
+.pop-up{
+    transform: translate(0%,-25%);
+}
 
 
 

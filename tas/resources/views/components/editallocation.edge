@@ -2,7 +2,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <button 
-    type=""
+    type="button"
     class="dd-button--hyperlink" 
     data-toggle="modal"
     data-target="#{{allocAcademic.id}}"
@@ -11,17 +11,15 @@
 </button>
 
 <div id="{{allocAcademic.id}}" class="modal">
-  <div class="pop-up-container modal-background"></div>
-      <div class="pop-up">
+  <div class="modal-background"></div>
+      <div class="modal-card pop-up">
         
-        <header class="modal-card-head"  style="background-color:white;">
-          
-        </header>
+        <header class="modal-card-head">
+            <p class="modal-card-title">Edit Allocation Details</p>
+            <button class="delete" aria-label="close" data-dismiss="modal"></button>
+          </header>
 
-        <section class="modal-card-body">
-
-        <p class="modal-card-title">Edit Allocation Details</p>
-
+        <section class="modal-card-body">       
         <form method="POST" action="{{ route('AllocationController.updateAllocation') }}"> 
             {{csrf}}
             <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
@@ -59,9 +57,11 @@
                     <input class="input" type="text" name="tags">
                 </div>
             </div>         
-            <input type="submit" value="Update Allocation" class="button-blue">
-            <button class="button-cancel is-danger" data-dismiss="modal">Cancel</button>   
             </section> 
+            <footer class="modal-card-foot">
+                <input type="submit" value="Update Allocation" class="dd-button--round button-blue-fill margin-8">
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>   
+            </footer>
         </form>
     </div>
 </div>

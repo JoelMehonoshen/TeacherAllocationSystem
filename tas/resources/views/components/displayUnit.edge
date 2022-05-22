@@ -1,3 +1,95 @@
+<div style="width:100%; display:block;">
+  <div class="table-outter">
+    <div class="table-title-block">
+      <div class="table-section--xx-small margin-8"></div>
+      <div class="table-section--small margin-8">ID</div>
+      <div class="table-section--large margin-8">Name</div>      
+      <div class="table-section--small margin-8">Semester</div>
+      <div class="table-section--medium margin-8">Assigned Load</div>
+      <div class="table-section--medium margin-8">Status</div>
+      <div class="table-section--medium margin-8">Actions</div>
+    </div>
+  </div>
+</div>
+  {{--Display Academic, name; school; load; status; tags; actions--}}
+  {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
+  @each(unit in units)
+  {{--  Display Mode (not a form)  --}}
+  <div>
+  <div class="table-outter">
+   <div class="table-static">
+      <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="table-section--small margin-8">{{ unit.id }}</div>
+      <div class="table-section--large margin-8">{{ unit.name }}</div>
+      <div class="table-section--small margin-8">{{ unit.semester }}</div>
+      <div class="table-section--medium margin-8">{{ unit.assignedLoad }}</div>
+      @if(unit.assignedLoad > 1)
+      <div class="table-section--medium margin-8">
+        <div class="table-section--stat stat-red margin-8"></div>
+      </div>
+      @elseif(unit.assignedLoad == unit.assignedLoad)
+      <div class="table-section--medium margin-8">
+        <div class="table-section--stat stat-green margin-8"></div>
+      </div>
+      @else
+      <div class="table-section--medium margin-8">
+        <div class="table-section--stat stat-yellow margin-8"></div>
+      </div>
+      @endif
+
+      <div class="table-section--medium margin-8">
+        @!component('components.editUnit', csrf=csrf, unit=unit)
+      </div>
+      
+   </div>
+   <div class="table-collapse">
+    <div class="table-collapse--inner">
+      <div class="table-section--medium font-weight-bold">Students</div>
+      <div class="table-section--medium font-weight-bold">Share</div>
+    </div>
+    <div class="table-collapse--inner">
+      <div class="table-section--medium">{{ unit.students }}</div>
+      <div class="table-section--medium">{{ unit.share }}</div>
+    </div>
+  </div>
+  </div>
+    
+</div>
+  {{--  if theres no allocations, display a warning  --}}
+  @else
+    <section class="hero is-danger">
+      <div class="hero-body">
+        <p class="title">
+          No Results
+        </p>
+        <p class="subtitle">
+           Please add an allocation or import spreadsheet
+        </p>
+      </div>
+    </section>
+  @endeach
+  
+  <script>
+  var coll = document.getElementsByClassName("table-static");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var arrow = this.firstChild.nextElementSibling.firstChild;
+      arrow.classList.toggle("arrow-down");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        arrow.classList.toggle("arrow-normal");
+      } else {
+        content.style.display = "block";
+        
+      }
+    });
+  }
+  </script>
+{{--
 @each(unit in units)
 <div class="box">
   @if(unit.assignedLoad == 1)
@@ -42,7 +134,6 @@
     </div>
   </section>
 </div>
-{{--  if theres no units, display a warning  --}}
 @else
   <section class="hero is-danger">
     <div class="hero-body">
@@ -55,3 +146,4 @@
     </div>
   </section>
 @endeach
+--}}

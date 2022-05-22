@@ -32,15 +32,15 @@
     <div class="table-section--medium">{{ allocAcademic.requestedLoad }}</div>
     <div class="table-section--medium">{{ allocAcademic.actualLoad }}</div>
     @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
-    <div class="table-section--small">
+    <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-red margin-8"></div>
     </div>
     @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
-    <div class="table-section--small">
+    <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-green margin-8"></div>
     </div>
     @else
-    <div class="table-section--small">
+    <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-yellow margin-8"></div>
     </div>
     @endif
@@ -73,50 +73,7 @@
 </div>
   
 
-  </div>
-  {{--
-    <div class="hero-body">
-      <div class="columns">
-        <div class="column is-half">
-          <div class="columns">
-            <div class="column is-one-fifth">
-              @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
-            </div>
-            <div class="column">
-              <p class="title">
-                {{ allocAcademic.name }}
-              </p>
-              <p class="subtitle">
-                Requested Load: {{ allocAcademic.requestedLoad }}
-              </p>
-              <p class="subtitle">
-                Actual Load: {{ allocAcademic.actualLoad}}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="column is-half">
-          @each(unit in allocAcademic.allocUnits)
-            <p class="subtitle">
-              Unit: {{ unit.unit_code }}, 
-              Load: {{ unit.load }}
-            </p>
-          @endeach
-          <div class="field is-grouped is-grouped-multiline">
-            @each(tag in allocAcademic.tags)
-            <div class="control">
-              <div class="tags has-addons">
-                <a class="tag is-info">{{tag.tag}}</a>
-              </div>
-            </div>
-            @endeach
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
---}}
 {{--  if theres no allocations, display a warning  --}}
 @else
   <section class="hero is-danger">
