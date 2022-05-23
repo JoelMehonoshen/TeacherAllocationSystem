@@ -1,43 +1,38 @@
+/* || GENERAL STYLES */
+
 html,body{
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.make-flex{
+/* || END */
+
+/* || UTILITIES */
+
+.flex-container{
     display: flex;
 }
 
-.home-login-container{
-    width:100%;
-    height: 100%;
-    background: url('splash.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    display: flex;
+.flex-center{
     justify-content: center;
     align-items: center;
 }
 
-.home-login-card{
-    min-width:400px;
-    height:fit-content;
-    padding:16px 48px;
-    background-color: rgba(255, 255, 255, 0.9);
-    text-align: center;
+.flex-col{
+    flex-direction: column;
 }
 
-.login-title{
-    font-size: xx-large;
-    padding:32px 0px 16px 0px;
-    font-weight: lighter;
+.img-cover{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .input-group{
     padding: 8px 0px;
 }
 
-.login-input{
+.text-input{
     width:100%;
     padding:12px;
     border: 1px solid lightgray;
@@ -50,56 +45,129 @@ html,body{
     border-radius: 10px;
 }
 
-.button-blue{
-    padding:10px 32px 10px 32px;
-    background-color: #175e9c;
-    color: white;
-    border:none;
-    cursor: pointer;
-    font-size: medium;
-    border-radius: 10px;
-    font-family: Arial, Helvetica, sans-serif;
+.full-width{
+    width: 100%;
+}
+
+.icon{
+    padding-right:32px;
+}
+
+.text-align-center{
     text-align: center;
+}
+
+/* || END */
+
+/* || PADDING */
+
+.padding-32{
+    padding: 32px;
+}
+
+.padding-24{
+    padding: 24px;
+}
+
+.padding-16{
+    padding: 16px;
+}
+
+/* || END */
+
+/* || PADDING */
+
+.margin-8{
     margin:8px;
 }
 
-.button-blue-login{
+/* || END */
+
+/* || COLORS */
+
+.white-transparent-fill{
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* || END */
+
+/* || TEXT/FONTS */
+
+.dd-title{
+    font-size: xx-large;   
+}
+
+.font-weight-light{
+    font-weight: lighter;
+}
+
+.font-weight-med{
+    font-weight: 600;
+}
+
+.font-weight-bold{
+    font-weight: bold;
+}
+
+.font-med{
+    font-size: medium;
+}
+
+.dd-font{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.page-title{
+    font-size: xx-large;
+    font-weight: bold;
+    margin-left:8px;
+}
+
+.page-subtitle{
+    font-size: large;
+    margin-left:8px;
+}
+
+/* || END */
+
+/* || BUTTONS */
+
+.dd-button{
     padding:10px 32px 10px 32px;
-    background-color: #175e9c;
-    color: white;
     border:none;
     cursor: pointer;
     font-size: medium;
-    border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 }
 
-.button-cancel{
+.dd-button--round{
     padding:10px 32px 10px 32px;
+    border:none;
+    cursor: pointer;
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.button-blue-fill{
+    background-color: #175e9c;
+    color: white;
+}
+
+.button-blue-fill:hover{
+    background-color: #134f84;
+    color: white;
+}
+
+.button-red-fill{
     background-color: #ff0000;
     color: white;
-    border:none;
-    cursor: pointer;
-    font-size: medium;
-    border-radius: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    margin:8px;
 }
 
-.button-cancel:hover{
+.button-red-fill:hover{
     background-color: #bb0000;
-    color: white;
-}
-
-.button-blue:hover{
-    background-color: #0f3e66;
-    color: white;
-}
-
-.button-blue-login:hover{
-    background-color: #0f3e66;
     color: white;
 }
 
@@ -114,7 +182,7 @@ html,body{
     color: lightgrey;
 }
 
-.list-action-button{
+.dd-button--hyperlink{
     background-color: transparent;
     color: black;
     border:none;
@@ -126,9 +194,32 @@ html,body{
     text-align: center;
 }
 
-.list-action-button:hover{
+.dd-button--hyperlink:hover{
     color: blue;
 }
+
+/* || END */
+
+/* || HOME PAGE */
+.home-background{
+    width:100%;
+    height: 100%;
+    background: url('splash.jpg');   
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.login-card{
+    min-width:400px;
+    height:fit-content;
+    padding:16px 56px;
+    text-align: center;
+}
+
+/* || END */
+
+/* || SEARCHBAR */
 
 .searchbar-select{
     padding:8.2px 16px;
@@ -187,16 +278,9 @@ html,body{
     padding:0px 0px 32px 0px;
 }
 
-.full-width{
-    width: 100%;
-}
+/* || END */
 
-
-.login-sign-up-prompt{
-    font-size: medium;
-    padding: 16px 0px 32px 0px;
-}
-
+/* || SIDEBAR || NAVBAR || NAV */
 .sidebar-cont{
     display: block;
     min-width: 180px;
@@ -233,7 +317,10 @@ html,body{
     color: white;
 }
 
-.dashboard-content{
+/* || END */
+
+/* || DASHBOARD || CONTENT || MAIN CONTENT */
+.main-content{
     padding:64px;
     width: 100%;
     min-height: 100%;
@@ -241,10 +328,6 @@ html,body{
     background-color: rgb(239, 239, 239);
     display: flex;
     flex-direction: column;
-}
-
-.dd-font{
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .dashboard-col{
@@ -275,28 +358,15 @@ html,body{
 .dashboard-title{
     font-size: x-large;
     font-weight: 600;
-    
 }
 
 .dashboard-paragraph{
     font-size: medium;
 }
 
-.page-title{
-    font-size: xx-large;
-    font-weight: bold;
-    margin-left:8px;
-}
+/* || END */ 
 
-.page-subtitle{
-    font-size: large;
-    margin-left:8px;
-}
-
-.icon{
-    padding-right:32px;
-}
-
+/* || IMPORTER || DROP-ZONE || FILE UPLOAD */
 .drop-zone{
     width:100%;
     height: fit-content;
@@ -320,12 +390,14 @@ html,body{
     margin-bottom:12px;
 }
 
-.list-outter{
+/* || END */ 
+
+.table-outter{
     margin:0px 0px;
     border-bottom: 1px solid lightgray;
 }
 
-.list-visible{
+.table-static{
     width: 100%;
     height:fit-content;
     background-color: rgb(249, 249, 249);
@@ -335,22 +407,7 @@ html,body{
     font-weight: bold;
 }
 
-.list-visible-inner{
-    width: auto;
-    height:fit-content;
-    display: flex;
-    align-items: center;
-    border-bottom:1px lightgrey solid ;
-    flex:1;
-    margin:0% 3%;
-    padding:8px 0px;
-}
-
-.bold{
-    font-weight: bold;
-}
-
-.list-collapse{
+.table-collapse{
     width: 100%;
     height:fit-content;
     background-color: rgb(234, 234, 234);
@@ -361,7 +418,18 @@ html,body{
     justify-content: center;
 }
 
-.list-title-block{
+.table-collapse--inner{
+    width: auto;
+    height:fit-content;
+    display: flex;
+    align-items: center;
+    border-bottom:1px lightgrey solid ;
+    flex:1;
+    margin:0% 3%;
+    padding:8px 0px;
+}
+
+.table-title-block{
     width: 100%;
     background-color:rgb(249, 249, 249);
     display: flex;
@@ -370,31 +438,50 @@ html,body{
     padding:12px 0px;
 }
 
-.alloc-name{
+.table-section--xx-small{
+    width: 3%;
+}
+
+.table-section--x-small{
+    width: 6%;
+}
+
+.table-section--small{
+    width: 10%;
+}
+
+.table-section--medium{
     width:15%;
 }
 
-.alloc-load{
-    width:10%;
-}
-
-.alloc-units{
+.table-section--large{
     width:20%;
 }
 
-@keyframes arrow-spin-down {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(90deg);}
+.table-section--x-large{
+    width:25%;
 }
 
-@keyframes arrow-spin-up {
-    from {transform: rotate(90deg);}
-    to {transform: rotate(0deg);}
+.table-section--stat{
+    width:25px;
 }
 
-.alloc-arrow{
-    width: 3%;
-    text-align: center;
+.stat-green{
+    height: 15px;
+    background-color: green;
+    border-radius: 10px;
+}
+
+.stat-red{
+    height: 15px;
+    background-color: red;
+    border-radius: 10px;
+}
+
+.stat-yellow{
+    height: 15px;
+    background-color: yellow;
+    border-radius: 10px;
 }
 
 .arrow-normal{
@@ -409,40 +496,21 @@ html,body{
     transform: rotate(90deg);
 }
 
-.alloc-row{
-    display: flex;
+@keyframes arrow-spin-down {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(90deg);}
 }
 
-.alloc-stat{
-    width:25px;
+@keyframes arrow-spin-up {
+    from {transform: rotate(90deg);}
+    to {transform: rotate(0deg);}
 }
 
-.alloc-stat-green{
-    height: 15px;
-    background-color: green;
-    border-radius: 10px;
+
+.pop-up{
+    transform: translate(0%,-25%);
 }
 
-.alloc-stat-red{
-    height: 15px;
-    background-color: red;
-    border-radius: 10px;
-}
 
-.alloc-stat-yellow{
-    height: 15px;
-    background-color: yellow;
-    border-radius: 10px;
-}
 
-.alloc-action{
-    width: 10%;
-}
 
-.alloc-tag{
-    width:25%;
-}
-
-.margin-8{
-    margin:8px;
-}

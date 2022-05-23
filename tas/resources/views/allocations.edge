@@ -2,8 +2,8 @@
 <html>
   @!component('components.head', title="Teacher Allocation System")
   @include('partials/sidebar')
-  <body class="make-flex">
-    <div class="dashboard-content dd-font">
+  <body class="flex-container">
+    <div class="main-content dd-font">
       {{--  Warning Message for Unallocated units  --}}
       <div>
         @if(unitsUnalloc > 0)
@@ -24,7 +24,7 @@
       @!component('components.searchbar', title="Find allocation", csrf=csrfField(), years=years, route=route('AllocationController.render'))
 
 
-      <div class="allocation-container">
+      <div>
         {{-- Display Allocations --}}
         @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)
       </div>
