@@ -3,9 +3,9 @@
 @loggedIn
   @!component('components.head', title="Teacher Allocation System")
   @include('partials/sidebar')
-  <body class="make-flex">
+  <body class="flex-container">
     
-    <section class="dashboard-content dd-font">
+    <section class="main-content dd-font">
       <h1 class="page-title">Home</h1>
       
       <div class="dashboard-col">
@@ -66,23 +66,23 @@
 @else
 
   @!component('components.head', title="Teacher Allocation System")
-  <body class="make-flex">
-    <div class="home-login-container">
-      <div class="home-login-card">
-        <h1 class="login-title">Login to TAS</h1>
+  <body class="flex-container">
+    <div class="home-background flex-container flex-center img-cover">
+      <div class="login-card white-transparent-fill">
+        <h1 class="dd-title font-weight-light padding-24">Login to TAS</h1>
         <form method="POST" action="{{ route('UserController.login') }}">      
           {{ csrfField() }}
           <div class="input-group">
-            <input class="login-input" type="text" name="email" placeholder="Email">
+            <input class="text-input" type="text" name="email" placeholder="Email">
           </div>
           <div class="input-group">
-            <input class="login-input" type="password" name="password" placeholder="Password">
+            <input class="text-input" type="password" name="password" placeholder="Password">
           </div>
           <div class="input-group">
-            <input class="button-blue-login full-width" type="submit" value="Submit">
+            <input class="dd-button--round button-blue-fill full-width" type="submit" value="Submit">
           </div>
           </form>
-        <p class="login-sign-up-prompt">Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
+        <p class="font-med padding-24">Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
       </div>
     </div>
   </body>
