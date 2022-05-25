@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Academic extends Model {
-    academic_preferences() {
+    academic_preference() {
         return this.hasMany("App/Models/AcademicPreference")
     }
 

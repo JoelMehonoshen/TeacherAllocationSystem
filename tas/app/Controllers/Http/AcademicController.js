@@ -32,6 +32,7 @@ class AcademicController {
         .update({
           name: request.input("name"),
           load: request.input("load"),
+          academic_preference: request.input("academic_preference"),
         });
 
         if(request.input("tags")){

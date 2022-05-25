@@ -7,6 +7,7 @@ const Helpers = use("Helpers");
 const Academic = use("App/Models/Academic");
 const Unit = use("App/Models/Unit");
 const Allocation = use("App/Models/Allocation");
+const AcademicPreference = use("App/Models/AcademicPreference");
 const Database = use("Database");
 
 class UnitImport {
@@ -42,6 +43,7 @@ class AcademicImport {
     ac.year = this.year;
     ac.school = "Information Technology";
     ac.load = this.load;
+    ac.academic_preference = this.academic_preference;
     await ac.save();
 
     if (this.allocations.length > 0) {
@@ -121,6 +123,7 @@ class ImportController {
     for (let i = 8; i < academicsCol.values.length - 3; i++) {
       const row = sheet.getRow(i + 1);
       const name = row.getCell("A").value;
+      const academic_preference = row.getCell("B").value;
       const load = row.getCell("D").value;
       let allocs = [];
       row.eachCell((cell, colNumber) => {
@@ -136,7 +139,7 @@ class ImportController {
           allocs.push({ UnitImport: unitImport, load: cell.value });
         }
       });
-      const ac = new AcademicImport(name, year, load, allocs);
+      const ac = new AcademicImport(name, year, load, allocs, academic_preference);
       academicsList.push(ac);
     }
 

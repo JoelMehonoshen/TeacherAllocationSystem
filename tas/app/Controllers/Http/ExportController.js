@@ -26,7 +26,7 @@ class ExportController {
     for (let i = 0; i < academics.length; i++) {
         const academicNameCell = sheet.getCell("A"+(i+9).toString())
         academicNameCell.value = academics[i].name
-        sheet.getCell("B"+(i+9).toString()).value = academics[i].AcademicPreference
+        sheet.getCell("B"+(i+9).toString()).value = academics[i].academic_preference
         sheet.getCell("C"+(i+9).toString()).value = "CS"
         sheet.getCell("D"+(i+9).toString()).value = academics[i].load
         sheet.getCell("E"+(i+9).toString()).value = {formula: "D"+(9+i).toString()+"*$C$2"}
