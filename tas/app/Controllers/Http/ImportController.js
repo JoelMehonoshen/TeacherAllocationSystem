@@ -21,11 +21,12 @@ class UnitImport {
 }
 
 class AcademicImport {
-  constructor(name, year, load, allocations) {
+  constructor(name, year, load, allocations, academic_preference) {
     this.name = name;
     this.year = year;
     this.load = load;
     this.allocations = [];
+    this.academic_preference = academic_preference;
     if (allocations !== undefined) {
       this.allocations = allocations;
     }

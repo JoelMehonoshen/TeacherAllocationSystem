@@ -15,7 +15,7 @@ class ExportController {
     await workbook.xlsx.readFile("public/template.xlsx");
 
     const sheet = workbook.worksheets[0];
-    
+
     const academicsDB = await Academic.all();
     const academics = academicsDB.toJSON();
 
@@ -26,7 +26,7 @@ class ExportController {
     for (let i = 0; i < academics.length; i++) {
         const academicNameCell = sheet.getCell("A"+(i+9).toString())
         academicNameCell.value = academics[i].name
-
+        sheet.getCell("B"+(i+9).toString()).value = academics[i].AcademicPreference
         sheet.getCell("C"+(i+9).toString()).value = "CS"
         sheet.getCell("D"+(i+9).toString()).value = academics[i].load
         sheet.getCell("E"+(i+9).toString()).value = {formula: "D"+(9+i).toString()+"*$C$2"}
@@ -38,7 +38,7 @@ class ExportController {
 
     sheet.getColumn('G').values = ["Code", "Name", "Semester", "Students", "Share", "Assigned Load", "Allocated Load"]
     sheet.getCell("C2").value = {
-        formula: this.hex(units.length+7+1)+"6/D"+(academics.length+9+1).toString() 
+        formula: this.hex(units.length+7+1)+"6/D"+(academics.length+9+1).toString()
     }
 
     sheet.getCell("C"+(academics.length+9+1).toString()).value = "Total:"
@@ -90,18 +90,18 @@ class ExportController {
         unitCodeCol.values = allocCol
     }
 
-    
+
     await workbook.xlsx.writeFile("public/template2.xlsx");
   }
 
-  
+
 
   hex(a) {
     const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // First figure out how many digits there are.
     a += 1; // This line is funky
     var c = 0;
-    var x = 1;      
+    var x = 1;
     while (a >= x) {
         c++;
         a -= x;
