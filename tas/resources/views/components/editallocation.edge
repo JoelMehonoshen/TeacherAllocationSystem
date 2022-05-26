@@ -11,57 +11,58 @@
 </button>
 
 <div id="{{allocAcademic.id}}" class="modal">
-  <div class="modal-background"></div>
-      <div class="modal-card pop-up">
-        
-        <header class="modal-card-head">
-            <p class="modal-card-title">Edit Allocation Details</p>
-            <button class="delete" aria-label="close" data-dismiss="modal"></button>
-          </header>
+    <div class="modal-background flex-container flex-center" >
+        <div class="modal-card">
+            
+            <header class="modal-card-head">
+                <p class="modal-card-title">Edit Allocation Details</p>
+                <button class="delete" aria-label="close" data-dismiss="modal"></button>
+            </header>
 
-        <section class="modal-card-body">       
-        <form method="POST" action="{{ route('AllocationController.updateAllocation') }}"> 
-            {{csrf}}
-            <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
-            <div class="field">
-                <label class="label">Academic Name</label>
-                <div class="control">
-                    <input class="input" type="text" name="name" value="{{ allocAcademic.name }}">
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Requested Load</label>
-                <div class="control">
-                    <input class="input" type="number" min="0" step=".1" name="requestedLoad" value="{{ allocAcademic.requestedLoad }}">
-                </div>
-            </div>
-            @each(unit in allocAcademic.allocUnits)
-            <input type="hidden" name="allocationID" value="{{unit.allocation_id}}">
+            <section class="modal-card-body">       
+            <form method="POST" action="{{ route('AllocationController.updateAllocation') }}"> 
+                {{csrf}}
+                <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
                 <div class="field">
-                    <label class="label">Unit:</label>
+                    <label class="label">Academic Name</label>
                     <div class="control">
-                        <input class="input" type="text" name="unit" value="{{ unit.unit_code }}">
+                        <input class="input" type="text" name="name" value="{{ allocAcademic.name }}">
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Load:</label>
+                    <label class="label">Requested Load</label>
                     <div class="control">
-                        <input class="input" type="number" min="0" step=".1" name="unitLoad" value="{{ unit.load }}">
+                        <input class="input" type="number" min="0" step=".1" name="requestedLoad" value="{{ allocAcademic.requestedLoad }}">
                     </div>
-                </div>                
-            @endeach
-            {{--  Tags  --}}
-            <div class="field">
-                <label class="label">Tags:</label>
-                <div class="field has-addons has-addons-centered">
-                    <input class="input" type="text" name="tags">
                 </div>
-            </div>         
-            </section> 
-            <footer class="modal-card-foot">
-                <input type="submit" value="Update Allocation" class="dd-button--round button-blue-fill margin-8">
-                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>   
-            </footer>
-        </form>
+                @each(unit in allocAcademic.allocUnits)
+                <input type="hidden" name="allocationID" value="{{unit.allocation_id}}">
+                    <div class="field">
+                        <label class="label">Unit:</label>
+                        <div class="control">
+                            <input class="input" type="text" name="unit" value="{{ unit.unit_code }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Load:</label>
+                        <div class="control">
+                            <input class="input" type="number" min="0" step=".1" name="unitLoad" value="{{ unit.load }}">
+                        </div>
+                    </div>                
+                @endeach
+                {{--  Tags  --}}
+                <div class="field">
+                    <label class="label">Tags:</label>
+                    <div class="field has-addons has-addons-centered">
+                        <input class="input" type="text" name="tags">
+                    </div>
+                </div>         
+                </section> 
+                <footer class="modal-card-foot">
+                    <input type="submit" value="Update Allocation" class="dd-button--round button-blue-fill margin-8">
+                    <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>   
+                </footer>
+            </form>
+        </div>
     </div>
 </div>
