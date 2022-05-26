@@ -2,10 +2,10 @@
   <div class="table-outter">
     <div class="table-title-block">
       <div class="table-section--xx-small margin-8"></div>
-      <div class="table-section--large margin-8">Name</div>
+      <div class="table-section--x-large margin-8">Name</div>
       <div class="table-section--x-large margin-8">School</div>
       <div class="table-section--medium margin-8">Load</div>
-      <div class="table-section--medium margin-8">Academic Preference: </div>
+      <div class="table-section--large margin-8">Academic Preference</div>
       <div class="table-section--medium margin-8">Status</div>
       <div class="table-section--x-large margin-8">Tags</div>
       <div class="table-section--small margin-8">Actions</div>
@@ -20,10 +20,10 @@
   <div class="table-outter">
    <div class="table-static">
       <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-      <div class="table-section--large margin-8">{{ academic.name }}</div>
+      <div class="table-section--x-large margin-8">{{ academic.name }}</div>
       <div class="table-section--x-large margin-8">{{ academic.school }}</div>
-      <div class="table-section--medium">{{ academic.load }}</div>
-      <div class="table-section--medium">{{academic.academic_preference}}</div>
+      <div class="table-section--medium margin-8">{{ academic.load }}</div>
+      <div class="table-section--large margin-8">{{academic.academic_preference}}</div>
       @if(academic.load > 1)
       <div class="table-section--medium margin-8">
         <div class="table-section--stat stat-red margin-8"></div>
@@ -52,7 +52,7 @@
       </div>
 
    </div>
-   <div class="table-collapse">
+  {{--<div class="table-collapse"></div>--}}
   </div>
 
 </div>
@@ -68,25 +68,6 @@
         </p>
       </div>
     </section>
-  @endeach
+@endeach
 
-  <script>
-  var coll = document.getElementsByClassName("table-static");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var arrow = this.firstChild.nextElementSibling.firstChild;
-      arrow.classList.toggle("arrow-down");
-      var content = this.nextElementSibling;
-      if (content.style.display === "block") {
-        content.style.display = "none";
-        arrow.classList.toggle("arrow-normal");
-      } else {
-        content.style.display = "block";
-
-      }
-    });
-  }
-  </script>
+@!component('components.tableJS')

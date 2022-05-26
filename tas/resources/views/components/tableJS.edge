@@ -1,0 +1,33 @@
+<script>
+    var coll = document.getElementsByClassName("table-static");
+    var i;
+
+    try {
+
+      for (i = 0; i < coll.length; i++) {
+        if(i % 2 === 0){
+            coll[i].classList.add("table-bg-primary");
+            coll[i].nextElementSibling.classList.add("table-bg-primary");
+          } else {
+            coll[i].classList.add("table-bg-secondary");
+            coll[i].nextElementSibling.classList.add("table-bg-secondary");
+          }
+
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var arrow = this.firstChild.nextElementSibling.firstChild;
+          arrow.classList.toggle("arrow-down");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+            arrow.classList.toggle("arrow-normal");
+          } else {
+            content.style.display = "block";
+          }        
+        });
+
+      } catch (error) {
+        continue;
+      }
+    }
+    </script>
