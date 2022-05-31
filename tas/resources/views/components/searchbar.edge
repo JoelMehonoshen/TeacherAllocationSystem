@@ -5,23 +5,16 @@
   <div class="field has-addons">
     <p class="control">
       <div class="">
-        <input class="search-input" type="text" name="search" placeholder="{{title}}">
+        <input class="search-input" type="text" name="search" placeholder="{{title}}"></input>
       </div>
-      <span class="">
-        <select class="searchbar-select">
-          <option value="" disabled selected >Year</option>
-          @each(year in years)
-          <option>{{ year }}</option>
-          @endeach
-        </select>
-      </span>
-    </p>
     
     <p class="has-addons">
       <button class="searchbar-button" type="submit">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
+      
       <button class="searchbar-clear-button" href="allocations">
+        <i class="fa fa-undo" aria-hidden="true"></i>
         Reset
       </button>
     </p>

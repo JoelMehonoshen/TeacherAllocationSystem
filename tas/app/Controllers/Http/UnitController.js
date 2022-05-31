@@ -9,9 +9,22 @@ class UnitController {
     try {
       if (request.input("search")) {
         const units = await Database.from("units")
-          .where('id', "like", "%"+request.input("search")+"%")
-          .orWhere('name', "like", "%"+request.input("search")+"%")
+          .where('id', "ilike", "%" + request.input("search") + "%")
+          .orWhere('name', "ilike", "%" + request.input("search") + "%")
         return view.render("units", { units: units });
+
+      } if (request.input("sort")) {
+        const units = await Database.from("units")
+          .orderBy(request.input("sort"))
+          .orderBy("id")
+        return view.render("units", { units: units });
+
+      } if (request.input("filter")) {
+        const units = await Database.from("units")
+          .where(request.input("filter"))
+          .orderBy("id")
+        return view.render("units", { units: units });
+
       } else {
         const units = await Unit.all();
         return view.render("units", { units: units.toJSON() });

@@ -61,7 +61,7 @@ class AcademicController {
         var academics = await Database
         .select("*")
         .from("academics")
-        .where("academics.name",'like',"%"+request.input("search")+"%")
+        .where("academics.name",'ilike',"%"+request.input("search")+"%")
 
       } else {
         var academics = await Database

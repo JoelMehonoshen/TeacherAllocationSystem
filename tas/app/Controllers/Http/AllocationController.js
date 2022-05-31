@@ -99,8 +99,8 @@ class AllocationController {
           .distinct("academics.id")
           .from("academics")
           .leftJoin("tags","academics.id","tags.academic_id")
-          .where("academics.name",'like',"%"+request.input("search")+"%")
-          .orWhere("tags.tag",'like',"%"+request.input("search")+"%")
+          .where("academics.name",'ilike',"%"+request.input("search")+"%")
+          .orWhere("tags.tag",'ilike',"%"+request.input("search")+"%")
 
         console.log(academics)
       } else {
