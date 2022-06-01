@@ -7,28 +7,47 @@ const Database = use("Database");
 class UnitController {
   async render({ request, view }) {
     try {
-      if (request.input("search")) {
-        const units = await Database.from("units")
-          .where('id', "ilike", "%" + request.input("search") + "%")
-          .orWhere('name', "ilike", "%" + request.input("search") + "%")
-        return view.render("units", { units: units });
 
-      } if (request.input("sort")) {
-        const units = await Database.from("units")
-          .orderBy(request.input("sort"))
-          .orderBy("id")
-        return view.render("units", { units: units });
+      // obtain user input from the sort and filter options
+      var search = request.input("search")
+      var sort = request.input("sort")
+      var idfilter = request.input("idfilter")
+      var semfilter = request.input("semfilter")
+      var minload = request.input("minload")
+      var maxload = request.input("maxload")
+      var minstudents = request.input("minstudents")
+      var maxstudents = request.input("maxstudents")
+      var minshare = request.input("minshare")
+      var maxshare = request.input("maxshare")
 
-      } if (request.input("filter")) {
-        const units = await Database.from("units")
-          .where(request.input("filter"))
-          .orderBy("id")
-        return view.render("units", { units: units });
+      //
+      if (!search && !idfilter) { search = "%" }
+      if (!search && idfilter) { search = idfilter }
+      if (!sort) { sort = "id" }
+      if (!semfilter) { semfilter = 0 }
+      if (semfilter == 1) { semfilter = 2 }
+      else if (semfilter == 2) { semfilter = 1 }      
+      if (!minload) { minload = 0 }
+      if (!maxload) { maxload = 99 }
+      if (!minstudents) { minstudents = 0 }
+      if (!maxstudents) { maxstudents = 99999 }
+      if (!minshare) { minshare = 0 }
+      if (!maxshare) { maxshare = 99 }
 
-      } else {
-        const units = await Unit.all();
-        return view.render("units", { units: units.toJSON() });
-      }
+      const units = await Database.from("units")
+        .where('id', "ilike", "%" + search + "%")
+        //.orWhere('name', "ilike", "%" + search + "%")
+        .where("semester", '<>', semfilter)
+        .where("assignedLoad", '>=', minload)
+        .where("assignedLoad", '<=', maxload)
+        .where("students", '>=', minstudents)
+        .where("students", '<=', maxstudents)
+        .where("share", '>=', minshare)
+        .where("share", '<=', maxshare)
+        .orderBy(sort)
+
+      return view.render("units", { units: units });
+      
     } catch (error) {
       Logger.error(error);
       throw new Exception();

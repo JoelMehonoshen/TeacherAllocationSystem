@@ -14,11 +14,11 @@
       @!component('components.addunit', csrf=csrfField())
       </div>
 
-      @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('UnitController.render'))
+      @!component('components.searchbar', title="Find Unit", units=units, csrf=csrfField(), route=route('UnitController.render'))
 
       <div>
         {{-- Display Units --}}
-        @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units)
+        @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units=units)
       </div>
 
     </div>
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="section">
-        @!component('components.searchbar', title="Find Unit", csrf=csrfField(), route=route('UnitController.render'))
+        @!component('components.searchbar', title="Find Unit", units=units, csrf=csrfField(), route=route('UnitController.render'))
       </div>
       @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units)
       <br>
