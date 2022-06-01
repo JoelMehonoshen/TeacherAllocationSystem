@@ -8,7 +8,7 @@ class UnitController {
   async render({ request, view }) {
     try {
 
-      // obtain user input from the sort and filter options
+      // obtain user input from searchbar + sort + filter options
       var search = request.input("search")
       var sort = request.input("sort")
       var idfilter = request.input("idfilter")
@@ -20,7 +20,7 @@ class UnitController {
       var minshare = request.input("minshare")
       var maxshare = request.input("maxshare")
 
-      //
+      // if no user input, use default sort + filter options
       if (!search && !idfilter) { search = "%" }
       if (!search && idfilter) { search = idfilter }
       if (!sort) { sort = "id" }
@@ -34,6 +34,7 @@ class UnitController {
       if (!minshare) { minshare = 0 }
       if (!maxshare) { maxshare = 99 }
 
+      // perform SQL query
       const units = await Database.from("units")
         .where('id', "ilike", "%" + search + "%")
         //.orWhere('name', "ilike", "%" + search + "%")
@@ -46,7 +47,14 @@ class UnitController {
         .where("share", '<=', maxshare)
         .orderBy(sort)
 
-      return view.render("units", { units: units });
+      const ids = await Database.from("units")        
+        .distinct("id")
+        .orderBy("id")
+
+      return view.render("units", {
+        units: units,
+        ids: ids
+      });
       
     } catch (error) {
       Logger.error(error);

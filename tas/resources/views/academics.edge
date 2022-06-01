@@ -12,7 +12,7 @@
       @!component('components.addacademic', csrf=csrfField())
       </div>
 
-      @!component('components.searchbar', title="Find Academic", csrf=csrfField(), route=route('AcademicController.render'))
+      @!component('components.searchAcademics', title="Find academic", schools=schools, csrf=csrfField(), route=route('AcademicController.render'))
 
       <div>
          {{-- Display Academics --}}

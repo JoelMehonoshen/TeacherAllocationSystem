@@ -57,19 +57,35 @@ class AcademicController {
 
   async render({ request, view }) {
     try {
-      if (request.input("search")) {
-        var academics = await Database
-        .select("*")
-        .from("academics")
-        .where("academics.name",'ilike',"%"+request.input("search")+"%")
 
-      } else {
-        var academics = await Database
-        .select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
-        .from("academics")
-      }
-      console.log(academics)
-      return view.render("academics", { academics: academics });
+      // obtain user input from searchbar + sort + filter options
+      var search = request.input("search")
+      var sort = request.input("sort")
+      var minload = request.input("minload")
+      var maxload = request.input("maxload")
+
+      // if no user input, use default sort + filter options
+      if (!search) { search = "%" }
+      if (!sort) { sort = "name" }
+      if (!minload) { minload = 0 }
+      if (!maxload) { maxload = 99 }
+
+      // perform SQL query
+      const academics = await Database.from("academics")
+        //.select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
+        .where("name", 'ilike', "%" + search + "%")
+        .orderBy(sort)
+
+      const schools = await Database.from("academics")
+        .distinct("school")
+        .orderBy("school")
+
+      //console.log(academics)
+      return view.render("academics", {
+        academics: academics,
+        schools: schools
+      });
+
     } catch (error) {
       Logger.error(error);
       throw new Exception();

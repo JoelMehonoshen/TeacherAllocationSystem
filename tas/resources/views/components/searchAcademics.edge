@@ -1,0 +1,62 @@
+<div class="searchbar-wrapper">
+  <form method="GET" action="{{ route }}">
+    {{csrf}}
+
+    <div class="field has-addons">
+    <p class="control">
+      <div class="">
+        <input class="search-input" type="text" name="search" placeholder="{{title}}"></input>
+      </div>
+    </p>
+
+    <p class="has-addons">
+      <button class="searchbar-button" type="submit">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+      <button class="searchbar-clear-button" href="allocations">
+        <i class="fa fa-undo" aria-hidden="true"></i>
+        Reset
+      </button>
+    </p>
+  </div>
+
+    <div class="dashboard-col">
+      <div class="dashboard-card">
+        <h2 class="dashboard-title">Sort</h2>
+        <select class="searchbar-select" name="sort">
+          <option value="" disabled="" selected="">Sort by...</option>
+          <option value="name">Academic Name</option>
+          <option value="school">School</option>
+          <option value="load">Requested Load</option>
+          <option value="academic_preference">Academic Preference</option>
+        </select>
+      </div>
+
+        <div class="dashboard-card card-half">
+          <h2 class="dashboard-title">Filter</h2>
+          <select class="searchbar-select" name="idfilter">
+            <option value="" disabled="" selected="">Filter by school...</option>
+            @each(academic in schools)
+            <option>{{ academic.school }}</option>
+            @endeach
+          </select>
+
+          <div style="width: 100%; display: table">
+            <div style="display: table-row">
+              <div style="display: table-cell">
+                &nbsp<p><b>Requested Load</b></p>
+              </div>
+              <div style="display: table-cell; width: 100px;">
+                Min. <input class="input" type="number" min="0" name="minload" step="any"></input>
+              </div>
+              <div style="display: table-cell; width: 100px;">
+                Max. <input class="input" type="number" min="0" name="maxload" step="any"></input>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      
+  </form>
+</div>
