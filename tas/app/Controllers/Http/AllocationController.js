@@ -72,8 +72,8 @@ class AllocationController {
       try{
 
       //Get units, needed for adding allocations
-      var unitList = await Database.select("*").from("units");
-      var academicList = await Database.select("*").from("academics");
+      var unitList = await Database.from("units");
+      var academicList = await Database.from("academics");
       var allocations = await Database.from("academics")
       .select(
         "allocations.unit_code",
@@ -92,23 +92,25 @@ class AllocationController {
       .select("allocation_id","tag")
       .where("type","=","allocation")
 
-      if (request.input("search")) {
-        // Retrieves search information from each table
-        var academics = await Database
-          .select("academics.id", "academics.name", "academics.load")
-          .distinct("academics.id")
-          .from("academics")
-          .leftJoin("tags","academics.id","tags.academic_id")
-          .where("academics.name",'ilike',"%"+request.input("search")+"%")
-          .orWhere("tags.tag",'ilike',"%"+request.input("search")+"%")
+      // obtain user input from searchbar + sort + filter options
+      var search = request.input("search")
+      var sort = request.input("sort")
 
-        console.log(academics)
-      } else {
-        // Retrieves all information from each table
-        var academics = await Database.select("id", "name", "load")
-          .from("academics")
-          .distinct("id");
-      }
+      // if no user input, use default sort + filter options
+      if (!search) { search = "%" }
+      if (!sort) { sort = "name" }
+
+      // Retrieves search information from each table
+      var academics = await Database
+        .select("academics.id", "academics.name", "academics.load")
+        .distinct("academics.id")
+        .from("academics")
+        .leftJoin("tags","academics.id","tags.academic_id")
+        .where("academics.name", 'ilike', "%" + search + "%")
+        .orWhere("tags.tag", 'ilike', "%" + search + "%")
+
+      //console.log(academics)
+
       // Coorelates academics and their allocations based on id
       var allocAcademics = [];
       //for each academic, check for allocations
@@ -156,6 +158,7 @@ class AllocationController {
           }
         }
       }
+
       //dynamically produce last 5 years for search bar drop down box
       let years = [];
       let currentYear = new Date().getFullYear() + 1;

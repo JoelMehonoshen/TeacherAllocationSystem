@@ -36,7 +36,7 @@ class UnitController {
 
       // perform SQL query
       const units = await Database.from("units")
-        .where('id', "ilike", "%" + search + "%")
+        .where("id", "ilike", "%" + search + "%")
         //.orWhere('name', "ilike", "%" + search + "%")
         .where("semester", '<>', semfilter)
         .where("assignedLoad", '>=', minload)
@@ -47,7 +47,8 @@ class UnitController {
         .where("share", '<=', maxshare)
         .orderBy(sort)
 
-      const ids = await Database.from("units")        
+      const ids = await Database.from("units")
+        .select("id")
         .distinct("id")
         .orderBy("id")
 

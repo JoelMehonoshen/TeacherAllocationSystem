@@ -25,20 +25,18 @@
         <h2 class="dashboard-title">Sort</h2>
         <select class="searchbar-select" name="sort">
           <option value="" disabled="" selected="">Sort by...</option>
-          <option value="id">ID</option>
-          <option value="name">Name</option>
+          <option value="academic.name">Academic Name</option>
           <option value="semester">Semester</option>
-          <option value="assignedLoad">Assigned Load</option>
-          <option value="students">Number of Students</option>
-          <option value="share">Share</option>
+          <option value="">Preferred Load</option>
+          <option value="">Actual Load</option>
         </select>
       </div>
 
         <div class="dashboard-card card-half">
           <h2 class="dashboard-title">Filter</h2>
-          <select class="searchbar-select" name="idfilter">
-            <option value="" disabled="" selected="">Filter by ID...</option>
-            @each(unit in units)
+          <select class="searchbar-select" name="unitfilter">
+            <option value="" disabled="" selected="">Filter by unit...</option>
+            @each(unit in unitList)
             <option>{{ unit.id }}</option>
             @endeach
           </select>
@@ -49,16 +47,23 @@
             <option>2</option>
           </select>
 
+          <select class="searchbar-select" name="yearfilter">
+            <option value="" disabled="" selected="">Filter by year...</option>
+            @each(year in years)
+            <option>{{ year }}</option>
+            @endeach
+          </select>
+
           <div style="width: 100%; display: table">
             <div style="display: table-row">
               <div style="display: table-cell">
-                &nbsp<p><b>Assigned Load</b></p>
+                &nbsp<p><b>Preferred Load</b></p>
               </div>
               <div style="display: table-cell; width: 100px;">
-                Min. <input class="input" type="number" min="0" name="minload" step="any"></input>
+                Min. <input class="input" type="number" min="0" name="minpreload" step="any"></input>
               </div>
               <div style="display: table-cell; width: 100px;">
-                Max. <input class="input" type="number" min="0" name="maxload" step="any"></input>
+                Max. <input class="input" type="number" min="0" name="maxpreload" step="any"></input>
               </div>
             </div>
           </div>
@@ -66,27 +71,13 @@
           <div style="width: 100%; display: table">
             <div style="display: table-row">
               <div style="display: table-cell">
-                &nbsp<p><b>Number of Students</b></p>
+                &nbsp<p><b>Actual Load</b></p>
               </div>
               <div style="display: table-cell; width: 100px;">
-                Min. <input class="input" type="number" min="0" name="minstudents" step="any"></input>
+                Min. <input class="input" type="number" min="0" name="minactload" step="any"></input>
               </div>
               <div style="display: table-cell; width: 100px;">
-                Max. <input class="input" type="number" min="0" name="maxstudents" step="any"></input>
-              </div>
-            </div>
-          </div>
-
-          <div style="width: 100%; display: table">
-            <div style="display: table-row">
-              <div style="display: table-cell">
-                &nbsp<p><b>Share</b></p>
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Min. <input class="input" type="number" min="0" name="minshare" step="any"></input>
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Max. <input class="input" type="number" min="0" name="maxshare" step="any"></input>
+                Max. <input class="input" type="number" min="0" name="maxactload" step="any"></input>
               </div>
             </div>
           </div>
