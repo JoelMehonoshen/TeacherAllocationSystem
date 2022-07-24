@@ -2,7 +2,83 @@
 <html>
 @loggedIn
   @!component('components.head', title="Teacher Allocation System")
-  @include('partials/sidebar')
+ 
+
+<body>
+  <div class="wrapper">
+    @include('partials/sidebar')
+    <div class="content-section">
+      <section class="main-content">
+        <h1 class="page-title">Home</h1>
+          
+        <div class="dashboard-col">
+          <div class="dashboard-card">
+            <h2 class="dashboard-title">Hi, {{ auth.user.username }}</h2>
+            <p class="dashboard-paragraph">
+              TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
+          </div>
+        </div>
+
+        
+  
+        <div class="dashboard-col">
+  
+        <div class="dashboard-card card-half">
+          <h2 class="dashboard-title">Import</h2>
+          <p class="dashboard-paragraph">Import a spreadsheet to get started.</p>
+  
+          @!component('components.csvimporter', csrf=csrfField())
+  
+        </div>
+  
+        <div class="dashboard-card card-half">
+          <h2 class="dashboard-title">Export</h2>
+          <p class="dashboard-paragraph">Export to a spreadsheet.</p>
+  
+          @!component('components.csvexport', csrf=csrfField())
+        
+  
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+
+  {{--
+    <h1 class="page-title">Home</h1>
+          
+          <div class="dashboard-col">
+            <div class="dashboard-card">
+              <h2 class="dashboard-title">Hi, {{ auth.user.username }}</h2>
+              <p class="dashboard-paragraph">
+                TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
+            </div>
+          </div>
+    
+          <div class="dashboard-col">
+    
+          <div class="dashboard-card card-half">
+            <h2 class="dashboard-title">Import</h2>
+            <p class="dashboard-paragraph">Import a spreadsheet to get started.</p>
+    
+            @!component('components.csvimporter', csrf=csrfField())
+    
+          </div>
+    
+          <div class="dashboard-card card-half">
+            <h2 class="dashboard-title">Export</h2>
+            <p class="dashboard-paragraph">Export to a spreadsheet.</p>
+    
+            @!component('components.csvexport', csrf=csrfField())
+          
+    
+          </div>
+    
+    
+    
+    --}}
+
+  {{--
   <body class="flex-container">
     
     <section class="main-content dd-font">
@@ -39,7 +115,7 @@
     </section>
   </body>
 
-  {{--
+  
     <body>
     <section class="section">
       <div class="container">
