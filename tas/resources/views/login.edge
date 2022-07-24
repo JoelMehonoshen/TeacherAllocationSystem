@@ -2,13 +2,12 @@
 <html>
 @!component('components.head', title="Teacher Allocation System")
 @!component('components.headerauth')
-  <body>
+  <body style="height:100vh">
     <div class="container">
       <h1 class="title">
         Login
       </h1>
     </div>
-
     <form method="POST" action="{{ route('UserController.login') }}">      
       {{ csrfField() }}
     <div class="textbox-group">

@@ -388,7 +388,7 @@ html{
     background-image: url("repeat.svg");
  }
   
- a:hover{
+ .nav-link:hover{
     display: block;
     background-color: rgb(244, 244, 244);
     color:black;
