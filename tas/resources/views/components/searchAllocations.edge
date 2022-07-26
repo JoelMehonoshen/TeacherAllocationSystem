@@ -32,7 +32,33 @@
         
       </div>
     </div>
-    <div class="data-row data-tool-row-3 flex-container">
+
+
+    <div class="data-row data-tool-row-4 flex-container" style="justify-content: space-between;">
+
+      <div class="flex-container" style="flex-direction:row;">
+        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
+          <p><b>Preferred Load</b></p>
+          <div style="display:flex;">
+            <input class="sort-filter-input min-max-input" type="number" min="0" name="minpreload" step="any" placeholder="Min">
+            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxpreload" step="any" placeholder="Max">
+          </div>
+        </div>
+  
+        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
+            <p><b>Actual Load</b></p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" type="number" min="0" name="minactload" step="any" placeholder="Min">
+              <input class="sort-filter-input min-max-input" type="number" min="0" name="maxactload" step="any" placeholder="Max">
+            </div>
+          </div>
+      </div>
+  
+    </div>
+
+
+    <div class="data-row data-tool-row-3 flex-container" style="flex-direction: column; justify-content:space-between;">
+      <div class="flex-container">
       <div>
       <select class="sort-filter-input" name="sort">
         <option value="" disabled="" selected="">Sort by...</option>
@@ -63,30 +89,17 @@
         <option>{{ year }}</option>
         @endeach
       </select>
+      </div>
+
+      <div>
+        <button class="dd-button--round button-blue-fill">Search</button>
+      </div>
 
     </div>
 
   </div>
 
-  <div class="data-row data-tool-row-4 flex-container">
-
-      <div class="flex-container" style="flex-direction:column;">
-        <p><b>Preferred Load</b></p>
-        <div style="display:flex;">
-          <input class="sort-filter-input min-max-input" type="number" min="0" name="minpreload" step="any" placeholder="Min">
-          <input class="sort-filter-input min-max-input" type="number" min="0" name="maxpreload" step="any" placeholder="Max">
-        </div>
-      </div>
-
-      <div class="flex-container" style="flex-direction:column;">
-          <p><b>Actual Load</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minactload" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxactload" step="any" placeholder="Max">
-          </div>
-        </div>
-
-  </div>
+  
 
   </div>
 </form>

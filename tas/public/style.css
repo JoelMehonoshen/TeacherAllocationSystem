@@ -254,7 +254,8 @@ html{
     padding:9px 10px;
     border:1px lightgray solid;
     font-size: medium;
-    width:300px;
+    width:600px;
+    min-width:100px;
     border-radius: 10px;
     margin:2px;
     outline: none;
@@ -669,6 +670,7 @@ html{
     padding:6px 12px;
     width: fit-content;
     margin-right:8px;
+    color:grey;
 }
 
 .min-max-input{
