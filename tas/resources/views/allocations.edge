@@ -14,14 +14,11 @@
           @endif
         </div>
         {{--  Title, Search Bar--}}
-        <div class="level">
-          <div>
-            <h1 class="page-title">Allocations</h1>
-            <h2 class="page-subtitle">Add and Search for Allocations</h2>
-          </div>
+      
+          
                 
         @!component('components.addallocation', csrf=csrfField(), academics=academicList, units=unitList, years=years)
-        </div>
+
 
 
         @!component('components.searchAllocations', title="Find allocation", csrf=csrfField(), unitList=unitList, years=years, route=route('AllocationController.render'))

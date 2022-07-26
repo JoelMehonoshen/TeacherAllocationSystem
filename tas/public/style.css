@@ -161,12 +161,12 @@ html{
 }
 
 .button-blue-fill{
-    background-color: #175e9c;
+    background-color: #2396fc;
     color: white;
 }
 
 .button-blue-fill:hover{
-    background-color: #134f84;
+    background-color: #1d7cd0;
     color: white;
 }
 
@@ -178,6 +178,16 @@ html{
 .button-red-fill:hover{
     background-color: #bb0000;
     color: white;
+}
+
+.button-light-fill{
+    background-color: #eeeeee;
+    color: black;
+}
+
+.button-light-fill:hover{
+    background-color: #d8d8d8;
+    color: black;
 }
 
 .button-unavailable{
@@ -237,34 +247,47 @@ html{
     cursor:pointer;
     position: relative;
     right:1px;
+    z-index: 0;
 }
 
 .search-input{
     padding:9px 10px;
     border:1px lightgray solid;
     font-size: medium;
-    min-width:300px;
-    width:500px;
-    border-radius: 10px 0px 0px 10px;
+    width:300px;
+    border-radius: 10px;
+    margin:2px;
+    outline: none;
+    z-index:0;
+    transition: ease 250ms;
+}
+
+.search-input:focus{
+    border:1px solid black;
+}
+
+.searchbar-button-container{
+    overflow: visible;
+    position: relative;
 }
 
 .searchbar-button{
-    padding:11.5px 32px;
-    color:white;
+    border: none;
+    outline: none;
+    margin:1px;
+    padding:12px;
+    background-color: transparent;
+    font-size:1.2em;
     cursor: pointer;
-    border:none;
-    background-color: #175e9c;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    text-align: center;
-    font-size: medium;
-    position: relative;
-    right:2px;
-    border-radius: 0px 10px 10px 0px;
+    color: rgb(90, 90, 90);
+    position: absolute;
+    z-index: 2;
+    right:0;
+    top:-3px;
 }
 
 .searchbar-button:hover{
-    background-color: #1d7dd1;
-    color: white;
+    color: black;
 }
 
 .searchbar-clear-button{
@@ -276,6 +299,12 @@ html{
     text-align: center;
     font-size: medium;
     position: relative;
+    background-color: transparent;
+}
+
+.searchbar-clear-button > i{
+    margin-right: 6px;
+    transform: translateY(2px);
 }
 
 .searchbar-clear-button:hover{
@@ -284,7 +313,6 @@ html{
 
 .searchbar-wrapper{
     width:100%;
-    padding:0px 0px 32px 0px;
 }
 
 /* || END */
@@ -365,7 +393,7 @@ html{
  }
 
  .allocation::before{
-    background-image: url("allocation.svg");
+    background-image: url("unit.svg");
  }
 
  .academic::before{
@@ -373,7 +401,7 @@ html{
  }
 
  .unit::before{
-    background-image: url("unit.svg");
+    background-image: url("allocation.svg");
  }
 
  .logout::before{
@@ -419,8 +447,8 @@ html{
   min-height: 100%;
   width:100%;
   display: flex;
-  background-color: rgb(242, 242, 242);
-  padding:32px;
+  background-color: rgb(247, 247, 247);
+  padding:12px;
   flex-direction: column;
 }
 
@@ -611,7 +639,43 @@ html{
     to {transform: rotate(0deg);}
 }
 
+/* || DATA TOOL */
 
+.data-tool-container{
+    width:100%;
+    height:fit-content;
+    background-color: white;
+    flex-direction: column;
+    padding: 24px;
+    gap:12px;
+}
+
+.data-row{
+    flex-direction: row;
+}
+
+.data-tool-row-2{
+    justify-content: space-between;
+}
+
+.data-tool-row-4{
+    gap: 12px;
+}
+
+.sort-filter-input{
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid lightgrey;
+    padding:6px 12px;
+    width: fit-content;
+    margin-right:8px;
+}
+
+.min-max-input{
+    display:inline;
+}
+
+/*END*/
 
 
 
