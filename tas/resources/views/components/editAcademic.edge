@@ -1,11 +1,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<button 
+
+<button
     type="button"
-    class="dd-button--hyperlink" 
+    class="dd-button--hyperlink"
     data-toggle="modal"
     data-target="#{{academic.id}}"
-    >     
+    >
     <i class= "fa fa-edit"></i>&nbsp; Edit
 </button>
 
@@ -17,7 +18,7 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="academics/updateacademic"> 
+        <form method="POST" action="academics/updateacademic">
             {{csrf}}
             <input type="hidden" name="academicID" value="{{academic.id}}">
             <div class="field">
@@ -38,13 +39,20 @@
                 <div class="field has-addons has-addons-centered">
                     <input class="input" type="text" name="tags">
                 </div>
-            </div>            
-            </section>  
+            </div>
+            </section>
             <footer class="modal-card-foot">
                 <input type="submit" value="Update Academic" class="dd-button--round button-blue-fill margin-8">
-                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>  
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+</form>
+                <form action="academics/deleteacademic" method="POST">
+                {{csrf}}
+                <input type="hidden" name="academicID" value="{{academic.id}}">
+                <input type="submit" value = "Delete Academic" class="dd-button--round button-red-fill margin-8">
+                </form>
+
             </footer>
-        </form>
+
     </div>
 </div>
 </div>

@@ -25,6 +25,22 @@ class AcademicController {
     }
   }
 
+async deleteacademic({ response, request }) {
+Logger.info('Delete Academic has run')
+    try {
+        await Database.from("allocations")
+        .where("id", request.input("academicID")).delete()
+        await Database.from("academics")
+        .where("id", request.input("academicID")).delete()
+        }
+         catch (error) {
+              Logger.error('Delete Academics',  error);
+              throw new Exception();
+        }
+        return response.route("/academics", true);
+        }
+
+
   async updateacademic({ response, request }) {
     try {
       await Database.from("academics")

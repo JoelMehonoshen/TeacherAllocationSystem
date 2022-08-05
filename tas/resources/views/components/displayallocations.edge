@@ -4,7 +4,7 @@
   <div class="table-title-block">
     <div class="table-section--xx-small margin-8"></div>
     <div class="table-section--medium margin-8">Name</div>
-    <div class="table-section--medium margin-8">Preferred Load</div>
+    <div class="table-section--medium margin-8">Requested Load</div>
     <div class="table-section--medium margin-8">Actual Load</div>
     <div class="table-section--medium margin-8">Status</div>
     <div class="table-section--x-large margin-8">Tags</div>
@@ -60,10 +60,15 @@
   <div class="table-collapse--inner">
     <div class="table-section--medium">{{ unit.unit_code }}</div>
     <div class="table-section--medium">{{ unit.load }}</div>
+    <form action="allocations/deleteallocation" method="POST">
+                                        {{csrf}}
+                                        <input type="hidden" name="unit_code" value="{{unit.unit_code}}">
+                                        <input type="submit" value = "Delete Allocation" class="dd-button--round button-red-fill margin-12">
+                                        </form>
   </div>
   @endeach
 </div>
-  
+
 
 </div>
 {{--  if theres no allocations, display a warning  --}}

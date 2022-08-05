@@ -26,7 +26,7 @@ class UnitController {
       if (!sort) { sort = "id" }
       if (!semfilter) { semfilter = 0 }
       if (semfilter == 1) { semfilter = 2 }
-      else if (semfilter == 2) { semfilter = 1 }      
+      else if (semfilter == 2) { semfilter = 1 }
       if (!minload) { minload = 0 }
       if (!maxload) { maxload = 99 }
       if (!minstudents) { minstudents = 0 }
@@ -56,7 +56,7 @@ class UnitController {
         units: units,
         ids: ids
       });
-      
+
     } catch (error) {
       Logger.error(error);
       throw new Exception();
@@ -104,5 +104,20 @@ class UnitController {
       throw new Exception();
     }
   }
-}
+  async deleteunit({ response, request }) {
+  Logger.info('Delete Unit has run')
+      try {
+          await Database.from("allocations")
+                    .where("unit_code", request.input("unitid")).delete()
+
+          await Database.from("units")
+          .where("id", request.input("unitid")).delete()
+          }
+           catch (error) {
+                Logger.error('Delete Unit',  error);
+                throw new Exception();
+          }
+          return response.route("/units", true);
+          }
+          }
 module.exports = UnitController;

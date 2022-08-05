@@ -8,6 +8,19 @@ const Tag = use("App/Models/Tag");
 // TODO:(OLD) get rid of the raw sql, change everything (except like sql statements) to use the ORM
 class AllocationController {
   // update the database with new allocations and academics
+
+  async deleteallocation({ response, request }) {
+  Logger.info('Delete Allocations has run')
+      try {
+          await Database.from("allocations").where("unit_code", request.input("unit_code")).delete()
+          }
+           catch (error) {
+                Logger.error('Delete Allocation', error);
+                throw new Exception();
+          }
+          return response.route("/allocations", true);
+          }
+
   async updateAllocation({ response, request }) {
     try{
       await Database.from("academics")
