@@ -23,7 +23,6 @@
 
         @!component('components.searchAllocations', title="Find allocation", csrf=csrfField(), unitList=unitList, years=years, route=route('AllocationController.render'))
 
-
         <div>
           {{-- Display Allocations --}}
           @!component('components.displayallocations', csrf=csrfField(), allocAcademics=allocAcademics)

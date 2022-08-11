@@ -61,10 +61,10 @@
     <div class="table-section--medium">{{ unit.unit_code }}</div>
     <div class="table-section--medium">{{ unit.load }}</div>
     <form action="allocations/deleteallocation" method="POST">
-                                        {{csrf}}
-                                        <input type="hidden" name="unit_code" value="{{unit.unit_code}}">
-                                        <input type="submit" value = "Delete Allocation" class="dd-button--round button-red-fill margin-12">
-                                        </form>
+      {{csrf}}
+      <input type="hidden" name="unit_code" value="{{unit.unit_code}}">
+      <input type="submit" value = "Delete Allocation" class="dd-button--round button-red-fill margin-12">
+    </form>
   </div>
   @endeach
 </div>
@@ -73,14 +73,10 @@
 </div>
 {{--  if theres no allocations, display a warning  --}}
 @else
-  <section class="hero is-danger">
-    <div class="hero-body">
-      <p class="title">
-        No Results
-      </p>
-      <p class="subtitle">
-         Please add an allocation or import spreadsheet
-      </p>
+  <section class="section-import-prompt"> 
+    
+    <div style="width:100%;">
+      @!component('components.csvimporter', csrf=csrf)
     </div>
   </section>
 @endeach

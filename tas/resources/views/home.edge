@@ -18,8 +18,6 @@
               TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
           </div>
         </div>
-
-        
   
         <div class="dashboard-col">
   
@@ -43,101 +41,6 @@
     </div>
   </div>
 </body>
-
-  {{--
-    <h1 class="page-title">Home</h1>
-          
-          <div class="dashboard-col">
-            <div class="dashboard-card">
-              <h2 class="dashboard-title">Hi, {{ auth.user.username }}</h2>
-              <p class="dashboard-paragraph">
-                TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
-            </div>
-          </div>
-    
-          <div class="dashboard-col">
-    
-          <div class="dashboard-card card-half">
-            <h2 class="dashboard-title">Import</h2>
-            <p class="dashboard-paragraph">Import a spreadsheet to get started.</p>
-    
-            @!component('components.csvimporter', csrf=csrfField())
-    
-          </div>
-    
-          <div class="dashboard-card card-half">
-            <h2 class="dashboard-title">Export</h2>
-            <p class="dashboard-paragraph">Export to a spreadsheet.</p>
-    
-            @!component('components.csvexport', csrf=csrfField())
-          
-    
-          </div>
-    
-    
-    
-    --}}
-
-  {{--
-  <body class="flex-container">
-    
-    <section class="main-content dd-font">
-      <h1 class="page-title">Home</h1>
-      
-      <div class="dashboard-col">
-        <div class="dashboard-card">
-          <h2 class="dashboard-title">Hi, {{ auth.user.username }}</h2>
-          <p class="dashboard-paragraph">
-            TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.          </p>
-        </div>
-      </div>
-
-      <div class="dashboard-col">
-
-      <div class="dashboard-card card-half">
-        <h2 class="dashboard-title">Import</h2>
-        <p class="dashboard-paragraph">Import a spreadsheet to get started.</p>
-
-        @!component('components.csvimporter', csrf=csrfField())
-
-      </div>
-
-      <div class="dashboard-card card-half">
-        <h2 class="dashboard-title">Export</h2>
-        <p class="dashboard-paragraph">Export to a spreadsheet.</p>
-
-        @!component('components.csvexport', csrf=csrfField())
-      
-
-      </div>
-      </div>
-
-    </section>
-  </body>
-
-  
-    <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title is-1">
-          Teacher Allocation System
-        </h1>
-        <p class="subtitle">
-        <h2> Hello {{ auth.user.username }}! </h2>
-        <p>Welcome to the Teacher Allocation System (TAS)</p> 
-        <h2 class="title is-2">
-          Getting Started
-        </h2>
-        <p class="subtitle">
-          TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units based on workloads, skill levels and other details.
-        </p>
-        <div class="buttons">
-          <a href="import" role="button" class="button is-primary">Start Importing</a>
-      </div>
-      </div>
-    </section>
-    </body>
---}}
 
 @else
 
@@ -164,30 +67,5 @@
     </div>
   </div>
   </body>
-    {{--
-    <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title is-1">
-          Teacher Allocation System
-        </h1>
-        <p class="subtitle">
-          TAS works by ingesting a spreadsheet of academics, units and other details. Our super smart machine learning technology then matches academics to units to ensure the best outcome for your school.
-        </p>
-        <h2 class="title is-2">
-          Getting Started
-        </h2>
-        <div class="buttons">
-          <a class="button is-primary" href="signup">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light" href="login">
-            Log in
-          </a>
-        </div>
-      </div>
-    </section>
-    </body>
-    --}}
 @endloggedIn
 </html>

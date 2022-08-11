@@ -64,7 +64,11 @@ html{
     text-align: center;
 }
 
-
+.section-import-prompt{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
 
 /* || END */
 
@@ -448,7 +452,7 @@ html{
   min-height: 100%;
   width:100%;
   display: flex;
-  background-color: rgb(247, 247, 247);
+  background-color: rgb(243, 243, 243);
   padding:12px;
   flex-direction: column;
 }
@@ -659,8 +663,16 @@ html{
     justify-content: space-between;
 }
 
+.data-tool-row-3{
+    justify-content: space-between;
+}
+
 .data-tool-row-4{
     gap: 12px;
+}
+
+.space-between{
+    justify-content:space-between;
 }
 
 .sort-filter-input{
