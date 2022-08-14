@@ -8,14 +8,8 @@
     <div class="content-section">
     <div class="main-content">
       {{--  Title, Search Bar--}}
-      <div class="level">
-        <div>
-          <h1 class="page-title">Units</h1>
-          <h2 class="page-subtitle">Add and Search for Units</h2>
-        </div>
-              
+      
       @!component('components.addunit', csrf=csrfField())
-      </div>
 
       @!component('components.searchUnits', title="Find unit code", ids=ids, csrf=csrfField(), route=route('UnitController.render'))
 

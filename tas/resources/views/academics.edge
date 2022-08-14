@@ -7,20 +7,16 @@
     @include('partials/sidebar')
     <div class="content-section">
       <div class="main-content">
-        <div class="level">
-          <div>
-            <h1 class="page-title">Academics</h1>
-            <h2 class="page-subtitle">Add and Search for Academics</h2>
-          </div>              
-        @!component('components.addacademic', csrf=csrfField())
-        </div>
+                    
+      @!component('components.addacademic', csrf=csrfField())
 
-        @!component('components.searchAcademics', title="Find academic", schools=schools, csrf=csrfField(), route=route('AcademicController.render'))
 
-        <div>
-          {{-- Display Academics --}}
-          @!component('components.displayAcademics', csrf=csrfField(), route=route('AcademicController.render'), academics=academics)
-        </div>
+      @!component('components.searchAcademics', title="Find academic", schools=schools, csrf=csrfField(), route=route('AcademicController.render'))
+
+      <div>
+        {{-- Display Academics --}}
+        @!component('components.displayAcademics', csrf=csrfField(), route=route('AcademicController.render'), academics=academics)
+      </div>
 
       </div>
     </div>
