@@ -83,7 +83,6 @@ class AllocationController {
 
   async render({ view, request }) {
       try{
-
       //Get units, needed for adding allocations
       var unitList = await Database.from("units");
       var academicList = await Database.from("academics");
@@ -156,7 +155,6 @@ class AllocationController {
               }
             }
           }
-
         teacher.actualLoad = totalLoad;
         teacher.allocUnits = units;
         teacher.tags = tags;

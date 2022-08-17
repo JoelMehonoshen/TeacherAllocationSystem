@@ -15,7 +15,6 @@ class ExportController {
     await workbook.xlsx.readFile("public/template.xlsx");
 
     const sheet = workbook.worksheets[0];
-
     const academicsDB = await Academic.all();
     const academics = academicsDB.toJSON();
 
@@ -29,8 +28,8 @@ class ExportController {
         sheet.getCell("B"+(i+9).toString()).value = academics[i].academic_preference
         sheet.getCell("C"+(i+9).toString()).value = "CS"
         sheet.getCell("D"+(i+9).toString()).value = academics[i].load
-        sheet.getCell("E"+(i+9).toString()).value = {formula: "D"+(9+i).toString()+"*$C$2"}
-        sheet.getCell("F"+(i+9).toString()).value = {formula: "SUMPRODUCT(H$6:"+this.hex(units.length+7)+"$6,H9:"+this.hex(units.length+7)+"9)"}
+        sheet.getCell("E"+(i+9).toString()).value = {formula: "ROUND(D"+(9+i).toString()+"*$C$2,2)"}
+        sheet.getCell("F"+(i+9).toString()).value = {formula: "ROUND(SUMPRODUCT(H$6:"+this.hex(units.length+6)+"$6,H"+(9+i).toString()+":"+this.hex(units.length+6)+(9+i).toString()+"),2)"}
         sheet.getCell("G"+(i+9).toString()).value = {formula: "F"+(9+i).toString()+"-E"+(9+i).toString() }
     }
     const bodies = sheet.getCell("A"+(academics.length+9+1).toString());
@@ -55,22 +54,20 @@ class ExportController {
         const allocs = await Database.from("academics")
         .select("academics.name", "allocations.load")
         .join("allocations", "academics.id", "=", "allocations.id")
-        .where(
-          "allocations.unit_code", units[i].id
-        );
+        .where("allocations.unit_code", units[i].id);
+
+        //these are unit columns
         var allocCol = new Array(8).fill("")
         allocCol[0] = units[i].id
         allocCol[1] = units[i].name
         allocCol[2] = units[i].semester
         allocCol[3] = units[i].students
         allocCol[4] = units[i].share
-        allocCol[5] = units[i].assignedLoad
-        allocCol[6] = {
-            formula: "SUM("+this.hex(i+7)+"9:"+this.hex(i+7)+"49)"
-        }
-        allocCol[7] = {
-            formula: "IF("+this.hex(i+7)+"5<>0,"+this.hex(i+7)+"7-1,"+this.hex(i+7)+"7)"
-        }
+        allocCol[5] = {formula: "ROUND(MAX(LOG10("+this.hex(i+7)+"4/7),$C$6)*"+this.hex(i+7)+"5,2)"}
+        allocCol[6] = {formula: "SUM("+this.hex(i+7)+"9:"+this.hex(i+7)+"49)" }
+        allocCol[7] = {formula: "IF("+this.hex(i+7)+"5<>0,"+this.hex(i+7)+"7-1,"+this.hex(i+7)+"7)"}
+
+
         for (let j = 0; j < academics.length; j++) {
             let pushed = false
             for ( let k = 0; k < allocs.length; k++) {
@@ -80,17 +77,15 @@ class ExportController {
                 }
             }
             if (!pushed) {
-                allocCol.push("")
+                allocCol.push(null)
             }
         }
+
         //console.log(units[i].id)
-        //console.log(allocs)
         //console.log(allocCol)
         const unitCodeCol = sheet.getColumn(i+8);
         unitCodeCol.values = allocCol
     }
-
-
     await workbook.xlsx.writeFile("public/template2.xlsx");
   }
 
@@ -118,10 +113,10 @@ class ExportController {
     return s;
     }
 
-  async render({ request, view }) {
+  async render({ request, response}) {
     try {
         await this.ExportWorksheet(2021);
-        return view.render("export", { filename: "template2.xlsx" });
+        return response.download("public/template2.xlsx");
     } catch (error) {
       Logger.error(error);
       throw new Exception();
