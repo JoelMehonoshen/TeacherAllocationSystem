@@ -28,11 +28,23 @@
                 </div>
             </div>
             <div class="field">
+                            <label class="label">School</label>
+                            <div class="control">
+                                <input class="input" type="text" name="school" value="{{academic.school}}">
+                            </div>
+                        </div>
+            <div class="field">
                 <label class="label">Requested Load</label>
                 <div class="control">
                     <input class="input" type="number" min="0" name="load" value="{{ academic.load }}">
                 </div>
             </div>
+            <div class="field">
+                            <label class="label">Academic Preference</label>
+                            <div class="control">
+                                <input class="input" type="text" name="academic_preference" value="{{academic.academic_preference}}">
+                            </div>
+                        </div>
             {{--  Tags  --}}
             <div class="field">
                 <label class="label">Tags:</label>

@@ -1,7 +1,7 @@
 <div class="searchbar-wrapper">
   <form method="GET" action="{{ route }}">
     {{csrf}}
-    
+
   <div class="flex-container data-tool-container">
     <div class="data-row data-tool-row-1 flex-container">
       <h1 class="title">Allocations</h1>
@@ -19,7 +19,7 @@
               <input class="search-input" type="text" name="search" placeholder="{{title}}">
             </div>
           </p>
-      
+
           <p class="has-addons">
             <button class="searchbar-clear-button" href="allocations"><i class="fa fa-undo" aria-hidden="true"></i>Reset</button>
           </p>
@@ -27,7 +27,7 @@
       </div>
       <div>
         <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AllocationForm">+ Add Allocation</button>
-        
+
       </div>
     </div>
 
@@ -36,13 +36,13 @@
 
       <div class="flex-container" style="flex-direction:row;">
         <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Preferred Load</b></p>
+          <p><b>Requested Load</b></p>
           <div style="display:flex;">
             <input class="sort-filter-input min-max-input" type="number" min="0" name="minpreload" step="any" placeholder="Min">
             <input class="sort-filter-input min-max-input" type="number" min="0" name="maxpreload" step="any" placeholder="Max">
           </div>
         </div>
-  
+
         <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
             <p><b>Actual Load</b></p>
             <div style="display:flex;">
@@ -51,7 +51,7 @@
             </div>
           </div>
       </div>
-  
+
     </div>
 
 
@@ -62,10 +62,10 @@
         <option value="" disabled="" selected="">Sort by...</option>
         <option value="academic.name">Academic Name</option>
         <option value="semester">Semester</option>
-        <option value="">Preferred Load</option>
+        <option value="">Requested Load</option>
         <option value="">Actual Load</option>
       </select>
-    
+
       <select class="sort-filter-input" name="unitfilter">
         <option value="" disabled="" selected="">Filter by unit...</option>
         @each(unit in unitList)
@@ -95,7 +95,7 @@
 
   </div>
 
-  
+
 
   </div>
 </form>
@@ -108,7 +108,7 @@
           <option value="" disabled="" selected="">Sort by...</option>
           <option value="academic.name">Academic Name</option>
           <option value="semester">Semester</option>
-          <option value="">Preferred Load</option>
+          <option value="">Requested Load</option>
           <option value="">Actual Load</option>
         </select>
       </div>
@@ -138,7 +138,7 @@
           <div style="width: 100%; display: table">
             <div style="display: table-row">
               <div style="display: table-cell">
-                &nbsp<p><b>Preferred Load</b></p>
+                &nbsp<p><b>Requested Load</b></p>
               </div>
               <div style="display: table-cell; width: 100px;">
                 Min. <input class="input" type="number" min="0" name="minpreload" step="any">
@@ -166,6 +166,6 @@
         </div>
       </div>
       --}}
-      
-  
+
+
 </div>
