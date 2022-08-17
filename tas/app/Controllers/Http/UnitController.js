@@ -47,6 +47,11 @@ class UnitController {
         .where("share", '<=', maxshare)
         .orderBy(sort)
 
+      // for each unit, round assignedLoad to 2 decimal places
+      for (var i = 0; i < units.length; i++) {
+        units[i].assignedLoad = Math.round(units[i].assignedLoad * 100) / 100;
+      }
+
       const ids = await Database.from("units")
         .select("id")
         .distinct("id")

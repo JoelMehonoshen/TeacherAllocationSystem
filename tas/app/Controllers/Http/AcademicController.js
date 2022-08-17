@@ -93,6 +93,11 @@ Logger.info('Delete Academic has run')
         .where("name", 'ilike', "%" + search + "%")
         .orderBy(sort)
 
+      // for each academic, round requestedLoad to 2 decimal places
+      for (var i = 0; i < academics.length; i++) {
+        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
+      }
+
       const schools = await Database.from("academics")
         .distinct("school")
         .orderBy("school")

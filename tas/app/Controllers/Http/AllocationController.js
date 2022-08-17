@@ -127,14 +127,20 @@ class AllocationController {
       var allocAcademics = [];
       //for each academic, check for allocations
       for (var i = 0; i < academics.length; i++) {
+
+        // for each unit, round requestedLoad to 2 decimal places
+        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
+
         var teacher = {
           id: academics[i].id,
           name: academics[i].name,
           requestedLoad: academics[i].load,
         };
+
         var units = [];
         var tags = [];
         var totalLoad = 0;
+
         for (var j = 0; j < allocations.length; j++) {
           if (teacher.id == allocations[j].id) {
             units.push({
@@ -143,6 +149,10 @@ class AllocationController {
               load: allocations[j].load,
             });
             totalLoad += parseFloat(allocations[j].load);
+
+            // round totalLoad (i.e. the actual load) to 2 decimal places
+            totalLoad = Math.round(totalLoad * 100) / 100;
+
           }
         }
         //for each unit/allocation - check for unique tags and create a string of them for edit allocation
