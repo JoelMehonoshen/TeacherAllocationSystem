@@ -11,16 +11,16 @@ const Database = use("Database");
 
 
 
-class ImportController {
+class spreadsheetViewController {
   async render({ view, request }) {
         try{
 
 
         return view.render("spreadsheetView");
       }catch (error){
-        Logger.error(`render Allocation (${error})`);
+        Logger.error(`render spreadsheetView (${error})`);
       }
     }
  }
 
-module.exports = ImportController;
+module.exports = spreadsheetViewController;
