@@ -22,10 +22,9 @@ class UnitImport {
 }
 
 class AcademicImport {
-  constructor(name, year,school, load, allocations, academic_preference) {
+  constructor(name, year, load, allocations, academic_preference) {
     this.name = name;
     this.year = year;
-    this.school = school;
     this.load = load;
     this.allocations = [];
     this.academic_preference = academic_preference;
@@ -42,29 +41,13 @@ class AcademicImport {
     const ac = new Academic();
     ac.name = this.name;
     ac.year = this.year;
-    ac.school = this.school;
+    ac.school = "Information Technology";
     ac.load = this.load;
     ac.academic_preference = this.academic_preference;
     await ac.save();
 
     if (this.allocations.length > 0) {
       this.allocations.forEach(({ UnitImport, load }) => {
-      if (UnitImport.semester == "1 & 2") {
-                const al = new Allocation();
-                al.id = ac.id;
-                al.unit_code = UnitImport.code;
-                al.unit_year = UnitImport.year;
-                al.unit_semester = 1;
-                al.load = load;
-                al.save();
-                const al2 = new Allocation();
-                al2.id = ac.id;
-                al2.unit_code = UnitImport.code;
-                al2.unit_year = UnitImport.year;
-                al2.unit_semester = 2;
-                al2.load = load;
-                al2.save();
-              } else {
           const al = new Allocation();
           al.id = ac.id;
           al.unit_code = UnitImport.code;
@@ -72,7 +55,7 @@ class AcademicImport {
           al.unit_semester = UnitImport.semester;
           al.load = load;
           al.save();
-          }
+
       });
     }
   }
@@ -125,7 +108,6 @@ class ImportController {
       const row = sheet.getRow(i + 1);
       const name = row.getCell("A").value;
       const academic_preference = row.getCell("B").value;
-      const school = row.getCell("C").value;
       const load = row.getCell("D").value;
       let allocs = [];
       row.eachCell((cell, colNumber) => {
@@ -141,7 +123,7 @@ class ImportController {
           allocs.push({ UnitImport: unitImport, load: cell.value });
         }
       });
-      const ac = new AcademicImport(name, year, school, load, allocs, academic_preference);
+      const ac = new AcademicImport(name, year, load, allocs, academic_preference);
       academicsList.push(ac);
     }
 
@@ -151,38 +133,16 @@ class ImportController {
       if (unitsCodeRow.getCell(colNumber).text === "") {
         break;
       }
-      //todo: this might need to change depending on the actual sheet data
-      if (unitsSemRow.getCell(colNumber).value == "1 & 2") {
-              units.push({
-                code: unitsCodeRow.getCell(colNumber).text,
-                name: unitsNameRow.getCell(colNumber).text,
-                year: year,
-                semester: 1,
-                students: unitsStudentsRow.getCell(colNumber).value,
-                share: unitsShareRow.getCell(colNumber).value,
-                load: Math.round(Math.max(Math.log10(unitsStudentsRow.getCell(colNumber).value/7),0.8)*unitsShareRow.getCell(colNumber).value * 100) / 100,
-              });
-              units.push({
-                code: unitsCodeRow.getCell(colNumber).text,
-                                name: unitsNameRow.getCell(colNumber).text,
-                                year: year,
-                                semester: 2,
-                                students: unitsStudentsRow.getCell(colNumber).value,
-                                share: unitsShareRow.getCell(colNumber).value,
-                                load: Math.round(Math.max(Math.log10(unitsStudentsRow.getCell(colNumber).value/7),0.8)*unitsShareRow.getCell(colNumber).value * 100) / 100,
-              });
-            } else {
-              units.push({
-                code: unitsCodeRow.getCell(colNumber).text,
-                                name: unitsNameRow.getCell(colNumber).text,
-                                year: year,
-                                semester: unitsSemRow.getCell(colNumber).value,
-                                students: unitsStudentsRow.getCell(colNumber).value,
-                                share: unitsShareRow.getCell(colNumber).value,
-                                load: Math.round(Math.max(Math.log10(unitsStudentsRow.getCell(colNumber).value/7),0.8)*unitsShareRow.getCell(colNumber).value * 100) / 100,
-              });
-            }
-          }
+        units.push({
+          code: unitsCodeRow.getCell(colNumber).text,
+          name: unitsNameRow.getCell(colNumber).text,
+          year: year,
+          semester: 1,
+          students: unitsStudentsRow.getCell(colNumber).value,
+          share: unitsShareRow.getCell(colNumber).value,
+          load: Math.round(Math.max(Math.log10(unitsStudentsRow.getCell(colNumber).value/7),0.8)*unitsShareRow.getCell(colNumber).value * 100) / 100,
+        });
+    }
 
     units.forEach(async ({code, name, year, semester, students, share, load }) => {
       const unit = new Unit();
