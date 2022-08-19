@@ -23,23 +23,14 @@ class AllocationController {
 
   async updateAllocation({ response, request }) {
     try{
-      await Database.from("academics")
-      .where("id", request.input("academicID"))
-      .update({
-        name: request.input("name"),
-        load: request.input("requestedLoad"),
-      });
-
-      if (request.input("unit")) {
       for (var i = 0; i < request.input("allocationID").length; i++) {
         await Database.from("allocations")
           .where("allocation_id", request.input("allocationID")[i])
           .update({
-            unit_code: request.input("unit"),
-            load: request.input("unitLoad"),
+            unit_code: request.input("unit")[i],
+            load: request.input("unitLoad")[i],
           });
         }
-      }
       if(request.input("tags")){
         //sanitise tag input
         var strTags = request.input("tags").replace(/\s/g, '');
