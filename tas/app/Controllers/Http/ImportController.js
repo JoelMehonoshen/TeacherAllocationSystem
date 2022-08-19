@@ -22,9 +22,10 @@ class UnitImport {
 }
 
 class AcademicImport {
-  constructor(name, year, load, allocations, academic_preference) {
+  constructor(name, year,school, load, allocations, academic_preference) {
     this.name = name;
     this.year = year;
+    this.school = school;
     this.load = load;
     this.allocations = [];
     this.academic_preference = academic_preference;
@@ -41,7 +42,7 @@ class AcademicImport {
     const ac = new Academic();
     ac.name = this.name;
     ac.year = this.year;
-    ac.school = "Information Technology";
+    ac.school = this.school;
     ac.load = this.load;
     ac.academic_preference = this.academic_preference;
     await ac.save();
@@ -55,7 +56,6 @@ class AcademicImport {
           al.unit_semester = UnitImport.semester;
           al.load = load;
           al.save();
-
       });
     }
   }
@@ -108,6 +108,7 @@ class ImportController {
       const row = sheet.getRow(i + 1);
       const name = row.getCell("A").value;
       const academic_preference = row.getCell("B").value;
+      const school = row.getCell("C").value;
       const load = row.getCell("D").value;
       let allocs = [];
       row.eachCell((cell, colNumber) => {
@@ -123,7 +124,7 @@ class ImportController {
           allocs.push({ UnitImport: unitImport, load: cell.value });
         }
       });
-      const ac = new AcademicImport(name, year, load, allocs, academic_preference);
+      const ac = new AcademicImport(name, year,school, load, allocs, academic_preference);
       academicsList.push(ac);
     }
 
@@ -133,11 +134,12 @@ class ImportController {
       if (unitsCodeRow.getCell(colNumber).text === "") {
         break;
       }
+      //todo: this might need to change depending on the actual sheet data
         units.push({
           code: unitsCodeRow.getCell(colNumber).text,
           name: unitsNameRow.getCell(colNumber).text,
           year: year,
-          semester: 1,
+          semester: unitsSemRow.getCell(colNumber).text,
           students: unitsStudentsRow.getCell(colNumber).value,
           share: unitsShareRow.getCell(colNumber).value,
           load: Math.round(Math.max(Math.log10(unitsStudentsRow.getCell(colNumber).value/7),0.8)*unitsShareRow.getCell(colNumber).value * 100) / 100,
