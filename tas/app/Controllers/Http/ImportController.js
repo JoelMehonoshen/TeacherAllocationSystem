@@ -7,7 +7,6 @@ const Helpers = use("Helpers");
 const Academic = use("App/Models/Academic");
 const Unit = use("App/Models/Unit");
 const Allocation = use("App/Models/Allocation");
-const AcademicPreference = use("App/Models/AcademicPreference");
 const Database = use("Database");
 
 class UnitImport {
