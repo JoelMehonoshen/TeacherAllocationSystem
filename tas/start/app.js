@@ -22,6 +22,7 @@ const providers = [
   '@adonisjs/drive/providers/DriveProvider',
   '@adonisjs/auth/providers/AuthProvider',
   '@adonisjs/validator/providers/ValidatorProvider'
+
 ]
 
 /*

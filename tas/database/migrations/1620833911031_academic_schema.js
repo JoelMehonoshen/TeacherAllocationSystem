@@ -6,12 +6,10 @@ const Schema = use('Schema')
 class AcademicSchema extends Schema {
   up () {
     this.create('academics', (table) => {
-      table.increments('id')
+      table.string('academicId')
       table.string('name')
-      table.integer('year')
-      table.string('school')
-      table.float('load')
-      table.string('academic_preference', 7)
+      table.string('category')
+      table.float('teachingFraction')
       table.timestamps()
     })
   }

@@ -6,12 +6,10 @@ const Schema = use('Schema')
 class AllocationSchema extends Schema {
   up () {
     this.create('allocations', (table) => {
-        table.increments('allocation_id')
-        table.integer('id').references('id').inTable("academics")
-        table.string('unit_code')
-        table.integer('unit_year')
-        table.integer('unit_semester')
-        table.float('load')
+        table.integer('academicId').references('academicId').inTable("academics")
+        table.integer('unitOfferingId').references('unitOfferingId').inTable("unitOfferrings")
+        table.boolean('unitCoordinator')
+        table.float('fractionAllocated')
         table.timestamps()
     })
   }

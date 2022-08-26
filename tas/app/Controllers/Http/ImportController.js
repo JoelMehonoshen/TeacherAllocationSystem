@@ -4,53 +4,51 @@ const Logger = use("Logger");
 
 const Excel = require("exceljs");
 const Helpers = use("Helpers");
+
 const Academic = use("App/Models/Academic");
 const Unit = use("App/Models/Unit");
 const Allocation = use("App/Models/Allocation");
 const Database = use("Database");
 
 class UnitImport {
-  constructor(code, name, year, semester, students, share) {
+  constructor(code, name, students) {
     this.code = code;
     this.name = name;
-    this.year = year;
-    this.semester = semester;
     this.students = students;
-    this.share = share;
   }
 }
-
+//todo will need to add models for each new schema *********
 class AcademicImport {
-  constructor(name, year,school, load, allocations, academic_preference) {
+  constructor(academicId, name, category, teachingFraction, allocations) {
+    this.academicId = academicId;
     this.name = name;
-    this.year = year;
+    this.category = category;
     this.school = school;
-    this.load = load;
+    this.teachingFraction = teachingFraction;
+    //keep the allocations list temporarily with the academic
     this.allocations = [];
-    this.academic_preference = academic_preference;
     if (allocations !== undefined) {
       this.allocations = allocations;
     }
   }
-
-  addAllocation(UnitImport, load) {
+//todo: this will need to be changed with new schema when we know what inputs are required
+  addAllocation(UnitImport) {
     this.allocations.push({ UnitImport, load });
   }
 
   async save() {
     const ac = new Academic();
+    ac.academicId = this.academicId;
     ac.name = this.name;
-    ac.year = this.year;
-    ac.school = this.school;
-    ac.load = this.load;
-    ac.academic_preference = this.academic_preference;
+    ac.category = this.category;
+    ac.teachingFraction = this.teachingFraction;
     await ac.save();
 
     if (this.allocations.length > 0) {
-      this.allocations.forEach(({ UnitImport, load }) => {
+      this.allocations.forEach(({ UnitImport }) => {
           const al = new Allocation();
-          al.id = ac.id;
-          al.unit_code = UnitImport.code;
+          al.academicId = ac.academicId;
+          al.unitOfferingId = UnitImport.code;
           al.unit_year = UnitImport.year;
           al.unit_semester = UnitImport.semester;
           al.load = load;

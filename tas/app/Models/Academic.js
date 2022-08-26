@@ -8,10 +8,6 @@ class Academic extends Model {
         return this.hasMany("App/Models/Allocation")
     }
 
-    loads() {
-        return this.hasMany("App/Models/Load")
-    }
-
     tags() {
         return this.hasMany("App/Models/Tag")
     }
