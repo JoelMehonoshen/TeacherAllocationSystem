@@ -6,8 +6,8 @@ const Schema = use('Schema')
 class PreferencesSchema extends Schema {
   up () {
     this.create('preferences', (table) => {
-      table.integer('academicId').references('academicId').inTable("academics")
-      table.integer('unitCode').references('unitCode').inTable("unit")
+      table.string('id').references('id').inTable("academics")
+      table.string('code').references('code').inTable("units")
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
       table.timestamps()

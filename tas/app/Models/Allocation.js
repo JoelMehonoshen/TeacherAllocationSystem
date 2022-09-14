@@ -8,12 +8,8 @@ class Allocation extends Model {
         return this.belongsTo("App/Models/Academic")
     }
 
-    units() {
-        return this.belongsTo("App/Models/Unit")
-    }
-
-    tags() {
-        return this.hasMany("App/Models/Tag")
+    unitOfferings() {
+        return this.belongsTo("App/Models/UnitOffering")
     }
 }
 

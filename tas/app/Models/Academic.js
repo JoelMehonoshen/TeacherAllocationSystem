@@ -8,9 +8,9 @@ class Academic extends Model {
         return this.hasMany("App/Models/Allocation")
     }
 
-    tags() {
-        return this.hasMany("App/Models/Tag")
-    }
+     preferences() {
+            return this.hasMany("App/Models/Preference")
+        }
 }
 
 module.exports = Academic

@@ -3,11 +3,11 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class UnitOfferingsSchema extends Schema {
+class OfferingsSchema extends Schema {
   up () {
-    this.create('unit_offerings', (table) => {
-      table.increments('unitOfferingId')
-      table.string('unitCode')
+    this.create('offerings', (table) => {
+      table.increments('id')
+      table.string('code')
       table.string('semester')
       table.string('estimatedEnrolments')
       table.float('schoolShare')
@@ -16,8 +16,8 @@ class UnitOfferingsSchema extends Schema {
   }
 
   down () {
-    this.drop('unit_offerings')
+    this.drop('offerings')
   }
 }
 
-module.exports = UnitOfferingsSchema
+module.exports = OfferingsSchema

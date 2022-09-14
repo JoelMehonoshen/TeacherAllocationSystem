@@ -4,12 +4,8 @@
 const Model = use('Model')
 
 class Unit extends Model {
-    allocations() {
-        return this.hasMany("App/Model/Allocation")
-    }
-
-    tags() {
-        return this.hasMany("App/Models/Tag")
+    unitOfferings() {
+        return this.hasMany("App/Model/UnitOffering")
     }
 }
 

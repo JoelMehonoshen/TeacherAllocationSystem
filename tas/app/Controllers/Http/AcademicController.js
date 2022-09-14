@@ -4,7 +4,6 @@ const Logger = use("Logger");
 
 const Academic = use("App/Models/Academic");
 const Database = use("Database");
-const Tag = use("App/Models/Tag");
 
 class AcademicController {
   async addacademic({ request, response }) {

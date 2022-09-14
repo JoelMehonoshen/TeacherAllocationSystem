@@ -6,7 +6,8 @@ const Schema = use('Schema')
 class UnitSchema extends Schema {
   up () {
     this.create('units', (table) => {
-      table.string('unitCode')
+      table.string('id')
+      table.string('code').unique().primary()
       table.string('name')
       table.string('subjectAreaGroup')
       table.timestamps()

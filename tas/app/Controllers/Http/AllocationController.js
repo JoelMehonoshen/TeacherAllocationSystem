@@ -3,7 +3,6 @@
 const Database = use("Database");
 const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
-const Tag = use("App/Models/Tag");
 
 // TODO:(OLD) get rid of the raw sql, change everything (except like sql statements) to use the ORM
 class AllocationController {
