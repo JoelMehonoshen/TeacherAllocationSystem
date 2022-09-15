@@ -11,6 +11,8 @@ class Allocation extends Model {
     unitOfferings() {
         return this.belongsTo("App/Models/UnitOffering")
     }
+
+
 }
 
 module.exports = Allocation

@@ -13,58 +13,57 @@
       <form method="POST" action="{{ route('AllocationController.addAllocation') }}">
         {{csrf}}
         <div class="field">
-          <label class="label">Academic Name</label>
-          <div class="control">
-            <div class="select">
-              <select name="academic" style="width: 100vw !important">
-                @each(academic in academics)
-                <option value="{{ academic.id }}">{{ academic.name }}</option>
-                @endeach
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
           <label class="label">Unit</label>
           <div class="control">
             <div class="select">
-              <select name="unit" style="width: 100vw !important">
+              <select name="unitCode" style="width: 100vw !important">
                 @each(unit in units)
-                <option value="{{ unit.id }}">{{ unit.id }} | {{ unit.name }}</option>
+                <option value="{{ unit.code }}">{{ unit.code }} | {{ unit.name }}</option>
                 @endeach
               </select>
             </div>
           </div>
         </div>
         <div class="field">
-          <label class="label">Load</label>
+          <label class="label">Academic Name</label>
           <div class="control">
-            <input class="input" type="number" step=".1" min="0" name="load" style="width: 100vw !important">
+            <div class="select">
+              <select name="academicId" style="width: 100vw !important">
+                @each(academic in academics)
+                <option value="{{ academic.id }}">{{academic.id }} | {{ academic.name }}</option>
+                @endeach
+              </select>
+            </div>
           </div>
         </div>
+        <div class="field">
+          <label class="label">Fraction Allocated</label>
+          <div class="control">
+            <input class="input" type="number" step=".05" min="0"  name="fractionAllocated" style="width: 100vw !important">
+          </div>
+        </div>
+        <label class="label">Unit Coordinator</label>
+        <p class="control">
+          <span class="select">
+            <select class="select" name="unitCoordinator" style="width: 100vw !important">
+              <option>True</option>
+              <option>False</option>
+            </select>
+          </span>
+        </p>
         <label class="label">Semester</label>
         <p class="control">
           <span class="select">
             <select class="select" name="semester" style="width: 100vw !important">
-              <option>1</option>
-              <option>2</option>
-            </select>
-          </span>
-        </p>
-        <label class="label">Year</label>
-        <p class="control">
-          <span class="select">
-            <select class="select" name="year" style="width: 100vw !important">
-                @each(year in years)
-                <option>{{ year }}</option>
-                @endeach
+                <option>2022/1</option>
+                <option>2022/2</option>
             </select>
           </span>
         </p>
     </section>
     <footer class="modal-card-foot">
       <input type="submit" value="Add Allocation" class="dd-button--round button-blue-fill margin-8">
-      <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>  
+      <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
     </footer>
     </form>
   </div>

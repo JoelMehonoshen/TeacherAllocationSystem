@@ -3,15 +3,15 @@
 const Database = use("Database");
 const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
+Database.query();
 
 // TODO:(OLD) get rid of the raw sql, change everything (except like sql statements) to use the ORM
 class AllocationController {
   // update the database with new allocations and academics
 
   async deleteallocation({ response, request }) {
-  Logger.info('Delete Allocations has run')
       try {
-          await Database.from("allocations").where("unit_code", request.input("unit_code")).delete()
+          await Database.from("allocations").where("id", request.input("id")).delete()
           }
            catch (error) {
                 Logger.error('Delete Allocation', error);
@@ -22,48 +22,30 @@ class AllocationController {
 
   async updateAllocation({ response, request }) {
     try{
-      for (var i = 0; i < request.input("allocationID").length; i++) {
+      for (var i = 0; i < request.input("id").length; i++) {
         await Database.from("allocations")
-          .where("allocation_id", request.input("allocationID")[i])
+          .where("id", request.input("id")[i])
           .update({
-            unit_code: request.input("unit")[i],
-            load: request.input("unitLoad")[i],
+            academicId: request.input("academicId")[i],
+            fractionAllocated: request.input("fractionAllocated")[i],
+            unitCoordinator: request.input("unitCoordinator")[i],
           });
         }
-      if(request.input("tags")){
-        //sanitise tag input
-        var strTags = request.input("tags").replace(/\s/g, '');
-        var tags= strTags.split('#')
-        //for each allocationID that comes through (each unit the academic is assigned to) create a tag for that allocation
-        for (var i = 0; i < request.input("allocationID").length; i++) {
-          //first item in tags list is empty, so skipping it with i=1
-          for(var x=1; x < tags.length; x++){
-              const newTag = new Tag();
-              newTag.tag = tags[x]
-              newTag.allocation_id = request.input("allocationID")[i]
-              newTag.academic_id = request.input("academicID")
-              newTag.type = "allocation"
-              console.log(tags)
-              await newTag.save();
-          }
-        }
-      }
       return response.route("/allocations", true);
     } catch (error) {
       Logger.error(`Update Allocation (${error})`);
     }
   }
-  // TODO:(OLD) All endpoints need to use the validator
-  // https://legacy.adonisjs.com/docs/4.1/validator
-  // adding a new allocation
+
   async addAllocation({ response, request }) {
     try {
+
+      const offeringEntry = await Database.select("offerings.id").from("offerings").where("code", request.input("unitCode")).where("semester",request.input("semester"))
       const newAllocation = new Allocation();
-      newAllocation.id = request.input("academic")
-      newAllocation.unit_code = request.input("unit");
-      newAllocation.unit_year = request.input("year");
-      newAllocation.unit_semester = request.input("semester");
-      newAllocation.load = request.input("load");
+      newAllocation.academicId = request.input("academicId")
+      newAllocation.id = offeringEntry[0]["id"]
+      newAllocation.fractionAllocated = request.input("fractionAllocated");
+      newAllocation.unitCoordinator = request.input("unitCoordinator");
       await newAllocation.save()
       return response.route("/allocations");
     } catch (error) {
@@ -73,26 +55,31 @@ class AllocationController {
 
   async render({ view, request }) {
       try{
-      //Get units, needed for adding allocations
-      var unitList = await Database.from("units");
-      var academicList = await Database.from("academics");
-      var allocations = await Database.from("academics")
-      .select(
-        "allocations.unit_code",
-        "allocations.load",
-        "allocations.id",
-        "allocations.allocation_id"
-      )
-      .join("allocations", "academics.id", "allocations.id");
-      var unitsUnalloc = await Database.from("units")
-      .select("units.id")
-      .whereNotIn(
-        "units.id",
-        Database.from("allocations").select("allocations.unit_code")
-      );
-      var tagslist = await Database.from('tags')
-      .select("allocation_id","tag")
-      .where("type","=","allocation")
+
+       var units = await Database.from("units");
+       var academics= await Database.from("academics");
+       var offerings = await Database.from("offerings");
+       var allocations = await Database.from("allocations");
+
+
+
+      var aggAllocations = [];
+      var aggTotalFractions = []
+
+      for (let i = 1; i <= offerings.length; i++){
+        var entries = await Database.from("allocations").where("id", i);
+        var totalFraction = await Database.from("allocations").where("id", i).sum("fractionAllocated");
+        if(totalFraction[0]["sum"] == null){
+          aggTotalFractions.push(0)
+        }
+        else{
+          aggTotalFractions.push(totalFraction[0]["sum"])
+        }
+        aggAllocations.push(entries)
+
+      }
+    console.log(aggTotalFractions)
+
 
       // obtain user input from searchbar + sort + filter options
       var search = request.input("search")
@@ -103,89 +90,24 @@ class AllocationController {
       if (!sort) { sort = "name" }
 
       // Retrieves search information from each table
-      var academics = await Database
-        .select("academics.id", "academics.name", "academics.load")
-        .distinct("academics.id")
-        .from("academics")
-        .leftJoin("tags","academics.id","tags.academic_id")
-        .where("academics.name", 'ilike', "%" + search + "%")
-        .orWhere("tags.tag", 'ilike', "%" + search + "%")
-
-      //console.log(academics)
-
-      // Coorelates academics and their allocations based on id
-      var allocAcademics = [];
-      //for each academic, check for allocations
-      for (var i = 0; i < academics.length; i++) {
-
-        // for each unit, round requestedLoad to 2 decimal places
-        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
-
-        var teacher = {
-          id: academics[i].id,
-          name: academics[i].name,
-          requestedLoad: academics[i].load,
-        };
-
-        var units = [];
-        var tags = [];
-        var totalLoad = 0;
-
-        for (var j = 0; j < allocations.length; j++) {
-          if (teacher.id == allocations[j].id) {
-            units.push({
-              allocation_id: allocations[j].allocation_id,
-              unit_code: allocations[j].unit_code,
-              load: allocations[j].load,
-            });
-            totalLoad += parseFloat(allocations[j].load);
-
-            // round totalLoad (i.e. the actual load) to 2 decimal places
-            totalLoad = Math.round(totalLoad * 100) / 100;
-
-          }
-        }
-        //for each unit/allocation - check for unique tags and create a string of them for edit allocation
-        for(var j=0; j < units.length; j++){
-          for(var x=0; x < tagslist.length; x++){
-            if(units[j].allocation_id == tagslist[x].allocation_id){
-                tags.push({
-                  tag: tagslist[x].tag
-                })
-              }
-            }
-          }
-        teacher.actualLoad = totalLoad;
-        teacher.allocUnits = units;
-        teacher.tags = tags;
-        allocAcademics.push(teacher);
-      }
-      for (var i=0; i < allocAcademics; i++){
-        for(var j=0; j < tagslist.length; j++){
-          if(allocations[j].id == tagslist[x].allocation_id){
-            tags.push({
-              tag: tagslist[x].tag
-            })
-          }
-        }
-      }
-
-      //dynamically produce last 5 years for search bar drop down box
-      let years = [];
-      let currentYear = new Date().getFullYear() + 1;
-      let earliestYear = currentYear - 5;
-      while (currentYear >= earliestYear) {
-        years.push(currentYear);
-        currentYear -= 1;
-      }
+      //todo:Commented this out bc of the new schema - Joel
+//      var academics = await Database
+//        .select("academics.id", "academics.name", "academics.load")
+//        .distinct("academics.id")
+//        .from("academics")
+//        .leftJoin("tags","academics.id","tags.academic_id")
+//        .where("academics.name", 'ilike', "%" + search + "%")
+//        .orWhere("tags.tag", 'ilike', "%" + search + "%")
 
       return view.render("allocations", {
-        allocAcademics: allocAcademics,
-        unitsUnalloc: unitsUnalloc,
-        academicList: academicList,
-        unitList: unitList,
-        years: years,
+        academics: academics,
+        units: units,
+        allocations: allocations,
+        offerings: offerings,
+        aggAllocations:aggAllocations,
+        aggTotalFractions:aggTotalFractions,
       });
+
     }catch (error){
       Logger.error(`render Allocation (${error})`);
     }

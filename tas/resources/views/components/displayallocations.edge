@@ -3,31 +3,35 @@
 <div class="table-outter" style="font-family:'Roboto'">
   <div class="table-title-block">
     <div class="table-section--xx-small margin-8"></div>
-    <div class="table-section--medium margin-8">Name</div>
-    <div class="table-section--medium margin-8">Requested Load</div>
-    <div class="table-section--medium margin-8">Actual Load</div>
+    <div class="table-section--medium margin-8">Unit Code</div>
+    <div class="table-section--medium margin-8">Semester</div>
+    <div class="table-section--medium margin-8">Estimated Enrolments</div>
+    <div class="table-section--medium margin-8">School Share</div>
+    <div class="table-section--medium margin-8">Total Allocated Fraction</div>
     <div class="table-section--medium margin-8">Status</div>
-    <div class="table-section--x-large margin-8">Tags</div>
     <div class="table-section--small margin-8">Actions</div>
   </div>
  </div>
 </div>
 
 {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
-@each(allocAcademic in allocAcademics)
-{{--  Display Mode (not a form)  --}}
-<div>
+
+@each(offering in offerings)
+
 <div class="table-outter">
   <div class="table-static">
     <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-    <div class="table-section--medium margin-8">{{ allocAcademic.name }}</div>
-    <div class="table-section--medium margin-8">{{ allocAcademic.requestedLoad }}</div>
-    <div class="table-section--medium margin-8">{{ allocAcademic.actualLoad }}</div>
-    @if(allocAcademic.requestedLoad < allocAcademic.actualLoad)
+    <div class="table-section--medium margin-8">{{ offering.code }}</div>
+    <div class="table-section--medium margin-8">{{ offering.semester }}</div>
+    <div class="table-section--medium margin-8">{{ offering.estimatedEnrolments }}</div>
+    <div class="table-section--medium margin-8">{{ offering.schoolShare }}</div>
+    <div class="table-section--medium margin-8">{{ aggTotalFractions[offering.id-1] }}</div>
+
+    @if(aggTotalFractions[offering.id-1] <= 0)
     <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-red"></div>
     </div>
-    @elseif(allocAcademic.requestedLoad == allocAcademic.actualLoad)
+    @elseif(aggTotalFractions[offering.id-1] > 1)
     <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-green"></div>
     </div>
@@ -37,32 +41,26 @@
     </div>
     @endif
 
-    <div class="table-section--x-large margin-8">
-      @each(tag in allocAcademic.tags)
-      <div class="control">
-        <div class="tags has-addons">
-          <a class="tag is-info">{{tag.tag}}</a>
-        </div>
-      </div>
-      @endeach
-    </div>
+
     <div class="table-section--small margin-8">
-      @!component('components.editallocation', csrf=csrf, allocAcademic=allocAcademic)
+      @!component('components.editallocation', csrf=csrf)
     </div>
 
  </div>
  <div class="table-collapse">
   <div class="table-collapse--inner">
-    <div class="table-section--medium font-weight-bold">Unit</div>
-    <div class="table-section--medium font-weight-bold">Load</div>
+    <div class="table-section--medium font-weight-bold">Academic ID</div>
+    <div class="table-section--medium font-weight-bold">Fraction Allocated</div>
+    <div class="table-section--medium font-weight-bold">Unit Coordinator</div>
   </div>
-  @each(unit in allocAcademic.allocUnits)
+   @each(allocation in aggAllocations[offering.id-1])
   <div class="table-collapse--inner">
-    <div class="table-section--medium">{{ unit.unit_code }}</div>
-    <div class="table-section--medium">{{ unit.load }}</div>
+    <div class="table-section--medium">{{ allocation.academicId }}</div>
+    <div class="table-section--medium">{{ allocation.fractionAllocated }}</div>
+    <div class="table-section--medium">{{ allocation.unitCoordinator }}</div>
     <form action="allocations/deleteallocation" method="POST">
       {{csrf}}
-      <input type="hidden" name="unit_code" value="{{unit.unit_code}}">
+      <input type="hidden" name="id" value="{{allocation.id}}">
       <input type="submit" value = "Delete Allocation" class="dd-button--round button-red-fill margin-12">
     </form>
   </div>
@@ -86,3 +84,4 @@
 @endeach
 
 @!component('components.tableJS')
+

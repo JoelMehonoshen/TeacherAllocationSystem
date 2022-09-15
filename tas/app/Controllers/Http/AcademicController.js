@@ -77,7 +77,7 @@ async deleteacademic({ response, request }) {
         //.select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
         .where("name", 'ilike', "%" + search + "%")
         .orderBy(sort)
-
+      const preferences = await Database.from("preferences")
 // for each academic, round requestedLoad to 2 decimal places (depreciated)
 //      for (var i = 0; i < academics.length; i++) {
 //        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
@@ -89,7 +89,8 @@ async deleteacademic({ response, request }) {
 
       //console.log(academics)
       return view.render("academics", {
-        academics: academics
+        academics: academics,
+        preferences: preferences,
       });
 
     } catch (error) {
