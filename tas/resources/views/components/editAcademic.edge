@@ -20,36 +20,31 @@
         <section class="modal-card-body">
         <form method="POST" action="academics/updateacademic">
             {{csrf}}
-            <input type="hidden" name="academicID" value="{{academic.id}}">
+          <input type="hidden" name="id" value="{{academic.id}}">
             <div class="field">
                 <label class="label">Academic Name</label>
                 <div class="control">
                     <input class="input" type="text" name="name" value="{{academic.name}}">
                 </div>
             </div>
-            <div class="field">
-                            <label class="label">School</label>
-                            <div class="control">
-                                <input class="input" type="text" name="school" value="{{academic.school}}">
-                            </div>
-                        </div>
-            <div class="field">
-                <label class="label">Requested Load</label>
-                <div class="control">
-                    <input class="input" type="number" min="0" step=".1" name="load" value="{{ academic.load }}">
-                </div>
+          <div class="field">
+            <label class="label">Academic ID</label>
+            <div class="control">
+              <input class="input" type="text" name="newId" value="{{academic.id}}">
             </div>
+          </div>
+          <div class="control">
+            <label class="label">Category</label>
+            <select class="input-select" type="input-select" style="margin:4px 0px;" name="category" id="category">
+              <option value="{{academic.category}}" disabled selected >{{academic.category}}</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Sessional">Sessional</option>
+            </select>
+          </div>
             <div class="field">
-                            <label class="label">Academic Preference</label>
-                            <div class="control">
-                                <input class="input" type="text" name="academic_preference" value="{{academic.academic_preference}}">
-                            </div>
-                        </div>
-            {{--  Tags  --}}
-            <div class="field">
-                <label class="label">Tags:</label>
-                <div class="field has-addons has-addons-centered">
-                    <input class="input" type="text" name="tags">
+                <label class="label">Teaching Fraction (%) </label>
+                <div class="control">
+                    <input class="input" type="number" min=0 max=1 step=0.05 name="teachingFraction" value="{{ academic.teachingFraction }}">
                 </div>
             </div>
             </section>
@@ -59,10 +54,9 @@
 </form>
                 <form action="academics/deleteacademic" method="POST">
                 {{csrf}}
-                <input type="hidden" name="academicID" value="{{academic.id}}">
+                <input type="hidden" name="id" value="{{academic.id}}">
                 <input type="submit" value = "Delete Academic" class="dd-button--round button-red-fill margin-8">
                 </form>
-
             </footer>
 
     </div>

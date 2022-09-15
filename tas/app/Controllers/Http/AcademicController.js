@@ -9,11 +9,10 @@ class AcademicController {
   async addacademic({ request, response }) {
     try {
       const newAcademic = new Academic();
+      newAcademic.id = request.input("id")
       newAcademic.name = request.input("name")
-      newAcademic.year = request.input("year")
-      newAcademic.school = request.input("school")
-      newAcademic.load = request.input("load")
-      newAcademic.academic_preference = request.input("academic_preference")
+      newAcademic.category = request.input("category")
+      newAcademic.teachingFraction = request.input("teachingFraction")
 
 
       await newAcademic.save()
@@ -25,12 +24,11 @@ class AcademicController {
   }
 
 async deleteacademic({ response, request }) {
-Logger.info('Delete Academic has run')
     try {
         await Database.from("allocations")
-        .where("id", request.input("academicID")).delete()
+        .where("academicId", request.input("id")).delete()
         await Database.from("academics")
-        .where("id", request.input("academicID")).delete()
+        .where("id", request.input("id")).delete()
         }
          catch (error) {
               Logger.error('Delete Academics',  error);
@@ -41,29 +39,16 @@ Logger.info('Delete Academic has run')
 
 
   async updateacademic({ response, request }) {
+  //todo: probably need a unique add check here and in add (above)
     try {
       await Database.from("academics")
-        .where("id", request.input("academicID"))
+        .where("id", request.input("id"))
         .update({
+          id: request.input("newId"),
           name: request.input("name"),
-          load: request.input("load"),
-          school: request.input("school"),
-          academic_preference: request.input("academic_preference"),
+          category: request.input("category"),
+          teachingFraction: request.input("teachingFraction"),
         });
-
-        if(request.input("tags")){
-          //sanitise tag input
-          var strTags = request.input("tags").replace(/\s/g, '');
-          var tags= strTags.split('#')
-          //first item in tags list is empty, so skipping it with i=1
-          for(var x=1; x < tags.length; x++){
-            const newTag = new Tag();
-            newTag.tag = tags[x]
-            newTag.academic_id = request.input("academicID")
-            newTag.type = "academic"
-            await newTag.save();
-          }
-        }
       return response.route("/academics", true);
     } catch (error) {
       Logger.error('Update Academics',  error);
@@ -74,6 +59,7 @@ Logger.info('Delete Academic has run')
   async render({ request, view }) {
     try {
 
+      //todo: update to work with new schema
       // obtain user input from searchbar + sort + filter options
       var search = request.input("search")
       var sort = request.input("sort")
@@ -92,19 +78,18 @@ Logger.info('Delete Academic has run')
         .where("name", 'ilike', "%" + search + "%")
         .orderBy(sort)
 
-      // for each academic, round requestedLoad to 2 decimal places
-      for (var i = 0; i < academics.length; i++) {
-        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
-      }
-
-      const schools = await Database.from("academics")
-        .distinct("school")
-        .orderBy("school")
+// for each academic, round requestedLoad to 2 decimal places (depreciated)
+//      for (var i = 0; i < academics.length; i++) {
+//        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
+//      }
+//
+//      const schools = await Database.from("academics")
+//        .distinct("school")
+//        .orderBy("school")
 
       //console.log(academics)
       return view.render("academics", {
-        academics: academics,
-        schools: schools
+        academics: academics
       });
 
     } catch (error) {

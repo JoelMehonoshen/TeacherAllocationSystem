@@ -3,11 +3,10 @@
     <div class="table-title-block">
       <div class="table-section--xx-small margin-8"></div>
       <div class="table-section--x-large margin-8">Name</div>
-      <div class="table-section--x-large margin-8">School</div>
-      <div class="table-section--medium margin-8">Requested Load</div>
-      <div class="table-section--large margin-8">Academic Preference</div>
+      <div class="table-section--x-large margin-8">Academic ID</div>
+      <div class="table-section--medium margin-8">Category</div>
+      <div class="table-section--large margin-8">Teaching Fraction (%)</div>
       <div class="table-section--medium margin-8">Status</div>
-      <div class="table-section--x-large margin-8">Tags</div>
       <div class="table-section--small margin-8">Actions</div>
     </div>
   </div>
@@ -21,14 +20,15 @@
    <div class="table-static">
       <div class="table-section--xx-small text-align-center margin-8">{{--<i class="fa fa-chevron-right" aria-hidden="true"></i>--}}</div>
       <div class="table-section--x-large margin-8">{{ academic.name }}</div>
-      <div class="table-section--x-large margin-8">{{ academic.school }}</div>
-      <div class="table-section--medium margin-8">{{ academic.load }}</div>
-      <div class="table-section--large margin-8">{{academic.academic_preference}}</div>
-      @if(academic.load > 1)
+      <div class="table-section--x-large margin-8">{{ academic.id }}</div>
+      <div class="table-section--medium margin-8">{{ academic.category }}</div>
+      <div class="table-section--large margin-8">{{academic.teachingFraction}}</div>
+      @if(academic.teachingFraction > 1)
       <div class="table-section--medium margin-8">
         <div class="table-section--stat stat-red margin-8"></div>
       </div>
-      @elseif(academic.load == academic.load)
+     {{--  This can be changed if we need  --}}
+      @elseif(academic.load == academic.load )
       <div class="table-section--medium margin-8">
         <div class="table-section--stat stat-green margin-8"></div>
       </div>
@@ -38,15 +38,6 @@
       </div>
       @endif
 
-      <div class="table-section--x-large margin-8">
-        @each(tag in academic.tags)
-        <div class="control">
-          <div class="tags has-addons">
-            <a class="tag is-info">{{tag.tag}}</a>
-          </div>
-        </div>
-        @endeach
-      </div>
       <div class="table-section--small margin-8">
         @!component('components.editAcademic', csrf=csrf, academic=academic)
       </div>
