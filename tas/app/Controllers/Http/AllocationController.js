@@ -22,15 +22,14 @@ class AllocationController {
 
   async updateAllocation({ response, request }) {
     try{
-      for (var i = 0; i < request.input("id").length; i++) {
         await Database.from("allocations")
-          .where("id", request.input("id")[i])
+          .where("id", request.input("id"))
           .update({
-            academicId: request.input("academicId")[i],
-            fractionAllocated: request.input("fractionAllocated")[i],
-            unitCoordinator: request.input("unitCoordinator")[i],
+            academicId: request.input("academicId"),
+            fractionAllocated: request.input("fractionAllocated"),
+            unitCoordinator: request.input("unitCoordinator"),
           });
-        }
+
       return response.route("/allocations", true);
     } catch (error) {
       Logger.error(`Update Allocation (${error})`);
@@ -41,6 +40,7 @@ class AllocationController {
     try {
 
       const offeringEntry = await Database.select("offerings.id").from("offerings").where("code", request.input("unitCode")).where("semester",request.input("semester"))
+      console.log(offeringEntry)
       const newAllocation = new Allocation();
       newAllocation.academicId = request.input("academicId")
       newAllocation.id = offeringEntry[0]["id"]
@@ -78,7 +78,6 @@ class AllocationController {
         aggAllocations.push(entries)
 
       }
-    console.log(aggTotalFractions)
 
 
       // obtain user input from searchbar + sort + filter options

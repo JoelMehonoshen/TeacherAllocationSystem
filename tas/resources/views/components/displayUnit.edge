@@ -2,12 +2,10 @@
   <div class="table-outter">
     <div class="table-title-block">
       <div class="table-section--xx-small margin-8"></div>
-      <div class="table-section--small margin-8">ID</div>
-      <div class="table-section--large margin-8">Name</div>      
-      <div class="table-section--small margin-8">Semester</div>
-      <div class="table-section--medium margin-8">Assigned Load</div>
-      <div class="table-section--medium margin-8">Status</div>
-      <div class="table-section--medium margin-8">Actions</div>
+      <div class="table-section--small margin-8">Code</div>
+      <div class="table-section--large margin-8">Name</div>
+      <div class="table-section--medium margin-8">Subject Area Group</div>
+      <div class="table-section--large margin-8">Actions</div>
     </div>
   </div>
 </div>
@@ -19,41 +17,52 @@
   <div class="table-outter">
    <div class="table-static">
       <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-      <div class="table-section--small margin-8">{{ unit.id }}</div>
+      <div class="table-section--small margin-8">{{ unit.code }}</div>
       <div class="table-section--large margin-8">{{ unit.name }}</div>
-      <div class="table-section--small margin-8">{{ unit.semester }}</div>
-      <div class="table-section--medium margin-8">{{ unit.assignedLoad }}</div>
-      @if(unit.assignedLoad > 1)
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-red margin-8"></div>
-      </div>
-      @elseif(unit.assignedLoad == unit.assignedLoad)
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-green margin-8"></div>
-      </div>
-      @else
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-yellow margin-8"></div>
-      </div>
-      @endif
+      <div class="table-section--small margin-8">{{ unit.subjectAreaGroup }}</div>
 
-      <div class="table-section--medium margin-8">
+
+      <div class="table-section--small margin-8">
         @!component('components.editUnit', csrf=csrf, unit=unit)
       </div>
-      
+     <div class="table-section--small margin-8">
+       @!component('components.addOffering', csrf=csrf, unit=unit)
+     </div>
+
    </div>
    <div class="table-collapse">
     <div class="table-collapse--inner">
-      <div class="table-section--medium font-weight-bold">Students</div>
-      <div class="table-section--medium font-weight-bold">Share</div>
+      <div class="table-section--medium font-weight-bold">Unit offering ID</div>
+      <div class="table-section--medium font-weight-bold">Semester</div>
+      <div class="table-section--medium font-weight-bold">Estimated Enrolments</div>
+      <div class="table-section--medium font-weight-bold">School Share</div>
     </div>
-    <div class="table-collapse--inner">
-      <div class="table-section--medium">{{ unit.students }}</div>
-      <div class="table-section--medium">{{ unit.share }}</div>
+
+     @each(offering in groupedUnits[unit.code])
+
+     <div class="table-collapse--inner">
+      <div class="table-section--medium">{{ offering.id }}</div>
+      <div class="table-section--medium">{{ offering.semester }}</div>
+       <div class="table-section--medium">{{ offering.estimatedEnrolments }}</div>
+       <div class="table-section--medium">{{ offering.schoolShare }}</div>
+
+       <div class="table-section--medium margin-0">
+         @!component('components.editoffering', csrf=csrf, offering=offering)
+       </div>
+       <div class="table-section--large margin-0">
+         <form action="units/deleteoffering" method="POST">
+           {{csrf}}
+           <input type="hidden" name="id" value="{{offering.id}}">
+           <input type="submit"   value = "Delete" class="dd-button--round button-red-fill margin-0">
+         </form>
+       </div>
+
     </div>
+     @endeach
+
   </div>
   </div>
-    
+
 </div>
   {{--  if theres no allocations, display a warning  --}}
   @else

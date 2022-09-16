@@ -6,12 +6,15 @@ const Schema = use('Schema')
 class OfferingsSchema extends Schema {
   up () {
     this.create('offerings', (table) => {
-      table.increments('id')
+      table.increments('id').unique()
       table.string('code')
       table.string('semester')
-      table.string('estimatedEnrolments')
+      table.integer('estimatedEnrolments')
       table.float('schoolShare')
       table.timestamps()
+      //todo:these combination unique constraints aren't implemented correctly
+      table.unique(['code', 'semester'])
+
     })
   }
 

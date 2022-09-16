@@ -1,0 +1,81 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<button
+    type="button"
+    class="dd-button--hyperlink"
+    data-toggle="modal"
+    data-target="#addOffering"
+    >
+    <i class= "fa fa-plus"></i>&nbsp;Add Offering
+</button>
+
+<div id="addOffering" class="modal">
+  <div class="modal-background flex-container flex-center">
+      <div class="modal-card pop-up">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Unit Offering</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="units/addoffering">
+            {{csrf}}
+            <div class="field">
+                <label class="label">Unit Code</label>
+                <div class="control">
+                    <input class="input" type="text" name="code" value="{{unit.code}}"readonly>
+                </div>
+            </div>
+          <div class="field">
+            <label class="label">Estimated Enrolments</label>
+            <div class="control">
+              <input class="input" type="number" name="estimatedEnrolments">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">School Share</label>
+            <div class="control">
+              <input class="input" type="number" min="0" step=".05" max ="1" name="schoolShare">
+
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">Year</label>
+                <p class="control">
+                            <span class="select">
+                                <select class="select" name="year">
+                                    <option>2022</option>
+                                    <option>2023</option>
+                                    <option>2024</option>
+                                    <option>2025</option>
+                                </select>
+                            </span>
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Semester</label>
+                <p class="control">
+                            <span class="select">
+                            <select class="select" name="semester">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                            </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+            </section>
+            <footer class="modal-card-foot">
+                <input type="submit" value="Add Unit Offering" class="dd-button--round button-blue-fill margin-8">
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+                </form>
+            </footer>
+    </div>
+</div>
+</div>

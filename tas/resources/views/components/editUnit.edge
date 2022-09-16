@@ -4,12 +4,12 @@
     type="button"
     class="dd-button--hyperlink"
     data-toggle="modal"
-    data-target="#{{unit.id}}"
+    data-target="#{{unit.code}}"
     >
     <i class= "fa fa-edit"></i>&nbsp;Edit
 </button>
 
-<div id="{{unit.id}}" class="modal">
+<div id="{{unit.code}}" class="modal">
   <div class="modal-background flex-container flex-center">
       <div class="modal-card pop-up">
         <header class="modal-card-head">
@@ -19,10 +19,11 @@
         <section class="modal-card-body">
         <form method="POST" action="units/updateunit">
             {{csrf}}
+          <input type="hidden" name="originalCode" value="{{unit.code}}">
             <div class="field">
                 <label class="label">Unit Code</label>
                 <div class="control">
-                    <input class="input" type="text" name="unitID" value="{{unit.id}}">
+                    <input class="input" type="text" name="code" value="{{unit.code}}">
                 </div>
             </div>
             <div class="field">
@@ -31,37 +32,12 @@
                     <input class="input" type="text" name="name" value="{{unit.name}}">
                 </div>
             </div>
-            <div class="columns">
-                <div class="column">
-                    <div class="field">
-                        <label class="label">Semester</label>
-                        <p class="control">
-                            <span class="select">
-                            <select class="select" name="semester" value= "{{ unit.semester }}">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <label class="label">Students</label>
-                        <div class="control">
-                            <input class="input" type="number" min="0" name="load" value="{{ unit.students }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <label class="label">Share</label>
-                        <div class="control">
-                            <input class="input" type="number" min="0" name="load" value="{{ unit.share }}" step="any">
-                        </div>
-                    </div>
-                </div>
+          <div class="field">
+            <label class="label">Subject Area Group</label>
+            <div class="control">
+              <input class="input" type="text" name="subjectAreaGroup" value="{{unit.subjectAreaGroup}}">
             </div>
+          </div>
             </section>
             <footer class="modal-card-foot">
                 <input type="submit" value="Update Unit" class="dd-button--round button-blue-fill margin-8">
@@ -69,7 +45,7 @@
                 </form>
                                 <form action="units/deleteunit" method="POST">
                                 {{csrf}}
-                                <input type="hidden" name="unitid" value="{{unit.id}}">
+                                <input type="hidden" name="code" value="{{unit.code}}">
                                 <input type="submit" value = "Delete Unit" class="dd-button--round button-red-fill margin-8">
                                 </form>
             </footer>

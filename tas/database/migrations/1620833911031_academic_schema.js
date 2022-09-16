@@ -7,7 +7,7 @@ class AcademicSchema extends Schema {
   up () {
     this.create('academics', (table) => {
       table.string('id').unique().primary()
-      table.string('name')
+      table.string('name').unique()
       table.string('category')
       table.float('teachingFraction')
       table.timestamps()

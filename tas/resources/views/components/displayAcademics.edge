@@ -6,7 +6,6 @@
       <div class="table-section--x-large margin-8">Academic ID</div>
       <div class="table-section--medium margin-8">Category</div>
       <div class="table-section--large margin-8">Teaching Fraction (%)</div>
-      <div class="table-section--medium margin-8">Status</div>
       <div class="table-section--small margin-8">Actions</div>
     </div>
   </div>
@@ -18,32 +17,47 @@
   <div>
   <div class="table-outter">
    <div class="table-static">
-      <div class="table-section--xx-small text-align-center margin-8">{{--<i class="fa fa-chevron-right" aria-hidden="true"></i>--}}</div>
+      <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
       <div class="table-section--x-large margin-8">{{ academic.name }}</div>
       <div class="table-section--x-large margin-8">{{ academic.id }}</div>
       <div class="table-section--medium margin-8">{{ academic.category }}</div>
       <div class="table-section--large margin-8">{{academic.teachingFraction}}</div>
-      @if(academic.teachingFraction > 1)
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-red margin-8"></div>
-      </div>
-     {{--  This can be changed if we need  --}}
-      @elseif(academic.load == academic.load )
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-green margin-8"></div>
-      </div>
-      @else
-      <div class="table-section--medium margin-8">
-        <div class="table-section--stat stat-yellow margin-8"></div>
-      </div>
-      @endif
 
       <div class="table-section--small margin-8">
         @!component('components.editAcademic', csrf=csrf, academic=academic)
       </div>
 
    </div>
-  {{--<div class="table-collapse"></div>--}}
+  <div class="table-collapse">
+    <div class="table-collapse--inner">
+      <div class="table-section--medium font-weight-bold">Unit Preference</div>
+      <div class="table-section--medium font-weight-bold">Desire To Teach (/10)</div>
+      <div class="table-section--medium font-weight-bold">Ability To Teach (/10)</div>
+      <div class="table-section--medium font-weight-bold">Edit</div>
+      <div class="table-section--medium font-weight-bold">Delete</div>
+    </div>
+
+    @each(preference in groupedPreferences[academic.id])
+
+    <div class="table-collapse--inner">
+      <div class="table-section--medium">{{ preference.code }}</div>
+      <div class="table-section--medium">{{ preference.desireToTeach }}</div>
+      <div class="table-section--medium">{{ preference.abilityToTeach }}</div>
+      <div class="table-section--medium margin-0">
+        @!component('components.editPreference', csrf=csrf,academic=academic, preference = preference, units = units)
+      </div>
+      <div class="table-section--large margin-0">
+        <form action="academics/deletepreference" method="POST">
+          {{csrf}}
+          <input type="hidden" name="id" value="{{preference.id}}">
+          <input type="hidden" name="code" value="{{preference.code}}">
+          <input type="submit"   value = "Delete" class="dd-button--round button-red-fill margin-0">
+        </form>
+      </div>
+    </div>
+
+    @endeach
+  </div>
   </div>
 
 </div>

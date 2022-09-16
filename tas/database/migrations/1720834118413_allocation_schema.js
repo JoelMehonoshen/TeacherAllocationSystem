@@ -11,6 +11,8 @@ class AllocationSchema extends Schema {
         table.float('fractionAllocated')
         table.boolean('unitCoordinator')
         table.timestamps()
+        //todo:these combination unique constraints aren't implemented correctly
+        table.unique(['academicId', 'id'])
     })
   }
 

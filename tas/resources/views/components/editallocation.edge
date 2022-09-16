@@ -5,12 +5,12 @@
     type="button"
     class="dd-button--hyperlink"
     data-toggle="modal"
-    data-target="#{{allocAcademic.id}}"
+    data-target="#{{allocation.id}}"
     >
     <i class= "fa fa-edit"></i>&nbsp;Edit
 </button>
 
-<div id="{{allocAcademic.id}}" class="modal">
+<div id="{{allocation.id}}" class="modal">
     <div class="modal-background flex-container flex-center" >
         <div class="modal-card">
 
@@ -22,34 +22,35 @@
             <section class="modal-card-body">
             <form method="POST" action="{{ route('AllocationController.updateAllocation') }}">
                 {{csrf}}
-                <input type="hidden" name="academicID" value="{{allocAcademic.id}}">
+                <input type="hidden" name="id" value="{{allocation.id}}">
+              <div class="field">
+                <label class="label">Academic Name</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="academicId" style="width: 100vw !important">
+
+                      <option value="{{allocation.academicId}}" disabled selected >{{allocation.academicId}}</option>
+                      @each(academic in academics)
+                      <option value="{{ academic.id }}">{{academic.id }} | {{ academic.name }}</option>
+                      @endeach
+                    </select>
+                  </div>
+                </div>
+              </div>
                 <div class="field">
-                    <label class="label">Academic Name</label>
+                    <label class="label">Fraction Allocated</label>
                     <div class="control">
-                        <input class="input" type="text" name="name" value="{{ allocAcademic.name }}"readonly>
+                        <input class="input" type="number" min="0" step=".05" max ="1" name="fractionAllocated" value="{{ allocation.fractionAllocated }}">
                     </div>
                 </div>
-                <div class="field">
-                    <label class="label">Requested Load</label>
-                    <div class="control">
-                        <input class="input" type="number" min="0" step=".1" name="requestedLoad" value="{{ allocAcademic.requestedLoad }}"readonly>
-                    </div>
-                </div>
-                @each(unit in allocAcademic.allocUnits)
-                <input type="hidden" name="allocationID" value="{{unit.allocation_id}}">
-                    <div class="field">
-                        <label class="label">Unit:</label>
-                        <div class="control">
-                            <input class="input" type="text" name="unit" value="{{ unit.unit_code }}"readonly>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="label">Load:</label>
-                        <div class="control">
-                            <input class="input" type="number" min="0" step=".1" name="unitLoad" value="{{ unit.load }}">
-                        </div>
-                    </div>
-                @endeach
+              <div class="field">
+                <label class="label">Unit Coordinator</label>
+                <select class="select" name="unitCoordinator" style="width: 100vw !important"value="{{ allocation.unitCoordinator }}"readonly>
+                  <option disabled selected >{{allocation.unitCoordinator}}</option>
+                  <option>True</option>
+                  <option>False</option>
+                </select>
+              </div>
                 </section>
                 <footer class="modal-card-foot">
                     <input type="submit" value="Update Allocation" class="dd-button--round button-blue-fill margin-8">

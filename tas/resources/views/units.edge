@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
   @!component('components.head', title="Teacher Allocation System")
-  
+
   <body>
     <div class="wrapper">
       @include('partials/sidebar')
     <div class="content-section">
     <div class="main-content">
       {{--  Title, Search Bar--}}
-      
+
       @!component('components.addunit', csrf=csrfField())
 
-      @!component('components.searchUnits', title="Find unit code", ids=ids, csrf=csrfField(), route=route('UnitController.render'))
+      @!component('components.searchUnits', title="Find unit code", units = units,  csrf=csrfField(), route=route('UnitController.render'))
 
       <div>
         {{-- Display Units --}}
-        @!component('components.displayUnit', units=units, csrf=csrfField(), route=route('UnitController.render'))
+        @!component('components.displayUnit', units=units, groupedUnits=groupedUnits, csrf=csrfField(), route=route('UnitController.render'))
       </div>
 
     </div>
@@ -38,9 +38,9 @@
         </div>
       </div>
       <div class="section">
-        @!component('components.searchbar', title="Find Unit", units=units, csrf=csrfField(), route=route('UnitController.render'))
+        @!component('components.searchbar', title="Find Unit", units=units,  csrf=csrfField(), route=route('UnitController.render'))
       </div>
-      @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units)
+      @!component('components.displayUnit', csrf=csrfField(), route=route('UnitController.render'), units = units, groupedUnits= groupedUnits)
       <br>
       <br>
       <br>
@@ -50,4 +50,4 @@
     </section>
   </body>
   --}}
-</html> 
+</html>

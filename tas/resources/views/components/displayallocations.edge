@@ -9,7 +9,6 @@
     <div class="table-section--medium margin-8">School Share</div>
     <div class="table-section--medium margin-8">Total Allocated Fraction</div>
     <div class="table-section--medium margin-8">Status</div>
-    <div class="table-section--small margin-8">Actions</div>
   </div>
  </div>
 </div>
@@ -31,7 +30,7 @@
     <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-red"></div>
     </div>
-    @elseif(aggTotalFractions[offering.id-1] > 1)
+    @elseif(aggTotalFractions[offering.id-1] >= 1)
     <div class="table-section--medium margin-8">
       <div class="table-section--stat stat-green"></div>
     </div>
@@ -42,9 +41,7 @@
     @endif
 
 
-    <div class="table-section--small margin-8">
-      @!component('components.editallocation', csrf=csrf)
-    </div>
+
 
  </div>
  <div class="table-collapse">
@@ -52,17 +49,24 @@
     <div class="table-section--medium font-weight-bold">Academic ID</div>
     <div class="table-section--medium font-weight-bold">Fraction Allocated</div>
     <div class="table-section--medium font-weight-bold">Unit Coordinator</div>
+    <div class="table-section--medium font-weight-bold">Edit</div>
+    <div class="table-section--medium font-weight-bold">Delete</div>
   </div>
    @each(allocation in aggAllocations[offering.id-1])
   <div class="table-collapse--inner">
     <div class="table-section--medium">{{ allocation.academicId }}</div>
     <div class="table-section--medium">{{ allocation.fractionAllocated }}</div>
     <div class="table-section--medium">{{ allocation.unitCoordinator }}</div>
+    <div class="table-section--medium margin-0">
+      @!component('components.editallocation', csrf=csrf,allocation=allocation, academics = academics)
+    </div>
+    <div class="table-section--large margin-0">
     <form action="allocations/deleteallocation" method="POST">
       {{csrf}}
       <input type="hidden" name="id" value="{{allocation.id}}">
-      <input type="submit" value = "Delete Allocation" class="dd-button--round button-red-fill margin-12">
+      <input type="submit"   value = "Delete" class="dd-button--round button-red-fill margin-0">
     </form>
+    </div>
   </div>
   @endeach
 </div>

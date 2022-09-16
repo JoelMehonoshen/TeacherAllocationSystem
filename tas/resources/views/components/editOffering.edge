@@ -1,0 +1,53 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<button
+    type="button"
+    class="dd-button--hyperlink"
+    data-toggle="modal"
+    data-target="#{{offering.id}}"
+    >
+    <i class= "fa fa-edit"></i>&nbsp;Edit
+</button>
+
+<div id="{{offering.id}}" class="modal">
+    <div class="modal-background flex-container flex-center" >
+        <div class="modal-card">
+
+            <header class="modal-card-head">
+                <p class="modal-card-title">Update Offering Details</p>
+                <button class="delete" aria-label="close" data-dismiss="modal"></button>
+            </header>
+
+            <section class="modal-card-body">
+            <form method="POST" action="{{ route('UnitController.updateoffering') }}">
+              {{csrf}}
+              <input type="hidden" name="id" value="{{offering.id}}">
+
+              <div class="field">
+                <label class="label">Semester</label>
+                <div class="control">
+                  <input class="input" type="text" name="semester" value="{{offering.semester}}"readonly>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Estimated Enrolments</label>
+                <div class="control">
+                  <input class="input" type="number" min="0" max ="10000" name="estimatedEnrolments" value="{{ offering.estimatedEnrolments }}">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">School Share</label>
+                <div class="control">
+                  <input class="input" type="number" min="0" step="0.05" max ="1" name="schoolShare" value="{{ offering.schoolShare }}">
+                </div>
+              </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <input type="submit" value="Update Offering" class="dd-button--round button-blue-fill margin-8">
+                    <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</div>

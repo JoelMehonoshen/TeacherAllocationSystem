@@ -39,6 +39,7 @@ Route.post('/allocations/updateallocation', 'AllocationController.updateAllocati
 Route.post('/allocations/deleteallocation', 'AllocationController.deleteallocation')
 .middleware(["auth"])
 
+
 //academics
 Route.get('/academics', 'AcademicController.render')
 .middleware(["auth"])
@@ -50,6 +51,11 @@ Route.post('/academics/updateacademic', 'AcademicController.updateacademic')
 .middleware(["auth"])
 Route.post('/academics/deleteacademic', 'AcademicController.deleteacademic')
 .middleware(["auth"])
+Route.post('/academics/deletepreference', 'AcademicController.deletepreference')
+.middleware(["auth"])
+Route.post('/academics/updatepreference', 'AcademicController.updatepreference')
+.middleware(["auth"])
+
 
 //units
 Route.get('/units', 'UnitController.render')
@@ -61,6 +67,12 @@ Route.post('/units/addunit', 'UnitController.addunit')
 Route.post('/units/updateunit', 'UnitController.updateunit')
 .middleware(["auth"])
 Route.post('/units/deleteunit', 'UnitController.deleteunit')
+.middleware(["auth"])
+Route.post('/units/addoffering', 'UnitController.addoffering')
+.middleware(["auth"])
+Route.post('/units/updateoffering', 'UnitController.updateoffering')
+.middleware(["auth"])
+Route.post('/units/deleteoffering', 'UnitController.deleteoffering')
 .middleware(["auth"])
 
 //file handling

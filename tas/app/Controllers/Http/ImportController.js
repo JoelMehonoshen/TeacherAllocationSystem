@@ -119,7 +119,7 @@ class ImportController {
       await this.ReadWorksheet();
       console.log("read worksheet");
       //not sure about this response route (redirect)
-      response.route("/home");
+      response.route("/allocations");
     } catch (error) {
       Logger.error(error);
       throw new Exception();

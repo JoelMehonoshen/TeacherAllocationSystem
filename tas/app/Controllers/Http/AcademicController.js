@@ -39,15 +39,19 @@ async deleteacademic({ response, request }) {
 
 
   async updateacademic({ response, request }) {
-  //todo: probably need a unique add check here and in add (above)
     try {
+    //todo:need to update allocations simultaneously
+//      await Database.from("allocations")
+//              .where("academicId", request.input("id"))
+//              .update({academicId: request.input("newId")});
+
       await Database.from("academics")
         .where("id", request.input("id"))
         .update({
           id: request.input("newId"),
           name: request.input("name"),
           category: request.input("category"),
-          teachingFraction: request.input("teachingFraction"),
+          teachingFraction: request.input("teachingFraction")
         });
       return response.route("/academics", true);
     } catch (error) {
@@ -55,6 +59,39 @@ async deleteacademic({ response, request }) {
       throw new Exception();
     }
   }
+
+  async updatepreference({ response, request }) {
+      try {
+
+       console.log(request.input("id"))
+        await Database.from("preferences")
+          .where("code", request.input("originalCode"))
+          .where("id", request.input("id"))
+          .update({
+            code: request.input("code"),
+            desireToTeach: request.input("desireToTeach"),
+            abilityToTeach: request.input("abilityToTeach")
+          });
+        return response.route("/academics", true);
+      } catch (error) {
+        Logger.error('Update Preferences',  error);
+        throw new Exception();
+      }
+    }
+
+   async deletepreference({ response, request }) {
+   try{
+    await Database.from("preferences")
+           .where("code", request.input("code"))
+           .where("id", request.input("id"))
+           .delete()
+           return response.route("/academics", true);
+   }catch (error) {
+          Logger.error('Delete Preferences',  error);
+          throw new Exception();
+        }
+
+   }
 
   async render({ request, view }) {
     try {
@@ -77,20 +114,33 @@ async deleteacademic({ response, request }) {
         //.select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
         .where("name", 'ilike', "%" + search + "%")
         .orderBy(sort)
-      const preferences = await Database.from("preferences")
-// for each academic, round requestedLoad to 2 decimal places (depreciated)
-//      for (var i = 0; i < academics.length; i++) {
-//        academics[i].requestedLoad = Math.round(academics[i].requestedLoad * 100) / 100;
-//      }
-//
-//      const schools = await Database.from("academics")
-//        .distinct("school")
-//        .orderBy("school")
+
+       const preferences = await Database.from("preferences");
+       const units = await Database.from("units");
+
+       // Accepts the array and key
+           const groupBy = (array, key) => {
+             // Return the end result
+             return array.reduce((result, currentValue) => {
+               // If an array already present for key, push it to the array. Else create an array and push the object
+               (result[currentValue[key]] = result[currentValue[key]] || []).push(
+                 currentValue
+               );
+               // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+               return result;
+             }, {}); // empty object is the initial value for result object
+           };
+
+       const groupedPreferences = groupBy(preferences,"id")
+
+
+
 
       //console.log(academics)
       return view.render("academics", {
         academics: academics,
-        preferences: preferences,
+        units: units,
+        groupedPreferences: groupedPreferences,
       });
 
     } catch (error) {
