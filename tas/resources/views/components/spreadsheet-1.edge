@@ -1,0 +1,137 @@
+<!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
+  <button class="tablinks" onclick="openTab(event, 'Units')">Units</button>
+  <button class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
+  <button class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
+  <button class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
+</div>
+
+<!-- Tab content -->
+<div id="Academics" class="tabcontent">
+  <table style="width:100%">
+    <tr>
+      <th class="heading-cell" style="width:1%;"></th>
+      <th class="heading-cell">AcademicId</th>
+      <th class="heading-cell">Name</th>
+      <th class="heading-cell">Category</th>
+      <th class="heading-cell">TeachingFraction</th>
+    </tr>
+    @each((academic, i) in academics)
+    <tr>
+      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+      <td class="cell" contenteditable="true">{{academic.id}}</td>
+      <td class="cell" contenteditable="true">{{academic.name}}</td>
+      <td class="cell" contenteditable="true">{{academic.category}}</td>
+      <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
+    </tr>
+    @endeach
+  </table>  
+</div>
+
+<div id="Units" class="tabcontent">
+  <table style="width:100%">
+    <tr>
+      <th class="heading-cell" style="width:1%;"></th>
+      <th class="heading-cell">Code</th>
+      <th class="heading-cell">Name</th>
+      <th class="heading-cell">SubjectAreaGroup</th>
+    </tr>
+    @each((unit, i) in units)
+    <tr>
+      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+      <td class="cell" contenteditable="true">{{unit.code}}</td>
+      <td class="cell" contenteditable="true">{{unit.name}}</td>
+      <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
+    </tr>
+    @endeach
+  </table> 
+</div>
+
+<div id="Allocations" class="tabcontent">
+  <table style="width:100%">
+    <tr>
+      <th class="heading-cell" style="width:1%;"></th>
+      <th class="heading-cell">AcademicId</th>
+      <th class="heading-cell">UnitOfferingId</th>
+      <th class="heading-cell">FractionAllocated</th>
+      <th class="heading-cell">UnitCoordinator</th>
+    </tr>
+    @each((allocation,i) in allocations)
+    <tr>
+      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+      <td class="cell" contenteditable="true">{{allocation.academicId}}</td>
+      <td class="cell" contenteditable="true">{{allocation.id}}</td>
+      <td class="cell" contenteditable="true">{{allocation.fractionAllocated}}</td>
+      <td class="cell" contenteditable="true">{{allocation.unitCoordinator}}</td>
+    </tr>
+    @endeach
+  </table> 
+</div>
+
+<div id="UnitOfferings" class="tabcontent">
+  <table style="width:100%">
+    <tr>
+      <th class="heading-cell" style="width:1%;"></th>
+      <th class="heading-cell">UnitOfferringId</th>
+      <th class="heading-cell">UnitCode</th>
+      <th class="heading-cell">Semester</th>
+      <th class="heading-cell">EstimatedEnrolments</th>
+      <th class="heading-cell">SchoolShare</th>
+    </tr>
+    @each((offering,i) in offerings)
+    <tr>
+      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+      <td class="cell" contenteditable="true">{{offering.id}}</td>
+      <td class="cell" contenteditable="true">{{offering.code}}</td>
+      <td class="cell" contenteditable="true">{{offering.semester}}</td>
+      <td class="cell" contenteditable="true">{{offering.estimatedEnrolments}}</td>
+      <td class="cell" contenteditable="true">{{offering.schoolShare}}</td>
+    </tr>
+    @endeach
+  </table> 
+</div>
+
+<div id="Preferences" class="tabcontent">
+  <table style="width:100%">
+    <tr>
+      <th class="heading-cell" style="width:1%;"></th>
+      <th class="heading-cell">AcademicId</th>
+      <th class="heading-cell">UnitCode</th>
+      <th class="heading-cell">DesireToTeach</th>
+      <th class="heading-cell">AbilityToTeach</th>
+    </tr>
+    @each((preference,i) in preferences)
+    <tr>
+      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+      <td class="cell" contenteditable="true">{{preference.id}}</td>
+      <td class="cell" contenteditable="true">{{preference.code}}</td>
+      <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
+      <td class="cell" contenteditable="true">{{preference.abilityToTeach}}</td>
+    </tr>
+    @endeach
+  </table> 
+</div>
+
+<script>
+  function openTab(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
