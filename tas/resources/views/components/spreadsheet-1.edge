@@ -1,5 +1,6 @@
 <!-- Tab links -->
-<div class="tab">
+<div class="tab" style="z-index:10;">
+  <button class="tablinks" onclick="openTab(event, 'Global')">Global</button>
   <button class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
   <button class="tablinks" onclick="openTab(event, 'Units')">Units</button>
   <button class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
@@ -8,45 +9,53 @@
 </div>
 
 <!-- Tab content -->
-<div id="Academics" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">AcademicId</th>
-      <th class="heading-cell">Name</th>
-      <th class="heading-cell">Category</th>
-      <th class="heading-cell">TeachingFraction</th>
-    </tr>
-    @each((academic, i) in academics)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{academic.id}}</td>
-      <td class="cell" contenteditable="true">{{academic.name}}</td>
-      <td class="cell" contenteditable="true">{{academic.category}}</td>
-      <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
-    </tr>
-    @endeach
-  </table>  
+@if(academics[0])
+
+<div id="Global" class="tabcontent">
+ 
 </div>
 
+<div id="Academics" class="tabcontent">
+  <table style="width:100%;">
+    <tr>
+      <td class="heading-cell" style="width:1%;"></td>
+      @each((academic, i) in academics)
+        <th class="heading-cell" contenteditable="true"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
+      @endeach
+    </tr>
+    <tr>
+      <th class="heading-cell" style="width:1%;">Category</th>
+      @each((academic, i) in academics)
+      <td class="cell" contenteditable="true">{{academic.category}}</td>
+      @endeach
+    </tr>
+    <tr>
+      <th class="heading-cell" style="width:1%;">TeachingFraction</th>
+      @each((academic, i) in academics)
+      <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
+      @endeach
+    </tr>
+  </table>  
+</div>  
+
 <div id="Units" class="tabcontent">
-  <table style="width:100%">
+  <table style="width:100%;">
     <tr>
       <th class="heading-cell" style="width:1%;"></th>
       <th class="heading-cell">Code</th>
-      <th class="heading-cell">Name</th>
       <th class="heading-cell">SubjectAreaGroup</th>
     </tr>
-    @each((unit, i) in units)
+    @each((unit,i) in units)
     <tr>
       <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{unit.code}}</td>
-      <td class="cell" contenteditable="true">{{unit.name}}</td>
+      <td class="cell" contenteditable="true" style="width:10%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}<div></td>
       <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
     </tr>
     @endeach
   </table> 
 </div>
+
+
 
 <div id="Allocations" class="tabcontent">
   <table style="width:100%">
@@ -68,6 +77,8 @@
     @endeach
   </table> 
 </div>
+
+
 
 <div id="UnitOfferings" class="tabcontent">
   <table style="width:100%">
@@ -92,6 +103,8 @@
   </table> 
 </div>
 
+
+
 <div id="Preferences" class="tabcontent">
   <table style="width:100%">
     <tr>
@@ -113,8 +126,17 @@
   </table> 
 </div>
 
+@else
+  <div style="width:100%; height:90vh; display:flex; justify-content:center; align-items:center;">
+    <h1>Please import a spreadsheet</h1>
+  </div>
+@endif
+
 <script>
-  function openTab(evt, cityName) {
+  document.querySelector(".tablinks").className += " active";
+  document.querySelector(".tabcontent").style.display = "block";
+
+  function openTab(evt, tabName) {
   // Declare all variables
   var i, tabcontent, tablinks;
 
@@ -131,7 +153,7 @@
   }
 
   // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(cityName).style.display = "block";
+  document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
 </script>

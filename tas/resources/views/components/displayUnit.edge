@@ -1,11 +1,11 @@
 <div style="width:100%; display:block;">
   <div class="table-outter">
     <div class="table-title-block">
-      <div class="table-section--xx-small margin-8"></div>
-      <div class="table-section--small margin-8">Code</div>
-      <div class="table-section--large margin-8">Name</div>
-      <div class="table-section--medium margin-8">Subject Area Group</div>
-      <div class="table-section--large margin-8">Actions</div>
+      <div class="margin-8 hcell tcell"></div>
+      <div class="margin-8 hcell tcell">Code</div>
+      <div class="margin-8 hcell tcell">Name</div>
+      <div class="margin-8 hcell tcell">Subject Area Group</div>
+      <div class="margin-8 hcell tcell">Actions</div>
     </div>
   </div>
 </div>
@@ -16,51 +16,51 @@
   <div>
   <div class="table-outter">
    <div class="table-static">
-      <div class="table-section--xx-small text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-      <div class="table-section--small margin-8">{{ unit.code }}</div>
-      <div class="table-section--large margin-8">{{ unit.name }}</div>
-      <div class="table-section--small margin-8">{{ unit.subjectAreaGroup }}</div>
+      <div class="text-align-center margin-8 tcell" style="padding:0px 4px"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="margin-8 tcell">{{ unit.code }}</div>
+      <div class="margin-8 tcell">{{ unit.name }}</div>
+      <div class="margin-8 tcell">{{ unit.subjectAreaGroup }}</div>
 
 
-      <div class="table-section--small margin-8">
+      <div class="margin-8 tcell" style="display:inline-block;">
         @!component('components.editUnit', csrf=csrf, unit=unit)
+        @!component('components.addOffering', csrf=csrf, unit=unit)
       </div>
-     <div class="table-section--small margin-8">
-       @!component('components.addOffering', csrf=csrf, unit=unit)
-     </div>
-
    </div>
-   <div class="table-collapse">
-    <div class="table-collapse--inner">
-      <div class="table-section--medium font-weight-bold">Unit offering ID</div>
-      <div class="table-section--medium font-weight-bold">Semester</div>
-      <div class="table-section--medium font-weight-bold">Estimated Enrolments</div>
-      <div class="table-section--medium font-weight-bold">School Share</div>
-    </div>
 
-     @each(offering in groupedUnits[unit.code])
-
-     <div class="table-collapse--inner">
-      <div class="table-section--medium">{{ offering.id }}</div>
-      <div class="table-section--medium">{{ offering.semester }}</div>
-       <div class="table-section--medium">{{ offering.estimatedEnrolments }}</div>
-       <div class="table-section--medium">{{ offering.schoolShare }}</div>
-
-       <div class="table-section--medium margin-0">
-         @!component('components.editoffering', csrf=csrf, offering=offering)
-       </div>
-       <div class="table-section--large margin-0">
-         <form action="units/deleteoffering" method="POST">
-           {{csrf}}
+  @if(units[0])
+  <div class="table-collapse">
+    <table style="width:100%; border-collapse:collapse;">
+      <tr>
+        <th class="margin-8 table-cell">Unit offering ID</th>
+        <th class="margin-8 table-cell">Semester</th>
+        <th class="margin-8 table-cell">Estimated Enrolments</th>
+        <th class="margin-8 table-cell">School Share</th>
+        <th class="margin-8 table-cell">Actions</th>        
+      </tr>
+      @each(offering in groupedUnits[unit.code])
+      <tr class="table-row">
+        <td class="margin-8 table-cell">{{ offering.id }}</td>
+        <td class="margin-8 table-cell">{{ offering.semester }}</td>
+        <td class="margin-8 table-cell">{{ offering.estimatedEnrolments }}</td>
+        <td class="margin-8 table-cell">{{ offering.schoolShare }}</td>
+        <td class="margin-8 table-cell">
+          <div style="display:inline;">
+            @!component('components.editoffering', csrf=csrf, offering=offering)
+          </div>
+          <form action="units/deleteoffering" method="POST" style="display:inline;">
+            {{csrf}}
            <input type="hidden" name="id" value="{{offering.id}}">
-           <input type="submit"   value = "Delete" class="dd-button--round button-red-fill margin-0">
-         </form>
-       </div>
-
-    </div>
-     @endeach
-
+           <input type="submit" value ="Delete" class="dd-button--hyperlink margin-0">
+          </form>
+        </td>
+      </tr> 
+      @endeach
+    </table>
   </div>
+  @endif
+
+
   </div>
 
 </div>
