@@ -332,24 +332,65 @@ html{
     flex-direction: row;
     overflow: hidden;
     height:100vh;
- }
-  
- .nav{
+    flex-grow:1;
+}
+
+.nav-opener{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position:absolute;
+    color:rgb(187, 187, 187);
+    left:-22px;
+    top:0;
+    width:25px;
+    height: 100vh;
+    background-color: rgba(227, 227, 227, 0.719);
+    transition: all 500ms;
+    opacity:0;
+    z-index:5;
+    cursor: pointer;
+}
+
+.nav-opener:hover{
+    background-color: rgba(251, 251, 251, 0.903);
+    color: black;
+    width:100px;
+    opacity:1;
+    left:0px;
+}
+
+.nav.nav-closed{
+    width:0px;
+    padding:0px;
+}
+
+.display-none{
+    opacity: 0;
+    display: none;
+}
+
+.nav{
     margin:0;
     height: 100vh;
     width:100px;
     background-color: rgb(251, 251, 251);
     display: block;
-    transition: all 500ms;
+    transition: all 800ms;
     padding:24px 12px;
     cursor: pointer;
- }
+    overflow: visible;
+}
   
- .nav:hover{
+ .nav:not(.nav-closed):hover{
     margin:0;
-    width:250px;
+    width: 250px;
     background-color: rgb(251, 251, 251);
     padding:24px 12px;
+ }
+
+ .nav:not(.nav-closed):hover .nav-closer{
+    opacity:1;
  }
   
  .link-content{
@@ -366,7 +407,7 @@ html{
  ul{
     position: relative;
  }
-  
+
  .nav-link{
     list-style: none;
     padding: 8px 12px;

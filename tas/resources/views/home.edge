@@ -2,14 +2,17 @@
 <html>
 @loggedIn
   @!component('components.head', title="Teacher Allocation System")
- 
 
 <body>
+  
   <div class="wrapper">
     @include('partials/sidebar')
     <div class="content-section">
       <section class="main-content">
-        <h1 class="page-title">Home</h1>
+        <div style="padding:32px;">
+        <div class="data-row data-tool-row-1 flex-container">
+          <h1 class="title">Home</h1>
+        </div>
           
         <div class="dashboard-col">
           <div class="dashboard-card">
@@ -36,6 +39,7 @@
           @!component('components.csvexport', csrf=csrfField())
         
   
+        </div>
         </div>
       </section>
     </div>
