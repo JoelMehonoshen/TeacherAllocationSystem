@@ -340,12 +340,12 @@ html{
     justify-content: center;
     align-items:center;
     position:absolute;
-    color:rgb(187, 187, 187);
+    color:rgb(229, 229, 229);
     left:-22px;
     top:0;
     width:25px;
     height: 100vh;
-    background-color: rgba(227, 227, 227, 0.719);
+    background-color: rgba(30, 30, 30, 0.504);
     transition: all 500ms;
     opacity:0;
     z-index:5;
@@ -353,8 +353,8 @@ html{
 }
 
 .nav-opener:hover{
-    background-color: rgba(251, 251, 251, 0.903);
-    color: black;
+    background-color: rgba(30, 30, 30, 0.504);
+    color:rgb(229, 229, 229);
     width:100px;
     opacity:1;
     left:0px;
@@ -438,35 +438,70 @@ html{
  }
   
  .home::before{
-    background-image: url("home.svg");
+    background-image: url("./icons/home.svg");
  }
 
  .allocation::before{
-    background-image: url("unit.svg");
+    background-image: url("./icons/unit.svg");
  }
 
  .academic::before{
-    background-image: url("academic.svg");
+    background-image: url("./icons/academic.svg");
  }
 
  .unit::before{
-    background-image: url("allocation.svg");
+    background-image: url("./icons/allocation.svg");
  }
 
  .logout::before{
-    background-image: url("logout.svg");
+    background-image: url("./icons/logout.svg");
  }
 
  .help::before{
-    background-image: url("help.svg");
+    background-image: url("./icons/help.svg");
  }
 
  .repeat::before{
-    background-image: url("repeat.svg");
+    background-image: url("./icons/repeat.svg");
  }
 
  .spreadsheet::before{
-    background-image: url("spreadsheet.svg");
+    background-image: url("./icons/spreadsheet.svg");
+ }
+
+ .expandcollapse{
+    list-style: none;
+    color:black;
+    cursor: pointer;
+    border-radius: 5px;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.1em;
+    font-weight: 400;
+    flex-basis: 100%;
+ }
+
+ .expandcollapse:hover{
+    background-color: rgb(235, 235, 235);
+ }
+
+ .expandcollapse::before{
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    content:"";
+    transform: translateY(3px);
+    transition: all ease 250ms;
+    margin-left:3px;
+ }
+
+ .expand-all::before{
+    background-image: url("./icons/plus-square.svg");
+ }
+
+ .collapse-all::before{
+    background-image: url("./icons/minus-square.svg");
  }
   
  .nav-link:hover{
@@ -641,9 +676,8 @@ table td {
 .dashboard-card{
     height: auto;
     padding:32px;
-    border-radius:15px;
     margin:8px;
-    background-color: white;
+    background-color: rgb(250, 250, 250);
     flex:1;
 }
 
@@ -731,6 +765,7 @@ table td {
     padding:8px;
     align-items: center; 
     justify-content: center;
+    transition:all 500ms;
 }
 
 .table-title-block{
@@ -775,18 +810,21 @@ table td {
     height: 15px;
     background-color: green;
     border-radius: 10px;
+    border:1px solid black;
 }
 
 .stat-red{
     height: 15px;
     background-color: red;
     border-radius: 10px;
+    border:1px solid black;
 }
 
 .stat-yellow{
     height: 15px;
     background-color: yellow;
     border-radius: 10px;
+    border:1px solid rgb(40, 40, 40);
 }
 
 .arrow-normal{

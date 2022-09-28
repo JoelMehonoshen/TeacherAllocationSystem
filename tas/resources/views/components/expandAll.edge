@@ -1,0 +1,11 @@
+<div>
+    <a class="expand-all expandcollapse" onclick="expandAll()"></a>
+</div>
+
+<script>
+    const x = document.querySelector(".expandcollapse");
+
+    x.addEventListener("click", function() {
+        ['expand-all', 'collapse-all'].map(v=> this.classList.toggle(v) )
+      });
+</script>
