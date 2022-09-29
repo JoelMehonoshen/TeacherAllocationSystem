@@ -13,6 +13,7 @@
 </div>
   {{--Display Academic, name; school; load; status; tags; actions--}}
   {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
+  @!component('components.editUnit-popup')
   @each(unit in units)
   {{--  Display Mode (not a form)  --}}
   <div>
@@ -27,6 +28,8 @@
       <div class="margin-8 tcell" style="display:inline-block;">
         @!component('components.editUnit', csrf=csrf, unit=unit)
         @!component('components.addOffering', csrf=csrf, unit=unit)
+        @!component('components.editUnit2', csrf=csrf, unit=unit, labels=['Code','Name','Subject Area Group','Actions'])
+        
       </div>
    </div>
 

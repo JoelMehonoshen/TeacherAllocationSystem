@@ -1,14 +1,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<button type="button" class="dd-button--hyperlink" data-toggle="modal" data-target="#{{unit.code}}">Edit</button>
+<button type="button" class="dd-button--hyperlink" data-toggle="modal" data-target="#{{i+1}}">Edit</button>
 
-<div id="{{unit.code}}" class="modal">
+<div id="{{i+1}}" class="modal">
   <div class="modal-background flex-container flex-center">
-      <div class="modal-card pop-up">
+      <div class="modal-card">
+
         <header class="modal-card-head">
-          <p class="modal-card-title">Edit unit Details</p>
+          <p class="modal-card-title">Edit Unit Details {{i+1}}</p>
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
+
         <section class="modal-card-body">
         <form method="POST" action="units/updateunit">
             {{csrf}}
@@ -36,11 +38,11 @@
                 <input type="submit" value="Update Unit" class="dd-button--round button-blue-fill margin-8">
                 <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
                 </form>
-                                <form action="units/deleteunit" method="POST">
-                                {{csrf}}
-                                <input type="hidden" name="code" value="{{unit.code}}">
-                                <input type="submit" value = "Delete Unit" class="dd-button--round button-red-fill margin-8">
-                                </form>
+                <form action="units/deleteunit" method="POST">
+                  {{csrf}}
+                  <input type="hidden" name="code" value="{{unit.code}}">
+                  <input type="submit" value = "Delete Unit" class="dd-button--round button-red-fill margin-8">
+                </form>
             </footer>
     </div>
 </div>

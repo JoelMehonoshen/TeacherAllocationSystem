@@ -1,0 +1,119 @@
+<style>
+    .poppy-wrapper{
+        width:100%;
+        height:100vh;
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.5);
+        top:0;
+        left:0;
+        cursor: pointer;
+        justify-content: center;
+        align-items:center;
+    }
+
+    .poppy{
+        width:fit-content;
+        height:fit-content;
+        background-color: white;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding:32px;
+    }
+
+    .popup-close{
+        position: absolute;
+        top:0;
+        right:0;
+    }
+
+    .popup-input{
+        display: block;
+        width:250px;
+        padding:8px;
+        font-size:1em;
+        border-radius: 8px;
+        border:1px solid lightgrey;
+        outline: none;
+    }
+
+    .popup-input-wrapper{
+        margin:4px;
+    }
+
+</style>
+
+<div class="poppy-wrapper display-none">
+    <div class="poppy">
+        <button class="dd-button--hyperlink popup-close" onclick="editUnitPopup()">Close</button>
+        <div id="popup-root"></div>
+    </div>
+</div>
+
+<script>
+    const pop = document.querySelector('.poppy-wrapper');
+    const root = document.getElementById('popup-root');
+
+    class DatasetObject {
+        constructor(stringMap) {
+            this.data_raw = JSON.parse(JSON.stringify(stringMap));
+            this.data = [];
+
+            for (const key in this.data_raw) {
+                if (Object.hasOwnProperty.call(this.data_raw, key)) {
+                    if(key !== 'labels'){
+                        this.data.push(this.data_raw[key]); 
+                    }      
+                }
+            }
+
+            this.labels = this.data_raw['labels'].split(',');
+
+            this.count = this.data.length;
+        }
+
+        log(){
+            console.log(this.data, this.labels, this.count);
+        }
+    }
+    
+    function editUnitPopup(obj) {        
+        pop.classList.toggle('display-none');
+        pop.classList.toggle('flex-container');
+
+        if(obj){
+            let data = new DatasetObject(obj.dataset);
+
+            
+
+            function initValues(obj){
+                    for (let i = 0; i < obj.count; i++) {
+                        const div = document.createElement("div");
+                        const label = document.createElement("label");
+                        const io = document.createElement("input");
+                        label.innerHTML = obj.labels[i];
+                        io.value = obj.data[i];
+                        label.classList = 'popup-label'
+                        io.classList = 'popup-input';
+                        div.classList = 'popup-input-wrapper';
+                        io.type = 'text';
+                        div.appendChild(label);
+                        div.appendChild(io); 
+                        root.appendChild(div);                       
+                    }
+                    
+            }
+
+            if(root.childElementCount === 0){
+                initValues(data);
+            } else {
+                while(root.firstElementChild){root.remove(root.lastElementChild)}
+                initValues(data);
+            }  
+        }
+    }
+
+    
+    
+</script>
