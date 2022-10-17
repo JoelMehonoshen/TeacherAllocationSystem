@@ -13,8 +13,6 @@ class UnitController {
       // Obtain the searchbar input + options selected from the sorting + filtering
       var searchbar = request.input("searchbar");
       var sortOption = request.input("sortOption");
-      var sem1 = request.input("sem1");
-      var sem2 = request.input("sem2");
       var minEnrols = request.input("minEnrols");
       var maxEnrols = request.input("maxEnrols");
       var minShare = request.input("minShare");
@@ -62,10 +60,34 @@ class UnitController {
 
       var offerings = await Database.from("offerings");
 
+      var subjectAreaGroups = [];
+      var temp = units.filter(unit => {
+        const isDuplicate = subjectAreaGroups.includes(unit.subjectAreaGroup);
 
-      //console.log(offerings);
-      //var sems = offerings.map(offering => offering.semester);
-      //console.log(sems);
+        if (!isDuplicate) {
+          subjectAreaGroups.push(unit.subjectAreaGroup);
+
+          return true;
+        }
+
+        return false;
+      });
+      subjectAreaGroups.sort();
+
+      var semesters = [];
+      var temp = offerings.filter(offering => {
+        const isDuplicate = semesters.includes(offering.semester);
+
+        if (!isDuplicate) {
+          semesters.push(offering.semester);
+
+          return true;
+        }
+
+        return false;
+      });
+      var sem1 = request.input("sem1");
+      var sem2 = request.input("sem2");
 
       // Filtering
       // ###########
@@ -88,6 +110,8 @@ class UnitController {
       return view.render("units", {
         units: units,
         groupedUnits: groupedUnits,
+        subjectAreaGroups: subjectAreaGroups,
+        semesters: semesters
       });
 
     } catch (error) {

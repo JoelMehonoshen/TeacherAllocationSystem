@@ -18,16 +18,16 @@
         {{--  Title, Search Bar--}}
 
 
-        @!component('components.addallocation', csrf=csrfField(),academics= academics,units = units, allocations= allocations,offerings= offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
+        @!component('components.addallocation', csrf=csrfField(), academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
 
 
 
-        @!component('components.searchAllocations', title="Find allocation", csrf=csrfField(), route=route('AllocationController.render'),academics= academics,units = units, allocations= allocations,offerings= offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
+        @!component('components.searchAllocations', title="Find allocation", csrf=csrfField(), route=route('AllocationController.render'), subjectAreaGroups=subjectAreaGroups, semesters=semesters, academics=academics,units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
 
         <div>
 
           {{-- Display Allocations --}}
-          @!component('components.displayallocations', csrf=csrfField(),academics=academics ,units=units, allocations=allocations,offerings= offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
+          @!component('components.displayallocations', csrf=csrfField(), academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
         </div>
       </section>
     </div>

@@ -16,12 +16,12 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
-                <input class="search-input" type="text" name="searchbar" placeholder="{{title}}"></input>
+                <input class="search-input" style="height:40px" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
             </p>
 
             <div>
-              <select class="sort-filter-input" name="sortOption">
+              <select class="sort-filter-input" style="height:40px" name="sortOption">
                 <option value="" disabled="">Sort by...</option>
                 <option value="code" selected="">Unit offering ID</option>
                 <option value="code" selected="">Unit code</option>
@@ -52,9 +52,9 @@
               <b>Subject Area Group</b>
             </p>
           <div class="display:flex;" style="height:70px; overflow-y: scroll;">
-              @each(unit in units)
+              @each(group in subjectAreaGroups)
               <div class="input-group-prepend">
-                <input class="sort-filter-input" type="checkbox" name="{{ unit.subjectAreaGroup }}">{{ unit.subjectAreaGroup }}</input>
+                <input class="sort-filter-input" type="checkbox" checked="" name="{{ group }}">{{ group }}</input>
               </div>
               @endeach
             </div>
@@ -64,9 +64,12 @@
             <p>
               <b>Semester</b>
             </p>
-            <div class="display:flex;">
-              <div class="input-group-prepend"><input class="sort-filter-input active" type="checkbox" checked="" name="sem1">Sem 1</input></div>
-              <div class="input-group-prepend"><input class="sort-filter-input active" type="checkbox" checked="" name="sem2">Sem 2</input></div>
+            <div class="display:flex;" style="height:70px; overflow-y: scroll;">
+              @each(sem in semesters)
+              <div class="input-group-prepend">
+                <input class="sort-filter-input" type="checkbox" checked="" name="{{ sem }}">{{ sem }}</input>
+              </div>
+              @endeach
             </div>
           </div>
 

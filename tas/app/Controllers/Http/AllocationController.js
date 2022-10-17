@@ -64,7 +64,7 @@ class AllocationController {
 
 
       var aggAllocations = [];
-      var aggTotalFractions = []
+      var aggTotalFractions = [];
 
       for (let i = 1; i <= offerings.length; i++) {
         var entries = await Database.from("allocations").where("id", i);
@@ -81,13 +81,39 @@ class AllocationController {
 
 
       // Obtain the searchbar input + options selected from the sorting + filtering
-      var search = request.input("search")
-      var sort = request.input("sort")
+      var search = request.input("search");
+      var sort = request.input("sort");
 
       // if no user input, use default sort + filter options
       if (!search) { search = ""; }
       if (!sort) { sort = "name"; }
 
+      var subjectAreaGroups = [];
+      var temp = units.filter(unit => {
+        const isDuplicate = subjectAreaGroups.includes(unit.subjectAreaGroup);
+
+        if (!isDuplicate) {
+          subjectAreaGroups.push(unit.subjectAreaGroup);
+
+          return true;
+        }
+
+        return false;
+      });
+      subjectAreaGroups.sort();
+
+      var semesters = [];
+      var temp = offerings.filter(offering => {
+        const isDuplicate = semesters.includes(offering.semester);
+
+        if (!isDuplicate) {
+          semesters.push(offering.semester);
+
+          return true;
+        }
+
+        return false;
+      });
 
 
       return view.render("allocations", {
@@ -97,6 +123,8 @@ class AllocationController {
         offerings: offerings,
         aggAllocations: aggAllocations,
         aggTotalFractions: aggTotalFractions,
+        subjectAreaGroups: subjectAreaGroups,
+        semesters: semesters
       });
 
     } catch (error) {
