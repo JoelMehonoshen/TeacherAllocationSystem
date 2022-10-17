@@ -23,27 +23,27 @@ class AcademicController {
     }
   }
 
-async deleteacademic({ response, request }) {
+  async deleteacademic({ response, request }) {
     try {
-        await Database.from("allocations")
+      await Database.from("allocations")
         .where("academicId", request.input("id")).delete()
-        await Database.from("academics")
+      await Database.from("academics")
         .where("id", request.input("id")).delete()
-        }
-         catch (error) {
-              Logger.error('Delete Academics',  error);
-              throw new Exception();
-        }
-        return response.route("/academics", true);
-        }
+    }
+    catch (error) {
+      Logger.error('Delete Academics', error);
+      throw new Exception();
+    }
+    return response.route("/academics", true);
+  }
 
 
   async updateacademic({ response, request }) {
     try {
-    //todo:need to update allocations simultaneously
-//      await Database.from("allocations")
-//              .where("academicId", request.input("id"))
-//              .update({academicId: request.input("newId")});
+      //todo:need to update allocations simultaneously
+      //      await Database.from("allocations")
+      //              .where("academicId", request.input("id"))
+      //              .update({academicId: request.input("newId")});
 
       await Database.from("academics")
         .where("id", request.input("id"))
@@ -55,88 +55,91 @@ async deleteacademic({ response, request }) {
         });
       return response.route("/academics", true);
     } catch (error) {
-      Logger.error('Update Academics',  error);
+      Logger.error('Update Academics', error);
       throw new Exception();
     }
   }
 
   async updatepreference({ response, request }) {
-      try {
+    try {
 
-       console.log(request.input("id"))
-        await Database.from("preferences")
-          .where("code", request.input("originalCode"))
-          .where("id", request.input("id"))
-          .update({
-            code: request.input("code"),
-            desireToTeach: request.input("desireToTeach"),
-            abilityToTeach: request.input("abilityToTeach")
-          });
-        return response.route("/academics", true);
-      } catch (error) {
-        Logger.error('Update Preferences',  error);
-        throw new Exception();
-      }
+      console.log(request.input("id"))
+      await Database.from("preferences")
+        .where("code", request.input("originalCode"))
+        .where("id", request.input("id"))
+        .update({
+          code: request.input("code"),
+          desireToTeach: request.input("desireToTeach"),
+          abilityToTeach: request.input("abilityToTeach")
+        });
+      return response.route("/academics", true);
+    } catch (error) {
+      Logger.error('Update Preferences', error);
+      throw new Exception();
+    }
+  }
+
+  async deletepreference({ response, request }) {
+    try {
+      await Database.from("preferences")
+        .where("code", request.input("code"))
+        .where("id", request.input("id"))
+        .delete()
+      return response.route("/academics", true);
+    } catch (error) {
+      Logger.error('Delete Preferences', error);
+      throw new Exception();
     }
 
-   async deletepreference({ response, request }) {
-   try{
-    await Database.from("preferences")
-           .where("code", request.input("code"))
-           .where("id", request.input("id"))
-           .delete()
-           return response.route("/academics", true);
-   }catch (error) {
-          Logger.error('Delete Preferences',  error);
-          throw new Exception();
-        }
-
-   }
+  }
 
   async render({ request, view }) {
     try {
 
-      //todo: update to work with new schema
-      // obtain user input from searchbar + sort + filter options
-      var search = request.input("search")
-      var sort = request.input("sort")
-      var minload = request.input("minload")
-      var maxload = request.input("maxload")
+      // Obtain the searchbar input + options selected from the sorting + filtering
+      var searchbar = request.input("searchbar");
+      var sortOption = request.input("sortOption");
+      var minTeachFrac = request.input("minTeachFrac");
+      var maxTeachFrac = request.input("maxTeachFrac");
+      var ongoing = request.input("categoryO");
+      var sessional = request.input("categoryS");
 
-      // if no user input, use default sort + filter options
-      if (!search) { search = "%" }
-      if (!sort) { sort = "name" }
-      if (!minload) { minload = 0 }
-      if (!maxload) { maxload = 99 }
+      // Default sorting + filtering options
+      if (!searchbar) { searchbar = ""; }
+      if (!sortOption) { sortOption = "name"; }
 
-      // perform SQL query
-      const academics = await Database.from("academics")
-        //.select("academics.name","academics.id","academics.year","academics.school","academics.load","academics.academic_preference")
-        .where("name", 'ilike', "%" + search + "%")
-        .orderBy(sort)
+      // Obtain from database
+      var academics = await Database.from("academics")
+        .where("name", "ilike", "%" + searchbar + "%")
+        .orWhere("id", "ilike", "%" + searchbar + "%")
+        .orderBy(sortOption);
+      const preferences = await Database.from("preferences");
+      const units = await Database.from("units");
 
-       const preferences = await Database.from("preferences");
-       const units = await Database.from("units");
-
-       // Accepts the array and key
-           const groupBy = (array, key) => {
-             // Return the end result
-             return array.reduce((result, currentValue) => {
-               // If an array already present for key, push it to the array. Else create an array and push the object
-               (result[currentValue[key]] = result[currentValue[key]] || []).push(
-                 currentValue
-               );
-               // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-               return result;
-             }, {}); // empty object is the initial value for result object
-           };
-
-       const groupedPreferences = groupBy(preferences,"id")
+      // Accepts the array and key
+      const groupBy = (array, key) => {
+        // Return the end result
+        return array.reduce((result, currentValue) => {
+          // If an array already present for key, push it to the array. Else create an array and push the object
+          (result[currentValue[key]] = result[currentValue[key]] || []).push(
+            currentValue
+          );
+          // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+          return result;
+        }, {}); // empty object is the initial value for result object
+      };
 
 
+      const groupedPreferences = groupBy(preferences, "id");
 
+      // Filtering
+      if (minTeachFrac) { academics = academics.filter(academic => academic.teachingFraction >= minTeachFrac); }
+      if (maxTeachFrac) { academics = academics.filter(academic => academic.teachingFraction <= maxTeachFrac); }
+      if (ongoing && sessional) { }
+      else if (ongoing) { academics = academics.filter(academic => academic.category == "Ongoing"); }
+      else if (sessional) { academics = academics.filter(academic => academic.category == "Sessional"); }
 
-      //console.log(academics)
+      //console.log(academics);
       return view.render("academics", {
         academics: academics,
         units: units,

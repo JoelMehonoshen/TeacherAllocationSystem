@@ -1,84 +1,85 @@
 <div class="searchbar-wrapper">
   <form method="GET" action="{{ route }}">
     {{csrf}}
-    
-  <div class="flex-container data-tool-container">
-    <div class="data-row data-tool-row-1 flex-container">
-      <h1 class="title">Academics</h1>
-    </div>
-    <div class="data-row data-tool-row-2 flex-container">
-      <div>
-        <div class="field has-addons">
-          <p class="control">
-            <div>
-              <div class="searchbar-button-container">
-                <button class="searchbar-button" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
+
+    <div class="flex-container data-tool-container">
+      <div class="data-row data-tool-row-1 flex-container">
+        <h1 class="title">Academics</h1>
+      </div>
+      <div class="data-row data-tool-row-2 flex-container">
+        <div>
+          <div class="field has-addons">
+            <p class="control">
+              <div>
+                <div class="searchbar-button-container">
+                  <button class="searchbar-button" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input class="search-input" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
-              <input class="search-input" type="text" name="search" placeholder="{{title}}">
-            </div>
-          </p>
-      
-          <p class="has-addons">
-            <button class="searchbar-clear-button" href="academics"><i class="fa fa-undo" aria-hidden="true"></i>Reset</button>
-          </p>
-        </div>
-      </div>
-      <div>
-        <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AcademicsForm">+ Add Academics</button>
-        
-      </div>
-    </div>
+            </p>
 
+              <div>
+                <select class="sort-filter-input" name="sortOption">
+                  <option value="" disabled="">Sort by...</option>
+                  <option value="name" selected="">First name</option>
+                  <option value="id">Academic ID</option>
+                  <option value="category">Category</option>
+                  <option value="teachingFraction">Lowest teaching fraction</option>
+                </select>
+              </div>
 
-    <div class="data-row data-tool-row-4 flex-container" style="justify-content: space-between;">
+            <p class="has-addons">
+              <button class="searchbar-clear-button" href="academics">
+                <i class="fa fa-undo" aria-hidden="true"></i>Reset
+              </button>
+            </p>
 
-      <div class="flex-container" style="flex-direction:row;">
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Requested Load</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minload" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxload" step="any" placeholder="Max">
           </div>
         </div>
+        <div>
+          <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AcademicsForm">+ Add Academics</button>
 
-      </div>
-  
-    </div>
-
-
-    <div class="data-row data-tool-row-3 flex-container" style="flex-direction: column; justify-content:space-between;">
-      <div class="flex-container space-between">
-      <div>
-      <select class="sort-filter-input" name="sort">
-        <option value="" disabled="" selected="">Sort by...</option>
-        <option value="name">Academic Name</option>
-        <option value="school">School</option>
-        <option value="load">Requested Load</option>
-        <option value="academic_preference">Academic Preference</option>
-      </select>
-
-      <select class="sort-filter-input" name="idfilter">
-        <option value="" disabled="" selected="">Filter by school...</option>
-        @each(academic in schools)
-        <option>{{ academic.school }}</option>
-        @endeach
-      </select>
-
-    </div>
-
-      <div>
-        <button class="dd-button--round button-blue-fill">Search</button>
+        </div>
       </div>
 
+
+      <div class="data-row data-tool-row-3 flex-container" style="justify-content: space-between;">
+
+        <div class="flex-container" style="flex-direction:row; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Category</b>
+            </p>
+            <div class="input-group-prepend">
+              <input class="sort-filter-input" type="checkbox" name="categoryO">Ongoing</input>
+            </div>
+            <div class="input-group-prepend">
+              <input class="sort-filter-input" type="checkbox" name="categoryS">Sessional</input>
+            </div>
+          </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Teaching Fraction</b>
+            </p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" name="minTeachFrac" type="number" min="0" max="99" step="0.1" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" name="maxTeachFrac" type="number" min="0" max="99" step="0.1" placeholder="Max"></input>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      
+
+
+
     </div>
-
-  </div>
-
-  
-
-  </div>
-</form>
+  </form>
 </div>
 

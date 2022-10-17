@@ -11,7 +11,7 @@
 
       @!component('components.addunit', csrf=csrfField())
 
-      @!component('components.searchUnits', title="Find unit code", units = units,  csrf=csrfField(), route=route('UnitController.render'))
+      @!component('components.searchUnits', title="Find unit...", units=units, csrf=csrfField(), route=route('UnitController.render'))
 
       <div>
         {{-- Display Units --}}

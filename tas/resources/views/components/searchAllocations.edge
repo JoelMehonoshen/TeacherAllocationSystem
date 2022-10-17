@@ -2,170 +2,173 @@
   <form method="GET" action="{{ route }}">
     {{csrf}}
 
-  <div class="flex-container data-tool-container">
-    <div class="data-row data-tool-row-1 flex-container">
-      <h1 class="title">Allocations</h1>
-    </div>
-    <div class="data-row data-tool-row-2 flex-container">
-      <div>
-        <div class="field has-addons">
-          <p class="control">
-            <div class="">
-              <div class="searchbar-button-container">
-                <button class="searchbar-button" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
+    <div class="flex-container data-tool-container">
+      <div class="data-row data-tool-row-1 flex-container">
+        <h1 class="title">Allocations</h1>
+      </div>
+      <div class="data-row data-tool-row-2 flex-container">
+        <div>
+          <div class="field has-addons">
+            <p class="control">
+              <div class="">
+                <div class="searchbar-button-container">
+                  <button class="searchbar-button" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input class="search-input" type="text" name="search" placeholder="{{title}}"></input>
               </div>
-              <input class="search-input" type="text" name="search" placeholder="{{title}}">
+            </p>
+
+            <div>
+              <select class="sort-filter-input" name="sort">
+                <option value="" disabled="" selected="">Sort by...</option>
+                <option value="academic.name">Academic Name</option>
+                <option value="semester">Semester</option>
+                <option value="">Requested Load</option>
+                <option value="">Actual Load</option>
+              </select>
             </div>
-          </p>
 
-          <p class="has-addons">
-            <button class="searchbar-clear-button" href="allocations"><i class="fa fa-undo" aria-hidden="true"></i>Reset</button>
-          </p>
-        </div>
-      </div>
-      <div>
-        <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AllocationForm">+ Add Allocation</button>
-
-      </div>
-    </div>
-
-
-    <div class="data-row data-tool-row-4 flex-container" style="justify-content: space-between;">
-
-      <div class="flex-container" style="flex-direction:row;">
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Requested Load</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minpreload" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxpreload" step="any" placeholder="Max">
+            <p class="has-addons">
+              <button class="searchbar-clear-button" href="allocations">
+                <i class="fa fa-undo" aria-hidden="true"></i>Reset
+              </button>
+            </p>
           </div>
         </div>
+        <div>
+          <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AllocationForm">+ Add Allocation</button>
 
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-            <p><b>Actual Load</b></p>
+        </div>
+      </div>
+
+
+      <div class="data-row data-tool-row-3 flex-container" style="justify-content: space-between;">
+
+        <div class="flex-container" style="flex-direction:row; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Semester</b>
+            </p>
+            <div class="display:flex;">
+              <div class="input-group-prepend">
+                <input class="sort-filter-input active" type="checkbox" checked="" name="sem1">Sem 1</input>
+              </div>
+              <div class="input-group-prepend">
+                <input class="sort-filter-input active" type="checkbox" checked="" name="sem2">Sem 2</input>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Estimated Enrolments</b>
+            </p>
             <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" type="number" min="0" name="minactload" step="any" placeholder="Min">
-              <input class="sort-filter-input min-max-input" type="number" min="0" name="maxactload" step="any" placeholder="Max">
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="minEnrolments" step="100" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="maxEnrolments" step="100" placeholder="Max"></input>
             </div>
           </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>School Share</b>
+            </p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="minShare" step="0.1" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="maxShare" step="0.1" placeholder="Max"></input>
+            </div>
+          </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Total Allocated Fraction</b>
+            </p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="999" name="minTotal" step="0.1" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="999" name="maxTotal" step="0.1" placeholder="Max"></input>
+            </div>
+          </div>
+
+          
+        </div>
       </div>
 
     </div>
+  </form>
 
-
-    <div class="data-row data-tool-row-3 flex-container" style="flex-direction: column; justify-content:space-between;">
-      <div class="flex-container space-between">
-      <div>
-      <select class="sort-filter-input" name="sort">
+  {{--
+  <div class="dashboard-col">
+    <div class="dashboard-card">
+      <h2 class="dashboard-title">Sort</h2>
+      <select class="searchbar-select" name="sort">
         <option value="" disabled="" selected="">Sort by...</option>
         <option value="academic.name">Academic Name</option>
         <option value="semester">Semester</option>
         <option value="">Requested Load</option>
         <option value="">Actual Load</option>
       </select>
+    </div>
 
-      <select class="sort-filter-input" name="unitfilter">
+    <div class="dashboard-card card-half">
+      <h2 class="dashboard-title">Filter</h2>
+      <select class="searchbar-select" name="unitfilter">
         <option value="" disabled="" selected="">Filter by unit...</option>
         @each(unit in unitList)
         <option>{{ unit.id }}</option>
         @endeach
       </select>
 
-      <select class="sort-filter-input" name="semfilter">
+      <select class="searchbar-select" name="semfilter">
         <option value="" disabled="" selected="">Filter by semester...</option>
         <option>1</option>
         <option>2</option>
       </select>
 
-      <select class="sort-filter-input" name="yearfilter">
+      <select class="searchbar-select" name="yearfilter">
         <option value="" disabled="" selected="">Filter by year...</option>
         @each(year in years)
         <option>{{ year }}</option>
         @endeach
       </select>
-    </div>
 
-      <div>
-        <button class="dd-button--round button-blue-fill">Search</button>
-      </div>
-
-    </div>
-
-  </div>
-
-
-
-  </div>
-</form>
-
-  {{--
-    <div class="dashboard-col">
-      <div class="dashboard-card">
-        <h2 class="dashboard-title">Sort</h2>
-        <select class="searchbar-select" name="sort">
-          <option value="" disabled="" selected="">Sort by...</option>
-          <option value="academic.name">Academic Name</option>
-          <option value="semester">Semester</option>
-          <option value="">Requested Load</option>
-          <option value="">Actual Load</option>
-        </select>
-      </div>
-
-        <div class="dashboard-card card-half">
-          <h2 class="dashboard-title">Filter</h2>
-          <select class="searchbar-select" name="unitfilter">
-            <option value="" disabled="" selected="">Filter by unit...</option>
-            @each(unit in unitList)
-            <option>{{ unit.id }}</option>
-            @endeach
-          </select>
-
-          <select class="searchbar-select" name="semfilter">
-            <option value="" disabled="" selected="">Filter by semester...</option>
-            <option>1</option>
-            <option>2</option>
-          </select>
-
-          <select class="searchbar-select" name="yearfilter">
-            <option value="" disabled="" selected="">Filter by year...</option>
-            @each(year in years)
-            <option>{{ year }}</option>
-            @endeach
-          </select>
-
-          <div style="width: 100%; display: table">
-            <div style="display: table-row">
-              <div style="display: table-cell">
-                &nbsp<p><b>Requested Load</b></p>
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Min. <input class="input" type="number" min="0" name="minpreload" step="any">
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Max. <input class="input" type="number" min="0" name="maxpreload" step="any">
-              </div>
-            </div>
+      <div style="width: 100%; display: table">
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            &nbsp<p>
+              <b>Requested Load</b>
+            </p>
           </div>
-
-          <div style="width: 100%; display: table">
-            <div style="display: table-row">
-              <div style="display: table-cell">
-                &nbsp<p><b>Actual Load</b></p>
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Min. <input class="input" type="number" min="0" name="minactload" step="any">
-              </div>
-              <div style="display: table-cell; width: 100px;">
-                Max. <input class="input" type="number" min="0" name="maxactload" step="any">
-              </div>
-            </div>
+          <div style="display: table-cell; width: 100px;">
+            Min. <input class="input" type="number" min="0" name="minpreload" step="any"></input>
           </div>
-
+          <div style="display: table-cell; width: 100px;">
+            Max. <input class="input" type="number" min="0" name="maxpreload" step="any"></input>
+          </div>
         </div>
       </div>
-      --}}
+
+      <div style="width: 100%; display: table">
+        <div style="display: table-row">
+          <div style="display: table-cell">
+            &nbsp<p>
+              <b>Actual Load</b>
+            </p>
+          </div>
+          <div style="display: table-cell; width: 100px;">
+            Min. <input class="input" type="number" min="0" name="minactload" step="any"></input>
+          </div>
+          <div style="display: table-cell; width: 100px;">
+            Max. <input class="input" type="number" min="0" name="maxactload" step="any"></input>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  --}}
 
 
 </div>

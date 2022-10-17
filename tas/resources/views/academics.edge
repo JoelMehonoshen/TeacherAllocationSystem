@@ -11,7 +11,7 @@
       @!component('components.addacademic', csrf=csrfField())
 
 
-      @!component('components.searchAcademics', title="Find academic", academics=academics, csrf=csrfField(), route=route('AcademicController.render'))
+      @!component('components.searchAcademics', title="Find academic...", academics=academics, units=units, csrf=csrfField(), route=route('AcademicController.render'))
 
       <div>
         {{-- Display Academics --}}

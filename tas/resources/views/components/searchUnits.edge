@@ -1,106 +1,100 @@
 <div class="searchbar-wrapper">
   <form method="GET" action="{{ route }}">
     {{csrf}}
-    
-  <div class="flex-container data-tool-container">
-    <div class="data-row data-tool-row-1 flex-container">
-      <h1 class="title">Units</h1>
-    </div>
-    <div class="data-row data-tool-row-2 flex-container">
-      <div>
-        <div class="field has-addons">
-          <p class="control">
-            <div>
-              <div class="searchbar-button-container">
-                <button class="searchbar-button" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
+
+    <div class="flex-container data-tool-container">
+      <div class="data-row data-tool-row-1 flex-container">
+        <h1 class="title">Units</h1>
+      </div>
+      <div class="data-row data-tool-row-2 flex-container">
+        <div>
+          <div class="field has-addons">
+            <p class="control">
+              <div>
+                <div class="searchbar-button-container">
+                  <button class="searchbar-button" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <input class="search-input" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
-              <input class="search-input" type="text" name="search" placeholder="{{title}}">
+            </p>
+
+            <div>
+              <select class="sort-filter-input" name="sortOption">
+                <option value="" disabled="">Sort by...</option>
+                <option value="code" selected="">Unit offering ID</option>
+                <option value="code" selected="">Unit code</option>
+                <option value="name">Unit name</option>
+                <option value="subjectAreaGroup">Subject area group</option>
+              </select>
             </div>
-          </p>
-      
-          <p class="has-addons">
-            <button class="searchbar-clear-button" href="units"><i class="fa fa-undo" aria-hidden="true"></i>Reset</button>
-          </p>
-        </div>
-      </div>
-      <div>
-        <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#unitsForm">+ Add Units</button>
-        
-      </div>
-    </div>
 
-
-    <div class="data-row data-tool-row-4 flex-container" style="justify-content: space-between;">
-
-      <div class="flex-container" style="flex-direction:row;">
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Assigned Load</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minload" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxload" step="any" placeholder="Max">
+            <p class="has-addons">
+              <button class="searchbar-clear-button" href="units">
+                <i class="fa fa-undo" aria-hidden="true"></i>Reset
+              </button>
+            </p>
           </div>
         </div>
+        <div>
+          <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#unitsForm">+ Add Units</button>
 
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Number of Students</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minstudents" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxstudents" step="any" placeholder="Max">
-          </div>
         </div>
+      </div>
 
-        <div class="flex-container" style="flex-direction:column; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
-          <p><b>Share</b></p>
-          <div style="display:flex;">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="minshare" step="any" placeholder="Min">
-            <input class="sort-filter-input min-max-input" type="number" min="0" name="maxshare" step="any" placeholder="Max">
+
+      <div class="data-row data-tool-row-3 flex-container" style="justify-content: space-between;">
+
+        <div class="flex-container" style="flex-direction:row; border:1px solid lightgrey; border-radius:10px; padding:12px; margin-right:8px; color:grey;">
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Subject Area Group</b>
+            </p>
+          <div class="display:flex;" style="height:70px; overflow-y: scroll;">
+              @each(unit in units)
+              <div class="input-group-prepend">
+                <input class="sort-filter-input" type="checkbox" name="{{ unit.subjectAreaGroup }}">{{ unit.subjectAreaGroup }}</input>
+              </div>
+              @endeach
+            </div>
           </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Semester</b>
+            </p>
+            <div class="display:flex;">
+              <div class="input-group-prepend"><input class="sort-filter-input active" type="checkbox" checked="" name="sem1">Sem 1</input></div>
+              <div class="input-group-prepend"><input class="sort-filter-input active" type="checkbox" checked="" name="sem2">Sem 2</input></div>
+            </div>
+          </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>Estimated Enrolments</b>
+            </p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="minEnrols" step="100" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="maxEnrols" step="100" placeholder="Max"></input>
+            </div>
+          </div>
+
+          <div class="flex-container" style="flex-direction:column; padding:12px; margin-right:10px;">
+            <p>
+              <b>School Share</b>
+            </p>
+            <div style="display:flex;">
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="minShare" step="0.1" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="maxShare" step="0.1" placeholder="Max"></input>
+            </div>
+          </div>
+
         </div>
 
       </div>
-  
-    </div>
-
-
-    <div class="data-row data-tool-row-3 flex-container" style="flex-direction: column; justify-content:space-between;">
-      <div class="flex-container space-between">
-      <div>
-        <select class="sort-filter-input" name="sort">
-          <option value="" disabled="" selected="">Sort by...</option>
-          <option value="id">ID</option>
-          <option value="name">Name</option>
-          <option value="semester">Semester</option>
-          <option value="assignedLoad">Assigned Load</option>
-          <option value="students">Number of Students</option>
-          <option value="share">Share</option>
-        </select>
-
-        <select class="sort-filter-input" name="idfilter">
-          <option value="" disabled="" selected="">Filter by ID...</option>
-          @each(unit in ids)
-          <option>{{ unit.id }}</option>
-          @endeach
-        </select>
-
-        <select class="sort-filter-input" name="semfilter">
-          <option value="" disabled="" selected="">Filter by semester...</option>
-          <option>1</option>
-          <option>2</option>
-        </select>
-      
 
     </div>
-
-      <div>
-        <button class="dd-button--round button-blue-fill">Search</button>
-      </div>
-
-    </div>
-
-  </div>
-  </div>
-</form>
+  </form>
 </div>
 
