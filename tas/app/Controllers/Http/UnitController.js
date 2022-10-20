@@ -10,7 +10,7 @@ class UnitController {
   async render({ request, view }) {
     try {
 
-      // Obtain the searchbar input + options selected from the sorting + filtering
+      // Obtain input from searchbar, sorting and some filtering options -> estimatedEnrolments
       var searchbar = request.input("searchbar");
       var sortOption = request.input("sortOption");
       var minEnrols = request.input("minEnrols");
@@ -21,20 +21,6 @@ class UnitController {
       // Default sorting + filtering options
       if (!searchbar) { searchbar = ""; }
       if (!sortOption) { sortOption = "code"; }
-      //if (!search && !idfilter) { search = "%" }
-      //if (!search && idfilter) { search = idfilter }
-      //if (!sortOption) { sortOption = "id" }
-      //if (!semfilter) { semfilter = 0 }
-      //if (semfilter == 1) { semfilter = 2 }
-      //else if (semfilter == 2) { semfilter = 1 }
-      //if (!minload) { minload = 0 }
-      //if (!maxload) { maxload = 99 }
-      //if (!minstudents) { minstudents = 0 }
-      //if (!maxstudents) { maxstudents = 99999 }
-      //if (!minshare) { minshare = 0 }
-      //if (!maxshare) { maxshare = 99 }
-
-
 
       // Obtain from database
       var units = await Database.from("units")
@@ -42,7 +28,58 @@ class UnitController {
         .orWhere('name', "ilike", "%" + searchbar + "%")
         .orderBy(sortOption);
 
+      // Obtain filtering option -> subjectAreaGroup
+      var subjectAreaGroups = [];
+      var subjectAreaGroupsInput = [];
+      units.filter(unit => {
+        if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
+          subjectAreaGroups.push(unit.subjectAreaGroup);
+          subjectAreaGroupsInput.push(request.input(unit.subjectAreaGroup));
+        }
+      });
+      subjectAreaGroups.sort();
+      subjectAreaGroupsInput.sort();
 
+      var offerings = await Database.from("offerings");
+
+      // Obtain filtering option -> semester
+      var semesters = [];
+      offerings.filter(offering => {
+        if (!semesters.includes(offering.semester)) { semesters.push(offering.semester); }
+      });
+      semesters.sort();
+
+      // Filtering subjectAreaGroup
+      for (let i = 0; i < subjectAreaGroups.length; i++) {
+        const group = subjectAreaGroups[i];
+        if (!subjectAreaGroupsInput.every(el => el == undefined) && !subjectAreaGroupsInput[i]) {
+          units = units.filter(unit => unit.subjectAreaGroup != group);
+        }
+      }
+
+      // Filtering semester
+      for (let i = 0; i < semesters.length; i++) {
+        const sem = semesters[i];
+        if (!request.input(element)) {
+          offerings = offerings.filter(offering => offering.semester != sem);
+        }
+      }
+
+      
+
+      // Filtering estimatedEnrolments
+      if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
+      if (maxEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments <= maxEnrols); }
+
+      // Filtering schoolShare
+      if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
+      if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
+
+      // Filtering numerical input fields
+      if (minEnrols || maxEnrols || minShare || maxShare) {
+        const reducedUnitCodes = offerings.map(offering => offering.code);
+        units = units.filter(unit => reducedUnitCodes.includes(unit.code));
+      }
 
       //helper function
       // Accepts the array and key
@@ -58,54 +95,11 @@ class UnitController {
         }, {}); // empty object is the initial value for result object
       };
 
-      var offerings = await Database.from("offerings");
-
-      var subjectAreaGroups = [];
-      var temp = units.filter(unit => {
-        const isDuplicate = subjectAreaGroups.includes(unit.subjectAreaGroup);
-
-        if (!isDuplicate) {
-          subjectAreaGroups.push(unit.subjectAreaGroup);
-
-          return true;
-        }
-
-        return false;
-      });
-      subjectAreaGroups.sort();
-
-      var semesters = [];
-      var temp = offerings.filter(offering => {
-        const isDuplicate = semesters.includes(offering.semester);
-
-        if (!isDuplicate) {
-          semesters.push(offering.semester);
-
-          return true;
-        }
-
-        return false;
-      });
-      var sem1 = request.input("sem1");
-      var sem2 = request.input("sem2");
-
-      // Filtering
-      // ###########
-      if (minShare) {
-        offerings = offerings.filter(offering => offering.schoolShare >= minShare);
-        //var result = offerings.map(offering => offering.code);
-      }
-      if (maxShare) {
-        offerings = offerings.filter(offering => offering.schoolShare <= maxShare);
-      }
-      if (sem1 && sem2) { ; }
-      else if (sem1) { ; }
-      else if (sem2) { ; }
-     
-      
-
       const groupedUnits = groupBy(offerings, "code");
+
       
+
+
 
       return view.render("units", {
         units: units,

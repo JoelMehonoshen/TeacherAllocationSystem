@@ -16,15 +16,14 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
-                <input class="search-input" style="height:40px" type="text" name="searchbar" placeholder="{{title}}"></input>
+                <input class="search-input" style="height:40px; width:400px" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
             </p>
 
             <div>
               <select class="sort-filter-input" style="height:40px" name="sortOption">
-                <option value="" disabled="">Sort by...</option>
-                <option value="code" selected="">Unit offering ID</option>
-                <option value="code" selected="">Unit code</option>
+                <option value="" disabled="" selected="">Sort by...</option>
+                <option value="code">Unit code</option>
                 <option value="name">Unit name</option>
                 <option value="subjectAreaGroup">Subject area group</option>
               </select>
@@ -51,7 +50,7 @@
             <p>
               <b>Subject Area Group</b>
             </p>
-          <div class="display:flex;" style="height:70px; overflow-y: scroll;">
+            <div class="display:flex;" style="height:70px; overflow-y: scroll;">
               @each(group in subjectAreaGroups)
               <div class="input-group-prepend">
                 <input class="sort-filter-input" type="checkbox" checked="" name="{{ group }}">{{ group }}</input>
@@ -78,8 +77,8 @@
               <b>Estimated Enrolments</b>
             </p>
             <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="minEnrols" step="100" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" type="number" min="0" max="99999" name="maxEnrols" step="100" placeholder="Max"></input>
+              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="minEnrols" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" style="width:80px" type="number" min="0" max="99999" name="maxEnrols" placeholder="Max"></input>
             </div>
           </div>
 
@@ -88,8 +87,8 @@
               <b>School Share</b>
             </p>
             <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="minShare" step="0.1" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" type="number" min="0" max="99" name="maxShare" step="0.1" placeholder="Max"></input>
+              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" name="minShare" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" style="width:70px" type="number" min="0" max="99" name="maxShare" placeholder="Max"></input>
             </div>
           </div>
 

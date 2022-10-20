@@ -56,65 +56,150 @@ class AllocationController {
   async render({ view, request }) {
     try {
 
-      var units = await Database.from("units");
+      // Obtain the searchbar input + options selected from the sorting + filtering
+      var searchbar = request.input("searchbar");
+      var sortOption = request.input("sortOption");
+      var minEnrols = request.input("minEnrols");
+      var maxEnrols = request.input("maxEnrols");
+      var minShare = request.input("minShare");
+      var maxShare = request.input("maxShare");
+      var minTotal = request.input("minTotal");
+      var maxTotal = request.input("maxTotal");
+
+      // if no user input, use default sort + filter options
+      if (!searchbar) { searchbar = ""; }
+      if (!sortOption) { sortOption = "code"; }
+
+      // Obtain from database
+      var units = await Database.from("units")
+        .where("code", "ilike", "%" + searchbar + "%");
       var academics = await Database.from("academics");
-      var offerings = await Database.from("offerings");
+      var offerings = await Database.from("offerings")
+        .where("code", "ilike", "%" + searchbar + "%");
       var allocations = await Database.from("allocations");
 
+      // Obtain filtering option -> subjectAreaGroup
+      var subjectAreaGroups = [];
+      var subjectAreaGroupsInput = [];
+      units.filter(unit => {
+        if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
+          subjectAreaGroups.push(unit.subjectAreaGroup);
+          subjectAreaGroupsInput.push(request.input(unit.subjectAreaGroup));
+        }
+      });
+      subjectAreaGroups.sort();
+      subjectAreaGroupsInput.sort();
+
+      // Obtain filtering option -> semester
+      var semesters = [];
+      var semestersInput = [];
+      offerings.filter(offering => {
+        if (!semesters.includes(offering.semester)) {
+          semesters.push(offering.semester);
+          semestersInput.push(request.input(offering.semester));
+        }
+      });
+      semesters.sort();
+      semestersInput.sort();
+
+      //// Filtering subjectAreaGroup
+      //for (let i = 0; i < subjectAreaGroups.length; i++) {
+      //  const group = subjectAreaGroups[i];
+      //  //console.log();
+      //  if (!subjectAreaGroupsInput.every(el => el == undefined) && !subjectAreaGroupsInput[i]) {
+      //    units = units.filter(unit => unit.subjectAreaGroup != group);
+      //  }
+      //}
+      //var reducedUnitCodes = units.map(unit => unit.code);
+      //offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
+      
+
+      
+
+      //// Filtering semester
+      //for (let i = 0; i < semesters.length; i++) {
+      //  const sem = semesters[i];
+      //  if (!semestersInput.every(el => el == undefined) && !semestersInput[i]) {
+      //    offerings = offerings.filter(offering => offering.semester != sem);
+      //  }
+      //}
 
 
+      //// Filtering estimatedEnrolments
+      //if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
+      //if (maxEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments <= maxEnrols); }
+
+      //// Filtering schoolShare
+      //if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
+      //if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
+
+      
+
+      
+      // Calculating total allocated fraction
       var aggAllocations = [];
       var aggTotalFractions = [];
 
       for (let i = 1; i <= offerings.length; i++) {
         var entries = await Database.from("allocations").where("id", i);
         var totalFraction = await Database.from("allocations").where("id", i).sum("fractionAllocated");
-        if (totalFraction[0]["sum"] == null) {
-          aggTotalFractions.push(0)
+        var totalFractionSum = totalFraction[0]["sum"];
+        
+        if (totalFractionSum == null) {
+          aggTotalFractions.push(0);
         }
         else {
-          aggTotalFractions.push(totalFraction[0]["sum"])
+          aggTotalFractions.push(totalFractionSum);
         }
-        aggAllocations.push(entries)
+        aggAllocations.push(entries);
 
       }
 
+      //// Filtering total allocated fraction
+      //if (minTotal) {
+      //  for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
+      //    if (!(aggTotalFractions[i] >= minTotal)) {
+      //      offerings.splice(i, 1);
+      //    }
+      //  }
+      //}
+      //if (maxTotal) {
+      //  for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
+      //    if (!(aggTotalFractions[i] <= maxTotal)) {
+      //      offerings.splice(i, 1);
+      //    }
+      //  }
+      //}
 
-      // Obtain the searchbar input + options selected from the sorting + filtering
-      var search = request.input("search");
-      var sort = request.input("sort");
+      //// Filtering numerical input fields
+      //if (minEnrols || maxEnrols || minShare || maxShare || minTotal || maxTotal) {
+      //  const reducedUnitCodes = offerings.map(offering => offering.code);
+      //  units = units.filter(unit => reducedUnitCodes.includes(unit.code));
+      //}
 
-      // if no user input, use default sort + filter options
-      if (!search) { search = ""; }
-      if (!sort) { sort = "name"; }
+      
 
-      var subjectAreaGroups = [];
-      var temp = units.filter(unit => {
-        const isDuplicate = subjectAreaGroups.includes(unit.subjectAreaGroup);
+      // Sorting
+      //if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
+      //if (sortOption == "estimatedEnrolments") { offerings.sort((a, b) => a.estimatedEnrolments - b.estimatedEnrolments); }
+      //if (sortOption == "schoolShare") { offerings.sort((a, b) => a.schoolShare - b.schoolShare); }
+      //if (sortOption == "totalFrac") {
+      //  var indices = aggTotalFractions.map(function (el, i) {
+      //    return { index: i, value: el };
+      //  })
+      //  indices.sort((a, b) => a.value - b.value);
+      //  offerings = indices.map(poop => (offerings[poop.index]));
+      //}
 
-        if (!isDuplicate) {
-          subjectAreaGroups.push(unit.subjectAreaGroup);
+      console.log(units.length);
+      console.log(offerings.length);
+      console.log(aggAllocations.length);
+      console.log(aggTotalFractions.length);
 
-          return true;
-        }
+      console.log(semestersInput);
+      console.log(subjectAreaGroupsInput);
 
-        return false;
-      });
-      subjectAreaGroups.sort();
-
-      var semesters = [];
-      var temp = offerings.filter(offering => {
-        const isDuplicate = semesters.includes(offering.semester);
-
-        if (!isDuplicate) {
-          semesters.push(offering.semester);
-
-          return true;
-        }
-
-        return false;
-      });
-
+      
 
       return view.render("allocations", {
         academics: academics,

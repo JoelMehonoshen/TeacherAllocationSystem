@@ -16,14 +16,14 @@
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
-                <input class="search-input" style="height:40px" type="text" name="searchbar" placeholder="{{title}}"></input>
+                <input class="search-input" style="height:40px; width:400px" type="text" name="searchbar" placeholder="{{title}}"></input>
               </div>
             </p>
 
               <div>
                 <select class="sort-filter-input" style="height:40px" name="sortOption">
-                  <option value="" disabled="">Sort by...</option>
-                  <option value="name" selected="">First name</option>
+                  <option value="" disabled="" selected="">Sort by...</option>
+                  <option value="name">First name</option>
                   <option value="id">Academic ID</option>
                   <option value="category">Category</option>
                   <option value="teachingFraction">Lowest teaching fraction</option>
@@ -53,10 +53,10 @@
               <b>Category</b>
             </p>
             <div class="input-group-prepend">
-              <input class="sort-filter-input" type="checkbox" checked="" name="categoryO">Ongoing</input>
+              <input class="sort-filter-input" type="checkbox" checked="" name="Ongoing">Ongoing</input>
             </div>
             <div class="input-group-prepend">
-              <input class="sort-filter-input" type="checkbox" checked="" name="categoryS">Sessional</input>
+              <input class="sort-filter-input" type="checkbox" checked="" name="Sessional">Sessional</input>
             </div>
           </div>
 
@@ -65,8 +65,8 @@
               <b>Teaching Fraction</b>
             </p>
             <div style="display:flex;">
-              <input class="sort-filter-input min-max-input" name="minTeachFrac" type="number" min="0" max="99" step="0.1" placeholder="Min"></input>
-              <input class="sort-filter-input min-max-input" name="maxTeachFrac" type="number" min="0" max="99" step="0.1" placeholder="Max"></input>
+              <input class="sort-filter-input min-max-input" style="width:70px" name="minTeachFrac" type="number" min="0" max="99" placeholder="Min"></input>
+              <input class="sort-filter-input min-max-input" style="width:70px" name="maxTeachFrac" type="number" min="0" max="99" placeholder="Max"></input>
             </div>
           </div>
 

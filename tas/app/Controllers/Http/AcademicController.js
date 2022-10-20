@@ -96,19 +96,19 @@ class AcademicController {
   async render({ request, view }) {
     try {
 
-      // Obtain the searchbar input + options selected from the sorting + filtering
+      // Obtain the searchbar input + sorting/filtering options
       var searchbar = request.input("searchbar");
       var sortOption = request.input("sortOption");
       var minTeachFrac = request.input("minTeachFrac");
       var maxTeachFrac = request.input("maxTeachFrac");
-      var ongoing = request.input("categoryO");
-      var sessional = request.input("categoryS");
+      var ongoing = request.input("Ongoing");
+      var sessional = request.input("Sessional");
 
       // Default sorting + filtering options
       if (!searchbar) { searchbar = ""; }
       if (!sortOption) { sortOption = "name"; }
 
-      // Obtain from database
+      // Obtain from database + sorting
       var academics = await Database.from("academics")
         .where("name", "ilike", "%" + searchbar + "%")
         .orWhere("id", "ilike", "%" + searchbar + "%")
@@ -129,17 +129,17 @@ class AcademicController {
         }, {}); // empty object is the initial value for result object
       };
 
-
       const groupedPreferences = groupBy(preferences, "id");
 
-      // Filtering
+      // Filtering category
+      if (ongoing && sessional) { }
+      else if (ongoing) { academics = academics.filter(academic => academic.category == ongoing); }
+      else if (sessional) { academics = academics.filter(academic => academic.category == sessional); }
+
+      // Filtering teaching fraction
       if (minTeachFrac) { academics = academics.filter(academic => academic.teachingFraction >= minTeachFrac); }
       if (maxTeachFrac) { academics = academics.filter(academic => academic.teachingFraction <= maxTeachFrac); }
-      if (ongoing && sessional) { }
-      else if (ongoing) { academics = academics.filter(academic => academic.category == "Ongoing"); }
-      else if (sessional) { academics = academics.filter(academic => academic.category == "Sessional"); }
 
-      //console.log(academics);
       return view.render("academics", {
         academics: academics,
         units: units,
