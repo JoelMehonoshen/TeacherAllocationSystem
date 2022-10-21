@@ -2,7 +2,7 @@
 const Exception = use("App/Exceptions/Handler");
 const Logger = use("Logger");
 
-const Academic = use("App/Models/Academic");
+const Academic = use("App/Models/Academic");const Preference = use("App/Models/Preference");
 const Database = use("Database");
 
 class AcademicController {
@@ -58,10 +58,24 @@ class AcademicController {
     }
   }
 
+  async addpreference({ request, response }) {
+      try {
+      console.log("making it here")
+        const newPreference = new Preference();
+        newPreference.id = request.input("id")
+        newPreference.code = request.input("code")
+        newPreference.desireToTeach = request.input("desireToTeach")
+        newPreference.abilityToTeach = request.input("abilityToTeach")
+        await newPreference.save()
+        return response.route("/academics", true);
+      } catch (error) {
+        Logger.error('Add Preferences' + error);
+        throw new Exception();
+      }
+    }
+
   async updatepreference({ response, request }) {
     try {
-
-      console.log(request.input("id"))
       await Database.from("preferences")
         .where("code", request.input("originalCode"))
         .where("id", request.input("id"))

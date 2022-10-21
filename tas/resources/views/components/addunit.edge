@@ -9,12 +9,12 @@
           <button class="delete" aria-label="close" data-dismiss="modal"></button>
         </header>
         <section class="modal-card-body">
-        <form method="POST" action="{{ route('UnitController.addunit') }}">  
+        <form method="POST" action="{{ route('UnitController.addunit') }}">
             {{csrf}}
             <div class="field">
             <label class="label">Unit Code</label>
                 <div class="control">
-                    <input class="input" type="text" name="id" placeholder="Unit Code">
+                    <input class="input" type="text" name="code" placeholder="Unit Code">
                 </div>
             </div>
             <div class="field">
@@ -24,51 +24,15 @@
                 </div>
             </div>
             <div class="field">
-            <label class="label">Share</label>
+            <label class="label">Subject Area Group</label>
                 <div class="control">
-                    <input class="input" type="number" name="share" step="any" placeholder="0" >
+                  <input class="input" type="text" name="subjectAreaGroup" placeholder="Subject Area Group">
                 </div>
             </div>
-            <div class="field">
-                <label class="label">Students</label>
-                <div class="control">
-                    <input class="input" type="number" name="students">
-                </div>
-            </div>
-            <div class="columns">
-                <div class="column is-half">
-                    <div class="field">
-                        <label class="label">Year</label>
-                        <p class="control">
-                            <span class="select">
-                                <select class="select" name="year">
-                                    <option>2021</option>
-                                    <option>2020</option>
-                                    <option>2019</option>
-                                    <option>2018</option>
-                                </select>
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <label class="label">Semester</label>
-                        <p class="control">
-                            <span class="select">
-                            <select class="select" name="semester">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                            </span>
-                        </p>
-                    </div> 
-            </div>     
-        </div>
-            </section>  
+            </section>
             <footer class="modal-card-foot">
                 <input type="submit" value="Add Unit" class="dd-button--round button-blue-fill margin-8">
-                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>  
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
             </footer>
         </form>
     </div>

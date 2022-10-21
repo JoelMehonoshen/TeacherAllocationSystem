@@ -1,0 +1,49 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<button type="button" class="dd-button--hyperlink" data-toggle="modal" data-target="#addPreference">Add Preference</button>
+
+<div id="addPreference" class="modal">
+  <div class="modal-background flex-container flex-center">
+      <div class="modal-card pop-up">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Academic Preference</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="academics/addpreference">
+            {{csrf}}
+            <input type="hidden" name="id" value="{{academic.id}}">
+            <div class="field">
+                <label class="label">Unit Preference</label>
+              <div class="control">
+                <div class="select">
+                  <select name="code" style="width: 100vw !important">
+                    @each(unit in units)
+                    <option value="{{ unit.code }}">{{ unit.code }} | {{ unit.name }}</option>
+                    @endeach
+                  </select>
+                </div>
+              </div>
+            </div>
+          <div class="field">
+            <label class="label">Desire To Teach</label>
+            <div class="control">
+              <input class="input" type="number" min="0" max="10" name="desireToTeach">
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Ability To Teach</label>
+            <div class="control">
+              <input class="input" type="number" min="0" max="10" name="abilityToTeach">
+            </div>
+          </div>
+
+            </section>
+            <footer class="modal-card-foot">
+                <input type="submit" value="Add Preference" class="dd-button--round button-blue-fill margin-8">
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+                </form>
+            </footer>
+    </div>
+</div>
+</div>

@@ -122,8 +122,7 @@ class UnitController {
       const newUnit = new Unit()
       newUnit.code = request.input("code")
       newUnit.name = request.input("name")
-      newUnit.year = request.input("year")
-      newUnit.semester = request.input("subjectAreaGroup")
+      newUnit.subjectAreaGroup = request.input("subjectAreaGroup")
       await newUnit.save()
       return response.route("/units", true);
     } catch (error) {
