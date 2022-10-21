@@ -3,6 +3,7 @@
 const Database = use("Database");
 const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
+const Offering = use("App/Models/Offering");
 Database.query();
 
 
@@ -39,8 +40,37 @@ class AllocationController {
   async addAllocation({ response, request }) {
     try {
 
-      const offeringEntry = await Database.select("offerings.id").from("offerings").where("code", request.input("unitCode")).where("semester", request.input("semester"))
-      console.log(offeringEntry)
+      let offeringEntry = await Database.from("offerings").where("code", request.input("unitCode")).where("semester", request.input("semester"))
+
+      //this if statement prevents a crash if no offering exists for the selected allocation semester
+      if(offeringEntry.length == 0){
+
+            const newOffering = new Offering()
+            const offeringLength = await Database.from("offerings").count()
+            console.log(offeringLength[0].count)
+            //fills id values of offerings if any have been deleted
+            let thisOfferingID = 0;
+            for (let i = 1; i < offeringLength[0].count; i++) {
+            const thisCheck = await Database.from("offerings").where("id", i);
+            if(!thisCheck.length != 0){
+            thisOfferingID = i;
+            break
+            }}
+
+            newOffering.id = thisOfferingID
+            newOffering.code = request.input("unitCode")
+            newOffering.semester = request.input("semester")
+
+            //todo: This could be done dynamically using a popup (have fun next group lol)
+            newOffering.estimatedEnrolments = 0;
+            newOffering.schoolShare = 0;
+            await newOffering.save()
+
+            //reallocate offering entry
+            offeringEntry = await Database.from("offerings").where("code", request.input("unitCode")).where("semester", request.input("semester"))
+            console.log("Offering "+ request.input("semester") +" doesn't exist for this Unit.")
+            console.log("New Offering Created")
+      }
       const newAllocation = new Allocation();
       newAllocation.academicId = request.input("academicId")
       newAllocation.id = offeringEntry[0]["id"]

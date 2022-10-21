@@ -27,6 +27,8 @@ class AcademicController {
     try {
       await Database.from("allocations")
         .where("academicId", request.input("id")).delete()
+      await Database.from("preferences")
+              .where("id", request.input("id")).delete()
       await Database.from("academics")
         .where("id", request.input("id")).delete()
     }
@@ -40,10 +42,6 @@ class AcademicController {
 
   async updateacademic({ response, request }) {
     try {
-      //todo:need to update allocations simultaneously
-      //      await Database.from("allocations")
-      //              .where("academicId", request.input("id"))
-      //              .update({academicId: request.input("newId")});
 
       await Database.from("academics")
         .where("id", request.input("id"))

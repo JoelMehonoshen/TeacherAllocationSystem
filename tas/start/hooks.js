@@ -1,5 +1,5 @@
 const { hooks } = require('@adonisjs/ignitor')
-// const Logger = use('Logger') //TODO: (OLD) Fix logger installation
+
 
 hooks.after.providersBooted(() => {
   const Exception = use('Exception')
