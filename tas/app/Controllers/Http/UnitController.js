@@ -27,27 +27,21 @@ class UnitController {
         .where("code", "ilike", "%" + searchbar + "%")
         .orWhere('name', "ilike", "%" + searchbar + "%")
         .orderBy(sortOption);
+      var offerings = await Database.from("offerings");
 
       // Obtain filtering option -> subjectAreaGroup
       var subjectAreaGroups = [];
-      var subjectAreaGroupsInput = [];
       units.filter(unit => {
         if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
           subjectAreaGroups.push(unit.subjectAreaGroup);
-          subjectAreaGroupsInput.push(request.input(unit.subjectAreaGroup));
         }
       });
-      subjectAreaGroups.sort();
-      subjectAreaGroupsInput.sort();
+      subjectAreaGroups.sort();      
 
-      var offerings = await Database.from("offerings");
-
-      // Obtain filtering option -> semester
-      var semesters = [];
-      offerings.filter(offering => {
-        if (!semesters.includes(offering.semester)) { semesters.push(offering.semester); }
-      });
-      semesters.sort();
+      var subjectAreaGroupsInput = [];
+      for (const group of subjectAreaGroups) {
+        subjectAreaGroupsInput.push(request.input(group));
+      }
 
       // Filtering subjectAreaGroup
       for (let i = 0; i < subjectAreaGroups.length; i++) {
@@ -57,14 +51,29 @@ class UnitController {
         }
       }
 
+
+      // Obtain filtering option -> semester
+      var semesters = [];
+      offerings.filter(offering => {
+        if (!semesters.includes(offering.semester)) {
+          semesters.push(offering.semester);
+        }
+      });
+      semesters.sort();
+
+      var semestersInput = [];
+      for (const sem of semesters) {
+        semestersInput.push(request.input(sem));
+      }
+
       // Filtering semester
       for (let i = 0; i < semesters.length; i++) {
         const sem = semesters[i];
-        if (!request.input(sem)) {
+        if (!semestersInput.every(el => el == undefined) && !semestersInput[i]) {
           offerings = offerings.filter(offering => offering.semester != sem);
         }
       }
-
+      
 
 
       // Filtering estimatedEnrolments
@@ -75,11 +84,13 @@ class UnitController {
       if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
       if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
 
-      // Filtering numerical input fields
-      if (minEnrols || maxEnrols || minShare || maxShare) {
-        const reducedUnitCodes = offerings.map(offering => offering.code);
-        units = units.filter(unit => reducedUnitCodes.includes(unit.code));
-      }
+
+
+      // Filtering out the same units in 'offerings' array as 'units' array
+      const reducedUnitCodes = offerings.map(offering => offering.code);
+      units = units.filter(unit => reducedUnitCodes.includes(unit.code));
+
+
 
       //helper function
       // Accepts the array and key
@@ -95,8 +106,6 @@ class UnitController {
         }, {}); // empty object is the initial value for result object
       };
 
-      // remove this line!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      var offerings = await Database.from("offerings");
 
       const groupedUnits = groupBy(offerings, "code");
 
