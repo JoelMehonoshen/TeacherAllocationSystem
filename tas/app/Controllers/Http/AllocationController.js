@@ -5,7 +5,7 @@ const Logger = use("Logger");
 const Allocation = use("App/Models/Allocation");
 Database.query();
 
-// TODO:(OLD) get rid of the raw sql, change everything (except like sql statements) to use the ORM
+
 class AllocationController {
   // update the database with new allocations and academics
 
@@ -112,7 +112,7 @@ class AllocationController {
       //}
       //var reducedUnitCodes = units.map(unit => unit.code);
       //offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
-      
+
 
 
       // Filtering semester
@@ -131,9 +131,9 @@ class AllocationController {
       //if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
       //if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
 
-      
 
-      
+
+
       // Calculating total allocated fraction
       var aggAllocations = [];
       var aggTotalFractions = [];
@@ -142,7 +142,7 @@ class AllocationController {
         var entries = await Database.from("allocations").where("id", i);
         var totalFraction = await Database.from("allocations").where("id", i).sum("fractionAllocated");
         var totalFractionSum = totalFraction[0]["sum"];
-        
+
         if (totalFractionSum == null) {
           aggTotalFractions.push(0);
         }
@@ -198,7 +198,7 @@ class AllocationController {
       console.log(subjectAreaGroupsInput);
       console.log(allocations);
 
-      
+
 
       return view.render("allocations", {
         academics: academics,

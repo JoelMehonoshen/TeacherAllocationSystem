@@ -61,7 +61,7 @@ class ExportController {
       AllocationSheet.getCell("D"+(j).toString()).value = allocations[i].unitCoordinator;
       }
 
-    //sheet 4 - Allocations
+    //sheet 4 - Offerings
     for (let i = 0; i < offerings.length; i++) {
       let j = i+2;
       OfferingSheet.getCell("A"+(j).toString()).value = offerings[i].id;
@@ -70,7 +70,7 @@ class ExportController {
       OfferingSheet.getCell("D"+(j).toString()).value = offerings[i].estimatedEnrolments;
       OfferingSheet.getCell("E"+(j).toString()).value = offerings[i].schoolShare;
       }
-    //sheet 5 - Allocations
+    //sheet 5 - Preferences
     for (let i = 0; i < preferences.length; i++) {
       let j = i+2;
       PreferenceSheet.getCell("A"+(j).toString()).value = preferences[i].id;

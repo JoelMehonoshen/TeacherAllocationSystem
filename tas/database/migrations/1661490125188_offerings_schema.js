@@ -13,7 +13,7 @@ class OfferingsSchema extends Schema {
       table.float('schoolShare')
       table.timestamps()
       //todo:these combination unique constraints aren't implemented correctly
-      table.unique(['code', 'semester'])
+      //table.unique(['code', 'semester'])
 
     })
   }

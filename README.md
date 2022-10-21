@@ -16,8 +16,6 @@ npm i -g @adonisjs/cli
 npm install dependencies 
 ```
 
-### Environment Setup
-Copy the '.env.example' file to a '.env' file and configure environment variables.
 
 ## Usage
 
@@ -47,6 +45,8 @@ docker-compose ps
 adonis migration:run
 ```
 
+
+### Don't need below commands for installation
 ### Refresh Data
 ```bash
 adonis migration:refresh

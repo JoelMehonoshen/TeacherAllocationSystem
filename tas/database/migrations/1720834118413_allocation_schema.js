@@ -12,7 +12,7 @@ class AllocationSchema extends Schema {
         table.boolean('unitCoordinator')
         table.timestamps()
         //todo:these combination unique constraints aren't implemented correctly
-        table.unique(['academicId', 'id'])
+        //table.unique(['academicId', 'id'])
     })
   }
 
