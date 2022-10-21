@@ -60,7 +60,7 @@ class UnitController {
       // Filtering semester
       for (let i = 0; i < semesters.length; i++) {
         const sem = semesters[i];
-        if (!request.input(element)) {
+        if (!request.input(sem)) {
           offerings = offerings.filter(offering => offering.semester != sem);
         }
       }

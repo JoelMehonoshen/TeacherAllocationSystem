@@ -114,16 +114,14 @@ class AllocationController {
       //offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
       
 
-      
 
-      //// Filtering semester
-      //for (let i = 0; i < semesters.length; i++) {
-      //  const sem = semesters[i];
-      //  if (!semestersInput.every(el => el == undefined) && !semestersInput[i]) {
-      //    offerings = offerings.filter(offering => offering.semester != sem);
-      //  }
-      //}
-
+      // Filtering semester
+      for (let i = 0; i < semesters.length; i++) {
+        const sem = semesters[i];
+        if (!semestersInput.every(el => el == undefined) && !semestersInput[i]) {
+          offerings = offerings.filter(offering => offering.semester != sem);
+        }
+      }
 
       //// Filtering estimatedEnrolments
       //if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
@@ -177,7 +175,7 @@ class AllocationController {
       //  units = units.filter(unit => reducedUnitCodes.includes(unit.code));
       //}
 
-      
+
 
       // Sorting
       //if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
@@ -188,7 +186,7 @@ class AllocationController {
       //    return { index: i, value: el };
       //  })
       //  indices.sort((a, b) => a.value - b.value);
-      //  offerings = indices.map(poop => (offerings[poop.index]));
+      //  offerings = indices.map(offering => (offerings[offering.index]));
       //}
 
       console.log(units.length);
@@ -198,6 +196,7 @@ class AllocationController {
 
       console.log(semestersInput);
       console.log(subjectAreaGroupsInput);
+      console.log(allocations);
 
       
 
