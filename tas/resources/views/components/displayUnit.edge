@@ -28,8 +28,8 @@
       <div class="margin-8 tcell" style="display:inline-block;">
         @!component('components.editUnit', csrf=csrf, unit=unit)
         @!component('components.addOffering', csrf=csrf, unit=unit)
-        @!component('components.editUnit2', csrf=csrf, unit=unit, labels=['Code','Name','Subject Area Group','Actions'])
-        
+        {{--@!component('components.editUnit2', csrf=csrf, unit=unit, labels=['Code','Name','Subject Area Group','Actions'])--}}
+
       </div>
    </div>
 
@@ -41,7 +41,7 @@
         <th class="margin-8 table-cell">Semester</th>
         <th class="margin-8 table-cell">Estimated Enrolments</th>
         <th class="margin-8 table-cell">School Share</th>
-        <th class="margin-8 table-cell">Actions</th>        
+        <th class="margin-8 table-cell">Actions</th>
       </tr>
       @each(offering in groupedUnits[unit.code])
       <tr class="table-row">
@@ -59,7 +59,7 @@
            <input type="submit" value ="Delete" class="dd-button--hyperlink margin-0">
           </form>
         </td>
-      </tr> 
+      </tr>
       @endeach
     </table>
   </div>

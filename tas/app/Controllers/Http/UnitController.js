@@ -65,7 +65,7 @@ class UnitController {
         }
       }
 
-      
+
 
       // Filtering estimatedEnrolments
       if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
@@ -95,9 +95,12 @@ class UnitController {
         }, {}); // empty object is the initial value for result object
       };
 
+      // remove this line!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      var offerings = await Database.from("offerings");
+
       const groupedUnits = groupBy(offerings, "code");
 
-      
+
 
 
 
@@ -131,9 +134,19 @@ class UnitController {
   async addoffering({ request, response }) {
     try {
       const newOffering = new Offering()
-      const offeringLength = await Database.from("offerings").length
-      console.log(offeringLength)
-      newOffering.id = offeringLength
+      const offeringLength = await Database.from("offerings").count()
+      console.log(offeringLength[0].count)
+
+      //fills id values of offerings if any have been deleted
+      let thisOfferingID = 0;
+      for (let i = 1; i < offeringLength[0].count; i++) {
+      const thisCheck = await Database.from("offerings").where("id", i);
+      if(!thisCheck.length != 0){
+      thisOfferingID = i;
+      break
+      }}
+
+      newOffering.id = thisOfferingID
       newOffering.code = request.input("code")
       newOffering.semester = request.input("year") + "/" + request.input("semester")
       newOffering.estimatedEnrolments = request.input("estimatedEnrolments")
@@ -168,8 +181,7 @@ class UnitController {
 
       await Database.from("allocations").where("id", request.input("id")).delete()
       await Database.from("offerings").where("id", request.input("id")).delete()
-      //todo: Need to decrement offerings and allocations for each offering
-      //await Database.from('offerings').where("id",">",offeringEntries[0].id).decrement('id',offeringEntries.length);
+
     } catch (error) {
       Logger.error('Delete Offering', error);
       throw new Exception();
@@ -201,7 +213,6 @@ class UnitController {
   }
   async deleteunit({ response, request }) {
     try {
-
       const offeringEntries = await Database.select("offerings.id").from("offerings").where("code", request.input("code"));
       await Database.from("allocations").where("id", offeringEntries[0].id).delete()
       await Database.from("offerings").where("code", request.input("code")).delete()
