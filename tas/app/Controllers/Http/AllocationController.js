@@ -110,40 +110,42 @@ class AllocationController {
 
       // Obtain filtering option -> subjectAreaGroup
       var subjectAreaGroups = [];
-      var subjectAreaGroupsInput = [];
       units.filter(unit => {
         if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
           subjectAreaGroups.push(unit.subjectAreaGroup);
-          subjectAreaGroupsInput.push(request.input(unit.subjectAreaGroup));
         }
       });
       subjectAreaGroups.sort();
-      subjectAreaGroupsInput.sort();
+
+      var subjectAreaGroupsInput = [];
+      for (const group of subjectAreaGroups) {
+        subjectAreaGroupsInput.push(request.input(group));
+      }
+
+      // Filtering subjectAreaGroup
+      for (let i = 0; i < subjectAreaGroups.length; i++) {
+        const group = subjectAreaGroups[i];
+        if (!subjectAreaGroupsInput.every(el => el == undefined) && !subjectAreaGroupsInput[i]) {
+          units = units.filter(unit => unit.subjectAreaGroup != group);
+        }
+      }
+      var reducedUnitCodes = units.map(unit => unit.code);
+      offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
+
 
       // Obtain filtering option -> semester
       var semesters = [];
-      var semestersInput = [];
       offerings.filter(offering => {
         if (!semesters.includes(offering.semester)) {
           semesters.push(offering.semester);
-          semestersInput.push(request.input(offering.semester));
         }
       });
       semesters.sort();
-      semestersInput.sort();
 
-      //// Filtering subjectAreaGroup
-      //for (let i = 0; i < subjectAreaGroups.length; i++) {
-      //  const group = subjectAreaGroups[i];
-      //  //console.log();
-      //  if (!subjectAreaGroupsInput.every(el => el == undefined) && !subjectAreaGroupsInput[i]) {
-      //    units = units.filter(unit => unit.subjectAreaGroup != group);
-      //  }
-      //}
-      //var reducedUnitCodes = units.map(unit => unit.code);
-      //offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
-
-
+      var semestersInput = [];
+      for (const sem of semesters) {
+        semestersInput.push(request.input(sem));
+      }
 
       // Filtering semester
       for (let i = 0; i < semesters.length; i++) {
@@ -154,12 +156,12 @@ class AllocationController {
       }
 
       //// Filtering estimatedEnrolments
-      //if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
-      //if (maxEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments <= maxEnrols); }
+      if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
+      if (maxEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments <= maxEnrols); }
 
-      //// Filtering schoolShare
-      //if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
-      //if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
+      // Filtering schoolShare
+      if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
+      if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
 
 
 
@@ -171,7 +173,7 @@ class AllocationController {
       for (let i = 1; i <= offerings.length; i++) {
         var entries = await Database.from("allocations").where("id", i);
         var totalFraction = await Database.from("allocations").where("id", i).sum("fractionAllocated");
-        var totalFractionSum = totalFraction[0]["sum"];
+        var totalFractionSum = totalFraction["sum"];
 
         if (totalFractionSum == null) {
           aggTotalFractions.push(0);
@@ -183,41 +185,39 @@ class AllocationController {
 
       }
 
-      //// Filtering total allocated fraction
-      //if (minTotal) {
-      //  for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-      //    if (!(aggTotalFractions[i] >= minTotal)) {
-      //      offerings.splice(i, 1);
-      //    }
-      //  }
-      //}
-      //if (maxTotal) {
-      //  for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-      //    if (!(aggTotalFractions[i] <= maxTotal)) {
-      //      offerings.splice(i, 1);
-      //    }
-      //  }
-      //}
+      // Filtering total allocated fraction
+      if (minTotal) {
+        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
+          if (!(aggTotalFractions[i] >= minTotal)) {
+            offerings.splice(i, 1);
+          }
+        }
+      }
+      if (maxTotal) {
+        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
+          if (!(aggTotalFractions[i] <= maxTotal)) {
+            offerings.splice(i, 1);
+          }
+        }
+      }
 
-      //// Filtering numerical input fields
-      //if (minEnrols || maxEnrols || minShare || maxShare || minTotal || maxTotal) {
-      //  const reducedUnitCodes = offerings.map(offering => offering.code);
-      //  units = units.filter(unit => reducedUnitCodes.includes(unit.code));
-      //}
+      // Filtering out the same units in 'offerings' array as 'units' array
+      var reducedUnitCodes = offerings.map(offering => offering.code);
+      units = units.filter(unit => reducedUnitCodes.includes(unit.code));
 
 
 
       // Sorting
-      //if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
-      //if (sortOption == "estimatedEnrolments") { offerings.sort((a, b) => a.estimatedEnrolments - b.estimatedEnrolments); }
-      //if (sortOption == "schoolShare") { offerings.sort((a, b) => a.schoolShare - b.schoolShare); }
-      //if (sortOption == "totalFrac") {
-      //  var indices = aggTotalFractions.map(function (el, i) {
-      //    return { index: i, value: el };
-      //  })
-      //  indices.sort((a, b) => a.value - b.value);
-      //  offerings = indices.map(offering => (offerings[offering.index]));
-      //}
+      if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
+      if (sortOption == "estimatedEnrolments") { offerings.sort((a, b) => a.estimatedEnrolments - b.estimatedEnrolments); }
+      if (sortOption == "schoolShare") { offerings.sort((a, b) => a.schoolShare - b.schoolShare); }
+      if (sortOption == "totalFrac") {
+        var indices = aggTotalFractions.map(function (el, i) {
+          return { index: i, value: el };
+        })
+        indices.sort((a, b) => a.value - b.value);
+        offerings = indices.map(offering => (offerings[offering.index]));
+      }
 
       console.log(units.length);
       console.log(offerings.length);
