@@ -112,7 +112,6 @@ class UnitController {
 
 
 
-
       return view.render("units", {
         units: units,
         groupedUnits: groupedUnits,

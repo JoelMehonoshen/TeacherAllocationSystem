@@ -1,118 +1,90 @@
 <div style="width:100%; display:block;">
-
-<div class="table-outter">
-  <div class="table-title-block">
-    <div class="hcell tcell margin-8">
-      @!component('components.expandAll')
+  <div class="table-outter">
+    <div class="table-title-block">
+      <div class="hcell tcell margin-8">
+        @!component('components.expandAll')
+      </div>
+      <div class="hcell tcell margin-8">Unit Code</div>
+      <div class="hcell tcell margin-8">Semester</div>
+      <div class="hcell tcell margin-8">Estimated Enrolments</div>
+      <div class="hcell tcell margin-8">School Share</div>
+      <div class="hcell tcell margin-8">Total Allocated Fraction</div>
+      <div class="hcell tcell margin-8">Status</div>
     </div>
-    <div class="hcell tcell margin-8">Unit Code</div>
-    <div class="hcell tcell margin-8">Semester</div>
-    <div class="hcell tcell margin-8">Estimated Enrolments</div>
-    <div class="hcell tcell margin-8">School Share</div>
-    <div class="hcell tcell margin-8">Total Allocated Fraction</div>
-    <div class="hcell tcell margin-8">Status</div>
   </div>
- </div>
+</div>
+  {{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
+  @each(offering in offerings)
+  <div>
+  <div class="table-outter">
+    <div class="table-static">
+      <div class="text-align-center margin-8 tcell" style="padding:0px 4px"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="margin-8 tcell">{{ offering.code }}</div>
+      <div class="margin-8 tcell">{{ offering.semester }}</div>
+      <div class="margin-8 tcell">{{ offering.estimatedEnrolments }}</div>
+      <div class="margin-8 tcell">{{ offering.schoolShare }}</div>
+      <div class="margin-8 tcell">{{ offering.aggTotalFraction }}</div>
+
+      @if(offering.aggTotalFraction <= 0)
+      <div class="tcell margin-8">
+        <div class="table-section--stat stat-red"></div>
+      </div>
+      @elseif(offering.aggTotalFraction >= 1)
+      <div class="tcell margin-8">
+        <div class="table-section--stat stat-green"></div>
+      </div>
+      @else
+      <div class="tcell margin-8">
+        <div class="table-section--stat stat-yellow"></div>
+      </div>
+      @endif
+      
+  </div>
+
+    @if(aggAllocations[offering.id])
+    <div class="table-collapse">
+    <table style="width:100%; border-collapse:collapse;">
+      <tr>
+        <th class="margin-8 table-cell">Academic ID</th>
+        <th class="margin-8 table-cell">Fraction Allocated</th>
+        <th class="margin-8 table-cell">Unit Coordinator</th>
+        <th class="margin-8 table-cell">Action</th>
+      </tr>
+      @each(allocation in aggAllocations[offering.id])
+      <tr class="table-row">
+        <td class="margin-8 table-cell">{{ allocation.academicId }}</td>
+        <td class="margin-8 table-cell">{{ allocation.fractionAllocated }}</td>
+        <td class="margin-8 table-cell">{{ allocation.unitCoordinator }}</td>
+        <td class="margin-8 table-cell">
+          <div style="display:inline;">
+            @!component('components.editallocation', csrf=csrf,allocation=allocation, academics = academics)
+          </div>
+          <form action="allocations/deleteallocation" method="POST" style="display:inline;">
+            {{csrf}}
+            <input type="hidden" name="id" value="{{allocation.id}}"></input>
+            <input type="submit"   value = "Delete" class="dd-button--hyperlink margin-0"></input>
+          </form>
+        </td>
+      </tr>
+      @endeach
+    </table>
+  </div>
+  @endif
+  </div>
 </div>
 
-{{--  Iterates through all of the allocations, displaying them in different colours depending on the requested and assigned load  --}}
-
-@each(offering in offerings)
-
-<div class="table-outter">
-  <div class="table-static">
-    <div class="tcell text-align-center margin-8"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
-    <div class="tcell margin-8">{{ offering.code }}</div>
-    <div class="tcell margin-8">{{ offering.semester }}</div>
-    <div class="tcell margin-8">{{ offering.estimatedEnrolments }}</div>
-    <div class="tcell margin-8">{{ offering.schoolShare }}</div>
-    <div class="tcell margin-8">{{ aggTotalFractions[offering.id-1] }}</div>
-
-    @if(aggTotalFractions[offering.id-1] <= 0)
-    <div class="tcell margin-8">
-      <div class="table-section--stat stat-red"></div>
+  {{--  if theres no allocations, display a warning  --}}
+  @else
+  <section class="hero is-danger">
+    <div class="hero-body">
+      <p class="title">
+        No Results
+      </p>
+      <p class="subtitle">
+        Please add an allocation or import spreadsheet
+      </p>
     </div>
-    @elseif(aggTotalFractions[offering.id-1] >= 1)
-    <div class="tcell margin-8">
-      <div class="table-section--stat stat-green"></div>
-    </div>
-    @else
-    <div class="tcell margin-8">
-      <div class="table-section--stat stat-yellow"></div>
-    </div>
-    @endif
- </div>
-
-@if(aggTotalFractions[offering.id-1])
-<div class="table-collapse">
-  <table style="width:100%; border-collapse:collapse;">
-    <tr>
-      <th class="margin-8 table-cell">Academic ID</th>
-      <th class="margin-8 table-cell">Fraction Allocated</th>
-      <th class="margin-8 table-cell">Unit Coordinator</th>
-      <th class="margin-8 table-cell">Action</th>
-    </tr>
-    @each(allocation in aggAllocations[offering.id-1])
-    <tr class="table-row">
-      <td class="margin-8 table-cell">{{ allocation.academicId }}</td>
-      <td class="margin-8 table-cell">{{ allocation.fractionAllocated }}</td>
-      <td class="margin-8 table-cell">{{ allocation.unitCoordinator }}</td>
-      <td class="margin-8 table-cell">
-        <div style="display:inline;">
-          @!component('components.editallocation', csrf=csrf,allocation=allocation, academics = academics)
-        </div>
-        <form action="allocations/deleteallocation" method="POST" style="display:inline;">
-          {{csrf}}
-          <input type="hidden" name="id" value="{{allocation.id}}">
-          <input type="submit"   value = "Delete" class="dd-button--hyperlink margin-0">
-        </form>
-      </td>
-    </tr> 
-    @endeach
-  </table>
- 
-</div>
-@endif
-{{--
- <div class="table-collapse">
-  <div class="table-collapse--inner">
-    <div class="table-section--medium font-weight-bold">Academic ID</div>
-    <div class="table-section--medium font-weight-bold">Fraction Allocated</div>
-    <div class="table-section--medium font-weight-bold">Unit Coordinator</div>
-    <div class="table-section--medium font-weight-bold">Action</div>
-  </div>
-   @each(allocation in aggAllocations[offering.id-1])
-  <div class="table-collapse--inner">
-    <div class="table-section--medium">{{ allocation.academicId }}</div>
-    <div class="table-section--medium">{{ allocation.fractionAllocated }}</div>
-    <div class="table-section--medium">{{ allocation.unitCoordinator }}</div>
-    <div class="table-section--x-large margin-0" style="display:inline;">
-      @!component('components.editallocation', csrf=csrf,allocation=allocation, academics = academics)
-      <form action="allocations/deleteallocation" method="POST">
-        {{csrf}}
-        <input type="hidden" name="id" value="{{allocation.id}}">
-        <input type="submit"   value = "Delete" class="dd-button--hyperlink margin-0">
-      </form>
-    </div>
-  </div>
+  </section>
   @endeach
-</div>
---}}
-
-</div>
-{{--  if theres no allocations, display a warning  --}}
-@else
-<section class="hero is-danger">
-  <div class="hero-body">
-    <p class="title">
-      No Results
-    </p>
-    <p class="subtitle">
-       Please add an allocation or import spreadsheet
-    </p>
-  </div>
-</section>
-@endeach
 
 @!component('components.tableJS')
-

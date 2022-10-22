@@ -167,23 +167,35 @@ class AllocationController {
 
 
       // Calculating total allocated fraction
-      var aggAllocations = [];
-      var aggTotalFractions = [];
-
-      for (let i = 1; i <= offerings.length; i++) {
-        var entries = await Database.from("allocations").where("id", i);
-        var totalFraction = await Database.from("allocations").where("id", i).sum("fractionAllocated");
-        var totalFractionSum = totalFraction["sum"];
+      for (const offering of offerings) {
+        var totalFraction = await Database.from("allocations").where("id", offering.id).sum("fractionAllocated");
+        var totalFractionSum = totalFraction[0]["sum"];
 
         if (totalFractionSum == null) {
-          aggTotalFractions.push(0);
+          offering.aggTotalFraction = 0;
         }
         else {
-          aggTotalFractions.push(totalFractionSum);
+          offering.aggTotalFraction = totalFractionSum;
         }
-        aggAllocations.push(entries);
 
       }
+
+      //helper function
+      // Accepts the array and key
+      const groupBy = (array, key) => {
+        // Return the end result
+        return array.reduce((result, currentValue) => {
+          // If an array already present for key, push it to the array. Else create an array and push the object
+          (result[currentValue[key]] = result[currentValue[key]] || []).push(
+            currentValue
+          );
+          // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+          return result;
+        }, {}); // empty object is the initial value for result object
+      };
+
+      const aggAllocations = groupBy(allocations, "id");
+
 
       // Filtering total allocated fraction
       if (minTotal) {
@@ -219,15 +231,7 @@ class AllocationController {
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-      console.log(units.length);
-      console.log(offerings.length);
-      console.log(aggAllocations.length);
-      console.log(aggTotalFractions.length);
-
-      console.log(semestersInput);
-      console.log(subjectAreaGroupsInput);
-      console.log(allocations);
-
+      
 
 
       return view.render("allocations", {
@@ -236,7 +240,6 @@ class AllocationController {
         allocations: allocations,
         offerings: offerings,
         aggAllocations: aggAllocations,
-        aggTotalFractions: aggTotalFractions,
         subjectAreaGroups: subjectAreaGroups,
         semesters: semesters
       });
