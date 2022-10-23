@@ -12,7 +12,29 @@
 @if(academics[0])
 
 <div id="Global" class="tabcontent">
- 
+  <table style="width:200%;">
+    <tr>
+    <th class="heading-cell"></th>
+    @each(unit in units)
+    <th class="heading-cell"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}</div></th>
+    @endeach
+    </tr>
+    @each(academic in academics)
+    <tr>
+      <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
+      @each((unit,i) in units)
+        <td class="cell" contenteditable="true">
+          @each((x,i) in global_spread)
+          @if(x.academicId == $parent.$parent.academic.id) 
+            @if(x.unitCode == $parent.unit.code)
+            {{x.fractionAllocated}}
+            @endif
+          @endif
+          @endeach
+        </td>
+      @endeach
+      @endeach   
+  </table>
 </div>
 
 <div id="Academics" class="tabcontent">
@@ -20,7 +42,7 @@
     <tr>
       <td class="heading-cell" style="width:1%;"></td>
       @each((academic, i) in academics)
-        <th class="heading-cell" contenteditable="true"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
+        <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
       @endeach
     </tr>
     <tr>

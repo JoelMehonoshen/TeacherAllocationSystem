@@ -19,13 +19,21 @@ class spreadsheetViewController {
           const allocations = await Database.from("allocations")
           const offerings = await Database.from("offerings")
           const preferences = await Database.from("preferences")
+          const global_spread = await Database
+          .from("academics")
+          .leftJoin("allocations",'academics.id','=','allocations.academicId')
+          .leftJoin("offerings",'allocations.id','=','offerings.id')
+          .select("academics.id AS academicId")
+          .select("allocations.fractionAllocated")
+          .select("offerings.code AS unitCode")
 
           return view.render("spreadsheetView", {
             academics: academics,
             units: units,
             allocations: allocations,
             offerings: offerings,
-            preferences: preferences
+            preferences: preferences,
+            global_spread:global_spread
 
           });
     

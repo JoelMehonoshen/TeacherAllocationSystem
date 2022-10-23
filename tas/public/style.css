@@ -643,6 +643,8 @@ table td {
     display: none;
     padding: 0px;
     padding-bottom:40px;
+    overflow-x: scroll;
+    height: 96vh;
   }
 
 /* || END */
