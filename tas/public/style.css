@@ -602,6 +602,12 @@ table td {
     z-index:0;
 }
 
+.head-fixed{
+    position: relative;
+    background-color: rgb(250, 250, 250);
+    z-index:15;
+}
+
 /* Style the tab */
 .tab {
     overflow: hidden;
@@ -643,7 +649,7 @@ table td {
     display: none;
     padding: 0px;
     padding-bottom:40px;
-    overflow-x: scroll;
+    overflow: scroll;
     height: 96vh;
   }
 
