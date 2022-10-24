@@ -61,7 +61,7 @@ class AllocationController {
             newOffering.code = request.input("unitCode")
             newOffering.semester = request.input("semester")
 
-            //todo: This could be done dynamically using a popup (have fun next group lol)
+            //todo: This could be done dynamically using a popup
             newOffering.estimatedEnrolments = 0;
             newOffering.schoolShare = 0;
             await newOffering.save()
@@ -231,7 +231,6 @@ class AllocationController {
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-      
 
 
       return view.render("allocations", {

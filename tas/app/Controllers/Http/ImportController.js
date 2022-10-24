@@ -132,11 +132,11 @@ class ImportController {
 
 
     //Must be in this order to delete due to foreign key constraints
-//    await Database.table("offerings").delete();
-//    await Database.table("preferences").delete();
-//    await Database.table("allocations").delete();
-//    await Database.table("units").delete();
-//    await Database.table("academics").delete();
+    await Database.table("allocations").delete();
+    await Database.table("offerings").delete();
+    await Database.table("preferences").delete();
+    await Database.table("units").delete();
+    await Database.table("academics").delete();
 
     const AcademicSheet = workbook.worksheets[0];
     const UnitSheet = workbook.worksheets[1];
@@ -236,6 +236,8 @@ class ImportController {
     i++;
     }}
 
+
+
     //must be in this order to ensure foreign keys?
     academicList.forEach((academicImport) => {
     academicImport.save();
@@ -254,6 +256,9 @@ class ImportController {
     preferenceList.forEach((preferenceImport) => {
     preferenceImport.save();
     });
+
+
+
 
 return;
   }}
