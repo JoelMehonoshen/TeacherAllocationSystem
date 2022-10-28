@@ -16,14 +16,6 @@ npm i -g @adonisjs/cli
 npm install dependencies 
 ```
 
-
-## Usage
-
-### Run the app:
-```bash
-adonis serve --dev
-```
-
 ## Database
 
 ### Install docker and docker-compose:
@@ -46,7 +38,17 @@ adonis migration:run
 ```
 
 
-### Don't need below commands for installation
+### Run the app:
+```bash
+adonis serve --dev
+```
+
+
+### Installation complete - http://localhost:3000/
+
+
+
+### EXTRA COMMANDS
 ### Refresh Data
 ```bash
 adonis migration:refresh
