@@ -83,6 +83,52 @@ class AllocationController {
     }
   }
 
+  // Handle the action after pressing Reset button in Allocations
+  async reset({ request, view }) {
+    try {
+      // const searchbar = request.input("searchbar")
+      const academics = await Database.from("academics");
+      const units = await Database.from("units").where("code");
+      const allocations = await Database.from("allocations");
+      const offerings = await Database.from("offerings").where("code");
+
+      // Obtain filtering options (Subject Area Group)
+      let subjectAreaGroups = [];
+      units.filter(unit => {
+        if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
+          subjectAreaGroups.push(unit.subjectAreaGroup);
+        }
+      });
+      subjectAreaGroups.sort();
+
+       // Obtain filtering options (Semester)
+       let semesters = [];
+       offerings.filter(offering => {
+         if (!semesters.includes(offering.semester)) {
+           semesters.push(offering.semester);
+         }
+       });
+       semesters.sort();
+
+      const aggAllocations = groupBy(allocations, "id");
+
+      return view.render('allocations', {
+        academics: academics,
+        units: units,
+        allocations: allocations,
+        offerings: offerings,
+        aggAllocations: aggAllocations,
+        subjectAreaGroups: subjectAreaGroups,
+        tickedCheckBoxes1: [],
+        semesters: semesters,
+        tickedCheckBoxes2: []
+      });
+
+    } catch (error) {
+      Logger.error(`Reset filters of Allocation (${error})`);
+    }
+  }
+
   async render({ view, request }) {
     try {
 
@@ -108,7 +154,7 @@ class AllocationController {
         .where("code", "ilike", "%" + searchbar + "%");
       let allocations = await Database.from("allocations");
 
-      // Obtain filtering option -> subjectAreaGroup
+      // Obtain filtering options (Subject Area Group)
       let subjectAreaGroups = [];
       units.filter(unit => {
         if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
@@ -118,7 +164,15 @@ class AllocationController {
       subjectAreaGroups.sort();
 
       let subjectAreaGroupsInput = [];
+      let tickedCheckBoxes1 = []
       for (const group of subjectAreaGroups) {
+        
+        // Tick certain checkboxes depending on if there are parameters related to Subject Area Group in URL 
+        const isTicked = request.input(group)
+        if (isTicked) {
+          tickedCheckBoxes1.push(group)
+        }
+
         subjectAreaGroupsInput.push(request.input(group));
       }
 
@@ -133,7 +187,7 @@ class AllocationController {
       offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
 
 
-      // Obtain filtering option -> semester
+      // Obtain filtering options (Semester)
       let semesters = [];
       offerings.filter(offering => {
         if (!semesters.includes(offering.semester)) {
@@ -141,9 +195,17 @@ class AllocationController {
         }
       });
       semesters.sort();
-
+      
       let semestersInput = [];
+      let tickedCheckBoxes2 = []
       for (const sem of semesters) {
+
+        // Tick certain checkboxes depending on if there are parameters related to Subject Area Group in URL 
+        const isTicked = request.input(sem)
+        if (isTicked) {
+          tickedCheckBoxes2.push(sem)
+        }
+
         semestersInput.push(request.input(sem));
       }
 
@@ -162,9 +224,6 @@ class AllocationController {
       // Filtering schoolShare
       if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
       if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
-
-
-
 
       // Calculating total allocated fraction
       for (const offering of offerings) {
@@ -196,7 +255,6 @@ class AllocationController {
 
       const aggAllocations = groupBy(allocations, "id");
 
-
       // Filtering total allocated fraction
       if (minTotal) {
         for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
@@ -217,8 +275,6 @@ class AllocationController {
       reducedUnitCodes = offerings.map(offering => offering.code);
       units = units.filter(unit => reducedUnitCodes.includes(unit.code));
 
-
-
       // Sorting
       if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
       if (sortOption == "estimatedEnrolments") { offerings.sort((a, b) => a.estimatedEnrolments - b.estimatedEnrolments); }
@@ -231,7 +287,8 @@ class AllocationController {
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-
+      console.log("TickedCheckBoxes1: %s %s", tickedCheckBoxes1, tickedCheckBoxes1.length);
+      console.log("TickedCheckBoxes2: %s %s", tickedCheckBoxes2, tickedCheckBoxes2.length);
 
       return view.render("allocations", {
         academics: academics,
@@ -240,7 +297,9 @@ class AllocationController {
         offerings: offerings,
         aggAllocations: aggAllocations,
         subjectAreaGroups: subjectAreaGroups,
-        semesters: semesters
+        tickedCheckBoxes1: tickedCheckBoxes1,
+        semesters: semesters,
+        tickedCheckBoxes2: tickedCheckBoxes2
       });
 
     } catch (error) {
