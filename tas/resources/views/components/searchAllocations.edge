@@ -12,7 +12,7 @@
             <p class="control">
               <div class="">
                 <div class="searchbar-button-container">
-                  <button class="searchbar-button" type="submit">
+                  <button class="searchbar-button" type="submit" href="{{ route }}">
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -31,7 +31,7 @@
             </div>
 
             <p class="has-addons">
-              <button class="searchbar-clear-button" href="allocations">
+              <button class="searchbar-clear-button" href="{{ reset }}">
                 <i class="fa fa-undo" aria-hidden="true"></i>Reset
               </button>
             </p>
@@ -54,9 +54,17 @@
             </p>
             <div class="display:flex;" style="height:70px; overflow-y: scroll;">
               @each(group in subjectAreaGroups)
-              <div class="input-group-prepend">
-                <input class="sort-filter-input" type="checkbox" checked="" name="{{ group }}">{{ group }}</input>
-              </div>
+
+                {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes1  --}}
+                @if(tickedCheckBoxes1.length > 0 && group.includes(tickedCheckBoxes1))
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ group }}" checked>{{ group }}</input>
+                  </div>
+                @else
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ group }}">{{ group }}</input>
+                  </div>
+                @endif
               @endeach
             </div>
           </div>
@@ -67,9 +75,16 @@
             </p>
             <div class="display:flex;" style="height:70px; overflow-y: scroll;">
               @each(sem in semesters)
-              <div class="input-group-prepend">
-                <input class="sort-filter-input" type="checkbox" checked="" name="{{ sem }}">{{ sem }}</input>
-              </div>
+              {{--  Check if at least 1 checkbox is ticked and certain checkboxes are included in tickedCheckBoxes2  --}}
+                @if(tickedCheckBoxes2.length > 0 && sem.includes(tickedCheckBoxes2))
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ sem }}" checked>{{ sem }}</input>
+                  </div>
+                @else
+                  <div class="input-group-prepend">
+                    <input class="sort-filter-input" type="checkbox" name="{{ sem }}">{{ sem }}</input>
+                  </div>
+                @endif
               @endeach
             </div>
           </div>
