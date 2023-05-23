@@ -23,7 +23,6 @@
 
 
         @!component('components.searchAllocations', title="Find allocation (unit code)...", csrf=csrfField(), route=route('AllocationController.render'), subjectAreaGroups=subjectAreaGroups, semesters=semesters, academics=academics, units=units, allocations=allocations, offerings=offerings, aggAllocations=aggAllocations, aggTotalFractions=aggTotalFractions)
-        Returned {{offerings.length}} allocations
         <div>
 
           {{-- Display Allocations --}}
