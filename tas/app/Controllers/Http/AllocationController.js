@@ -83,52 +83,6 @@ class AllocationController {
     }
   }
 
-  // Handle the action after pressing Reset button in Allocations
-  async reset({ request, view }) {
-    try {
-      // const searchbar = request.input("searchbar")
-      const academics = await Database.from("academics");
-      const units = await Database.from("units").where("code");
-      const allocations = await Database.from("allocations");
-      const offerings = await Database.from("offerings").where("code");
-
-      // Obtain filtering options (Subject Area Group)
-      let subjectAreaGroups = [];
-      units.filter(unit => {
-        if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
-          subjectAreaGroups.push(unit.subjectAreaGroup);
-        }
-      });
-      subjectAreaGroups.sort();
-
-       // Obtain filtering options (Semester)
-       let semesters = [];
-       offerings.filter(offering => {
-         if (!semesters.includes(offering.semester)) {
-           semesters.push(offering.semester);
-         }
-       });
-       semesters.sort();
-
-      const aggAllocations = groupBy(allocations, "id");
-
-      return view.render('allocations', {
-        academics: academics,
-        units: units,
-        allocations: allocations,
-        offerings: offerings,
-        aggAllocations: aggAllocations,
-        subjectAreaGroups: subjectAreaGroups,
-        tickedCheckBoxes1: [],
-        semesters: semesters,
-        tickedCheckBoxes2: []
-      });
-
-    } catch (error) {
-      Logger.error(`Reset filters of Allocation (${error})`);
-    }
-  }
-
   async render({ view, request }) {
     try {
 
