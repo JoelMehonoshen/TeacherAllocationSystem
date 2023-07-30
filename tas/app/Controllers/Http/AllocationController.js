@@ -210,20 +210,8 @@ class AllocationController {
       const aggAllocations = groupBy(allocations, "id");
 
       // Filtering total allocated fraction
-      if (minTotal) {
-        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-          if (!(aggTotalFractions[i] >= minTotal)) {
-            offerings.splice(i, 1);
-          }
-        }
-      }
-      if (maxTotal) {
-        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-          if (!(aggTotalFractions[i] <= maxTotal)) {
-            offerings.splice(i, 1);
-          }
-        }
-      }
+      if (minTotal) { offerings = offerings.filter(offering => offering.aggTotalFraction >= minTotal); }
+      if (maxTotal) { offerings = offerings.filter(offering => offering.aggTotalFraction <= maxTotal); }
 
       // Filtering out the same units in 'offerings' array as 'units' array
       reducedUnitCodes = offerings.map(offering => offering.code);
@@ -241,9 +229,6 @@ class AllocationController {
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-      console.log("TickedCheckBoxes1: %s %s", tickedCheckBoxes1, tickedCheckBoxes1.length);
-      console.log("TickedCheckBoxes2: %s %s", tickedCheckBoxes2, tickedCheckBoxes2.length);
-
       return view.render("allocations", {
         academics: academics,
         units: units,
@@ -253,7 +238,13 @@ class AllocationController {
         subjectAreaGroups: subjectAreaGroups,
         tickedCheckBoxes1: tickedCheckBoxes1,
         semesters: semesters,
-        tickedCheckBoxes2: tickedCheckBoxes2
+        tickedCheckBoxes2: tickedCheckBoxes2,
+        minEnrols: minEnrols,
+        maxEnrols: maxEnrols,
+        minShare: minShare,
+        maxShare: maxShare,
+        minTotal: minTotal,
+        maxTotal: maxTotal
       });
 
     } catch (error) {
