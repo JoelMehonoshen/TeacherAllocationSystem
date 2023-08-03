@@ -12,7 +12,7 @@ class AllocationController {
 
   async deleteallocation({ response, request }) {
     try {
-      await Database.from("allocations").where("id", request.input("id")).delete()
+      await Database.from("allocations").where("academicId", request.input("academicId")).delete()
     }
     catch (error) {
       Logger.error('Delete Allocation', error);
@@ -228,6 +228,9 @@ class AllocationController {
         indices.sort((a, b) => a.value - b.value);
         offerings = indices.map(offering => (offerings[offering.index]));
       }
+
+      let allocations2 = await Database.from("allocations");
+      console.log(allocations2)
 
       return view.render("allocations", {
         academics: academics,
