@@ -62,6 +62,11 @@
           <div class="input-group">
             <input class="text-input" type="password" name="password" placeholder="Password">
           </div>
+          @if(flashMessage('IncorrectDetails'))
+          <section class="notification is-danger is-small is-light small-font-size">
+            {{ flashMessage('IncorrectDetails')}}
+          </section>
+          @endif
           <div class="input-group">
             <input class="dd-button--round button-blue-fill full-width" type="submit" value="Submit">
           </div>
