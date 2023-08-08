@@ -112,6 +112,11 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
+// Teaching form page
+Route.get('/preference_form', ({view}) => {
+    return view.render('teachingForm')
+})
+
 // error pages
 Route.get('/401', ({view }) => {
     return view.render('401')

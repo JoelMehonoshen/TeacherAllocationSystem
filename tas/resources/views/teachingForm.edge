@@ -1,0 +1,44 @@
+@!component('components.head', title="Teaching Allocation Preferences")
+
+<body>
+  <div class="container">
+    <h1 class="title">Teaching Allocation Preferences</h1>
+
+    <form method="POST" action="{{ route('teachingForm.submit') }}">
+      {{ csrfField() }}
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="id">ID:</label>
+      <input type="text" id="id" name="id" required>
+
+      <h2>Classes:</h2>
+
+      <div class="items">
+        @each(item in items)
+          <div class="item">
+            <span class="item-name">{{ item.name }}</span>
+            <div class="item-ratings">
+              <span>Experience:</span>
+              <select name="experience[{{ item.name }}]">
+                @for(i in 1..5)
+                  <option value="{{ i }}">{{ i }}</option>
+                @endfor
+              </select>
+              <span>Willingness:</span>
+              <select name="willingness[{{ item.name }}]">
+                @for(i in 1..5)
+                  <option value="{{ i }}">{{ i }}</option>
+                @endfor
+              </select>
+            </div>
+          </div>
+        @endeach
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
