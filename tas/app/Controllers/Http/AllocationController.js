@@ -95,6 +95,9 @@ class AllocationController {
       let maxShare = request.input("maxShare");
       let minTotal = request.input("minTotal");
       let maxTotal = request.input("maxTotal");
+      const sortOptions = [["code", "Unit code"], ["estimatedEnrolments", "Lowest estimated enrolments"], ["schoolShare", "Lowest school share"], ["totalFrac", "Lowest total fraction"]];
+      // const sortOptions = ["code", "estimatedEnrolments", "schoolShare", "totalFrac"];
+
 
       // If no user input, use default sort + filter options
       if (!searchbar) { searchbar = ""; }
@@ -247,7 +250,9 @@ class AllocationController {
         minShare: minShare,
         maxShare: maxShare,
         minTotal: minTotal,
-        maxTotal: maxTotal
+        maxTotal: maxTotal,
+        sortOption: sortOption,
+        sortOptions: sortOptions
       });
 
     } catch (error) {

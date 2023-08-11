@@ -19,12 +19,15 @@
               </div>
             </p>
             <div>
-              <select class="sort-filter-input" style="height:40px" name="sortOption">
-                <option value="" disabled="" selected="">Sort by...</option>
-                <option value="code">Unit code</option>
-                <option value="estimatedEnrolments">Lowest estimated enrolments</option>
-                <option value="schoolShare">Lowest school share</option>
-                <option value="totalFrac">Lowest total fraction</option>
+              <select class="sort-filter-input"style="height:40px" name="sortOption">
+                <option selected disabled value="">Sort by ..</option>
+                @each(option in sortOptions)
+                    @if(sortOption == option[0])
+                        <option value="{{option[0]}}" selected >{{option[1]}}</option>
+                    @else 
+                        <option value="{{option[0]}}">{{option[1]}}</option>
+                    @endif
+                @endeach
               </select>
             </div>
             <p class="has-addons">
