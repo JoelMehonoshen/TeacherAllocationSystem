@@ -739,7 +739,7 @@ table td {
 /* || TABLE */
 .spreadsheet-container {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: auto auto auto;
 }
 
