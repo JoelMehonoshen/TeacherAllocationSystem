@@ -12,32 +12,60 @@
 @if(academics[0])
 
 <div id="Global" class="tabcontent">
-  <table style="width:100%;">
-    <tr>
-      <th class="heading-cell"></th>
-      @each(academic in academics)
-        <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
-      @endeach
-      </tr>
-    @each(unit in units)
-    <tr>
-      <th class="heading-cell" style="width:5%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}</div></th>
-      @each((academic,i) in academics)
-        <td class="cell" contenteditable="true">
-          @each((x,i) in global_spread)
-          @if(x.academicId == $parent.academic.id) 
-            @if(x.unitCode == $parent.$parent.unit.code)
-            {{x.fractionAllocated}}
-            @endif
-          @endif
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+      <table style="100%">
+        <tr>
+          <th class="heading-cell"></th>
+          @each(academic in academics)
+            <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
           @endeach
-        </td>
-      @endeach
-      @endeach   
-  </table>
+          </tr>
+        @each(unit in units)
+        <tr>
+          <th class="heading-cell" style="width:5%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}</div></th>
+          @each((academic,i) in academics)
+            <td class="cell" contenteditable="true">
+              @each((x,i) in global_spread)
+              @if(x.academicId == $parent.academic.id) 
+                @if(x.unitCode == $parent.$parent.unit.code)
+                {{x.fractionAllocated}}
+                @endif
+              @endif
+              @endeach
+            </td>
+          @endeach
+          @endeach   
+      </table>
+    </div>
+  </div>
 </div>
 
 <div id="Academics" class="tabcontent">
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+    </div>
+  </div>
   <table style="width:100%;">
     <tr>
       <td class="heading-cell" style="width:1%;"></td>
@@ -61,91 +89,147 @@
 </div>  
 
 <div id="Units" class="tabcontent">
-  <table style="width:100%;">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">Code</th>
-      <th class="heading-cell">SubjectAreaGroup</th>
-    </tr>
-    @each((unit,i) in units)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true" style="width:10%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}<div></td>
-      <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
-    </tr>
-    @endeach
-  </table> 
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+      <table style="width:100%;">
+        <tr>
+          <th class="heading-cell" style="width:1%;"></th>
+          <th class="heading-cell">Code</th>
+          <th class="heading-cell">SubjectAreaGroup</th>
+        </tr>
+        @each((unit,i) in units)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+          <td class="cell" contenteditable="true" style="width:10%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}<div></td>
+          <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
+        </tr>
+        @endeach
+      </table> 
+    </div>
+  </div>
 </div>
 
 
 
 <div id="Allocations" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">AcademicId</th>
-      <th class="heading-cell">UnitOfferingId</th>
-      <th class="heading-cell">FractionAllocated</th>
-      <th class="heading-cell">UnitCoordinator</th>
-    </tr>
-    @each((allocation,i) in allocations)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{allocation.academicId}}</td>
-      <td class="cell" contenteditable="true">{{allocation.id}}</td>
-      <td class="cell" contenteditable="true">{{allocation.fractionAllocated}}</td>
-      <td class="cell" contenteditable="true">{{allocation.unitCoordinator}}</td>
-    </tr>
-    @endeach
-  </table> 
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+      <table style="width:100%">
+        <tr>
+          <th class="heading-cell" style="width:1%;"></th>
+          <th class="heading-cell">AcademicId</th>
+          <th class="heading-cell">UnitOfferingId</th>
+          <th class="heading-cell">FractionAllocated</th>
+          <th class="heading-cell">UnitCoordinator</th>
+        </tr>
+        @each((allocation,i) in allocations)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+          <td class="cell" contenteditable="true">{{allocation.academicId}}</td>
+          <td class="cell" contenteditable="true">{{allocation.id}}</td>
+          <td class="cell" contenteditable="true">{{allocation.fractionAllocated}}</td>
+          <td class="cell" contenteditable="true">{{allocation.unitCoordinator}}</td>
+        </tr>
+        @endeach
+      </table> 
+    </div>
+  </div>
 </div>
 
 
 
 <div id="UnitOfferings" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">UnitOfferringId</th>
-      <th class="heading-cell">UnitCode</th>
-      <th class="heading-cell">Semester</th>
-      <th class="heading-cell">EstimatedEnrolments</th>
-      <th class="heading-cell">SchoolShare</th>
-    </tr>
-    @each((offering,i) in offerings)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{offering.id}}</td>
-      <td class="cell" contenteditable="true">{{offering.code}}</td>
-      <td class="cell" contenteditable="true">{{offering.semester}}</td>
-      <td class="cell" contenteditable="true">{{offering.estimatedEnrolments}}</td>
-      <td class="cell" contenteditable="true">{{offering.schoolShare}}</td>
-    </tr>
-    @endeach
-  </table> 
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+      <table style="width:100%">
+        <tr>
+          <th class="heading-cell" style="width:1%;"></th>
+          <th class="heading-cell">UnitOfferringId</th>
+          <th class="heading-cell">UnitCode</th>
+          <th class="heading-cell">Semester</th>
+          <th class="heading-cell">EstimatedEnrolments</th>
+          <th class="heading-cell">SchoolShare</th>
+        </tr>
+        @each((offering,i) in offerings)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+          <td class="cell" contenteditable="true">{{offering.id}}</td>
+          <td class="cell" contenteditable="true">{{offering.code}}</td>
+          <td class="cell" contenteditable="true">{{offering.semester}}</td>
+          <td class="cell" contenteditable="true">{{offering.estimatedEnrolments}}</td>
+          <td class="cell" contenteditable="true">{{offering.schoolShare}}</td>
+        </tr>
+        @endeach
+      </table> 
+    </div>
+  </div>
 </div>
 
 
 
 <div id="Preferences" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">AcademicId</th>
-      <th class="heading-cell">UnitCode</th>
-      <th class="heading-cell">DesireToTeach</th>
-      <th class="heading-cell">AbilityToTeach</th>
-    </tr>
-    @each((preference,i) in preferences)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{preference.id}}</td>
-      <td class="cell" contenteditable="true">{{preference.code}}</td>
-      <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
-      <td class="cell" contenteditable="true">{{preference.abilityToTeach}}</td>
-    </tr>
-    @endeach
-  </table> 
+  <div class="spreadsheet-container">
+    <div class="spreadsheet-title-container">
+      <h1 class="title">Spreadsheet View</h1>
+    </div>
+    <div class="sort-table-container">
+      <select class="sort-table" style="height:40px" name="sortOption">
+        <option value="" disabled="" selected="">Sort by...</option>
+        <option value="code">Unit code</option>
+        <option value="academicsNames">Academics' names</option>
+      </select>
+    </div>
+    <div class="table-layout">
+      <table style="width:100%">
+        <tr>
+          <th class="heading-cell" style="width:1%;"></th>
+          <th class="heading-cell">AcademicId</th>
+          <th class="heading-cell">UnitCode</th>
+          <th class="heading-cell">DesireToTeach</th>
+          <th class="heading-cell">AbilityToTeach</th>
+        </tr>
+        @each((preference,i) in preferences)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+          <td class="cell" contenteditable="true">{{preference.id}}</td>
+          <td class="cell" contenteditable="true">{{preference.code}}</td>
+          <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
+          <td class="cell" contenteditable="true">{{preference.abilityToTeach}}</td>
+        </tr>
+        @endeach
+      </table> 
+    </div>
+  </div>
 </div>
 
 @else
