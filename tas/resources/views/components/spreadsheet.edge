@@ -47,77 +47,74 @@
   </div>
 
   <!-- Academics Table -->
-  <form method="GET" action="{{ route }}">
-    {{csrf}}
-    <div id="Academics" class="tabcontent">
-      <table style="width:100%;">
+  <div id="Academics" class="tabcontent">
+    <table style="width:100%;">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AcademicId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="academicsOption1" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="ascending">Ascending Order</option>
+                <option value="descending">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Name</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="academicsOption2" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="ascending">Ascending Order</option>
+                <option value="descending">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Category</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="academicsOption3" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="ascending">Ascending Order</option>
+                <option value="descending">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>TeachingFraction</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="academicsOption4" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="ascending">Ascending Order</option>
+                <option value="descending">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
+      @each((academic, i) in academics)
         <tr>
-          <th class="heading-cell" style="width:1%;"></th>
-          <th class="heading-cell">
-            <div style="display: flex;">
-              <p>AcademicId</p>
-              <form method="GET" action="{{ route }}">
-                {{csrf}}
-                <select class="filter-cells" name="academicsOption1" onchange="this.form.submit()">
-                  <option value="" disabled="" selected>Sort by...</option>
-                  <option value="ascending">Ascending Order</option>
-                  <option value="descending">Descending Order</option>
-                </select>
-              </form>
-            </div>
-          </th>
-          <th class="heading-cell">
-            <div style="display: flex;">
-              <p>Name</p>
-              <form method="GET" action="{{ route }}">
-                {{csrf}}
-                <select class="filter-cells" name="academicsOption2" onchange="this.form.submit()">
-                  <option value="" disabled="" selected>Sort by...</option>
-                  <option value="ascending">Ascending Order</option>
-                  <option value="descending">Descending Order</option>
-                </select>
-              </form>
-            </div>
-          </th>
-          <th class="heading-cell">
-            <div style="display: flex;">
-              <p>Category</p>
-              <form method="GET" action="{{ route }}">
-                {{csrf}}
-                <select class="filter-cells" name="academicsOption3" onchange="this.form.submit()">
-                  <option value="" disabled="" selected>Sort by...</option>
-                  <option value="ascending">Ascending Order</option>
-                  <option value="descending">Descending Order</option>
-                </select>
-              </form>
-            </div>
-          </th>
-          <th class="heading-cell">
-            <div style="display: flex;">
-              <p>TeachingFraction</p>
-              <form method="GET" action="{{ route }}">
-                {{csrf}}
-                <select class="filter-cells" name="academicsOption4" onchange="this.form.submit()">
-                  <option value="" disabled="" selected>Sort by...</option>
-                  <option value="ascending">Ascending Order</option>
-                  <option value="descending">Descending Order</option>
-                </select>
-              </form>
-            </div>
-          </th>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true" style="width:10%;">{{academic.id}}</td>
+          <td class="cell" contenteditable="true">{{academic.name}}</td>
+          <td class="cell" contenteditable="true">{{academic.category}}</td>
+          <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
         </tr>
-        @each((academic, i) in academics)
-          <tr>
-            <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
-            <td class="cell" contenteditable="true" style="width:10%;">{{academic.id}}</td>
-            <td class="cell" contenteditable="true">{{academic.name}}</td>
-            <td class="cell" contenteditable="true">{{academic.category}}</td>
-            <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
-          </tr>
-        @endeach
-      </table>  
-    </div>  
-  </form>
+      @endeach
+    </table>  
+  </div>  
 
   <!-- Units Table -->
   <div id="Units" class="tabcontent">
