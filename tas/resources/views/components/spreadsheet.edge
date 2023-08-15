@@ -56,10 +56,10 @@
             <p>AcademicId</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="academicsOption1" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="academicsAsc1">Ascending Order</option>
+                <option value="academicsDesc1">Descending Order</option>
               </select>
             </form>
           </div>
@@ -69,10 +69,10 @@
             <p>Name</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="academicsOption2" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="academicsAsc2">Ascending Order</option>
+                <option value="academicsDesc2">Descending Order</option>
               </select>
             </form>
           </div>
@@ -82,10 +82,10 @@
             <p>Category</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="academicsOption3" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="academicsAsc3">Ascending Order</option>
+                <option value="academicsDesc3">Descending Order</option>
               </select>
             </form>
           </div>
@@ -95,10 +95,10 @@
             <p>TeachingFraction</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="academicsOption4" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="academicsAsc4">Ascending Order</option>
+                <option value="academicsDesc4">Descending Order</option>
               </select>
             </form>
           </div>
@@ -126,10 +126,10 @@
             <p>Code</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitsOption1" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitsAsc1">Ascending Order</option>
+                <option value="unitsDesc1">Descending Order</option>
               </select>
             </form>
           </div>
@@ -139,10 +139,10 @@
             <p>Name</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitsOption2" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitsAsc2">Ascending Order</option>
+                <option value="unitsDesc2">Descending Order</option>
               </select>
             </form>
           </div>
@@ -152,10 +152,10 @@
             <p>SubjectAreaGroup</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitsOption3" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitsAsc3">Ascending Order</option>
+                <option value="unitsDesc3">Descending Order</option>
               </select>
             </form>
           </div>
@@ -182,36 +182,36 @@
             <p>AcademicId</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="allocationsOption1" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="allocationsAsc1">Ascending Order</option>
+                <option value="allocationsDesc1">Descending Order</option>
               </select>
             </form>
           </div>
         </th>
         <th class="heading-cell">
           <div style="display: flex;">
-            <p>UnitOfferringId</p>
+            <p>UnitOfferingId</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="allocationsOption2" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="allocationsAsc2">Ascending Order</option>
+                <option value="allocationsDesc2">Descending Order</option>
               </select>
             </form>
           </div>
         </th>
         <th class="heading-cell">
           <div style="display: flex;">
-            <p>fractionAllocated</p>
+            <p>FractionAllocated</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="allocationsOption3" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="allocationsAsc3">Ascending Order</option>
+                <option value="allocationsDesc3">Descending Order</option>
               </select>
             </form>
           </div>
@@ -221,10 +221,10 @@
             <p>UnitCoordinator</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="allocationsOption4" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="allocationsAsc4">Ascending Order</option>
+                <option value="allocationsDesc4">Descending Order</option>
               </select>
             </form>
           </div>
@@ -252,10 +252,10 @@
             <p>UnitOfferringId</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitOfferingsOption1" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitOfferingsAsc1">Ascending Order</option>
+                <option value="unitOfferingsDesc1">Descending Order</option>
               </select>
             </form>
           </div>
@@ -265,10 +265,10 @@
             <p>UnitCode</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitOfferingsOption2" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitOfferingsAsc2">Ascending Order</option>
+                <option value="unitOfferingsDesc2">Descending Order</option>
               </select>
             </form>
           </div>
@@ -278,10 +278,10 @@
             <p>Semester</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitOfferingsOption3" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitOfferingsAsc3">Ascending Order</option>
+                <option value="unitOfferingsDesc3">Descending Order</option>
               </select>
             </form>
           </div>
@@ -291,10 +291,10 @@
             <p>EstimatedEnrolments</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitOfferingsOption4" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitOfferingsAsc4">Ascending Order</option>
+                <option value="unitOfferingsDesc4">Descending Order</option>
               </select>
             </form>
           </div>
@@ -304,10 +304,10 @@
             <p>SchoolShare</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="unitOfferingsOption5" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="unitOfferingsAsc5">Ascending Order</option>
+                <option value="unitOfferingsDesc5">Descending Order</option>
               </select>
             </form>
           </div>
@@ -336,10 +336,10 @@
             <p>AcademicId</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="preferencesOption1" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="preferencesAsc1">Ascending Order</option>
+                <option value="preferencesDesc1">Descending Order</option>
               </select>
             </form>
           </div>
@@ -349,23 +349,23 @@
             <p>UnitCode</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="preferencesOption2" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="preferencesAsc2">Ascending Order</option>
+                <option value="preferencesDesc2">Descending Order</option>
               </select>
             </form>
           </div>
         </th>
         <th class="heading-cell">
           <div style="display: flex;">
-            <p>desireToTeach</p>
+            <p>DesireToTeach</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="preferencesOption3" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="preferencesAsc3">Ascending Order</option>
+                <option value="preferencesDesc3">Descending Order</option>
               </select>
             </form>
           </div>
@@ -375,10 +375,10 @@
             <p>AbilityToTeach</p>
             <form method="GET" action="{{ route }}">
               {{csrf}}
-              <select class="filter-cells" name="preferencesOption4" onchange="this.form.submit()">
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
-                <option value="ascending">Ascending Order</option>
-                <option value="descending">Descending Order</option>
+                <option value="preferencesAsc4">Ascending Order</option>
+                <option value="preferencesDesc4">Descending Order</option>
               </select>
             </form>
           </div>
@@ -386,7 +386,7 @@
       </tr>
       @each((preference,i) in preferences)
         <tr>
-          <td class="heading-cell" style="width:1%;">{{i+1}}</td>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
           <td class="cell" contenteditable="true">{{preference.id}}</td>
           <td class="cell" contenteditable="true">{{preference.code}}</td>
           <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
