@@ -8,7 +8,7 @@ const Unit = use("App/Models/Unit");
 const Allocation = use("App/Models/Allocation");
 const Database = use("Database");
 
-class spreadsheetViewController {
+class SpreadsheetViewController {
   async render({ view, request }) {
     try{
       const academics = await Database.from("academics")
@@ -39,4 +39,4 @@ class spreadsheetViewController {
   }
  }
 
-module.exports = spreadsheetViewController;
+module.exports = SpreadsheetViewController;
