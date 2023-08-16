@@ -23,7 +23,10 @@ class SpreadsheetViewController {
 
       // Obtain a URL parameter for sorting a table
       const sortOption = request.input("sortOption");
-      console.log(preferences);
+
+      // Store the values of a selected button and a name of a table to display at first
+      let selectedButton = "global-button";
+      let selectedTableName = "Global";
 
       // Sort a table in ascending order based on a non-numerical column
       const sortAscOrder1 = (table, columnName) => {
@@ -124,131 +127,211 @@ class SpreadsheetViewController {
           // For Academics Table
           case "academicsAsc1":
             academics = sortAscOrder1(academics, "id");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsDesc1":
             academics = sortDescOrder1(academics, "id");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsAsc2":
             academics = sortAscOrder1(academics, "name");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsDesc2":
             academics = sortDescOrder1(academics, "name");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsAsc3":
             academics = sortAscOrder1(academics, "category");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsDesc3":
             academics = sortDescOrder1(academics, "category");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsAsc4":
             academics = sortAscOrder2(academics, "teachingFraction");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
           case "academicsDesc4":
             academics = sortDescOrder2(academics, "teachingFraction");
+            selectedButton = "academics-button";
+            selectedTableName = "Academics";
             break;
 
           // For Units Table
           case "unitsAsc1":
             units = sortAscOrder1(units, "code");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
           case "unitsDesc1":
             units = sortDescOrder1(units, "code");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
           case "unitsAsc2":
             units = sortAscOrder1(units, "name");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
           case "unitsDesc2":
             units = sortDescOrder1(units, "name");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
           case "unitsAsc3":
             units = sortAscOrder1(units, "subjectAreaGroup");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
           case "unitsDesc3":
             units = sortDescOrder1(units, "subjectAreaGroup");
+            selectedButton = "units-button";
+            selectedTableName = "Units";
             break;
 
           // For Allocations Table
           case "allocationsAsc1":
             allocations = sortAscOrder1(allocations, "academicId");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsDesc1":
             allocations = sortDescOrder1(allocations, "academicId");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsAsc2":
             allocations = sortAscOrder2(allocations, "id");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsDesc2":
             allocations = sortDescOrder2(allocations, "id");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsAsc3":
             allocations = sortAscOrder2(allocations, "fractionAllocated");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsDesc3":
             allocations = sortDescOrder2(allocations, "fractionAllocated");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsAsc4":
             allocations = sortAscOrder1(allocations, "unitCoordinator");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
           case "allocationsDesc4":
             allocations = sortDescOrder1(allocations, "unitCoordinator");
+            selectedButton = "allocations-button";
+            selectedTableName = "Allocations";
             break;
 
           // For UnitOfferings Table
           case "unitOfferingsAsc1":
             offerings = sortAscOrder2(offerings, "id");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc1":
             offerings = sortDescOrder2(offerings, "id");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc2":
             offerings = sortAscOrder1(offerings, "code");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc2":
             offerings = sortDescOrder1(offerings, "code");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc3":
             offerings = sortAscOrder1(offerings, "semester");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc3":
             offerings = sortDescOrder1(offerings, "semester");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc4":
             offerings = sortAscOrder2(offerings, "estimatedEnrolments");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc4":
             offerings = sortDescOrder2(offerings, "estimatedEnrolments");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc5":
             offerings = sortAscOrder2(offerings, "schoolShare");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc5":
             offerings = sortDescOrder2(offerings, "schoolShare");
+            selectedButton = "unitOfferings-button";
+            selectedTableName = "UnitOfferings";
             break;
 
           // For Preferences Table
           case "preferencesAsc1":
             preferences = sortAscOrder1(preferences, "id");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesDesc1":
             preferences = sortDescOrder1(preferences, "id");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesAsc2":
             preferences = sortAscOrder1(preferences, "code");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesDesc2":
             preferences = sortDescOrder1(preferences, "code");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesAsc3":
             preferences = sortAscOrder2(preferences, "desireToTeach");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesDesc3":
             preferences = sortDescOrder2(preferences, "desireToTeach");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesAsc4":
             preferences = sortAscOrder2(preferences, "abilityToTeach");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
           case "preferencesDesc4":
             preferences = sortDescOrder2(preferences, "abilityToTeach");
+            selectedButton = "preferences-button";
+            selectedTableName = "Preferences";
             break;
         }
       }
@@ -260,6 +343,8 @@ class SpreadsheetViewController {
         offerings: offerings,
         preferences: preferences,
         global_spread: global_spread,
+        selectedButton: selectedButton,
+        selectedTableName: selectedTableName,
       });
     } catch (error) {
       Logger.error(error);

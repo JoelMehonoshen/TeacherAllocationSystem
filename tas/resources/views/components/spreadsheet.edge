@@ -1,11 +1,11 @@
 <!-- Tab links -->
 <div class="tab" style="z-index:10;">
-  <button class="tablinks" onclick="openTab(event, 'Global')">Global</button>
-  <button class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
-  <button class="tablinks" onclick="openTab(event, 'Units')">Units</button>
-  <button class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
-  <button class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
-  <button class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
+  <button id="global-button" class="tablinks" onclick="openTab(event, 'Global')">Global</button>
+  <button id="academics-button" class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
+  <button id="units-button" class="tablinks" onclick="openTab(event, 'Units')">Units</button>
+  <button id="allocations-button" class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
+  <button id="unitOfferings-button" class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
+  <button id="preferences-button" class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
 </div>
 
 <!-- Tab content -->
@@ -313,7 +313,7 @@
           </div>
         </th>
       </tr>
-      @each((offering,i) in offerings)
+      @each((offering, i) in offerings)
         <tr>
           <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
           <td class="cell" contenteditable="true">{{offering.id}}</td>
@@ -384,7 +384,7 @@
           </div>
         </th>
       </tr>
-      @each((preference,i) in preferences)
+      @each((preference, i) in preferences)
         <tr>
           <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
           <td class="cell" contenteditable="true">{{preference.id}}</td>
@@ -403,9 +403,11 @@
 
 <script>
   // Change the name of the class "tablinks" and the style of the class "tabcontent"
-  // according to the button pressed
-  document.querySelector(".tablinks").className += " active";
-  document.querySelector(".tabcontent").style.display = "block";
+  // according to the table where a user selected a certain sorting
+  let tablinksButton = document.getElementById("{{selectedButton}}");
+  tablinksButton.classList.add("active");
+  let tabcontentDiv = document.getElementById("{{selectedTableName}}");
+  tabcontentDiv.style.display = "block";
 
   // Open a tab and display a table
   function openTab(evt, tabName) {
