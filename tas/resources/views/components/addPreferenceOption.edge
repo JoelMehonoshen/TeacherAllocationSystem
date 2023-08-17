@@ -1,0 +1,40 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div id="preferenceList" class="modal">
+  <div class="modal-background flex-container flex-center">
+      <div class="modal-card pop-up">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Add Unit</p>
+          <button class="delete" aria-label="close" data-dismiss="modal"></button>
+        </header>
+        <section class="modal-card-body">
+        <form method="POST" action="{{ route('UnitController.addunit') }}">
+            {{csrf}}
+            <div class="field">
+            <label class="label">Unit Code</label>
+                <div class="control">
+                    <input class="input" type="text" name="code" placeholder="Unit Code">
+                </div>
+            </div>
+            <div class="field">
+            <label class="label">Unit Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="name" placeholder="Unit Name">
+                </div>
+            </div>
+            <div class="field">
+            <label class="label">Subject Area Group</label>
+                <div class="control">
+                  <input class="input" type="text" name="subjectAreaGroup" placeholder="Subject Area Group">
+                </div>
+            </div>
+            </section>
+            <footer class="modal-card-foot">
+                <input type="submit" value="Add Unit" class="dd-button--round button-blue-fill margin-8">
+                <button class="dd-button--round button-red-fill margin-8" data-dismiss="modal">Cancel</button>
+            </footer>
+        </form>
+    </div>
+</div>
+</div>

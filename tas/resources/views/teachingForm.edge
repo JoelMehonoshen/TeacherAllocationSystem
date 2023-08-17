@@ -1,7 +1,7 @@
 @!component('components.head', title="Teaching Allocation Preferences")
 
 <body>
-  <div class="content-section">
+    <div class="content-section">
       <div class="home-background flex-container flex-center img-cover">
         <div class="login-card white-transparent-fill">
           <h1 class="title">Teaching Allocation Preferences</h1>
@@ -13,9 +13,11 @@
 
             <label for="id">ID:</label>
             <input type="text" id="id" name="id" required>
-
+            <br/>
             <h2>Classes:</h2>
+            @!component('components.addPreferenceOption', csrf=csrfField())
 
+            <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#preferenceList">+ Add Units</button>
             <div class="items">
               @each(item in items)
                 <div class="item">
@@ -37,13 +39,14 @@
                 </div>
               @endeach
             </div>
-            <button type="submit">Submit</button>
+            <br/>
+            <button type="submit"  class="dd-button--round button-blue-fill">Submit</button>
           </form>
         </div>
       </div>
     </div>
     <div class="container">
   </div>
-  @include('partials.footer') <!-- Currently, this line is bugged, and does not render -->
+  <!-- @include('partials.footer') Currently, this line is bugged, and does not render -->
 </body>
 </html>
