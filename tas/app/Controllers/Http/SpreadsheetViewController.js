@@ -32,7 +32,7 @@ class SpreadsheetViewController {
 
         // Sort an array including only elements of a certain column of a table in ascending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
-        sortedColumnArray.sort();
+        sortedColumnArray.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base'}));
 
         // Sort an original table in ascending order according to the order of "sortedColumnArray"
         sortedColumnArray.map((each) => {
@@ -55,7 +55,7 @@ class SpreadsheetViewController {
 
         // Sort an array including only elements of a certain column of a table in descending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
-        sortedColumnArray.sort().reverse();
+        sortedColumnArray.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base'})).reverse();
 
         // Sort an original table in descending order according to the order of "sortedColumnArray"
         sortedColumnArray.map((each) => {
