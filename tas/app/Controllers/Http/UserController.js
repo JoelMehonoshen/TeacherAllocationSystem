@@ -79,13 +79,18 @@ class UserController {
   /*
     Logs in a user and returns a session token
   */
-  async login({ request, auth, response }) {
+  async login({ request, auth, response, session }) {
     try {
       await auth.attempt(request.input("email"), request.input("password"));
       return response.route("/", true);
     } catch (error) {
+      console.log(error);
+      const message ="Invalid username or password!";
+      console.log(message);
+      session.withErrors(message).flash({ IncorrectDetails: message });
+      console.log("InvalidPassword");
       Logger.error(error);
-      return response.route("/login_error", true);
+      return response.redirect('back');
     }
   }
 

@@ -7,12 +7,12 @@ const Offering = use("App/Models/Offering");
 Database.query();
 
 
+// Update the database with new allocations and academics
 class AllocationController {
-  // update the database with new allocations and academics
 
   async deleteallocation({ response, request }) {
     try {
-      await Database.from("allocations").where("id", request.input("id")).delete()
+      await Database.from("allocations").where("academicId", request.input("academicId")).delete()
     }
     catch (error) {
       Logger.error('Delete Allocation', error);
@@ -42,13 +42,13 @@ class AllocationController {
 
       let offeringEntry = await Database.from("offerings").where("code", request.input("unitCode")).where("semester", request.input("semester"))
 
-      //this if statement prevents a crash if no offering exists for the selected allocation semester
+      // This if statement prevents a crash if no offering exists for the selected allocation semester
       if(offeringEntry.length == 0){
 
             const newOffering = new Offering()
             const offeringLength = await Database.from("offerings").count()
             console.log(offeringLength[0].count)
-            //fills id values of offerings if any have been deleted
+            // Fills id values of offerings if any have been deleted
             let thisOfferingID = 0;
             for (let i = 1; i < offeringLength[0].count; i++) {
             const thisCheck = await Database.from("offerings").where("id", i);
@@ -61,12 +61,12 @@ class AllocationController {
             newOffering.code = request.input("unitCode")
             newOffering.semester = request.input("semester")
 
-            //todo: This could be done dynamically using a popup
+            // Todo: This could be done dynamically using a popup
             newOffering.estimatedEnrolments = 0;
             newOffering.schoolShare = 0;
             await newOffering.save()
 
-            //reallocate offering entry
+            // Reallocate offering entry
             offeringEntry = await Database.from("offerings").where("code", request.input("unitCode")).where("semester", request.input("semester"))
             console.log("Offering "+ request.input("semester") +" doesn't exist for this Unit.")
             console.log("New Offering Created")
@@ -87,29 +87,29 @@ class AllocationController {
     try {
 
       // Obtain the searchbar input + options selected from the sorting + filtering
-      var searchbar = request.input("searchbar");
-      var sortOption = request.input("sortOption");
-      var minEnrols = request.input("minEnrols");
-      var maxEnrols = request.input("maxEnrols");
-      var minShare = request.input("minShare");
-      var maxShare = request.input("maxShare");
-      var minTotal = request.input("minTotal");
-      var maxTotal = request.input("maxTotal");
+      let searchbar = request.input("searchbar");
+      let sortOption = request.input("sortOption");
+      let minEnrols = request.input("minEnrols");
+      let maxEnrols = request.input("maxEnrols");
+      let minShare = request.input("minShare");
+      let maxShare = request.input("maxShare");
+      let minTotal = request.input("minTotal");
+      let maxTotal = request.input("maxTotal");
 
-      // if no user input, use default sort + filter options
+      // If no user input, use default sort + filter options
       if (!searchbar) { searchbar = ""; }
       if (!sortOption) { sortOption = "code"; }
 
       // Obtain from database
-      var units = await Database.from("units")
+      let units = await Database.from("units")
         .where("code", "ilike", "%" + searchbar + "%");
-      var academics = await Database.from("academics");
-      var offerings = await Database.from("offerings")
+      let academics = await Database.from("academics");
+      let offerings = await Database.from("offerings")
         .where("code", "ilike", "%" + searchbar + "%");
-      var allocations = await Database.from("allocations");
+      let allocations = await Database.from("allocations");
 
-      // Obtain filtering option -> subjectAreaGroup
-      var subjectAreaGroups = [];
+      // Obtain filtering options (Subject Area Group)
+      let subjectAreaGroups = [];
       units.filter(unit => {
         if (!subjectAreaGroups.includes(unit.subjectAreaGroup)) {
           subjectAreaGroups.push(unit.subjectAreaGroup);
@@ -117,8 +117,16 @@ class AllocationController {
       });
       subjectAreaGroups.sort();
 
-      var subjectAreaGroupsInput = [];
+      let subjectAreaGroupsInput = [];
+      let tickedCheckBoxes1 = []
       for (const group of subjectAreaGroups) {
+        
+        // Tick certain checkboxes depending on if there are parameters related to Subject Area Group in URL 
+        const isTicked = request.input(group)
+        if (isTicked) {
+          tickedCheckBoxes1.push(group)
+        }
+
         subjectAreaGroupsInput.push(request.input(group));
       }
 
@@ -129,21 +137,29 @@ class AllocationController {
           units = units.filter(unit => unit.subjectAreaGroup != group);
         }
       }
-      var reducedUnitCodes = units.map(unit => unit.code);
+      let reducedUnitCodes = units.map(unit => unit.code);
       offerings = offerings.filter(offering => reducedUnitCodes.includes(offering.code));
 
 
-      // Obtain filtering option -> semester
-      var semesters = [];
+      // Obtain filtering options (Semester)
+      let semesters = [];
       offerings.filter(offering => {
         if (!semesters.includes(offering.semester)) {
           semesters.push(offering.semester);
         }
       });
       semesters.sort();
-
-      var semestersInput = [];
+      
+      let semestersInput = [];
+      let tickedCheckBoxes2 = []
       for (const sem of semesters) {
+
+        // Tick certain checkboxes depending on if there are parameters related to Subject Area Group in URL 
+        const isTicked = request.input(sem)
+        if (isTicked) {
+          tickedCheckBoxes2.push(sem)
+        }
+
         semestersInput.push(request.input(sem));
       }
 
@@ -155,7 +171,7 @@ class AllocationController {
         }
       }
 
-      //// Filtering estimatedEnrolments
+      // Filtering estimatedEnrolments
       if (minEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments >= minEnrols); }
       if (maxEnrols) { offerings = offerings.filter(offering => offering.estimatedEnrolments <= maxEnrols); }
 
@@ -163,13 +179,10 @@ class AllocationController {
       if (minShare) { offerings = offerings.filter(offering => offering.schoolShare >= minShare); }
       if (maxShare) { offerings = offerings.filter(offering => offering.schoolShare <= maxShare); }
 
-
-
-
       // Calculating total allocated fraction
       for (const offering of offerings) {
-        var totalFraction = await Database.from("allocations").where("id", offering.id).sum("fractionAllocated");
-        var totalFractionSum = totalFraction[0]["sum"];
+        let totalFraction = await Database.from("allocations").where("id", offering.id).sum("fractionAllocated");
+        let totalFractionSum = totalFraction[0]["sum"];
 
         if (totalFractionSum == null) {
           offering.aggTotalFraction = 0;
@@ -180,7 +193,7 @@ class AllocationController {
 
       }
 
-      //helper function
+      // Helper function
       // Accepts the array and key
       const groupBy = (array, key) => {
         // Return the end result
@@ -191,47 +204,33 @@ class AllocationController {
           );
           // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
           return result;
-        }, {}); // empty object is the initial value for result object
+        }, {}); // Empty object is the initial value for result object
       };
 
       const aggAllocations = groupBy(allocations, "id");
 
-
       // Filtering total allocated fraction
-      if (minTotal) {
-        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-          if (!(aggTotalFractions[i] >= minTotal)) {
-            offerings.splice(i, 1);
-          }
-        }
-      }
-      if (maxTotal) {
-        for (let i = aggTotalFractions.length - 1; i >= 0; i--) {
-          if (!(aggTotalFractions[i] <= maxTotal)) {
-            offerings.splice(i, 1);
-          }
-        }
-      }
+      if (minTotal) { offerings = offerings.filter(offering => offering.aggTotalFraction >= minTotal); }
+      if (maxTotal) { offerings = offerings.filter(offering => offering.aggTotalFraction <= maxTotal); }
 
       // Filtering out the same units in 'offerings' array as 'units' array
-      var reducedUnitCodes = offerings.map(offering => offering.code);
+      reducedUnitCodes = offerings.map(offering => offering.code);
       units = units.filter(unit => reducedUnitCodes.includes(unit.code));
-
-
 
       // Sorting
       if (sortOption == "code") { offerings.sort((a, b) => a.code - b.code); }
       if (sortOption == "estimatedEnrolments") { offerings.sort((a, b) => a.estimatedEnrolments - b.estimatedEnrolments); }
       if (sortOption == "schoolShare") { offerings.sort((a, b) => a.schoolShare - b.schoolShare); }
       if (sortOption == "totalFrac") {
-        var indices = aggTotalFractions.map(function (el, i) {
+        let indices = aggTotalFractions.map(function (el, i) {
           return { index: i, value: el };
         })
         indices.sort((a, b) => a.value - b.value);
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-
+      let allocations2 = await Database.from("allocations");
+      console.log(allocations2)
 
       return view.render("allocations", {
         academics: academics,
@@ -240,7 +239,15 @@ class AllocationController {
         offerings: offerings,
         aggAllocations: aggAllocations,
         subjectAreaGroups: subjectAreaGroups,
-        semesters: semesters
+        tickedCheckBoxes1: tickedCheckBoxes1,
+        semesters: semesters,
+        tickedCheckBoxes2: tickedCheckBoxes2,
+        minEnrols: minEnrols,
+        maxEnrols: maxEnrols,
+        minShare: minShare,
+        maxShare: maxShare,
+        minTotal: minTotal,
+        maxTotal: maxTotal
       });
 
     } catch (error) {
