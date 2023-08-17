@@ -71,8 +71,54 @@ class SpreadsheetViewController {
         return sortedTable;
       };
 
-      // Sort a table in ascending order based on a numerical column
+      // Sort a table in ascending order based on a boolean column
       const sortAscOrder2 = (table, columnName) => {
+        let sortedColumnArray = [];
+        let sortedTable = [];
+
+        // Sort an array including only elements of a certain column of a table in ascending order
+        table.map((each) => sortedColumnArray.push(each[columnName]));
+        sortedColumnArray.sort();
+
+        // Sort an original table in ascending order according to the order of "sortedColumnArray"
+        sortedColumnArray.map((each) => {
+          for (let i = 0; i < table.length; i++) {
+            if (each == table[i][columnName]) {
+              sortedTable.push(table[i]);
+              table.splice(i, 1);
+              break;
+            }
+          }
+        });
+
+        return sortedTable;
+      };
+
+      // Sort a table in descending order based on a boolean column
+      const sortDescOrder2 = (table, columnName) => {
+        let sortedColumnArray = [];
+        let sortedTable = [];
+
+        // Sort an array including only elements of a certain column of a table in descending order
+        table.map((each) => sortedColumnArray.push(each[columnName]));
+        sortedColumnArray.sort().reverse();
+
+        // Sort an original table in descending order according to the order of "sortedColumnArray"
+        sortedColumnArray.map((each) => {
+          for (let i = 0; i < table.length; i++) {
+            if (each == table[i][columnName]) {
+              sortedTable.push(table[i]);
+              table.splice(i, 1);
+              break;
+            }
+          }
+        });
+
+        return sortedTable;
+      };
+
+      // Sort a table in ascending order based on a numerical column
+      const sortAscOrder3 = (table, columnName) => {
         let sortedColumnArray = [];
         let sortedTable = [];
 
@@ -95,7 +141,7 @@ class SpreadsheetViewController {
       };
 
       // Sort a table in descending order based on a numerical column
-      const sortDescOrder2 = (table, columnName) => {
+      const sortDescOrder3 = (table, columnName) => {
         let sortedColumnArray = [];
         let sortedTable = [];
 
@@ -153,12 +199,12 @@ class SpreadsheetViewController {
             selectedTableName = "Academics";
             break;
           case "academicsAsc4":
-            academics = sortAscOrder2(academics, "teachingFraction");
+            academics = sortAscOrder3(academics, "teachingFraction");
             selectedButton = "academics-button";
             selectedTableName = "Academics";
             break;
           case "academicsDesc4":
-            academics = sortDescOrder2(academics, "teachingFraction");
+            academics = sortDescOrder3(academics, "teachingFraction");
             selectedButton = "academics-button";
             selectedTableName = "Academics";
             break;
@@ -207,44 +253,44 @@ class SpreadsheetViewController {
             selectedTableName = "Allocations";
             break;
           case "allocationsAsc2":
-            allocations = sortAscOrder2(allocations, "id");
+            allocations = sortAscOrder3(allocations, "id");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
           case "allocationsDesc2":
-            allocations = sortDescOrder2(allocations, "id");
+            allocations = sortDescOrder3(allocations, "id");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
           case "allocationsAsc3":
-            allocations = sortAscOrder2(allocations, "fractionAllocated");
+            allocations = sortAscOrder3(allocations, "fractionAllocated");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
           case "allocationsDesc3":
-            allocations = sortDescOrder2(allocations, "fractionAllocated");
+            allocations = sortDescOrder3(allocations, "fractionAllocated");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
           case "allocationsAsc4":
-            allocations = sortAscOrder1(allocations, "unitCoordinator");
+            allocations = sortAscOrder2(allocations, "unitCoordinator");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
           case "allocationsDesc4":
-            allocations = sortDescOrder1(allocations, "unitCoordinator");
+            allocations = sortDescOrder2(allocations, "unitCoordinator");
             selectedButton = "allocations-button";
             selectedTableName = "Allocations";
             break;
 
           // For UnitOfferings Table
           case "unitOfferingsAsc1":
-            offerings = sortAscOrder2(offerings, "id");
+            offerings = sortAscOrder3(offerings, "id");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc1":
-            offerings = sortDescOrder2(offerings, "id");
+            offerings = sortDescOrder3(offerings, "id");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
@@ -269,22 +315,22 @@ class SpreadsheetViewController {
             selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc4":
-            offerings = sortAscOrder2(offerings, "estimatedEnrolments");
+            offerings = sortAscOrder3(offerings, "estimatedEnrolments");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc4":
-            offerings = sortDescOrder2(offerings, "estimatedEnrolments");
+            offerings = sortDescOrder3(offerings, "estimatedEnrolments");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsAsc5":
-            offerings = sortAscOrder2(offerings, "schoolShare");
+            offerings = sortAscOrder3(offerings, "schoolShare");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
           case "unitOfferingsDesc5":
-            offerings = sortDescOrder2(offerings, "schoolShare");
+            offerings = sortDescOrder3(offerings, "schoolShare");
             selectedButton = "unitOfferings-button";
             selectedTableName = "UnitOfferings";
             break;
@@ -311,22 +357,22 @@ class SpreadsheetViewController {
             selectedTableName = "Preferences";
             break;
           case "preferencesAsc3":
-            preferences = sortAscOrder2(preferences, "desireToTeach");
+            preferences = sortAscOrder3(preferences, "desireToTeach");
             selectedButton = "preferences-button";
             selectedTableName = "Preferences";
             break;
           case "preferencesDesc3":
-            preferences = sortDescOrder2(preferences, "desireToTeach");
+            preferences = sortDescOrder3(preferences, "desireToTeach");
             selectedButton = "preferences-button";
             selectedTableName = "Preferences";
             break;
           case "preferencesAsc4":
-            preferences = sortAscOrder2(preferences, "abilityToTeach");
+            preferences = sortAscOrder3(preferences, "abilityToTeach");
             selectedButton = "preferences-button";
             selectedTableName = "Preferences";
             break;
           case "preferencesDesc4":
-            preferences = sortDescOrder2(preferences, "abilityToTeach");
+            preferences = sortDescOrder3(preferences, "abilityToTeach");
             selectedButton = "preferences-button";
             selectedTableName = "Preferences";
             break;
