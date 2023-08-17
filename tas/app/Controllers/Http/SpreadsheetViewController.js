@@ -1,7 +1,4 @@
 "use strict";
-
-const { all } = require("express/lib/application");
-
 const Exception = use("App/Exceptions/Handler");
 const Logger = use("Logger");
 const Database = use("Database");
