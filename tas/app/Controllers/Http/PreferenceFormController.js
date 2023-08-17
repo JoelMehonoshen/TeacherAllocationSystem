@@ -29,3 +29,4 @@ class PreferenceFormController {
     }
 }
 
+module.exports = PreferenceFormController;

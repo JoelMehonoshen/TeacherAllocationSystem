@@ -113,7 +113,7 @@ Route.get('/login', ({view }) => {
 })
 
 // Teaching form page
-Route.get('preference_form', 'PreferenceFormController.displayForm').as('preference_form');
+Route.get('preference_form', 'PreferenceFormController.displayForm');
 // Route.get('/preference_form', ({view}) => {
 //     return view.render('teachingForm')
 // })
