@@ -12,6 +12,7 @@
         <form method="POST" action="{{ route('PreferenceFormController.processForm') }}">
             <label for="selectedItems">Select Items:</label>
             <select name="selectedItems[]" multiple>
+                {{-- unitsList as defined in PreferenceFormController --}}
                 @each(item in unitsList)
                     <option value="{{ item }}">{{ item }}</option>
                 @endeach
