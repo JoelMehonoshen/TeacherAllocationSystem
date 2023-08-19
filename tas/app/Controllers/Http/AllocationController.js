@@ -229,9 +229,6 @@ class AllocationController {
         offerings = indices.map(offering => (offerings[offering.index]));
       }
 
-      let allocations2 = await Database.from("allocations");
-      console.log(allocations2)
-
       return view.render("allocations", {
         academics: academics,
         units: units,
