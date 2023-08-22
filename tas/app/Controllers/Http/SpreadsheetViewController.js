@@ -4,6 +4,63 @@ const Logger = use("Logger");
 const Database = use("Database");
 
 class SpreadsheetViewController {
+  
+  // Update the current table after editing cells in a table
+  async updateTable({ view, request }) {
+    try {
+      let academics = await Database.from("academics");
+      let units = await Database.from("units");
+      let allocations = await Database.from("allocations");
+      let offerings = await Database.from("offerings");
+      let preferences = await Database.from("preferences");
+      let global_spread = await Database.from("academics")
+        .leftJoin("allocations", "academics.id", "=", "allocations.academicId")
+        .leftJoin("offerings", "allocations.id", "=", "offerings.id")
+        .select("academics.id AS academicId")
+        .select("allocations.fractionAllocated")
+        .select("offerings.code AS unitCode");
+
+      // Store the values of a selected button and a name of a table to display at first
+      let selectedButton = "global-button";
+      let selectedTableName = request.body.tableName;
+      switch(selectedTableName) {
+        case "Global":
+          selectedButton = "global-button";
+          break;
+          case "Academics":
+          selectedButton = "academics-button";
+          break;
+          case "Units":
+            selectedButton = "units-button";
+            break;
+            case "Allocations":
+              selectedButton = "allocations-button";
+          break;
+        case "UnitOfferings":
+          selectedButton = "unitOfferings-button";
+          break;
+          case "Preferences":
+            selectedButton = "preferences-button";
+            break;
+      }
+          
+      console.log(request.body);
+      return view.render("spreadsheetView", {
+        academics: academics,
+        units: units,
+        allocations: allocations,
+        offerings: offerings,
+        preferences: preferences,
+        global_spread: global_spread,
+        selectedButton: selectedButton,
+        selectedTableName: selectedTableName,
+      });
+    } catch (error) {
+      Logger.error(error);
+      throw new Exception();
+    }
+  }
+
   async render({ view, request }) {
     try {
       let academics = await Database.from("academics");
@@ -378,7 +435,8 @@ class SpreadsheetViewController {
             break;
         }
       }
-
+      
+      // console.log(academics);
       return view.render("spreadsheetView", {
         academics: academics,
         units: units,

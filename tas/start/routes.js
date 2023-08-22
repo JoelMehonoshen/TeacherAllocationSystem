@@ -91,7 +91,9 @@ Route.put('upload', 'ImportController.uploadFile')
 
 //spreadsheet viewer
 Route.get('/spreadsheetView', 'SpreadsheetViewController.render')
-.middleware(["auth"])
+.middleware(["auth"]);
+Route.post('/spreadsheetView', 'SpreadsheetViewController.updateTable')
+.middleware(["auth"]);
 
 //UserController Routes
 Route.post('/auth/login', 'UserController.login')
