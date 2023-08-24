@@ -9,7 +9,10 @@ const Database = use("Database");
 
 class PreferenceFormController {
     constructor() {
-        this.unitsList = [];
+        // List to display in addPreferenceOption list
+        this.unitsList = ['CAB301', 'CAB203', 'IFB399', 'IFB295'];
+
+        // List of items added from unitsList by addPreferenceOption
         this.selectedList = []; // Separate list for selected items
       }
 
