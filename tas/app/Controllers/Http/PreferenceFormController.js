@@ -9,8 +9,13 @@ const Database = use("Database");
 
 class PreferenceFormController {
     constructor() {
-        this.unitsList = ['CAB301', 'CAB203', 'IFB399', 'IFB295'];
+        this.unitsList = [];
         this.selectedList = []; // Separate list for selected items
+      }
+
+      // Can't call await in the constructor, so we need to define a separate function to fetch unitsList
+      async updateUnitsList() {
+        this.unitsList = await Database.select("offerings.code").from("offerings");
       }
     
       // Display the form
@@ -19,14 +24,18 @@ class PreferenceFormController {
       }
     
       // Handle form submission
-      async processForm({ request, response }) {
+      async processAddUnitForm({ request, response }) {
         const selectedItems = request.input('selectedItems', []);
         
         // Add selected items to the separate list
         this.selectedList = selectedItems;
     
         return response.route('preference_form');
-    }
+      }
+
+      async processUnitPreferenceForm({ request, response }) {
+        const formInputs = request.input('«Placeholder»')
+      }
 }
 
 module.exports = PreferenceFormController;
