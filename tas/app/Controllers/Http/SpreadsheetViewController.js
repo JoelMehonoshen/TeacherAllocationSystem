@@ -4,57 +4,85 @@ const Logger = use("Logger");
 const Database = use("Database");
 
 class SpreadsheetViewController {
-  
   // Update the current table after editing cells in a table
-  async updateTable({ view, request }) {
+  async updateTable({ request, response }) {
     try {
-      let academics = await Database.from("academics");
-      let units = await Database.from("units");
-      let allocations = await Database.from("allocations");
-      let offerings = await Database.from("offerings");
-      let preferences = await Database.from("preferences");
-      let global_spread = await Database.from("academics")
-        .leftJoin("allocations", "academics.id", "=", "allocations.academicId")
-        .leftJoin("offerings", "allocations.id", "=", "offerings.id")
-        .select("academics.id AS academicId")
-        .select("allocations.fractionAllocated")
-        .select("offerings.code AS unitCode");
+      // Update values stored in the database
+      const updateDatabase = async (tableName) => {
+        // Store keys of the object of "request.body" except "tableName" and "_csrf"
+        let object = request.body;
+        let keys = [];
+        for (let each in object) {
+          if (each != "tableName" && each != "_csrf") {
+            keys.push(each);
+          }
+        }
 
-      // Store the values of a selected button and a name of a table to display at first
-      let selectedButton = "global-button";
-      let selectedTableName = request.body.tableName;
-      switch(selectedTableName) {
-        case "Global":
-          selectedButton = "global-button";
-          break;
+        // Update all rows in a certain table
+        switch (tableName) {
+          case "Global":
+            break;
           case "Academics":
-          selectedButton = "academics-button";
-          break;
+            for (let i = 0; i < object[keys[0]].length; i++) {
+              await Database.from("academics")
+                .where("id", object[keys[0]][i])
+                .update({
+                  name: object[keys[1]][i],
+                  category: object[keys[2]][i],
+                  teachingFraction: object[keys[3]][i],
+                });
+            }
+            break;
           case "Units":
-            selectedButton = "units-button";
+            for (let i = 0; i < object[keys[0]].length; i++) {
+              await Database.from("units")
+                .where("code", object[keys[0]][i])
+                .update({
+                  name: object[keys[1]][i],
+                  subjectAreaGroup: object[keys[2]][i],
+                });
+            }
             break;
-            case "Allocations":
-              selectedButton = "allocations-button";
-          break;
-        case "UnitOfferings":
-          selectedButton = "unitOfferings-button";
-          break;
+          case "Allocations":
+            for (let i = 0; i < object[keys[0]].length; i++) {
+              await Database.from("allocations")
+                .where("academicId", object[keys[0]][i])
+                .where("id", object[keys[1]][i])
+                .update({
+                  fractionAllocated: object[keys[2]][i],
+                  unitCoordinator: object[keys[3]][i],
+                });
+            }
+            break;
+          case "UnitOfferings":
+            for (let i = 0; i < object[keys[0]].length; i++) {
+              await Database.from("offerings")
+                .where("id", object[keys[0]][i])
+                .where("code", object[keys[1]][i])
+                .where("semester", object[keys[2]][i])
+                .update({
+                  estimatedEnrolments: object[keys[3]][i],
+                  schoolShare: object[keys[4]][i],
+                });
+            }
+            break;
           case "Preferences":
-            selectedButton = "preferences-button";
+            for (let i = 0; i < object[keys[0]].length; i++) {
+              await Database.from("preferences")
+                .where("id", object[keys[0]][i])
+                .where("code", object[keys[1]][i])
+                .update({
+                  desireToTeach: object[keys[2]][i],
+                  abilityToTeach: object[keys[3]][i],
+                });
+            }
             break;
-      }
-          
-      console.log(request.body);
-      return view.render("spreadsheetView", {
-        academics: academics,
-        units: units,
-        allocations: allocations,
-        offerings: offerings,
-        preferences: preferences,
-        global_spread: global_spread,
-        selectedButton: selectedButton,
-        selectedTableName: selectedTableName,
-      });
+        }
+      };
+
+      updateDatabase(request.body.tableName);
+
+      return response.redirect().toRoute("SpreadsheetViewController.render");
     } catch (error) {
       Logger.error(error);
       throw new Exception();
@@ -89,7 +117,9 @@ class SpreadsheetViewController {
 
         // Sort an array including only elements of a certain column of a table in ascending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
-        sortedColumnArray.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base'}));
+        sortedColumnArray.sort((a, b) =>
+          a.localeCompare(b, undefined, { sensitivity: "base" })
+        );
 
         // Sort an original table in ascending order according to the order of "sortedColumnArray"
         sortedColumnArray.map((each) => {
@@ -112,7 +142,11 @@ class SpreadsheetViewController {
 
         // Sort an array including only elements of a certain column of a table in descending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
-        sortedColumnArray.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base'})).reverse();
+        sortedColumnArray
+          .sort((a, b) =>
+            a.localeCompare(b, undefined, { sensitivity: "base" })
+          )
+          .reverse();
 
         // Sort an original table in descending order according to the order of "sortedColumnArray"
         sortedColumnArray.map((each) => {
@@ -435,8 +469,7 @@ class SpreadsheetViewController {
             break;
         }
       }
-      
-      // console.log(academics);
+
       return view.render("spreadsheetView", {
         academics: academics,
         units: units,

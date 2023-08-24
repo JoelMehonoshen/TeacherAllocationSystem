@@ -134,13 +134,13 @@
               {{academic.id}}
             </td>
             <td class="cell">
-              <input type="text" name="acadmicName" value="{{academic.name}}">
+              <input type="text" name="acadmicName" value="{{academic.name}}" style="width: 100%;">
             </td>
             <td class="cell">
-              <input type="text" name="academicCategory" value="{{academic.category}}">
+              <input type="text" name="academicCategory" value="{{academic.category}}" style="width: 100%;">
             </td>
             <td class="cell">
-              <input type="text" name="academicTeachingFraction" value="{{academic.teachingFraction}}">
+              <input type="text" name="academicTeachingFraction" value="{{academic.teachingFraction}}" style="width: 100%;">
             </td>
           </tr>
         @endeach
@@ -204,10 +204,10 @@
               {{unit.code}}
             </td>
             <td class="cell">
-              <input type="text" name="unitName" value="{{unit.name}}">
+              <input type="text" name="unitName" value="{{unit.name}}" style="width: 100%;">
             </td>
             <td class="cell">
-              <input type="text" name="unitSubjectAreaGroup" value="{{unit.subjectAreaGroup}}">
+              <input type="text" name="unitSubjectAreaGroup" value="{{unit.subjectAreaGroup}}" style="width: 100%;">
             </td>
           </tr>
         @endeach
@@ -288,10 +288,10 @@
               {{allocation.id}}
             </td>
             <td class="cell">
-              <input type="text" name="academicFractionAllocated" value="{{allocation.fractionAllocated}}">
+              <input type="text" name="academicFractionAllocated" value="{{allocation.fractionAllocated}}" style="width: 100%;">
             </td>
             <td class="cell">
-              <input type="text" name="academicUnitCoordinator" value="{{allocation.unitCoordinator}}">
+              <input type="text" name="academicUnitCoordinator" value="{{allocation.unitCoordinator}}" style="width: 100%;">
             </td>
           </tr>
         @endeach
@@ -389,10 +389,10 @@
               {{offering.semester}}
             </td>
             <td class="cell">
-              <input type="text" name="offeringEstimatedEnrolments" value="{{offering.estimatedEnrolments}}">
+              <input type="text" name="offeringEstimatedEnrolments" value="{{offering.estimatedEnrolments}}" style="width: 100%;">
             </td>
             <td class="cell">
-              <input type="text" name="offeringSchoolShare" value="{{offering.schoolShare}}">
+              <input type="text" name="offeringSchoolShare" value="{{offering.schoolShare}}" style="width: 100%;">
             </td>
           </tr>
         @endeach
@@ -473,10 +473,10 @@
               {{preference.code}}
             </td>
             <td class="cell" contenteditable="true">
-              <input type="text" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}">
+              <input type="text" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}" style="width: 100%;">
             </td>
             <td class="cell" contenteditable="true">
-              <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}">
+              <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%;">
             </td>
           </tr>
         @endeach
@@ -492,12 +492,8 @@
 <script>
   // Change the name of the class "tablinks" and the style of the class "tabcontent"
   // according to the table where a user selected a certain sorting
-  let tablinksButton = document.getElementById("{{selectedButton}}");
-  // console.log(tablinksButton);
-  tablinksButton.classList.add("active");
-  let tabcontentDiv = document.getElementById("{{selectedTableName}}");
-  // console.log(tabcontentDiv);
-  tabcontentDiv.style.display = "block";
+  document.getElementById("{{selectedButton}}").classList.add("active");
+  document.getElementById("{{selectedTableName}}").style.display = "block";
 
   // Hide all save buttons for tables at first
   let saveButtons = document.getElementsByClassName("searchbar-button");
@@ -505,7 +501,6 @@
     saveButtons[i].style.display = "none";
   }
 
-  console.log("{{selectedTableName}}");
   // Show a save button according to the opened tab
   switch("{{selectedTableName}}") {
     case "Global":
