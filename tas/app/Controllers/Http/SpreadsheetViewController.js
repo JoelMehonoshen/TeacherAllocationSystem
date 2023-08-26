@@ -100,8 +100,47 @@ class SpreadsheetViewController {
         .leftJoin("allocations", "academics.id", "=", "allocations.academicId")
         .leftJoin("offerings", "allocations.id", "=", "offerings.id")
         .select("academics.id AS academicId")
-        .select("allocations.fractionAllocated")
-        .select("offerings.code AS unitCode");
+        .select("academics.name AS name")
+        .select("offerings.id AS unitOfferingId")
+        .select("offerings.code AS unitCode")
+        .select("offerings.semester AS semester")
+        .select("allocations.fractionAllocated AS fractionAllocated");
+
+      // Create a global table used in "spreadsheetView.edge" and "spreadsheet.edge" 
+      const createGlobalTable = (academics, offerings, global_spread) => {
+        let globalTable = [];
+        for (let i = 0; i < offerings.length; i++) {
+          for (let j = 0; j < academics.length; j++) {
+            // Add a matched object to the list if it exists in "global_spread",
+            // otherwise add an object that is newly created to the list
+            let isMatched = false;
+            for (let k = 0; k < global_spread.length; k++) {
+              if (
+                offerings[i].code == global_spread[k].unitCode &&
+                offerings[i].semester == global_spread[k].semester &&
+                academics[j].id == global_spread[k].academicId
+              ) {
+                globalTable.push(global_spread[k]);
+                isMatched = true;
+                break;
+              }
+            }
+
+            if (!isMatched) {
+              globalTable.push({
+                academicId: academics[j].id,
+                name: academics[j].name,
+                unitOfferingId: offerings[i].id,
+                unitCode: offerings[i].code,
+                semester: offerings[i].semester,
+                fractionAllocated: 0,
+              });
+            }
+          }
+        }
+
+        return globalTable;
+      };
 
       // Obtain a URL parameter for sorting a table
       const sortOption = request.input("sortOption");
@@ -254,7 +293,8 @@ class SpreadsheetViewController {
         return sortedTable;
       };
 
-      // Check if a table should be sorted
+      // A certain table will be sorted if "sortOption" exists,
+      // otherwise default sorting will be executed
       if (sortOption) {
         // Sort a table according to the value of sortOption
         switch (sortOption) {
@@ -468,7 +508,13 @@ class SpreadsheetViewController {
             selectedTableName = "Preferences";
             break;
         }
+      } else {
+        offerings = sortAscOrder3(offerings, "id");
+        selectedButton = "global-button";
+        selectedTableName = "Global";
       }
+
+      const globalTable = createGlobalTable(academics, offerings, global_spread);
 
       return view.render("spreadsheetView", {
         academics: academics,
@@ -476,7 +522,7 @@ class SpreadsheetViewController {
         allocations: allocations,
         offerings: offerings,
         preferences: preferences,
-        global_spread: global_spread,
+        globalTable: globalTable,
         selectedButton: selectedButton,
         selectedTableName: selectedTableName,
       });
