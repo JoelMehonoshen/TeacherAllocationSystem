@@ -7,82 +7,77 @@ class SpreadsheetViewController {
   // Update the current table after editing cells in a table
   async updateTable({ request, response }) {
     try {
-      // Update values stored in the database
-      const updateDatabase = async (tableName) => {
-        // Store keys of the object of "request.body" except "tableName" and "_csrf"
-        let object = request.body;
-        let keys = [];
-        for (let each in object) {
-          if (each != "tableName" && each != "_csrf") {
-            keys.push(each);
+      // Store keys of the object of "request.body" except "tableName" and "_csrf"
+      let object = request.body;
+      let keys = [];
+      for (let each in object) {
+        if (each != "tableName" && each != "_csrf") {
+          keys.push(each);
+        }
+      }
+
+      // Update all rows in a certain table
+      switch (request.body.tableName) {
+        case "Global":
+          break;
+        case "Academics":
+          for (let i = 0; i < object[keys[0]].length; i++) {
+            await Database.from("academics")
+              .where("id", object[keys[0]][i])
+              .update({
+                name: object[keys[1]][i],
+                category: object[keys[2]][i],
+                teachingFraction: object[keys[3]][i],
+              });
           }
-        }
+          break;
+        case "Units":
+          for (let i = 0; i < object[keys[0]].length; i++) {
+            await Database.from("units")
+              .where("code", object[keys[0]][i])
+              .update({
+                name: object[keys[1]][i],
+                subjectAreaGroup: object[keys[2]][i],
+              });
+          }
+          break;
+        case "Allocations":
+          for (let i = 0; i < object[keys[0]].length; i++) {
+            await Database.from("allocations")
+              .where("academicId", object[keys[0]][i])
+              .where("id", object[keys[1]][i])
+              .update({
+                fractionAllocated: object[keys[2]][i],
+                unitCoordinator: object[keys[3]][i],
+              });
+          }
+          break;
+        case "UnitOfferings":
+          for (let i = 0; i < object[keys[0]].length; i++) {
+            await Database.from("offerings")
+              .where("id", object[keys[0]][i])
+              .where("code", object[keys[1]][i])
+              .where("semester", object[keys[2]][i])
+              .update({
+                estimatedEnrolments: object[keys[3]][i],
+                schoolShare: object[keys[4]][i],
+              });
+          }
+          break;
+        case "Preferences":
+          for (let i = 0; i < object[keys[0]].length; i++) {
+            await Database.from("preferences")
+              .where("id", object[keys[0]][i])
+              .where("code", object[keys[1]][i])
+              .update({
+                desireToTeach: object[keys[2]][i],
+                abilityToTeach: object[keys[3]][i],
+              });
+          }
+          break;
+      }
 
-        // Update all rows in a certain table
-        switch (tableName) {
-          case "Global":
-            break;
-          case "Academics":
-            for (let i = 0; i < object[keys[0]].length; i++) {
-              await Database.from("academics")
-                .where("id", object[keys[0]][i])
-                .update({
-                  name: object[keys[1]][i],
-                  category: object[keys[2]][i],
-                  teachingFraction: object[keys[3]][i],
-                });
-            }
-            break;
-          case "Units":
-            for (let i = 0; i < object[keys[0]].length; i++) {
-              await Database.from("units")
-                .where("code", object[keys[0]][i])
-                .update({
-                  name: object[keys[1]][i],
-                  subjectAreaGroup: object[keys[2]][i],
-                });
-            }
-            break;
-          case "Allocations":
-            for (let i = 0; i < object[keys[0]].length; i++) {
-              await Database.from("allocations")
-                .where("academicId", object[keys[0]][i])
-                .where("id", object[keys[1]][i])
-                .update({
-                  fractionAllocated: object[keys[2]][i],
-                  unitCoordinator: object[keys[3]][i],
-                });
-            }
-            break;
-          case "UnitOfferings":
-            for (let i = 0; i < object[keys[0]].length; i++) {
-              await Database.from("offerings")
-                .where("id", object[keys[0]][i])
-                .where("code", object[keys[1]][i])
-                .where("semester", object[keys[2]][i])
-                .update({
-                  estimatedEnrolments: object[keys[3]][i],
-                  schoolShare: object[keys[4]][i],
-                });
-            }
-            break;
-          case "Preferences":
-            for (let i = 0; i < object[keys[0]].length; i++) {
-              await Database.from("preferences")
-                .where("id", object[keys[0]][i])
-                .where("code", object[keys[1]][i])
-                .update({
-                  desireToTeach: object[keys[2]][i],
-                  abilityToTeach: object[keys[3]][i],
-                });
-            }
-            break;
-        }
-      };
-
-      updateDatabase(request.body.tableName);
-
-      return response.redirect().toRoute("SpreadsheetViewController.render");
+      return response.route("/spreadsheetView", true);
     } catch (error) {
       Logger.error(error);
       throw new Exception();
@@ -105,42 +100,6 @@ class SpreadsheetViewController {
         .select("offerings.code AS unitCode")
         .select("offerings.semester AS semester")
         .select("allocations.fractionAllocated AS fractionAllocated");
-
-      // Create a global table used in "spreadsheetView.edge" and "spreadsheet.edge" 
-      const createGlobalTable = (academics, offerings, global_spread) => {
-        let globalTable = [];
-        for (let i = 0; i < offerings.length; i++) {
-          for (let j = 0; j < academics.length; j++) {
-            // Add a matched object to the list if it exists in "global_spread",
-            // otherwise add an object that is newly created to the list
-            let isMatched = false;
-            for (let k = 0; k < global_spread.length; k++) {
-              if (
-                offerings[i].code == global_spread[k].unitCode &&
-                offerings[i].semester == global_spread[k].semester &&
-                academics[j].id == global_spread[k].academicId
-              ) {
-                globalTable.push(global_spread[k]);
-                isMatched = true;
-                break;
-              }
-            }
-
-            if (!isMatched) {
-              globalTable.push({
-                academicId: academics[j].id,
-                name: academics[j].name,
-                unitOfferingId: offerings[i].id,
-                unitCode: offerings[i].code,
-                semester: offerings[i].semester,
-                fractionAllocated: 0,
-              });
-            }
-          }
-        }
-
-        return globalTable;
-      };
 
       // Obtain a URL parameter for sorting a table
       const sortOption = request.input("sortOption");
@@ -514,7 +473,37 @@ class SpreadsheetViewController {
         selectedTableName = "Global";
       }
 
-      const globalTable = createGlobalTable(academics, offerings, global_spread);
+      // Create a global table used in "spreadsheetView.edge" and "spreadsheet.edge"
+      let globalTable = [];
+      for (let i = 0; i < offerings.length; i++) {
+        for (let j = 0; j < academics.length; j++) {
+          // Add a matched object to the list if it exists in "global_spread",
+          // otherwise add an object that is newly created to the list
+          let isMatched = false;
+          for (let k = 0; k < global_spread.length; k++) {
+            if (
+              offerings[i].code == global_spread[k].unitCode &&
+              offerings[i].semester == global_spread[k].semester &&
+              academics[j].id == global_spread[k].academicId
+            ) {
+              globalTable.push(global_spread[k]);
+              isMatched = true;
+              break;
+            }
+          }
+
+          if (!isMatched) {
+            globalTable.push({
+              academicId: academics[j].id,
+              name: academics[j].name,
+              unitOfferingId: offerings[i].id,
+              unitCode: offerings[i].code,
+              semester: offerings[i].semester,
+              fractionAllocated: 0,
+            });
+          }
+        }
+      }
 
       return view.render("spreadsheetView", {
         academics: academics,

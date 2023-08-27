@@ -10,7 +10,8 @@
 
 <!-- Tab content -->
 @if(academics[0])
-  <button id="save-global" class="searchbar-button" form="globalTable">
+  {{--  Make a button for the Global table not displayed at this stage  --}}
+  <button id="save-global" class="searchbar-button" onclick="submitGlobalTableForm(event)" style="display: none;">
     Save the Table
   </button>
   <button id="save-academics" class="searchbar-button" form="academicsTable" style="display: none;">
@@ -45,6 +46,7 @@
       </tr>
       <form id="globalTable" method="POST" action="{{ route2 }}">
         {{csrf}}
+        <input type="text" name="tableName" value="Global" style="display: none;">
         @each(offering in offerings)
           <tr>
             <th class="heading-cell" style="width:10%;">
@@ -59,12 +61,18 @@
             </th>
             @each(academic in academics)
               <td class="cell">
-                @each(each in globalTable)
-                  @if(($parent.$parent.offering.code == each.unitCode) && ($parent.$parent.offering.semester == each.semester) && ($parent.academic.id == each.academicId))
-                  <input type="text" name="allocationDetail" value="{{each}}" style="display: none;">
-                  <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 100%;">
-                  @endif
-                @endeach
+                <div class="allocationDetail">
+                  @each((each, index) in globalTable)
+                    @if(($parent.$parent.offering.code == each.unitCode) && ($parent.$parent.offering.semester == each.semester) && ($parent.academic.id == each.academicId))
+                      <input type="text" name="{{index + 1}}" value="{{each.academicId}}" style="display: none;">
+                      <input type="text" name="{{index + 1}}" value="{{each.name}}" style="display: none;">
+                      <input type="text" name="{{index + 1}}" value="{{each.unitOfferingId}}" style="display: none;">
+                      <input type="text" name="{{index + 1}}" value="{{each.unitCode}}" style="display: none;">
+                      <input type="text" name="{{index + 1}}" value="{{each.semester}}" style="display: none;">
+                      <input type="text" name="{{index + 1}}" value="{{each.fractionAllocated}}" style="width: 100%;">
+                    @endif
+                  @endeach
+                </div>
               </td>
             @endeach
           </tr>
@@ -531,27 +539,28 @@
       break;
   }
 
+  
   // Open a tab and display a table
   function openTab(evt, tabName) {
     // Declare all variables
     let i, tabcontent, tablinks;
-
+    
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-
+    
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-
+    
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
-
+    
     // Hide all save buttons for tables at first
     let saveButtons = document.getElementsByClassName("searchbar-button");
     for (i = 0; i < saveButtons.length; i++) {
@@ -560,23 +569,23 @@
 
     // Show a save button according to the opened tab
     switch(tabName) {
-      case "Global":
-        document.getElementById("save-global").style.display = "block";
-        break;
+      // case "Global":
+      //   document.getElementById("save-global").style.display = "block";
+      //   break;
       case "Academics":
         document.getElementById("save-academics").style.display = "block";
         break;
       case "Units":
         document.getElementById("save-units").style.display = "block";
         break;
-      case "Allocations":
+        case "Allocations":
         document.getElementById("save-allocations").style.display = "block";
         break;
-      case "UnitOfferings":
-        document.getElementById("save-unitOfferings").style.display = "block";
+        case "UnitOfferings":
+          document.getElementById("save-unitOfferings").style.display = "block";
         break;
-      case "Preferences":
-        document.getElementById("save-preferences").style.display = "block";
+        case "Preferences":
+          document.getElementById("save-preferences").style.display = "block";
         break;
     }
   }
