@@ -10,7 +10,9 @@ const Database = use("Database");
 class PreferenceFormController {
     constructor() {
         // List to display in addPreferenceOption list
-        this.unitsList = ['CAB301', 'CAB203', 'IFB399', 'IFB295'];
+        this.unitsList = [];
+
+        this.semester = "2022/1";
 
         // List of items added from unitsList by addPreferenceOption
         this.selectedList = []; // Separate list for selected items
@@ -18,11 +20,14 @@ class PreferenceFormController {
 
       // Can't call await in the constructor, so we need to define a separate function to fetch unitsList
       async updateUnitsList() {
-        this.unitsList = await Database.select("offerings.code").from("offerings");
+        const currentOfferings = await Database.select("offerings.code").from("offerings").where("semester", this.semester);
+        this.unitsList = currentOfferings.map(item => item.code.trim());
+        console.log(this.unitsList);
       }
     
       // Display the form
       async displayForm({ view }) {
+        this.updateUnitsList();
         return view.render('teachingForm', { unitsList: this.unitsList });
       }
     

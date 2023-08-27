@@ -10,7 +10,7 @@
         </header>
         <section class="modal-card-body">
         <form method="POST" action="{{ route('PreferenceFormController.processForm') }}">
-            <label for="selectedItems">Select Items:</label>
+            <label for="selectedItems">Select Items:</label><br/>
             <select name="selectedItems[]" multiple>
                 {{-- unitsList as defined in PreferenceFormController --}}
                 @each(item in unitsList)
