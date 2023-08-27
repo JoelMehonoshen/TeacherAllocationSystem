@@ -10,23 +10,22 @@
 
 <!-- Tab content -->
 @if(academics[0])
-  {{--  Make a button for the Global table not displayed at this stage  --}}
-  <button id="save-global" class="searchbar-button" onclick="submitGlobalTableForm(event)" style="display: none;">
+  <button id="save-global" class="save-spreadsheet-button">
     Save the Table
   </button>
-  <button id="save-academics" class="searchbar-button" form="academicsTable" style="display: none;">
+  <button id="save-academics" class="save-spreadsheet-button" form="academicsTable" style="display: none;">
     Save the Table
   </button>
-  <button id="save-units" class="searchbar-button" form="unitsTable" style="display: none;">
+  <button id="save-units" class="save-spreadsheet-button" form="unitsTable" style="display: none;">
     Save the Table
   </button>
-  <button id="save-allocations" class="searchbar-button" form="allocationsTable" style="display: none;">
+  <button id="save-allocations" class="save-spreadsheet-button" form="allocationsTable" style="display: none;">
     Save the Table
   </button>
-  <button id="save-unitOfferings" class="searchbar-button" form="unitOfferingsTable" style="display: none;">
+  <button id="save-unitOfferings" class="save-spreadsheet-button" form="unitOfferingsTable" style="display: none;">
     Save the Table
   </button>
-  <button id="save-preferences" class="searchbar-button" form="preferencesTable" style="display: none;">
+  <button id="save-preferences" class="save-spreadsheet-button" form="preferencesTable" style="display: none;">
     Save the Table
   </button>
 
@@ -512,7 +511,7 @@
   document.getElementById("{{selectedTableName}}").style.display = "block";
 
   // Hide all save buttons for tables at first
-  let saveButtons = document.getElementsByClassName("searchbar-button");
+  let saveButtons = document.getElementsByClassName("save-spreadsheet-button");
   for (i = 0; i < saveButtons.length; i++) {
     saveButtons[i].style.display = "none";
   }
@@ -562,16 +561,16 @@
     evt.currentTarget.className += " active";
     
     // Hide all save buttons for tables at first
-    let saveButtons = document.getElementsByClassName("searchbar-button");
+    let saveButtons = document.getElementsByClassName("save-spreadsheet-button");
     for (i = 0; i < saveButtons.length; i++) {
       saveButtons[i].style.display = "none";
     }
 
     // Show a save button according to the opened tab
     switch(tabName) {
-      // case "Global":
-      //   document.getElementById("save-global").style.display = "block";
-      //   break;
+      case "Global":
+        document.getElementById("save-global").style.display = "block";
+        break;
       case "Academics":
         document.getElementById("save-academics").style.display = "block";
         break;
