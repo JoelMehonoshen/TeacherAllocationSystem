@@ -596,9 +596,11 @@ table td {
     background-color: white;
     border: 0.5px solid rgb(210, 210, 210);
     color: rgb(119, 119, 119);
-    padding:4px;
+    padding-left: 4px;
     width:fit-content;
     overflow: visible;
+    vertical-align: middle;
+    height: 30px;
 }
 
 

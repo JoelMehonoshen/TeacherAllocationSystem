@@ -40,7 +40,7 @@
         <th class="heading-cell">
         <th class="heading-cell">
         @each(academic in academics)
-          <th class="heading-cell">
+          <th class="heading-cell" style="vertical-align: middle;">
             <div class="cell-content" data-tooltip="{{academic.id}}" style="width: 100px;">
               {{academic.name}}
             </div>
@@ -49,19 +49,19 @@
       </tr>
       @each(offering in offerings)
         <tr>
-          <th class="heading-cell" style="width:10%;">
+          <th class="heading-cell" style="width:10%; vertical-align: middle;">
             <div class="cell-content">
               {{offering.code}}
             </div>
           </th>
-          <th class="heading-cell" style="width:5%;">
+          <th class="heading-cell" style="width:5%; vertical-align: middle;">
             <div class="cell-content">
               {{offering.semester}}
             </div>
           </th>
           @each(academic in academics)
             <td class="cell">
-              <form method="POST" action="{{ route2 }}">
+              <form method="POST" action="{{ route2 }}" style="height: 24px">
                 {{csrf}}
                 <input type="text" name="tableName" value="Global" style="display: none;">
                 @each(each in globalTable)
@@ -72,7 +72,7 @@
                     <input type="text" name="unitCode" value="{{each.unitCode}}" style="display: none;">
                     <input type="text" name="semester" value="{{each.semester}}" style="display: none;">
                     <div style="display: inline-block;">
-                      <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 60px;">
+                      <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 60px; border: none;">
                       <button id="save-global">Save</button>
                     </div>
                   @endif
@@ -154,13 +154,13 @@
               {{academic.id}}
             </td>
             <td class="cell">
-              <input type="text" name="acadmicName" value="{{academic.name}}" style="width: 100%;">
+              <input type="text" name="acadmicName" value="{{academic.name}}" style="width: 100%; border: none;">
             </td>
             <td class="cell">
-              <input type="text" name="academicCategory" value="{{academic.category}}" style="width: 100%;">
+              <input type="text" name="academicCategory" value="{{academic.category}}" style="width: 100%; border: none;">
             </td>
             <td class="cell">
-              <input type="text" name="academicTeachingFraction" value="{{academic.teachingFraction}}" style="width: 100%;">
+              <input type="text" name="academicTeachingFraction" value="{{academic.teachingFraction}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach
@@ -224,10 +224,10 @@
               {{unit.code}}
             </td>
             <td class="cell">
-              <input type="text" name="unitName" value="{{unit.name}}" style="width: 100%;">
+              <input type="text" name="unitName" value="{{unit.name}}" style="width: 100%; border: none;">
             </td>
             <td class="cell">
-              <input type="text" name="unitSubjectAreaGroup" value="{{unit.subjectAreaGroup}}" style="width: 100%;">
+              <input type="text" name="unitSubjectAreaGroup" value="{{unit.subjectAreaGroup}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach
@@ -308,10 +308,10 @@
               {{allocation.id}}
             </td>
             <td class="cell">
-              <input type="text" name="academicFractionAllocated" value="{{allocation.fractionAllocated}}" style="width: 100%;">
+              <input type="text" name="academicFractionAllocated" value="{{allocation.fractionAllocated}}" style="width: 100%; border: none;">
             </td>
             <td class="cell">
-              <input type="text" name="academicUnitCoordinator" value="{{allocation.unitCoordinator}}" style="width: 100%;">
+              <input type="text" name="academicUnitCoordinator" value="{{allocation.unitCoordinator}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach
@@ -409,10 +409,10 @@
               {{offering.semester}}
             </td>
             <td class="cell">
-              <input type="text" name="offeringEstimatedEnrolments" value="{{offering.estimatedEnrolments}}" style="width: 100%;">
+              <input type="text" name="offeringEstimatedEnrolments" value="{{offering.estimatedEnrolments}}" style="width: 100%; border: none;">
             </td>
             <td class="cell">
-              <input type="text" name="offeringSchoolShare" value="{{offering.schoolShare}}" style="width: 100%;">
+              <input type="text" name="offeringSchoolShare" value="{{offering.schoolShare}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach
@@ -492,11 +492,11 @@
               <input type="text" name="preferenceCode" value="{{preference.code}}" style="display: none;">
               {{preference.code}}
             </td>
-            <td class="cell" contenteditable="true">
-              <input type="text" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}" style="width: 100%;">
+            <td class="cell">
+              <input type="text" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}" style="width: 100%; border: none;">
             </td>
-            <td class="cell" contenteditable="true">
-              <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%;">
+            <td class="cell">
+              <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach
