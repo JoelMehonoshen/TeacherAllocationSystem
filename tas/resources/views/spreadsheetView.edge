@@ -7,7 +7,6 @@
       <div class="content-section">
         <div class="main-content">
           <div class="spreadsheet-container">
-            <h1 class="title">Spreadsheet View</h1>
             @!component('components.spreadsheet', {
               title: "Current Spreadsheet state",
               csrf: csrfField(),
@@ -19,7 +18,7 @@
               offerings: offerings,
               preferences: preferences,
               globalTable: globalTable,
-              selectedButton: selectedButton,
+              selectedTab: selectedTab,
               selectedTableName: selectedTableName,
             })
           </div>

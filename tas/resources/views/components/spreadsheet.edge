@@ -1,35 +1,39 @@
-<!-- Tab links -->
+{{--  Tab links  --}}
 <div class="tab" style="z-index:10;">
-  <button id="global-button" class="tablinks" onclick="openTab(event, 'Global')">Global</button>
-  <button id="academics-button" class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
-  <button id="units-button" class="tablinks" onclick="openTab(event, 'Units')">Units</button>
-  <button id="allocations-button" class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
-  <button id="unitOfferings-button" class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
-  <button id="preferences-button" class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
+  <button id="global-tab" class="tablinks" onclick="openTab(event, 'Global')">Global</button>
+  <button id="academics-tab" class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
+  <button id="units-tab" class="tablinks" onclick="openTab(event, 'Units')">Units</button>
+  <button id="allocations-tab" class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
+  <button id="unitOfferings-tab" class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
+  <button id="preferences-tab" class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
 </div>
 
-<!-- Tab content -->
+{{--  Table contents  --}}
 @if(academics[0])
-  <button id="save-global" class="save-spreadsheet-button">
-    Save the Table
-  </button>
-  <button id="save-academics" class="save-spreadsheet-button" form="academicsTable" style="display: none;">
-    Save the Table
-  </button>
-  <button id="save-units" class="save-spreadsheet-button" form="unitsTable" style="display: none;">
-    Save the Table
-  </button>
-  <button id="save-allocations" class="save-spreadsheet-button" form="allocationsTable" style="display: none;">
-    Save the Table
-  </button>
-  <button id="save-unitOfferings" class="save-spreadsheet-button" form="unitOfferingsTable" style="display: none;">
-    Save the Table
-  </button>
-  <button id="save-preferences" class="save-spreadsheet-button" form="preferencesTable" style="display: none;">
-    Save the Table
-  </button>
+  <div style="display: flex;">
+    <h1 class="title" style="width: 50%; text-align: left;">Spreadsheet View</h1>
 
-  <!-- Global Table -->
+    {{--  Save Buttons  --}}
+    <div style="margin-left: auto;">
+      <button id="save-academics" class="save-spreadsheet-button" form="academicsTable" style="display: none;">
+        Save the Table
+      </button>
+      <button id="save-units" class="save-spreadsheet-button" form="unitsTable" style="display: none;">
+        Save the Table
+      </button>
+      <button id="save-allocations" class="save-spreadsheet-button" form="allocationsTable" style="display: none;">
+        Save the Table
+      </button>
+      <button id="save-unitOfferings" class="save-spreadsheet-button" form="unitOfferingsTable" style="display: none;">
+        Save the Table
+      </button>
+      <button id="save-preferences" class="save-spreadsheet-button" form="preferencesTable" style="display: none;">
+        Save the Table
+      </button>
+    </div>
+  </div>
+
+  {{--  Global Table  --}}
   <div id="Global" class="tabcontent">
     <table style="width:100%;">
       <tr>
@@ -37,50 +41,51 @@
         <th class="heading-cell">
         @each(academic in academics)
           <th class="heading-cell">
-            <div class="cell-content" data-tooltip="{{academic.id}}">
+            <div class="cell-content" data-tooltip="{{academic.id}}" style="width: 100px;">
               {{academic.name}}
             </div>
           </th>
         @endeach
       </tr>
-      <form id="globalTable" method="POST" action="{{ route2 }}">
-        {{csrf}}
-        <input type="text" name="tableName" value="Global" style="display: none;">
-        @each(offering in offerings)
-          <tr>
-            <th class="heading-cell" style="width:10%;">
-              <div class="cell-content">
-                {{offering.code}}
-              </div>
-            </th>
-            <th class="heading-cell" style="width:5%;">
-              <div class="cell-content">
-                {{offering.semester}}
-              </div>
-            </th>
-            @each(academic in academics)
-              <td class="cell">
-                <div class="allocationDetail">
-                  @each((each, index) in globalTable)
-                    @if(($parent.$parent.offering.code == each.unitCode) && ($parent.$parent.offering.semester == each.semester) && ($parent.academic.id == each.academicId))
-                      <input type="text" name="{{index + 1}}" value="{{each.academicId}}" style="display: none;">
-                      <input type="text" name="{{index + 1}}" value="{{each.name}}" style="display: none;">
-                      <input type="text" name="{{index + 1}}" value="{{each.unitOfferingId}}" style="display: none;">
-                      <input type="text" name="{{index + 1}}" value="{{each.unitCode}}" style="display: none;">
-                      <input type="text" name="{{index + 1}}" value="{{each.semester}}" style="display: none;">
-                      <input type="text" name="{{index + 1}}" value="{{each.fractionAllocated}}" style="width: 100%;">
-                    @endif
-                  @endeach
-                </div>
-              </td>
-            @endeach
-          </tr>
-        @endeach   
-      </form>
+      @each(offering in offerings)
+        <tr>
+          <th class="heading-cell" style="width:10%;">
+            <div class="cell-content">
+              {{offering.code}}
+            </div>
+          </th>
+          <th class="heading-cell" style="width:5%;">
+            <div class="cell-content">
+              {{offering.semester}}
+            </div>
+          </th>
+          @each(academic in academics)
+            <td class="cell">
+              <form method="POST" action="{{ route2 }}">
+                {{csrf}}
+                <input type="text" name="tableName" value="Global" style="display: none;">
+                @each(each in globalTable)
+                  @if(($parent.$parent.offering.code == each.unitCode) && ($parent.$parent.offering.semester == each.semester) && ($parent.academic.id == each.academicId))
+                    <input type="text" name="academicId" value="{{each.academicId}}" style="display: none;">
+                    <input type="text" name="name" value="{{each.name}}" style="display: none;">
+                    <input type="text" name="unitOfferingId" value="{{each.unitOfferingId}}" style="display: none;">
+                    <input type="text" name="unitCode" value="{{each.unitCode}}" style="display: none;">
+                    <input type="text" name="semester" value="{{each.semester}}" style="display: none;">
+                    <div style="display: inline-block;">
+                      <input type="text" name="fractionAllocated" value="{{each.fractionAllocated}}" style="width: 60px;">
+                      <button id="save-global">Save</button>
+                    </div>
+                  @endif
+                @endeach
+              </form> 
+            </td>
+          @endeach
+        </tr>
+      @endeach   
     </table>
   </div>
 
-  <!-- Academics Table -->
+  {{--  Academics Table  --}}
   <div id="Academics" class="tabcontent">
     <table style="width:100%;">
       <tr>
@@ -163,7 +168,7 @@
     </table>  
   </div>  
 
-  <!-- Units Table -->
+  {{--  Units Table  --}}
   <div id="Units" class="tabcontent">
     <table style="width:100%;">
       <tr>
@@ -230,7 +235,7 @@
     </table> 
   </div>
 
-  <!-- Allocations Table -->
+  {{--  Allocations Table  --}}
   <div id="Allocations" class="tabcontent">
     <table style="width:100%">
       <tr>
@@ -314,7 +319,7 @@
     </table> 
   </div>
 
-  <!-- UnitOfferings Table -->
+  {{--  UnitOfferings Table  --}}
   <div id="UnitOfferings" class="tabcontent">
     <table style="width:100%">
       <tr>
@@ -415,7 +420,7 @@
     </table> 
   </div>
 
-  <!-- Preferences Table -->
+  {{--  Preferences Table  --}}
   <div id="Preferences" class="tabcontent">
     <table style="width:100%">
       <tr>
@@ -507,7 +512,7 @@
 <script>
   // Change the name of the class "tablinks" and the style of the class "tabcontent"
   // according to the table where a user selected a certain sorting
-  document.getElementById("{{selectedButton}}").classList.add("active");
+  document.getElementById("{{selectedTab}}").classList.add("active");
   document.getElementById("{{selectedTableName}}").style.display = "block";
 
   // Hide all save buttons for tables at first
@@ -518,9 +523,6 @@
 
   // Show a save button according to the opened tab
   switch("{{selectedTableName}}") {
-    case "Global":
-      document.getElementById("save-global").style.display = "block";
-      break;
     case "Academics":
       document.getElementById("save-academics").style.display = "block";
       break;
@@ -568,9 +570,6 @@
 
     // Show a save button according to the opened tab
     switch(tabName) {
-      case "Global":
-        document.getElementById("save-global").style.display = "block";
-        break;
       case "Academics":
         document.getElementById("save-academics").style.display = "block";
         break;
