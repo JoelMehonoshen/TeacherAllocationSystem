@@ -12,6 +12,7 @@ class PreferenceFormController {
         // List to display in addPreferenceOption list
         this.unitsList = ["Item1", "Item2", "Item3"];
 
+        // TODO: Add a way for the user to set this!
         this.semester = "2022/1";
 
         // List of items added from unitsList by addPreferenceOption
