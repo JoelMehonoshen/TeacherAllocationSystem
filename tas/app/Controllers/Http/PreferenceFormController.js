@@ -10,7 +10,7 @@ const Database = use("Database");
 class PreferenceFormController {
     constructor() {
         // List to display in addPreferenceOption list
-        this.unitsList = [];
+        this.unitsList = ["Item1", "Item2", "Item3"];
 
         this.semester = "2022/1";
 
@@ -42,7 +42,7 @@ class PreferenceFormController {
       }
 
       async processUnitPreferenceForm({ request, response }) {
-        const formInputs = request.input('«Placeholder»')
+        const formInputs = request.input('unitPreferences', [])
       }
 }
 
