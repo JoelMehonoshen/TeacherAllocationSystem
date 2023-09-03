@@ -28,7 +28,7 @@ class PreferenceFormController {
     
       // Display the form
       async displayForm({ view }) {
-        this.updateUnitsList();
+        await this.updateUnitsList();
         return view.render('teachingForm', { unitsList: this.unitsList });
       }
     
