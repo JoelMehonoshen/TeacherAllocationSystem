@@ -31,4 +31,9 @@ export default class AutoAllocatorController {
         return ((this.willingWeight * allocationScores.willingness) + (this.expertiseWeight * allocationScores.expertise) 
             + (this.priorWeight * allocationScores.priorYears)) * timeFitRatio;
     }
+
+    // TODO: iterate through all academics who have filled the form for year x/sem y, allocate them to classes in that time period.
+    public autoAllocate(): void {
+
+    }
 }
