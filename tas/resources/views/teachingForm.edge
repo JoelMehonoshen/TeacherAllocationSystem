@@ -6,7 +6,7 @@
       <div class="home-background flex-container flex-center img-cover">
         <div class="login-card white-transparent-fill">
           <h1 class="title">Teaching Allocation Preferences</h1>
-          <form method="POST" action="/preference_form" style="display: flex; flex-direction: column;">
+          <form method="POST" action="{{ route('teachingForm.processPreferenceForm') }}">
             {{ csrfField() }}
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
               <label for="name" style="margin-right: 10px;">Name:</label>
