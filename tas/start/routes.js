@@ -105,8 +105,11 @@ Route.get('/login', ({view }) => {
     return view.render('login')
 })
 
-// Teaching form page
-Route.get('preference_form', 'PreferenceFormController.displayForm');
+// Teaching preference form page
+Route.get('/preference_form', 'PreferenceFormController.displayForm');
+Route.post('/preference_form', 'PreferenceFormController.updatePreferences');
+Route.get('/preference_form/success', "PreferenceFormController.displaySuccessPage");
+Route.get('/preference_form/failure', "PreferenceFormController.displayFailurePage");
 
 // error pages
 Route.get('/401', ({view }) => {

@@ -1,50 +1,83 @@
-"use strict"
-const Exception = use("App/Exceptions/Handler");
-const Logger = use("Logger");
+"use strict";
 
-const Academic = use("App/Models/PreferenceForm");
-const Preference = use("App/Models/Academic");
-const Offering = use("App/Models/Offering")
 const Database = use("Database");
 
 class PreferenceFormController {
-    constructor() {
-        // List to display in addPreferenceOption list
-        this.unitsList = ["Item1", "Item2", "Item3"];
+  // Display the page that academics' preferences have been successfully updated
+  async displaySuccessPage({ view }) {
+    return view.render("teachingFormSuccess");
+  }
 
-        // TODO: Add a way for the user to set this!
-        this.semester = "2022/1";
+  // Display the page that it failed to update academics' preferences
+  async displayFailurePage({ view }) {
+    return view.render("teachingFormFailure");
+  }
 
-        // List of items added from unitsList by addPreferenceOption
-        this.selectedList = []; // Separate list for selected items
+  // Update academics' preferences
+  async updatePreferences({ request, response }) {
+    // Check if a certain academic exists in the database
+    let academics = await Database.from("academics");
+    let doesAcademicExist = false;
+    for (const academic of academics) {
+      if (
+        academic.id == request.body.id &&
+        academic.name == request.body.name
+      ) {
+        doesAcademicExist = true;
+        break;
+      }
+    }
+
+    const currentDate = new Date();
+    if (doesAcademicExist) {
+      // Update a certain record if it exists in the database,
+      // otherwise insert a new record to the database
+      const doesRecordExist = await Database.from("preferences")
+        .where("id", request.body.id)
+        .where("code", request.body.unitCode);
+      if (doesRecordExist.length == 1) {
+        await Database.from("preferences")
+          .where("id", request.body.id)
+          .where("code", request.body.unitCode)
+          .update({
+            desireToTeach: request.body.willingness,
+            abilityToTeach: request.body.experience,
+            updated_at: currentDate,
+          });
+      } else {
+        await Database.table("preferences").insert({
+          id: request.body.id,
+          code: request.body.unitCode,
+          desireToTeach: request.body.willingness,
+          abilityToTeach: request.body.experience,
+          created_at: currentDate,
+          updated_at: currentDate,
+        });
       }
 
-      // Can't call await in the constructor, so we need to define a separate function to fetch unitsList
-      async updateUnitsList() {
-        const currentOfferings = await Database.select("offerings.code").from("offerings").where("semester", this.semester);
-        this.unitsList = currentOfferings.map(item => item.code.trim());
-        console.log(this.unitsList);
-      }
-    
-      // Display the form
-      async displayForm({ view }) {
-        await this.updateUnitsList();
-        return view.render('teachingForm', { unitsList: this.unitsList });
-      }
-    
-      // Handle form submission
-      async processAddUnitForm({ request, response }) {
-        const selectedItems = request.input('selectedItems', []);
-        
-        // Add selected items to the separate list
-        this.selectedList = selectedItems;
-    
-        return response.route('preference_form');
-      }
+      return response.route("/preference_form/success", true);
+    } else {
+      return response.route("/preference_form/failure", true);
+    }
+  }
 
-      async processUnitPreferenceForm({ request, response }) {
-        const formInputs = request.input('unitPreferences', [])
-      }
+  // Display the preference form
+  async displayForm({ view }) {
+    // Make an array to store only unit codes
+    let units = await Database.from("units");
+    let unitsArray = [];
+    for (const unit of units) {
+      unitsArray.push(unit.code);
+    }
+
+    // An array storing values used to select for academics' willingness and experiences
+    const teachingValuesArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    return view.render("teachingForm", {
+      unitsArray: unitsArray,
+      teachingValuesArray: teachingValuesArray,
+    });
+  }
 }
 
 module.exports = PreferenceFormController;

@@ -1,53 +1,50 @@
-@!component('components.head', title="Teaching Allocation Preferences")
-
-<body>
+<!DOCTYPE html>
+<html>
+  @!component('components.head', title="Teaching Allocation Preferences")
+  <body>
     <div class="content-section">
       <div class="home-background flex-container flex-center img-cover">
         <div class="login-card white-transparent-fill">
           <h1 class="title">Teaching Allocation Preferences</h1>
-          <form method="POST" action="{{ route('teachingForm.submit') }}">
+          <form method="POST" action="/preference_form" style="display: flex; flex-direction: column;">
             {{ csrfField() }}
-
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" required>
-            <br/><br/>
-            <h2>Classes:</h2>
-            <!-- Load the component allow for selecting preference options -->
-            @!component('components.addPreferenceOption', csrf=csrfField(), unitsList=unitsList)
-
-            <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#preferenceList">+ Add Units</button>
-            <div class="items">
-              @each(item in items)
-                <div class="item">
-                  <span class="item-name">{{ item.name }}</span>
-                  <div class="item-ratings">
-                    <span>Experience:</span>
-                    <select name="experience[{{ item.name }}]">
-                      @for(i in 1..5)
-                        <option value="{{ i }}">{{ i }}</option>
-                      @endfor
-                    </select>
-                    <span>Willingness:</span>
-                    <select name="willingness[{{ item.name }}]">
-                      @for(i in 1..5)
-                        <option value="{{ i }}">{{ i }}</option>
-                      @endfor
-                    </select>
-                  </div>
-                </div>
-              @endeach
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+              <label for="name" style="margin-right: 10px;">Name:</label>
+              <input type="text" id="name" name="name" style="margin-right: 10px;" required>
+              <label for="id" style="margin-right: 10px;">ID:</label>
+              <input type="text" id="id" name="id" required>
             </div>
-            <br/>
-            <button type="submit"  class="dd-button--round button-blue-fill">Submit</button>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+              <label for="unitCode" style="margin-right: 10px;">Unit Code:</label>
+              <select id="unitCode" name="unitCode" style="width: 50%" required>
+                <option value="" disabled="" selected>Select...</option>
+                @each(each in unitsArray)
+                  <option value="{{ each }}">{{ each }}</option>
+                @endeach
+              </select> 
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+              <label for="willingness" style="margin-right: 10px;">Willingness:</label>
+              <select id="willingness" name="willingness" style="width: 50%" required>
+                <option value="" disabled="" selected>Select...</option>
+                @each(i in teachingValuesArray)
+                  <option value="{{ i }}">{{ i }}</option>
+                @endeach
+              </select>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+              <label for="experience" style="margin-right: 10px;">Experience:</label>
+              <select id="experience" name="experience" required style="width: 50%" required>
+                <option value="" disabled="" selected>Select...</option>
+                @each(i in teachingValuesArray)
+                  <option value="{{ i }}">{{ i }}</option>
+                @endeach
+              </select>
+            </div>
+            <button type="submit" class="dd-button--round button-blue-fill">Submit</button>
           </form>
         </div>
       </div>
     </div>
-    <div class="container">
-  </div>
-  <!-- @include('partials.footer') Currently, this line is bugged, and does not render -->
-</body>
+  </body>
 </html>
