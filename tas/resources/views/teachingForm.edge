@@ -9,8 +9,6 @@
           <form method="POST" action="/preference_form" style="display: flex; flex-direction: column;">
             {{ csrfField() }}
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
-              <label for="name" style="margin-right: 10px;">Name:</label>
-              <input type="text" id="name" name="name" style="margin-right: 10px;" required>
               <label for="id" style="margin-right: 10px;">ID:</label>
               <input type="text" id="id" name="id" required>
             </div>
@@ -34,15 +32,21 @@
             </div>
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
               <label for="experience" style="margin-right: 10px;">Experience:</label>
-              <select id="experience" name="experience" required style="width: 50%" required>
+              <select id="experience" name="experience" style="width: 50%" required>
                 <option value="" disabled="" selected>Select...</option>
                 @each(i in teachingValuesArray)
                   <option value="{{ i }}">{{ i }}</option>
                 @endeach
               </select>
             </div>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+              <label for="yearsOfPriorWork" style="margin-right: 10px;">Years of prior work (optional):</label>
+              <input type="number" name="yearsOfPriorWork" pattern="[1-9][0-9]*" placeholder="Enter the number of the years." style="width: 50%">
+            </div>
             <button type="submit" class="dd-button--round button-blue-fill">Submit</button>
           </form>
+          <p class="font-med" style="margin-top: 24px; margin-bottom: 5px;">Already have an account? <a href="/">Login here</a></p>
+          <p class="font-med" style="margin-bottom: 24px;"> Don't have an account?&nbsp;<a href="signup">Sign up</a></p>
         </div>
       </div>
     </div>

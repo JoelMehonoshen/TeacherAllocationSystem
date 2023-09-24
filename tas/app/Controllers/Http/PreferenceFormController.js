@@ -19,10 +19,7 @@ class PreferenceFormController {
     let academics = await Database.from("academics");
     let doesAcademicExist = false;
     for (const academic of academics) {
-      if (
-        academic.id == request.body.id &&
-        academic.name == request.body.name
-      ) {
+      if (academic.id == request.body.id) {
         doesAcademicExist = true;
         break;
       }
@@ -42,6 +39,7 @@ class PreferenceFormController {
           .update({
             desireToTeach: request.body.willingness,
             abilityToTeach: request.body.experience,
+            yearsOfPriorWork: request.body.yearsOfPriorWork,
             updated_at: currentDate,
           });
       } else {
@@ -50,6 +48,7 @@ class PreferenceFormController {
           code: request.body.unitCode,
           desireToTeach: request.body.willingness,
           abilityToTeach: request.body.experience,
+          yearsOfPriorWork: request.body.yearsOfPriorWork,
           created_at: currentDate,
           updated_at: currentDate,
         });
