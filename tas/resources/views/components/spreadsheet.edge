@@ -1,153 +1,400 @@
 <!-- Tab links -->
 <div class="tab" style="z-index:10;">
-  <button class="tablinks" onclick="openTab(event, 'Global')">Global</button>
-  <button class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
-  <button class="tablinks" onclick="openTab(event, 'Units')">Units</button>
-  <button class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
-  <button class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
-  <button class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
+  <button id="global-button" class="tablinks" onclick="openTab(event, 'Global')">Global</button>
+  <button id="academics-button" class="tablinks" onclick="openTab(event, 'Academics')">Academics</button>
+  <button id="units-button" class="tablinks" onclick="openTab(event, 'Units')">Units</button>
+  <button id="allocations-button" class="tablinks" onclick="openTab(event, 'Allocations')">Allocations</button>
+  <button id="unitOfferings-button" class="tablinks" onclick="openTab(event, 'UnitOfferings')">UnitOfferings</button>
+  <button id="preferences-button" class="tablinks" onclick="openTab(event, 'Preferences')">Preferences</button>
 </div>
 
 <!-- Tab content -->
 @if(academics[0])
-
-<div id="Global" class="tabcontent">
-  <table style="width:100%;">
-    <tr>
-      <th class="heading-cell"></th>
-      @each(academic in academics)
-        <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
-      @endeach
+  <!-- Global Table -->
+  <div id="Global" class="tabcontent">
+    <table style="width:100%;">
+      <tr>
+        <th class="heading-cell"></th>
+        @each(academic in academics)
+          <th class="heading-cell">
+            <div class="cell-content" data-tooltip="{{academic.id}}">
+              {{academic.name}}
+            </div>
+          </th>
+        @endeach
       </tr>
-    @each(unit in units)
-    <tr>
-      <th class="heading-cell" style="width:5%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}</div></th>
-      @each((academic,i) in academics)
-        <td class="cell" contenteditable="true">
-          @each((x,i) in global_spread)
-          @if(x.academicId == $parent.academic.id) 
-            @if(x.unitCode == $parent.$parent.unit.code)
-            {{x.fractionAllocated}}
-            @endif
-          @endif
+      @each(unit in units)
+        <tr>
+          <th class="heading-cell" style="width:5%;">
+            <div class="cell-content" data-tooltip="{{unit.name}}">
+              {{unit.code}}
+            </div>
+          </th>
+          @each((academic,i) in academics)
+            <td class="cell" contenteditable="true">
+              @each((x,i) in global_spread)
+                @if(x.academicId == $parent.academic.id) 
+                  @if(x.unitCode == $parent.$parent.unit.code)
+                  {{x.fractionAllocated}}
+                  @endif
+                @endif
+              @endeach
+            </td>
           @endeach
-        </td>
-      @endeach
+        </tr>
       @endeach   
-  </table>
-</div>
+    </table>
+  </div>
 
-<div id="Academics" class="tabcontent">
-  <table style="width:100%;">
-    <tr>
-      <td class="heading-cell" style="width:1%;"></td>
+  <!-- Academics Table -->
+  <div id="Academics" class="tabcontent">
+    <table style="width:100%;">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AcademicId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="academicsAsc1">Ascending Order</option>
+                <option value="academicsDesc1">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Name</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="academicsAsc2">Ascending Order</option>
+                <option value="academicsDesc2">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Category</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="academicsAsc3">Ascending Order</option>
+                <option value="academicsDesc3">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>TeachingFraction</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="academicsAsc4">Ascending Order</option>
+                <option value="academicsDesc4">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
       @each((academic, i) in academics)
-        <th class="heading-cell"><div class="cell-content" data-tooltip="{{academic.id}}">{{academic.name}}</div></th>
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true" style="width:10%;">{{academic.id}}</td>
+          <td class="cell" contenteditable="true">{{academic.name}}</td>
+          <td class="cell" contenteditable="true">{{academic.category}}</td>
+          <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
+        </tr>
       @endeach
-    </tr>
-    <tr>
-      <th class="heading-cell" style="width:1%;">Category</th>
-      @each((academic, i) in academics)
-      <td class="cell" contenteditable="true">{{academic.category}}</td>
+    </table>  
+  </div>  
+
+  <!-- Units Table -->
+  <div id="Units" class="tabcontent">
+    <table style="width:100%;">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Code</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitsAsc1">Ascending Order</option>
+                <option value="unitsDesc1">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Name</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitsAsc2">Ascending Order</option>
+                <option value="unitsDesc2">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>SubjectAreaGroup</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitsAsc3">Ascending Order</option>
+                <option value="unitsDesc3">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
+      @each((unit, i) in units)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true" style="width:10%;">{{unit.code}}</td>
+          <td class="cell" contenteditable="true">{{unit.name}}</td>
+          <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
+        </tr>
       @endeach
-    </tr>
-    <tr>
-      <th class="heading-cell" style="width:1%;">TeachingFraction</th>
-      @each((academic, i) in academics)
-      <td class="cell" contenteditable="true">{{academic.teachingFraction}}</td>
+    </table> 
+  </div>
+
+  <!-- Allocations Table -->
+  <div id="Allocations" class="tabcontent">
+    <table style="width:100%">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AcademicId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="allocationsAsc1">Ascending Order</option>
+                <option value="allocationsDesc1">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>UnitOfferingId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="allocationsAsc2">Ascending Order</option>
+                <option value="allocationsDesc2">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>FractionAllocated</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="allocationsAsc3">Ascending Order</option>
+                <option value="allocationsDesc3">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>UnitCoordinator</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="allocationsAsc4">Ascending Order</option>
+                <option value="allocationsDesc4">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
+      @each((allocation, i) in allocations)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true">{{allocation.academicId}}</td>
+          <td class="cell" contenteditable="true">{{allocation.id}}</td>
+          <td class="cell" contenteditable="true">{{allocation.fractionAllocated}}</td>
+          <td class="cell" contenteditable="true">{{allocation.unitCoordinator}}</td>
+        </tr>
       @endeach
-    </tr>
-  </table>  
-</div>  
+    </table> 
+  </div>
 
-<div id="Units" class="tabcontent">
-  <table style="width:100%;">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">Code</th>
-      <th class="heading-cell">SubjectAreaGroup</th>
-    </tr>
-    @each((unit,i) in units)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true" style="width:10%;"><div class="cell-content" data-tooltip="{{unit.name}}">{{unit.code}}<div></td>
-      <td class="cell" contenteditable="true">{{unit.subjectAreaGroup}}</td>
-    </tr>
-    @endeach
-  </table> 
-</div>
+  <!-- UnitOfferings Table -->
+  <div id="UnitOfferings" class="tabcontent">
+    <table style="width:100%">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>UnitOfferringId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitOfferingsAsc1">Ascending Order</option>
+                <option value="unitOfferingsDesc1">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>UnitCode</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitOfferingsAsc2">Ascending Order</option>
+                <option value="unitOfferingsDesc2">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Semester</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitOfferingsAsc3">Ascending Order</option>
+                <option value="unitOfferingsDesc3">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>EstimatedEnrolments</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitOfferingsAsc4">Ascending Order</option>
+                <option value="unitOfferingsDesc4">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>SchoolShare</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="unitOfferingsAsc5">Ascending Order</option>
+                <option value="unitOfferingsDesc5">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
+      @each((offering, i) in offerings)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true">{{offering.id}}</td>
+          <td class="cell" contenteditable="true">{{offering.code}}</td>
+          <td class="cell" contenteditable="true">{{offering.semester}}</td>
+          <td class="cell" contenteditable="true">{{offering.estimatedEnrolments}}</td>
+          <td class="cell" contenteditable="true">{{offering.schoolShare}}</td>
+        </tr>
+      @endeach
+    </table> 
+  </div>
 
-
-
-<div id="Allocations" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">AcademicId</th>
-      <th class="heading-cell">UnitOfferingId</th>
-      <th class="heading-cell">FractionAllocated</th>
-      <th class="heading-cell">UnitCoordinator</th>
-    </tr>
-    @each((allocation,i) in allocations)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{allocation.academicId}}</td>
-      <td class="cell" contenteditable="true">{{allocation.id}}</td>
-      <td class="cell" contenteditable="true">{{allocation.fractionAllocated}}</td>
-      <td class="cell" contenteditable="true">{{allocation.unitCoordinator}}</td>
-    </tr>
-    @endeach
-  </table> 
-</div>
-
-
-
-<div id="UnitOfferings" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">UnitOfferringId</th>
-      <th class="heading-cell">UnitCode</th>
-      <th class="heading-cell">Semester</th>
-      <th class="heading-cell">EstimatedEnrolments</th>
-      <th class="heading-cell">SchoolShare</th>
-    </tr>
-    @each((offering,i) in offerings)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{offering.id}}</td>
-      <td class="cell" contenteditable="true">{{offering.code}}</td>
-      <td class="cell" contenteditable="true">{{offering.semester}}</td>
-      <td class="cell" contenteditable="true">{{offering.estimatedEnrolments}}</td>
-      <td class="cell" contenteditable="true">{{offering.schoolShare}}</td>
-    </tr>
-    @endeach
-  </table> 
-</div>
-
-
-
-<div id="Preferences" class="tabcontent">
-  <table style="width:100%">
-    <tr>
-      <th class="heading-cell" style="width:1%;"></th>
-      <th class="heading-cell">AcademicId</th>
-      <th class="heading-cell">UnitCode</th>
-      <th class="heading-cell">DesireToTeach</th>
-      <th class="heading-cell">AbilityToTeach</th>
-    </tr>
-    @each((preference,i) in preferences)
-    <tr>
-      <td class="heading-cell" style="width:1%;">{{i+1}}</td>
-      <td class="cell" contenteditable="true">{{preference.id}}</td>
-      <td class="cell" contenteditable="true">{{preference.code}}</td>
-      <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
-      <td class="cell" contenteditable="true">{{preference.abilityToTeach}}</td>
-    </tr>
-    @endeach
-  </table> 
-</div>
-
+  <!-- Preferences Table -->
+  <div id="Preferences" class="tabcontent">
+    <table style="width:100%">
+      <tr>
+        <th class="heading-cell" style="width:1%;"></th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AcademicId</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc1">Ascending Order</option>
+                <option value="preferencesDesc1">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>UnitCode</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc2">Ascending Order</option>
+                <option value="preferencesDesc2">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>DesireToTeach</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc3">Ascending Order</option>
+                <option value="preferencesDesc3">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AbilityToTeach</p>
+            <form method="GET" action="{{ route }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc4">Ascending Order</option>
+                <option value="preferencesDesc4">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+      </tr>
+      @each((preference, i) in preferences)
+        <tr>
+          <td class="heading-cell" style="width:1%;">{{i + 1}}</td>
+          <td class="cell" contenteditable="true">{{preference.id}}</td>
+          <td class="cell" contenteditable="true">{{preference.code}}</td>
+          <td class="cell" contenteditable="true">{{preference.desireToTeach}}</td>
+          <td class="cell" contenteditable="true">{{preference.abilityToTeach}}</td>
+        </tr>
+      @endeach
+    </table> 
+  </div>
 @else
   <div style="width:100%; height:90vh; display:flex; justify-content:center; align-items:center;">
     <h1>Please import a spreadsheet</h1>
@@ -155,27 +402,32 @@
 @endif
 
 <script>
-  document.querySelector(".tablinks").className += " active";
-  document.querySelector(".tabcontent").style.display = "block";
+  // Change the name of the class "tablinks" and the style of the class "tabcontent"
+  // according to the table where a user selected a certain sorting
+  let tablinksButton = document.getElementById("{{selectedButton}}");
+  tablinksButton.classList.add("active");
+  let tabcontentDiv = document.getElementById("{{selectedTableName}}");
+  tabcontentDiv.style.display = "block";
 
+  // Open a tab and display a table
   function openTab(evt, tabName) {
-  // Declare all variables
-  var i, tabcontent, tablinks;
+    // Declare all variables
+    let i, tabcontent, tablinks;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
   }
-
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-
-  // Show the current tab, and add an "active" class to the button that opened the tab
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
 </script>
