@@ -10,6 +10,7 @@ class PreferencesSchema extends Schema {
       table.string('code').references('code').inTable("units")
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
+      table.integer('yearsOfPriorWork')
       table.timestamps()
       //todo:these combination unique constraints aren't implemented correctly
       table.unique(['id', 'code'])

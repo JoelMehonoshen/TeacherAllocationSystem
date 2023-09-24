@@ -1,6 +1,5 @@
 'use strict'
 
-const AcademicController = require('../app/Controllers/Http/AcademicController')
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +14,7 @@ const AcademicController = require('../app/Controllers/Http/AcademicController')
 |
 */
 
-/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-
-const Helpers = use('Helpers')
 const Route = use('Route')
-const ExcelJS = require('exceljs');
-const ImportController = require('../app/Controllers/Http/ImportController');
-const ExportController = require('../app/Controllers/Http/ExportController');
 
 Route.get('/', ({view }) => {
     return view.render('home')
@@ -111,6 +104,12 @@ Route.get('/signup', ({view }) => {
 Route.get('/login', ({view }) => {
     return view.render('login')
 })
+
+// Teaching preference form page
+Route.get('/preference_form', 'PreferenceFormController.displayForm');
+Route.post('/preference_form', 'PreferenceFormController.updatePreferences');
+Route.get('/preference_form/success', "PreferenceFormController.displaySuccessPage");
+Route.get('/preference_form/failure', "PreferenceFormController.displayFailurePage");
 
 // error pages
 Route.get('/401', ({view }) => {
