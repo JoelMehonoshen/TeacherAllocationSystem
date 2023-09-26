@@ -39,6 +39,7 @@
     "App": "./app"
   },
   "devDependencies": {
-    "@creativebulma/bulma-tagsinput": "^1.0.3"
+    "@creativebulma/bulma-tagsinput": "^1.0.3",
+    "japa": "^4.0.0"
   }
 }
