@@ -138,7 +138,7 @@ Route.get(
 // Data visualisation
 Route.get('/dashboard', ({ view }) => {
   return view.render('dashboard')
-});//.middleware(['auth']);
+});//.middleware(['auth']); // Left disabled for now until working, must be re-enabled for prod
 
 // error pages
 Route.get('/401', ({ view }) => {
