@@ -22,7 +22,6 @@ const Route = use('Route');
 const ExcelJS = require('exceljs');
 const ImportController = require('../app/Controllers/Http/ImportController');
 const ExportController = require('../app/Controllers/Http/ExportController');
-const Route = use('Route')
 
 Route.get('/', ({ view }) => {
   return view.render('home');
@@ -127,8 +126,19 @@ Route.get('/login', ({ view }) => {
 // Teaching preference form page
 Route.get('/preference_form', 'PreferenceFormController.displayForm');
 Route.post('/preference_form', 'PreferenceFormController.updatePreferences');
-Route.get('/preference_form/success', "PreferenceFormController.displaySuccessPage");
-Route.get('/preference_form/failure', "PreferenceFormController.displayFailurePage");
+Route.get(
+  '/preference_form/success',
+  'PreferenceFormController.displaySuccessPage',
+);
+Route.get(
+  '/preference_form/failure',
+  'PreferenceFormController.displayFailurePage',
+);
+
+// Data visualisation
+Route.get('/dashboard', ({ view }) => {
+  return view.render('dashboard')
+});//.middleware(['auth']);
 
 // error pages
 Route.get('/401', ({ view }) => {
