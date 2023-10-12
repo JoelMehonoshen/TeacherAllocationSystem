@@ -1,7 +1,7 @@
-"use strict";
-const Exception = use("App/Exceptions/Handler");
-const Logger = use("Logger");
-const Database = use("Database");
+'use strict';
+const Exception = use('App/Exceptions/Handler');
+const Logger = use('Logger');
+const Database = use('Database');
 
 class SpreadsheetViewController {
   // Update the current table after editing cells in a table
@@ -124,12 +124,11 @@ class SpreadsheetViewController {
         .select("allocations.fractionAllocated AS fractionAllocated");
 
       // Obtain a URL parameter for sorting a table
-      const sortOption = request.input("sortOption");
-
+      const sortOption = request.input('sortOption');
+      
       // Store the values of a selected tab and a name of a table to display at first
       let selectedTab = "global-tab";
       let selectedTableName = "Global";
-
       // Sort a table in ascending order based on a non-numerical column
       const sortAscOrder1 = (table, columnName) => {
         let sortedColumnArray = [];
@@ -138,7 +137,7 @@ class SpreadsheetViewController {
         // Sort an array including only elements of a certain column of a table in ascending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
         sortedColumnArray.sort((a, b) =>
-          a.localeCompare(b, undefined, { sensitivity: "base" })
+          a.localeCompare(b, undefined, { sensitivity: "base" })          
         );
 
         // Sort an original table in ascending order according to the order of "sortedColumnArray"
@@ -527,7 +526,7 @@ class SpreadsheetViewController {
         }
       }
 
-      return view.render("spreadsheetView", {
+      return view.render('spreadsheetView', {
         academics: academics,
         units: units,
         allocations: allocations,
