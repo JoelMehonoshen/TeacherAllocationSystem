@@ -43,5 +43,7 @@ export default class AutoAllocatorController {
   }
 
   // TODO: iterate through all academics who have filled the form for year x/sem y, allocate them to classes in that time period.
-  public autoAllocate(): void {}
+  public autoAllocate(): void {
+    
+  }
 }

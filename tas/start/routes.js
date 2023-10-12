@@ -22,7 +22,6 @@ const Route = use('Route');
 const ExcelJS = require('exceljs');
 const ImportController = require('../app/Controllers/Http/ImportController');
 const ExportController = require('../app/Controllers/Http/ExportController');
-const Route = use('Route')
 
 Route.get('/', ({ view }) => {
   return view.render('home');
