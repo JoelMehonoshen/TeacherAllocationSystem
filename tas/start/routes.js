@@ -102,9 +102,10 @@ Route.get('/exportSheet', 'ExportController.export').middleware(['auth']);
 Route.put('upload', 'ImportController.uploadFile');
 
 //spreadsheet viewer
-Route.get('/spreadsheetView', 'SpreadsheetViewController.render').middleware([
-  'auth',
-]);
+Route.get('/spreadsheetView', 'SpreadsheetViewController.render')
+.middleware(["auth"]);
+Route.post('/spreadsheetView', 'SpreadsheetViewController.updateTable')
+.middleware(["auth"]);
 
 //UserController Routes
 Route.post('/auth/login', 'UserController.login');
