@@ -89,6 +89,43 @@ class AllocationController {
     }
   }
 
+  //auto Allocation
+  async scoreAllocation({ response, request }) {
+    try {
+      //Assuming all wight are 1
+      const autoAllocator = new AutoAllocatorController(1, 1, 1);
+      //Assuing time required is 5
+      let timeRequired = 5;
+      
+      let preferences = await Database.from('preferences');
+      
+      for (let preference of preferences) {
+        const allocation = await Database.from('allocation').where('academicId', preferece.academicId).first();
+        const timeAvailable = allocation ? allocation.fractionAllocated : 1;
+        // preference.score = preference.desireToTeach + preference.abilityToTeach;
+        const allocationScore = autoAllocator.scoreAllocation(
+          {
+            willingness: preference.desireToTeach,
+            expertise: preference.abilityToTeach,
+            priorYears: preference.yearsOfPriorWork
+          },
+          timeAvailable,
+          timeRequired,
+        )
+        
+        Logger.info(`Updating Id: ${preference.desireToTeach} with score: ${preference.score}`);
+        await Database.from('preferences')
+         .where('id', preference.id)
+         .update({ score: allocationScore });
+        
+      }
+      return response.json({ success: true, message: 'Allocations scored successfully!' });
+    } catch (error) {
+      Logger.error(`Score Allocation Error: ${error.message}`);
+      return response.json({ success: false, message: 'Error in scoring allocations'});
+    }
+  }
+
   async render({ view, request }) {
     try {
       // Obtain the searchbar input + options selected from the sorting + filtering

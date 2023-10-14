@@ -34,6 +34,10 @@
             </p>
           </div>
         </div>
+        <form action="allocations/scoreallocation" method="POST" style="display:inline;">
+          {{csrf}}
+          <input type="submit" value="Auto Allocation" class="dd-button--round button-blue-fill">
+        </form>
         <div>
           <button type="button" class="dd-button--round button-blue-fill" data-toggle="modal" data-target="#AllocationForm">+ Add Allocation</button>
         </div>

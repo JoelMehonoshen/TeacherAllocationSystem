@@ -11,6 +11,7 @@ class PreferencesSchema extends Schema {
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
       table.integer('yearsOfPriorWork')
+      table.float('score').defaultTo(0);
       table.timestamps()
       //todo:these combination unique constraints aren't implemented correctly
       table.unique(['id', 'code']);

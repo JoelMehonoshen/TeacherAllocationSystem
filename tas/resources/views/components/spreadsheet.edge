@@ -477,6 +477,11 @@
             </form>
           </div>
         </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>Score</p>
+          </div>
+        </th>
       </tr>
       <form id="preferencesTable" method="POST" action="{{ route2 }}">
         {{csrf}}
@@ -497,6 +502,9 @@
             </td>
             <td class="cell">
               <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%; border: none;">
+            </td>
+            <td class="cell">
+              {{preference.score}}
             </td>
           </tr>
         @endeach

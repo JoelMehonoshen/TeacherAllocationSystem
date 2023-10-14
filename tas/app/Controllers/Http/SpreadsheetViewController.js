@@ -94,6 +94,7 @@ class SpreadsheetViewController {
               .update({
                 desireToTeach: object[keys[2]][i],
                 abilityToTeach: object[keys[3]][i],
+                score: object[keys[4][i]],
               });
           }
           break;
