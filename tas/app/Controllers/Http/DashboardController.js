@@ -29,6 +29,7 @@ class DashboardController {
       return view.render('dashboard', {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
         allocationFulfillment: allocationFulfillment,
+        allocationChartType: process.env.ALLOCATION_CHART_TYPE
       });
     } catch (error) {
       Logger.error(error);
@@ -37,6 +38,8 @@ class DashboardController {
   }
 
   allocationFulfillment(allocations) {
+    const tol = Number(process.env.WELL_ALLOCATED_TOLERANCE)
+    console.log(`Tolerance: ${tol}`)
     const allocationSummary = this.getAllocationSummary(allocations);
     let over = 0,
       under = 0,
@@ -53,7 +56,7 @@ class DashboardController {
       `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
     );
     while (
-      allocationSummary[iterator].totalAllocatedFraction > 1 &&
+      allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
       iterator < allocationSummary.length - 1
     ) {
       over++;
@@ -64,7 +67,7 @@ class DashboardController {
     );
     // Count the number of well-allocated units
     while (
-      allocationSummary[iterator].totalAllocatedFraction === 1 &&
+      allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
       iterator < allocationSummary.length - 1
     ) {
       equal++;
@@ -75,7 +78,7 @@ class DashboardController {
     );
     // Count the number of underallocated units
     while (
-      allocationSummary[iterator].totalAllocatedFraction < 1 &&
+      allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
       iterator < allocationSummary.length - 1
     ) {
       under++;
