@@ -92,7 +92,7 @@ Route.get("/export", "ExportController.render").middleware(["auth"]);
 Route.get("/exportSheet", "ExportController.export").middleware(["auth"]);
 Route.put("upload", "ImportController.uploadFile");
 
-// Spreadsheet Viewe
+// Spreadsheet View
 Route.get("/spreadsheetView", "SpreadsheetViewController.render").middleware([
   "auth",
 ]);
@@ -115,7 +115,7 @@ Route.get("/login", ({ view }) => {
   return view.render("login");
 });
 
-// Teaching preference form page
+// Teaching Preference Form Page
 Route.get("/preference_form", "PreferenceFormController.displayForm");
 Route.post("/preference_form", "PreferenceFormController.updatePreferences");
 Route.get(
@@ -127,11 +127,10 @@ Route.get(
   "PreferenceFormController.displayFailurePage"
 );
 
-// Data Visualisation
+// Data Visualisation Page
 Route.get("/dashboard", "DashboardController.displayDashboard").middleware([
   "auth",
 ]);
-// Left disabled for now until working, must be re-enabled for prod
 
 // Error pages
 Route.get("/401", ({ view }) => {

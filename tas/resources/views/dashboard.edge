@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
   @!component('components.head', title="Dashboard")
   <body>
@@ -7,31 +6,61 @@
       @include('partials/sidebar')
       <div class="content-section">
         <div>
-          <canvas id="myChart"></canvas>
+          <p id="topAndBottom5Allocations" style="display: none;">{{topAndBottom5Allocations}}</p>
+          <canvas id="topAndBottom5AllocationsBarChart"></canvas>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-          const ctx = document.getElementById('myChart');
-          new Chart(ctx, {
-              type: 'bar',
-              data: {
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-              datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  borderWidth: 1
-              }]
-              },
-              options: {
-              scales: {
-                  y: {
-                  beginAtZero: true
-                  }
-              }
-              }
-          });
-        </script>
       </div>
     </div>
   </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Read JSON string data in the div tag where its id is "topAndBottom5AllocationsData"
+  const topAndBottom5Allocations = document.getElementById('topAndBottom5Allocations');
+  const topAndBottom5AllocationsJson = JSON.parse(topAndBottom5Allocations.innerText);
+
+  // Store each data into labels and data arrays
+  const topAndBottom5AllocationsLabels = [];
+  const topAndBottom5AllocationsData = [];
+  for (let key in topAndBottom5AllocationsJson) {
+    const label = topAndBottom5AllocationsJson[key].unitCode + topAndBottom5AllocationsJson[key].semester;
+    topAndBottom5AllocationsLabels.push(label);
+    topAndBottom5AllocationsData.push(
+      topAndBottom5AllocationsJson[key].totalAllocatedFraction
+    );
+  }
+
+  // Plot the bar chart to display Top and Bottom 5 Allocations
+  const topAndBottom5AllocationsBarChart = document.getElementById('topAndBottom5AllocationsBarChart');
+  new Chart(topAndBottom5AllocationsBarChart, {
+    type: 'bar',
+    data: {
+      labels: topAndBottom5AllocationsLabels,
+      datasets: [{
+        label: 'Total Allocated Fraction',
+        data: topAndBottom5AllocationsData,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      elements: {
+        bar: {
+          borderWidth: 2,
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Top and Bottom 5 Allocations'
+        }
+      }
+    },
+  });
+</script>
+
