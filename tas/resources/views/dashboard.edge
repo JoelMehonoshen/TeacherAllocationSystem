@@ -6,6 +6,10 @@
       @include('partials/sidebar')
       <div class="content-section">
         <div>
+          <p id="allocationFulfillment" style="display: none;">{{allocationFulfillment}}</p>
+          <canvas id="allocationFulfillmentBarChart"></canvas>
+        </div>
+        <div>
           <p id="topAndBottom5Allocations" style="display: none;">{{topAndBottom5Allocations}}</p>
           <canvas id="topAndBottom5AllocationsBarChart"></canvas>
         </div>
@@ -15,6 +19,43 @@
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Retrieve the data passed by DashboardController, and split it back into an array
+  const allocationFulfillment = document.getElementById('allocationFulfillment').innerText.split(",") ;
+
+  // Plot the bar chart to display the fulfillment of each allocation
+  const fulfillmentLabels = ['underallocated', 'well-allocated', 'overallocated']
+  console.log(allocationFulfillment)
+  const allocationFulfillmentBarChart = document.getElementById('allocationFulfillmentBarChart');
+  new Chart(allocationFulfillmentBarChart, {
+    type: 'bar',
+    data: {
+      labels: fulfillmentLabels,
+      datasets: [{
+        data: allocationFulfillment,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      elements: {
+        bar: {
+          borderWidth: 2,
+        }
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: 'Allocation Summary'
+        }
+      }
+    },
+  });
+</script>
 <script>
   // Read JSON string data in the div tag where its id is "topAndBottom5AllocationsData"
   const topAndBottom5Allocations = document.getElementById('topAndBottom5Allocations');
