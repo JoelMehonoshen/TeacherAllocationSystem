@@ -41,31 +41,32 @@ class DashboardController {
 
   allocationFulfillment(allocations) {
     const allocationSummary = this.getAllocationSummary(allocations);
-    let over, under, equal, iterator = 0;
+    let over = 0, under = 0, equal = 0, iterator = 0;
     // Sort the allocations before we iterate through them.
     // This will reduce the number of times we need to go through the loop.
     allocationSummary.sort(
       (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
     );
-
+    console.log("Distribution cut-points:")
     // Count the number of overallocated units
-    while (allocationSummary[iterator].totalAllocatedFraction > 1) {
+    console.log(`${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`)
+    while (allocationSummary[iterator].totalAllocatedFraction > 1 && iterator < allocationSummary.length - 1) {
       over++;
       iterator++;
     }
-
+    console.log(`${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`)
     // Count the number of well-allocated units
-    while (allocationSummary[iterator].totalAllocatedFraction === 1) {
+    while (allocationSummary[iterator].totalAllocatedFraction === 1 && iterator < allocationSummary.length - 1) {
       equal++;
       iterator++;
     }
-
+    console.log(`${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`)
     // Count the number of underallocated units
-    while (allocationSummary[iterator].totalAllocatedFraction < 1) {
+    while (allocationSummary[iterator].totalAllocatedFraction < 1 && iterator < allocationSummary.length - 1) {
       under++;
       iterator++;
     }
-
+    console.log(`Distribution:\nUnder: ${under},\nEqual: ${equal},\nOver: ${over}`)
     return [under, equal, over];
   }
 
