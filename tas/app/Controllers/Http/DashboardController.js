@@ -17,6 +17,9 @@ class DashboardController {
         allocations,
         offerings
       );
+
+      const allocationFulfillment = this.allocationFulfillment(allocations);
+
       const topAndBottom5AllocationsObject = Object.assign(
         {},
         topAndBottom5AllocationsArray
@@ -27,6 +30,7 @@ class DashboardController {
 
       return view.render("dashboard", {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
+        allocationFulfillment: allocationFulfillment,
       });
     } catch (error) {
       Logger.error(error);
@@ -34,36 +38,41 @@ class DashboardController {
     }
   }
 
-  
+
+  allocationFulfillment(allocations) {
+    const allocationSummary = this.getAllocationSummary(allocations);
+    let over, under, equal, iterator = 0;
+    // Sort the allocations before we iterate through them.
+    // This will reduce the number of times we need to go through the loop.
+    allocationSummary.sort(
+      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
+    );
+
+    // Count the number of overallocated units
+    while (allocationSummary[iterator].totalAllocatedFraction > 1) {
+      over++;
+      iterator++;
+    }
+
+    // Count the number of well-allocated units
+    while (allocationSummary[iterator].totalAllocatedFraction === 1) {
+      equal++;
+      iterator++;
+    }
+
+    // Count the number of underallocated units
+    while (allocationSummary[iterator].totalAllocatedFraction < 1) {
+      under++;
+      iterator++;
+    }
+
+    return [under, equal, over];
+  }
+
   // Generate an array containing Top and Bottom 5 Allocations data
   generateTopAndBottom5Allocations(allocations, offerings) {
       // Calculate total allocated fraction by Unit Offering ID
-      const allocationSummary = [];
-      for (let i = 0; i < allocations.length; i++) {
-        if (i == 0) {
-          allocationSummary.push({
-            unitOfferingId: allocations[i].id,
-            totalAllocatedFraction: allocations[i].fractionAllocated,
-          });
-          continue;
-        }
-
-        let isMatched = false;
-        for (let j = 0; j < allocationSummary.length; j++) {
-          if (allocations[i].id == allocationSummary[j].unitOfferingId) {
-            allocationSummary[j].totalAllocatedFraction +=
-              allocations[i].fractionAllocated;
-            isMatched = true;
-            break;
-          }
-        }
-        if (!isMatched) {
-          allocationSummary.push({
-            unitOfferingId: allocations[i].id,
-            totalAllocatedFraction: allocations[i].fractionAllocated,
-          });
-        }
-      }
+      const allocationSummary = this.getAllocationSummary(allocations);
 
       // Sort "allocationSummary" in descending order using the value of "totalAllocatedFraction"
       allocationSummary.sort(
@@ -94,6 +103,39 @@ class DashboardController {
 
       return topAndBottom5Allocations;
     };
+
+    /*
+    * Returns a summary of all allocations
+    */
+    getAllocationSummary(allocations) {
+      const allocationSummary = [];
+      for (let i = 0; i < allocations.length; i++) {
+        if (i == 0) {
+          allocationSummary.push({
+            unitOfferingId: allocations[i].id,
+            totalAllocatedFraction: allocations[i].fractionAllocated,
+          });
+          continue;
+        }
+
+        let isMatched = false;
+        for (let j = 0; j < allocationSummary.length; j++) {
+          if (allocations[i].id == allocationSummary[j].unitOfferingId) {
+            allocationSummary[j].totalAllocatedFraction +=
+              allocations[i].fractionAllocated;
+            isMatched = true;
+            break;
+          }
+        }
+        if (!isMatched) {
+          allocationSummary.push({
+            unitOfferingId: allocations[i].id,
+            totalAllocatedFraction: allocations[i].fractionAllocated,
+          });
+        }
+      }
+      return allocationSummary;
+    }
   }
 
 module.exports = DashboardController;
