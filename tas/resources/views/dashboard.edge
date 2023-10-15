@@ -4,6 +4,9 @@
   <body>
     <div class="wrapper">
       @include('partials/sidebar')
+      {{-- The <p> tags below allow us to carry over information from the rendering 
+        method in DashboardController.js, this is then passed to the charts in their
+        respective component files --}}
       <div class="content-section">
         <div>
           <p id="allocationFulfillment" style="display: none;">{{allocationFulfillment}}</p>
@@ -19,7 +22,10 @@
   </body>
 </html>
 
+{{-- Load the Chart.js library from the CDN --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{-- Import the chart components into the document to render the canvases --}}
 @!component('components/allocationFulfillmentChart')
 @!component('components/topAndBottom5Chart')
 
