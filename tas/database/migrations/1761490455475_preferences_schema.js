@@ -8,6 +8,7 @@ class PreferencesSchema extends Schema {
     this.create('preferences', (table) => {
       table.string('id').references('id').inTable("academics")
       table.string('code').references('code').inTable("units")
+      table.string('preferredSemester')
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
       table.integer('yearsOfPriorWork')
