@@ -63,8 +63,8 @@ Route.post(
   "AcademicController.addPreference"
 ).middleware(["auth"]);
 Route.post(
-  "/academics/deletepreference",
-  "AcademicController.deletepreference"
+  "/academics/deletePreference",
+  "AcademicController.deletePreference"
 ).middleware(["auth"]);
 Route.post(
   "/academics/updatePreference",

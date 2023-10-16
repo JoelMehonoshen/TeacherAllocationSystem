@@ -17,7 +17,7 @@
             <label class="label">Unit Preference</label>
             <div class="control">
               <div class="select">
-                <select name="code" style="width: 100vw !important">
+                <select name="code" style="width: 100vw !important" required>
                   @each(unit in units)
                     <option value="{{ unit.code }}">{{ unit.code }} | {{ unit.name }}</option>
                   @endeach
@@ -28,23 +28,23 @@
           <div class="field">
             <label class="label">Preferred Semester</label>
             <div class="control">
-              <input class="input" type="text" name="preferredSemester" pattern="[0-9]{4}/[1-2]">
+              <input class="input" type="text" name="preferredSemester" pattern="[0-9]{4}/[1-2]" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Desire To Teach</label>
             <div class="control">
-              <input class="input" type="number" min="0" max="10" name="desireToTeach">
+              <input class="input" type="number" min="0" max="10" name="desireToTeach" required>
             </div>
           </div>
           <div class="field">
             <label class="label">Ability To Teach</label>
             <div class="control">
-              <input class="input" type="number" min="0" max="10" name="abilityToTeach">
+              <input class="input" type="number" min="0" max="10" name="abilityToTeach" required>
             </div>
           </div>
           <div class="field">
-            <label class="label">Years Of Prior Work</label>
+            <label class="label">Years Of Prior Work (Optional)</label>
             <div class="control">
               <input class="input" type="number" name="yearsOfPriorWork">
             </div>
