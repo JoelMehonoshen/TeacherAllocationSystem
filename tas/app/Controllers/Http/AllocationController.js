@@ -94,15 +94,22 @@ class AllocationController {
     try {
       //Assuming all wight are 1
       const autoAllocator = new AutoAllocatorController(1, 1, 1);
-      //Assuing time required is 5
+      //Assuing every unit's time required is 5
       let timeRequired = 5;
       
       let preferences = await Database.from('preferences');
       
       for (let preference of preferences) {
         const allocation = await Database.from('allocation').where('academicId', preferece.academicId).first();
-        const timeAvailable = allocation ? allocation.fractionAllocated : 1;
+        const timeAvailable = allocation ? allocation.fractionAllocated : 0;
         // preference.score = preference.desireToTeach + preference.abilityToTeach;
+
+        timeRequired = 5 - (allocation ? allocation.fractionAllocated: 0);
+        
+        if (timeRequired <= 0) {
+          continue;
+        }
+
         const allocationScore = autoAllocator.scoreAllocation(
           {
             willingness: preference.desireToTeach,
@@ -111,15 +118,32 @@ class AllocationController {
           },
           timeAvailable,
           timeRequired,
-        )
-        
-        Logger.info(`Updating Id: ${preference.desireToTeach} with score: ${preference.score}`);
-        await Database.from('preferences')
-         .where('id', preference.id)
-         .update({ score: allocationScore });
-        
+        );
+
+        //Update the pereference score in the database
+        await Database.from('preferebces')
+          .where('id', preference.id)
+          .update({ score: allocationScore });
       }
-      return response.json({ success: true, message: 'Allocations scored successfully!' });
+
+      //assigning part
+      const assignedAcademics = await autoAllocator.assignAllocation(
+        //constracutor
+        preferences,
+        timeAvailable,
+        timeRequired
+      );
+
+      for (const assigned of assignedAcademics) {
+        const newAllocation = new Allocation();
+        newAllocation.academicId = assigned.academicId;
+        newAllocation.id = assigned.id;
+        newAllocation.fractionAllocated = assinged.fractionAllocated;
+        await newAllocation.save();
+
+      }
+      return response.route('/allocations');
+      // return response.json({ success: true, message: 'Allocations scored successfully!' });
     } catch (error) {
       Logger.error(`Score Allocation Error: ${error.message}`);
       return response.json({ success: false, message: 'Error in scoring allocations'});

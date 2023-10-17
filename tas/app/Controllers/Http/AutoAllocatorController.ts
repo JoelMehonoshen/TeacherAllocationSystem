@@ -43,7 +43,32 @@ export default class AutoAllocatorController {
   }
 
   // TODO: iterate through all academics who have filled the form for year x/sem y, allocate them to classes in that time period.
-  public autoAllocate(): void {
+  public async asignAllocation(
+    preferences: any[],
+    timeAvailable: number,
+    timeRequired: number,
+  ): Promise<any> {
+    //sort the score
+    preferences.sort((a,b) => b.score - a.score);
+
+    type AssignedAcademic = {
+      academicsId: number;
+      id: number;
+      fractionAllocated: number;
+    };
     
+    const assignedAcademics: AssignedAcademic[] = [];
+
+    for (const preference of preferences) {
+      if (timeRequired <= 0) continue;
+
+      assignedAcademics.push({
+        academicsId: preference.academicId,
+        id: preference.offeringId,
+        fractionAllocated: preference.fractionAllocated
+      });
+    }
+
+    timeRequired -= timeAvailable;
   }
 }
