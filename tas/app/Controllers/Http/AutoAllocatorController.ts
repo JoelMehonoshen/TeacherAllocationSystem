@@ -33,6 +33,8 @@ export default class AutoAllocatorController {
     // and reduce it if they have less according to the magnitude of the difference.
     const timeFitRatio: number = timeAvailable / timeRequired;
 
+    console.log(allocationScores);
+
     // Return the weighted sum of the factors scaled according to how well the academic's availability matches the class's requirements.
     return (
       (this.willingWeight * allocationScores.willingness +

@@ -93,7 +93,7 @@ class AllocationController {
   async scoreAllocation({ response, request }) {
     try {
       //Assuming all wight are 1
-      const autoAllocator = new AutoAllocatorController(1, 1, 1);
+      const autoAllocator = new AutoAllocatorController(proccess.env.WEIGHT_WILLINGNESS, proccess.env.WEIGHT_EXPERIENCE, process.env.WEIGHT_PRIOR);
       //Assuing every unit's time required is 5
       let timeRequired = 5;
       
@@ -121,8 +121,10 @@ class AllocationController {
         );
 
         //Update the pereference score in the database
-        await Database.from('preferebces')
+        await Database.from('preferences')
           .where('id', preference.id)
+          .where('code', preference.code)
+          .where('preferredSemster', preferredSemester)
           .update({ score: allocationScore });
       }
 

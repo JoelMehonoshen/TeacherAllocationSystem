@@ -8,13 +8,14 @@ class PreferencesSchema extends Schema {
     this.create('preferences', (table) => {
       table.string('id').references('id').inTable("academics")
       table.string('code').references('code').inTable("units")
+      table.string('preferredSemester')
       table.integer('desireToTeach')
       table.integer('abilityToTeach')
       table.integer('yearsOfPriorWork')
       table.float('score').defaultTo(0);
       table.timestamps()
       //todo:these combination unique constraints aren't implemented correctly
-      table.unique(['id', 'code']);
+      table.unique(['id', 'code', 'preferredSemester']);
     });
   }
 
