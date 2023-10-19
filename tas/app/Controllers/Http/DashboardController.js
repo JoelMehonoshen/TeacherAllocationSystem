@@ -71,8 +71,10 @@ class DashboardController {
             experience.push(countAssigned !== 0 ? avgExp / countAssigned : 0);
           }
         }
+        if(willingness[offeringInd] === undefined || experience[offeringInd] === undefined) {
+          codes.pop();
+        }
       }
-
       return {
         codes: codes,
         willingness: willingness,
