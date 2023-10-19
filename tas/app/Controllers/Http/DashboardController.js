@@ -11,6 +11,7 @@ class DashboardController {
       // Fetch allocations and offerings data from the database
       const allocations = await Database.from('allocations');
       const offerings = await Database.from('offerings');
+      const preferences = await Database.from('preferences');
 
       // Convert "topAndBottom5AllocationsArray" into JSON string format
       const topAndBottom5AllocationsArray =
@@ -26,10 +27,15 @@ class DashboardController {
         topAndBottom5AllocationsObject,
       );
 
+      const willingnessAndExperienceJSON = JSON.stringify(
+        this.willingnessAndExperience(allocations, offerings, preferences),
+      );
+
       return view.render('dashboard', {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
         allocationFulfillment: allocationFulfillment,
-        allocationChartType: process.env.ALLOCATION_CHART_TYPE
+        allocationChartType: process.env.ALLOCATION_CHART_TYPE,
+        willingnessAndExpertise: willingnessAndExperienceJSON,
       });
     } catch (error) {
       Logger.error(error);
@@ -37,9 +43,53 @@ class DashboardController {
     }
   }
 
+  willingnessAndExperience(allocations, offerings, preferences) {
+    try {
+      console.log(`Allocations:\n${JSON.stringify(allocations)}\n`);
+      console.log(`Offerings:\n${JSON.stringify(offerings)}\n`);
+      console.log(`Preferences:\n${JSON.stringify(preferences)}\n`);
+      let codes = [],
+        willingness = [],
+        experience = [];
+      for (let offeringInd in offerings) {
+        let offering = offerings[offeringInd]
+        codes.push(offering["code"] + ' (' + offering["semester"] + ')');
+        let avgWilling = 0,
+          avgExp = 0;
+        for (let allocationInd in allocations) {
+          let allocation = allocations[allocationInd];
+          if (offering.id == allocation.id) {
+            let countAssigned = 0;
+            for (let preferenceInd in preferences) {
+              let preference = preferences[preferenceInd];
+              if (preference.id == allocation.academicId) {
+                countAssigned++;
+                avgWilling += preference.desireToTeach;
+                avgExp += preference.abilityToTeach;
+              }
+            }
+            willingness.push(
+              countAssigned !== 0 ? avgWilling / countAssigned : 0,
+            );
+            experience.push(countAssigned !== 0 ? avgExp / countAssigned : 0);
+          }
+        }
+      }
+
+      return {
+        codes: codes,
+        willingness: willingness,
+        experience: experience,
+      };
+    } catch (error) {
+      Logger.error(error);
+      throw new Exception(error);
+    }
+  }
+
   allocationFulfillment(allocations) {
-    const tol = Number(process.env.WELL_ALLOCATED_TOLERANCE)
-    console.log(`Tolerance: ${tol}`)
+    const tol = Number(process.env.WELL_ALLOCATED_TOLERANCE);
+    console.log(`Tolerance: ${tol}`);
     const allocationSummary = this.getAllocationSummary(allocations);
     let over = 0,
       under = 0,
@@ -56,7 +106,7 @@ class DashboardController {
       `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
     );
     while (
-      allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
+      allocationSummary[iterator].totalAllocatedFraction > 1 + tol &&
       iterator < allocationSummary.length - 1
     ) {
       over++;
@@ -67,7 +117,7 @@ class DashboardController {
     );
     // Count the number of well-allocated units
     while (
-      allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
+      allocationSummary[iterator].totalAllocatedFraction >= 1 - tol &&
       iterator < allocationSummary.length - 1
     ) {
       equal++;
@@ -78,7 +128,7 @@ class DashboardController {
     );
     // Count the number of underallocated units
     while (
-      allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
+      allocationSummary[iterator].totalAllocatedFraction < 1 - tol &&
       iterator < allocationSummary.length - 1
     ) {
       under++;

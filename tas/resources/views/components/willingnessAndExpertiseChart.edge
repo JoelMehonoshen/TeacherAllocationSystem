@@ -4,15 +4,8 @@
     const willingnessAndExpertiseJson = JSON.parse(willingnessAndExpertise.innerText);
   
     // Store each data into labels and data arrays
-    const willingnessAndExpertiseLabels = [];
-    const willingnessAndExpertiseData = [];
-    for (let key in willingnessAndExpertiseJson) {
-      const label = willingnessAndExpertiseJson[key].unitCode + " " + willingnessAndExpertiseJson[key].semester;
-      willingnessAndExpertiseLabels.push(label);
-      willingnessAndExpertiseData.push(
-        willingnessAndExpertiseJson[key].totalAllocatedFraction
-      );
-    }
+    const willingnessAndExpertiseLabels = willingnessAndExpertiseJson.codes;
+
     // Plot the bar chart to display Top and Bottom 5 Allocations
     const willingnessAndExpertiseBarChart = document.getElementById('willingnessAndExpertiseBarChart');
     new Chart(willingnessAndExpertiseBarChart, {
@@ -20,9 +13,14 @@
       data: {
         labels: willingnessAndExpertiseLabels,
         datasets: [{
-          label: 'Total Allocated Fraction',
-          data: willingnessAndExpertiseData,
+          label: 'Average Willingness',
+          data: willingnessAndExpertiseJson.willingness,
           borderWidth: 1
+        },
+        {
+            label: "Average Expertise",
+            data: willingnessAndExpertiseJson.experience,
+            borderWidth: 1
         }]
       },
       options: {
@@ -39,7 +37,7 @@
           },
           title: {
             display: true,
-            text: 'Top and Bottom 5 Allocations'
+            text: 'Average willingness and expertise by unit'
           }
         }
       },
