@@ -25,30 +25,44 @@ class PreferenceFormController {
       }
     }
 
-    const currentDate = new Date();
     if (doesAcademicExist) {
       // Update a certain record if it exists in the database,
       // otherwise insert a new record to the database
+      const currentDate = new Date();
       const doesRecordExist = await Database.from("preferences")
         .where("id", request.body.id)
-        .where("code", request.body.unitCode);
+        .where("code", request.body.unitCode)
+        .where("preferredSemester", request.body.preferredSemester);
       if (doesRecordExist.length == 1) {
+        // Check if an academic entered the value in "Years of Prior Work" in the form
+        let yearsOfPriorWork = doesRecordExist.yearsOfPriorWork;
+        if (!yearsOfPriorWork) {
+          yearsOfPriorWork = 0;
+        }
         await Database.from("preferences")
           .where("id", request.body.id)
           .where("code", request.body.unitCode)
+          .where("preferredSemester", request.body.preferredSemester)
           .update({
+            preferredSemester: request.body.preferredSemester,
             desireToTeach: request.body.willingness,
             abilityToTeach: request.body.experience,
-            yearsOfPriorWork: request.body.yearsOfPriorWork,
+            yearsOfPriorWork: yearsOfPriorWork,
             updated_at: currentDate,
           });
       } else {
+        // Check if an academic entered the value in "Years of Prior Work" in the form
+        let yearsOfPriorWork = request.body.yearsOfPriorWork;
+        if (!yearsOfPriorWork) {
+          yearsOfPriorWork = 0;
+        }
         await Database.table("preferences").insert({
           id: request.body.id,
           code: request.body.unitCode,
+          preferredSemester: request.body.preferredSemester,
           desireToTeach: request.body.willingness,
           abilityToTeach: request.body.experience,
-          yearsOfPriorWork: request.body.yearsOfPriorWork,
+          yearsOfPriorWork: yearsOfPriorWork,
           created_at: currentDate,
           updated_at: currentDate,
         });

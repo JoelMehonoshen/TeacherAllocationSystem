@@ -252,10 +252,10 @@ class ImportController {
       } else {
         const academicId = row.getCell("A").value;
         const code = row.getCell("B").value;
-        const preferredSemester = "2022/1";
+        const preferredSemester = "2022/1"; // Default value
         const desireToTeach = row.getCell("C").value;
         const abilityToTeach = row.getCell("D").value;
-        const yearsOfPriorWork = 0;
+        const yearsOfPriorWork = 0; // Default value
         const newPreference = new PreferenceImport(
           academicId,
           code,
