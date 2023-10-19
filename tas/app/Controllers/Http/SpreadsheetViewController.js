@@ -1,7 +1,7 @@
-'use strict';
-const Exception = use('App/Exceptions/Handler');
-const Logger = use('Logger');
-const Database = use('Database');
+"use strict";
+const Exception = use("App/Exceptions/Handler");
+const Logger = use("Logger");
+const Database = use("Database");
 
 class SpreadsheetViewController {
   // Update the current table after editing cells in a table
@@ -27,11 +27,11 @@ class SpreadsheetViewController {
           // otherwise insert a new record to the database
           if (doesRecordExist.length == 1) {
             await Database.from("allocations")
-            .where("academicId", object.academicId)
-            .where("id", object.unitOfferingId)
-            .update({
-              fractionAllocated: object.fractionAllocated,
-            });
+              .where("academicId", object.academicId)
+              .where("id", object.unitOfferingId)
+              .update({
+                fractionAllocated: object.fractionAllocated,
+              });
           } else {
             // Set false for the unit coordinator column by default
             await Database.table("allocations").insert({
@@ -91,9 +91,11 @@ class SpreadsheetViewController {
             await Database.from("preferences")
               .where("id", object[keys[0]][i])
               .where("code", object[keys[1]][i])
+              .where("preferredSemester", object[keys[2]][i])
               .update({
-                desireToTeach: object[keys[2]][i],
-                abilityToTeach: object[keys[3]][i],
+                desireToTeach: object[keys[3]][i],
+                abilityToTeach: object[keys[4]][i],
+                yearsOfPriorWork: object[keys[5]][i],
               });
           }
           break;
@@ -124,8 +126,8 @@ class SpreadsheetViewController {
         .select("allocations.fractionAllocated AS fractionAllocated");
 
       // Obtain a URL parameter for sorting a table
-      const sortOption = request.input('sortOption');
-      
+      const sortOption = request.input("sortOption");
+
       // Store the values of a selected tab and a name of a table to display at first
       let selectedTab = "global-tab";
       let selectedTableName = "Global";
@@ -136,9 +138,9 @@ class SpreadsheetViewController {
 
         // Sort an array including only elements of a certain column of a table in ascending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
-        sortedColumnArray.sort((a, b) =>
-          a.localeCompare(b, undefined, { sensitivity: "base" })          
-        );
+        sortedColumnArray.sort((a, b) => {
+          a.localeCompare(b, undefined, { sensitivity: "base" });
+        });
 
         // Sort an original table in ascending order according to the order of "sortedColumnArray"
         sortedColumnArray.map((each) => {
@@ -162,9 +164,9 @@ class SpreadsheetViewController {
         // Sort an array including only elements of a certain column of a table in descending order
         table.map((each) => sortedColumnArray.push(each[columnName]));
         sortedColumnArray
-          .sort((a, b) =>
-            a.localeCompare(b, undefined, { sensitivity: "base" })
-          )
+          .sort((a, b) => {
+            a.localeCompare(b, undefined, { sensitivity: "base" });
+          })
           .reverse();
 
         // Sort an original table in descending order according to the order of "sortedColumnArray"
@@ -468,22 +470,42 @@ class SpreadsheetViewController {
             selectedTableName = "Preferences";
             break;
           case "preferencesAsc3":
-            preferences = sortAscOrder3(preferences, "desireToTeach");
+            preferences = sortAscOrder1(preferences, "preferredSemester");
             selectedTab = "preferences-tab";
             selectedTableName = "Preferences";
             break;
           case "preferencesDesc3":
-            preferences = sortDescOrder3(preferences, "desireToTeach");
+            preferences = sortDescOrder1(preferences, "preferredSemester");
             selectedTab = "preferences-tab";
             selectedTableName = "Preferences";
             break;
           case "preferencesAsc4":
-            preferences = sortAscOrder3(preferences, "abilityToTeach");
+            preferences = sortAscOrder3(preferences, "desireToTeach");
             selectedTab = "preferences-tab";
             selectedTableName = "Preferences";
             break;
           case "preferencesDesc4":
+            preferences = sortDescOrder3(preferences, "desireToTeach");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
+            break;
+          case "preferencesAsc5":
+            preferences = sortAscOrder3(preferences, "abilityToTeach");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
+            break;
+          case "preferencesDesc5":
             preferences = sortDescOrder3(preferences, "abilityToTeach");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
+            break;
+          case "preferencesAsc6":
+            preferences = sortAscOrder3(preferences, "yearsOfPriorWork");
+            selectedTab = "preferences-tab";
+            selectedTableName = "Preferences";
+            break;
+          case "preferencesDesc6":
+            preferences = sortDescOrder3(preferences, "yearsOfPriorWork");
             selectedTab = "preferences-tab";
             selectedTableName = "Preferences";
             break;
@@ -526,7 +548,7 @@ class SpreadsheetViewController {
         }
       }
 
-      return view.render('spreadsheetView', {
+      return view.render("spreadsheetView", {
         academics: academics,
         units: units,
         allocations: allocations,

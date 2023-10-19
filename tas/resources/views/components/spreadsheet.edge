@@ -453,7 +453,7 @@
         </th>
         <th class="heading-cell">
           <div style="display: flex;">
-            <p>DesireToTeach</p>
+            <p>PreferredSemester</p>
             <form method="GET" action="{{ route1 }}">
               {{csrf}}
               <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
@@ -466,13 +466,39 @@
         </th>
         <th class="heading-cell">
           <div style="display: flex;">
-            <p>AbilityToTeach</p>
+            <p>DesireToTeach</p>
             <form method="GET" action="{{ route1 }}">
               {{csrf}}
               <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
                 <option value="" disabled="" selected>Sort by...</option>
                 <option value="preferencesAsc4">Ascending Order</option>
                 <option value="preferencesDesc4">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>AbilityToTeach</p>
+            <form method="GET" action="{{ route1 }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc5">Ascending Order</option>
+                <option value="preferencesDesc5">Descending Order</option>
+              </select>
+            </form>
+          </div>
+        </th>
+        <th class="heading-cell">
+          <div style="display: flex;">
+            <p>YearsOfPriorWork</p>
+            <form method="GET" action="{{ route1 }}">
+              {{csrf}}
+              <select class="filter-cells" name="sortOption" onchange="this.form.submit()">
+                <option value="" disabled="" selected>Sort by...</option>
+                <option value="preferencesAsc6">Ascending Order</option>
+                <option value="preferencesDesc6">Descending Order</option>
               </select>
             </form>
           </div>
@@ -493,10 +519,17 @@
               {{preference.code}}
             </td>
             <td class="cell">
-              <input type="text" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}" style="width: 100%; border: none;">
+              <input type="text" name="preferencePreferredSemester" value="{{preference.preferredSemester}}" style="display: none;">
+              {{preference.preferredSemester}}
             </td>
             <td class="cell">
-              <input type="text" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%; border: none;">
+              <input type="number" name="preferenceDesireToTeach" value="{{preference.desireToTeach}}" style="width: 100%; border: none;">
+            </td>
+            <td class="cell">
+              <input type="number" name="preferenceAbilityToTeach" value="{{preference.abilityToTeach}}" style="width: 100%; border: none;">
+            </td>
+            <td class="cell">
+              <input type="number" name="preferenceYearsOfPriorWork" value="{{preference.yearsOfPriorWork}}" style="width: 100%; border: none;">
             </td>
           </tr>
         @endeach

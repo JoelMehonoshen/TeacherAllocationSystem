@@ -1,16 +1,16 @@
-'use strict';
-const Exception = use('App/Exceptions/Handler');
-const Logger = use('Logger');
+"use strict";
+const Exception = use("App/Exceptions/Handler");
+const Logger = use("Logger");
 
-const Excel = require('exceljs');
-const Helpers = use('Helpers');
+const Excel = require("exceljs");
+const Helpers = use("Helpers");
 
-const Academic = use('App/Models/Academic');
-const Unit = use('App/Models/Unit');
-const Allocation = use('App/Models/Allocation');
-const Offering = use('App/Models/Offering');
-const Preference = use('App/Models/Preference');
-const Database = use('Database');
+const Academic = use("App/Models/Academic");
+const Unit = use("App/Models/Unit");
+const Allocation = use("App/Models/Allocation");
+const Offering = use("App/Models/Offering");
+const Preference = use("App/Models/Preference");
+const Database = use("Database");
 
 class AcademicImport {
   constructor(academicId, name, category, teachingFraction) {
@@ -26,7 +26,7 @@ class AcademicImport {
     ac.category = this.category;
     ac.teachingFraction = this.teachingFraction;
     await ac.save();
-    console.log('academic entered');
+    console.log("academic entered");
   }
 }
 
@@ -82,30 +82,41 @@ class OfferingImport {
 }
 
 class PreferenceImport {
-  constructor(academicId, code, desireToTeach, abilityToTeach) {
+  constructor(
+    academicId,
+    code,
+    preferredSemester,
+    desireToTeach,
+    abilityToTeach,
+    yearsOfPriorWork
+  ) {
     this.id = academicId;
     this.code = code;
+    this.preferredSemester = preferredSemester;
     this.desireToTeach = desireToTeach;
     this.abilityToTeach = abilityToTeach;
+    this.yearsOfPriorWork = yearsOfPriorWork;
   }
   async save() {
     const pr = new Preference();
     pr.id = this.id;
     pr.code = this.code;
+    pr.preferredSemester = this.preferredSemester;
     pr.desireToTeach = this.desireToTeach;
     pr.abilityToTeach = this.abilityToTeach;
+    pr.yearsOfPriorWork = this.yearsOfPriorWork;
     await pr.save();
   }
 }
 
 class ImportController {
   async uploadFile({ request, response, view }) {
-    console.log('file upload');
+    console.log("file upload");
     try {
-      const upload = request.file('Allocation', {
-        size: '10mb',
+      const upload = request.file("Allocation", {
+        size: "10mb",
       });
-      await upload.move(Helpers.tmpPath('uploads'), {
+      await upload.move(Helpers.tmpPath("uploads"), {
         name: `uploadedData.xlsm`,
         overwrite: true,
       });
@@ -114,11 +125,11 @@ class ImportController {
         return upload.error();
       }
 
-      console.log('start read');
+      console.log("start read");
       await this.ReadWorksheet();
-      console.log('read worksheet');
+      console.log("read worksheet");
       //not sure about this response route (redirect)
-      response.route('/allocations');
+      response.route("/allocations");
     } catch (error) {
       Logger.error(error);
       throw new Exception();
@@ -127,14 +138,14 @@ class ImportController {
 
   async ReadWorksheet() {
     const workbook = new Excel.Workbook();
-    await workbook.xlsx.readFile('tmp/uploads/uploadedData.xlsm');
+    await workbook.xlsx.readFile("tmp/uploads/uploadedData.xlsm");
 
     //Must be in this order to delete due to foreign key constraints
-    await Database.table('allocations').delete();
-    await Database.table('offerings').delete();
-    await Database.table('preferences').delete();
-    await Database.table('units').delete();
-    await Database.table('academics').delete();
+    await Database.table("allocations").delete();
+    await Database.table("offerings").delete();
+    await Database.table("preferences").delete();
+    await Database.table("units").delete();
+    await Database.table("academics").delete();
 
     const AcademicSheet = workbook.worksheets[0];
     const UnitSheet = workbook.worksheets[1];
@@ -152,18 +163,18 @@ class ImportController {
     let i = 0;
     while (1) {
       const row = AcademicSheet.getRow(i + 2);
-      if (row.getCell('A') == null || row.getCell('A') == '') {
+      if (row.getCell("A") == null || row.getCell("A") == "") {
         break;
       } else {
-        const academicId = row.getCell('A').value;
-        const name = row.getCell('B').value;
-        const category = row.getCell('C').value;
-        const teachingFraction = row.getCell('D').value;
+        const academicId = row.getCell("A").value;
+        const name = row.getCell("B").value;
+        const category = row.getCell("C").value;
+        const teachingFraction = row.getCell("D").value;
         const newAcademic = new AcademicImport(
           academicId,
           name,
           category,
-          teachingFraction,
+          teachingFraction
         );
         academicList.push(newAcademic);
         i++;
@@ -174,12 +185,12 @@ class ImportController {
     i = 0;
     while (1) {
       const row = UnitSheet.getRow(i + 2);
-      if (row.getCell('A') == null || row.getCell('A') == '') {
+      if (row.getCell("A") == null || row.getCell("A") == "") {
         break;
       } else {
-        const code = row.getCell('A').value;
-        const name = row.getCell('B').value;
-        const subjectAreaGroup = row.getCell('C').value;
+        const code = row.getCell("A").value;
+        const name = row.getCell("B").value;
+        const subjectAreaGroup = row.getCell("C").value;
         const newUnit = new UnitImport(code, name, subjectAreaGroup);
         unitList.push(newUnit);
         i++;
@@ -190,18 +201,18 @@ class ImportController {
     i = 0;
     while (1) {
       const row = AllocationSheet.getRow(i + 2);
-      if (row.getCell('A') == null || row.getCell('A') == '') {
+      if (row.getCell("A") == null || row.getCell("A") == "") {
         break;
       } else {
-        const academicId = row.getCell('A').value;
-        const offeringId = row.getCell('B').value;
-        const fractionAllocated = row.getCell('C').value;
-        const unitCoordinator = row.getCell('D').value;
+        const academicId = row.getCell("A").value;
+        const offeringId = row.getCell("B").value;
+        const fractionAllocated = row.getCell("C").value;
+        const unitCoordinator = row.getCell("D").value;
         const newAllocation = new AllocationImport(
           academicId,
           offeringId,
           fractionAllocated,
-          unitCoordinator,
+          unitCoordinator
         );
         allocationList.push(newAllocation);
         i++;
@@ -212,20 +223,20 @@ class ImportController {
     i = 0;
     while (1) {
       const row = OfferingSheet.getRow(i + 2);
-      if (row.getCell('A') == null || row.getCell('A') == '') {
+      if (row.getCell("A") == null || row.getCell("A") == "") {
         break;
       } else {
-        const offeringId = row.getCell('A').value;
-        const code = row.getCell('B').value;
-        const semester = row.getCell('C').value;
-        const estimatedEnrolments = row.getCell('D').value;
-        const schoolShare = row.getCell('E').value;
+        const offeringId = row.getCell("A").value;
+        const code = row.getCell("B").value;
+        const semester = row.getCell("C").value;
+        const estimatedEnrolments = row.getCell("D").value;
+        const schoolShare = row.getCell("E").value;
         const newOffering = new OfferingImport(
           offeringId,
           code,
           semester,
           estimatedEnrolments,
-          schoolShare,
+          schoolShare
         );
         offeringList.push(newOffering);
         i++;
@@ -236,18 +247,22 @@ class ImportController {
     i = 0;
     while (1) {
       const row = PreferenceSheet.getRow(i + 2);
-      if (row.getCell('A') == null || row.getCell('A') == '') {
+      if (row.getCell("A") == null || row.getCell("A") == "") {
         break;
       } else {
-        const academicId = row.getCell('A').value;
-        const code = row.getCell('B').value;
-        const desireToTeach = row.getCell('C').value;
-        const abilityToTeach = row.getCell('D').value;
+        const academicId = row.getCell("A").value;
+        const code = row.getCell("B").value;
+        const preferredSemester = "2022/1"; // Default value
+        const desireToTeach = row.getCell("C").value;
+        const abilityToTeach = row.getCell("D").value;
+        const yearsOfPriorWork = 0; // Default value
         const newPreference = new PreferenceImport(
           academicId,
           code,
+          preferredSemester,
           desireToTeach,
           abilityToTeach,
+          yearsOfPriorWork
         );
         preferenceList.push(newPreference);
         i++;
