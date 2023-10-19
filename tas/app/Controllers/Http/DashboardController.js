@@ -45,9 +45,6 @@ class DashboardController {
 
   willingnessAndExperience(allocations, offerings, preferences) {
     try {
-      console.log(`Allocations:\n${JSON.stringify(allocations)}\n`);
-      console.log(`Offerings:\n${JSON.stringify(offerings)}\n`);
-      console.log(`Preferences:\n${JSON.stringify(preferences)}\n`);
       let codes = [],
         willingness = [],
         experience = [];
