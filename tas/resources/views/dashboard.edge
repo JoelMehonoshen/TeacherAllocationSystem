@@ -17,6 +17,10 @@
           <p id="topAndBottom5Allocations" style="display: none;">{{topAndBottom5Allocations}}</p>
           <canvas id="topAndBottom5AllocationsBarChart"></canvas>
         </div>
+        <div>
+          <p id="willingnessAndExpertise" style="display: none;">{{willingnessAndExpertise}}</p>
+          <canvas id="willingnessAndExpertiseBarChart"></canvas>
+        </div>
       </div>
     </div>
   </body>
@@ -28,4 +32,5 @@
 {{-- Import the chart components into the document to render the canvases --}}
 @!component('components/allocationFulfillmentChart')
 @!component('components/topAndBottom5Chart')
+@!component('components/willingnessAndExpertiseChart')
 

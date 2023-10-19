@@ -1,0 +1,47 @@
+<script>
+    // Read JSON string data in the div tag where its id is "willingnessAndExpertiseData"
+    const willingnessAndExpertise = document.getElementById('willingnessAndExpertise');
+    const willingnessAndExpertiseJson = JSON.parse(willingnessAndExpertise.innerText);
+  
+    // Store each data into labels and data arrays
+    const willingnessAndExpertiseLabels = [];
+    const willingnessAndExpertiseData = [];
+    for (let key in willingnessAndExpertiseJson) {
+      const label = willingnessAndExpertiseJson[key].unitCode + " " + willingnessAndExpertiseJson[key].semester;
+      willingnessAndExpertiseLabels.push(label);
+      willingnessAndExpertiseData.push(
+        willingnessAndExpertiseJson[key].totalAllocatedFraction
+      );
+    }
+    // Plot the bar chart to display Top and Bottom 5 Allocations
+    const willingnessAndExpertiseBarChart = document.getElementById('willingnessAndExpertiseBarChart');
+    new Chart(willingnessAndExpertiseBarChart, {
+      type: 'bar',
+      data: {
+        labels: willingnessAndExpertiseLabels,
+        datasets: [{
+          label: 'Total Allocated Fraction',
+          data: willingnessAndExpertiseData,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          }
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+          title: {
+            display: true,
+            text: 'Top and Bottom 5 Allocations'
+          }
+        }
+      },
+    });
+  </script>
