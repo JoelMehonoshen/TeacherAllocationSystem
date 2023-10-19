@@ -49,20 +49,20 @@ class DashboardController {
         willingness = [],
         experience = [];
       for (let offeringInd in offerings) {
-        let offering = offerings[offeringInd]
-        codes.push(offering["code"] + ' (' + offering["semester"] + ')');
-        let avgWilling = 0,
-          avgExp = 0;
+        let offering = offerings[offeringInd];
+        codes.push(offering['code'] + ' (' + offering['semester'] + ')');
         for (let allocationInd in allocations) {
           let allocation = allocations[allocationInd];
-          if (offering.id == allocation.id) {
-            let countAssigned = 0;
+          if (offering['id'] == allocation['id']) {
+            let countAssigned = 0,
+              avgWilling = 0,
+              avgExp = 0;
             for (let preferenceInd in preferences) {
               let preference = preferences[preferenceInd];
-              if (preference.id == allocation.academicId) {
+              if (preference['id'] == allocation['academicId']) {
                 countAssigned++;
-                avgWilling += preference.desireToTeach;
-                avgExp += preference.abilityToTeach;
+                avgWilling += preference['desireToTeach'];
+                avgExp += preference['abilityToTeach'];
               }
             }
             willingness.push(
