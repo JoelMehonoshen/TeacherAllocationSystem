@@ -212,7 +212,8 @@ class DashboardController {
   }
 
   getCohortDifference(offerings) {
-    const cohortchange = [];
+    let cohortchange = [];
+    
     const targetdate1 = "2022/1";
     const targetdate2 = "2022/2";
 
@@ -232,11 +233,12 @@ class DashboardController {
       let target1 = 0;
       let target2 = 0;
       //get amount of cohorts of targetdate
-      for (let j = 0; j < cohort.length; j++) {
-        if (offerings[j].semester == targetdate1) {
-          target1 = offerings[j].estimatedEnrolments;
-        } else if (offerings[j].semester == targetdate2) {
-          target2 = offerings[j].estimatedEnrolments;
+      for (let k = 0; k < cohort.length; k++) {
+        if (offerings[cohort[k]].semester == targetdate1) {
+          target1 = offerings[cohort[k]].estimatedEnrolments;
+          
+        } else if (offerings[cohort[k]].semester == targetdate2) {
+          target2 = offerings[cohort[k]].estimatedEnrolments;
         }
       }
       if ((target1 == 0) | (target2 == 0)) {
@@ -248,25 +250,30 @@ class DashboardController {
       } else {
         cohortchange.push({
           unitCode: offerings[i].code,
-          cohort: target1 - target2,
-          percentage: target1 / target2,
+          cohort: target2 - target1,
+          percentage: Math.round(((target2 - target1)/target1*100)*10)/10,
         });
       }
     }
     return cohortchange;
   }
-
+  removeDuplicatesByKey(arr, key) {
+    return arr.filter((obj, index, self) =>
+      index === self.findIndex((o) => o[key] === obj[key])
+    );
+  }
   fourlargestdiff(offerings) {
-    const cohort = this.getCohortDifference(offerings);
+    let cohort = this.getCohortDifference(offerings);
+    cohort = this.removeDuplicatesByKey(cohort, "unitCode");
     // sort using cohort number
-    cohort.sort((a, b) => b.cohort - a.cohort);
-    return cohort;
-    // return [
-    //   cohort[0],
-    //   cohort[1],
-    //   cohort[cohort.length - 1],
-    //   cohort[cohort.length - 2],
-    // ];
+    cohort.sort((a, b) => b.percentage - a.percentage);
+
+    return [
+      cohort[0],
+      cohort[1],
+      cohort[cohort.length - 2],
+      cohort[cohort.length - 1],
+    ];
   }
 }
 module.exports = DashboardController;
