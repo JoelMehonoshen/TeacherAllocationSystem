@@ -13,18 +13,20 @@ class DashboardController {
       const offerings = await Database.from('offerings');
 
       // Convert "topAndBottom5AllocationsArray" into JSON string format
-      const topAndBottom5AllocationsArray =
-        this.generateTopAndBottom5Allocations(allocations, offerings);
+      const topAndBottom5AllocationsArray = this.generateTopAndBottom5Allocations(allocations, offerings);
 
       const allocationFulfillment = this.allocationFulfillment(allocations);
 
       const topAndBottom5AllocationsObject = Object.assign(
         {},
-        topAndBottom5AllocationsArray,
+        topAndBottom5AllocationsArray
       );
       const topAndBottom5AllocationsString = JSON.stringify(
-        topAndBottom5AllocationsObject,
+        topAndBottom5AllocationsObject
       );
+      
+      // const cohort =fourlargestdiff(offerings);
+      // console.log(cohort[0]);
 
       return view.render('dashboard', {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
@@ -38,54 +40,45 @@ class DashboardController {
   }
 
   allocationFulfillment(allocations) {
-    const tol = Number(process.env.WELL_ALLOCATED_TOLERANCE)
-    console.log(`Tolerance: ${tol}`)
+    const tol = Number(process.env.WELL_ALLOCATED_TOLERANCE);
+    console.log(`Tolerance: ${tol}`);
     const allocationSummary = this.getAllocationSummary(allocations);
-    let over = 0,
-      under = 0,
-      equal = 0,
-      iterator = 0;
+    let over = 0, under = 0, equal = 0, iterator = 0;
     // Sort the allocations before we iterate through them.
     // This will reduce the number of times we need to go through the loop.
     allocationSummary.sort(
-      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction,
+      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
     );
     console.log('Distribution cut-points:');
     // Count the number of overallocated units
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
-    while (
-      allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
-      iterator < allocationSummary.length - 1
-    ) {
+    while (allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
+      iterator < allocationSummary.length - 1) {
       over++;
       iterator++;
     }
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
     // Count the number of well-allocated units
-    while (
-      allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
-      iterator < allocationSummary.length - 1
-    ) {
+    while (allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
+      iterator < allocationSummary.length - 1) {
       equal++;
       iterator++;
     }
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
     // Count the number of underallocated units
-    while (
-      allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
-      iterator < allocationSummary.length - 1
-    ) {
+    while (allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
+      iterator < allocationSummary.length - 1) {
       under++;
       iterator++;
     }
     console.log(
-      `Distribution:\nUnder: ${under},\nEqual: ${equal},\nOver: ${over}`,
+      `Distribution:\nUnder: ${under},\nEqual: ${equal},\nOver: ${over}`
     );
     return [under, equal, over];
   }
@@ -97,7 +90,7 @@ class DashboardController {
 
     // Sort "allocationSummary" in descending order using the value of "totalAllocatedFraction"
     allocationSummary.sort(
-      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction,
+      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
     );
 
     // Retrieve Top and Bottom 5 data in the value of "totalAllocatedFraction"
@@ -157,6 +150,62 @@ class DashboardController {
     }
     return allocationSummary;
   }
-}
 
+
+  getCohortDifference(offerings) {
+    const cohortchange = [];
+    const targetdate1 = '2022/1';
+    const targetdate2 = '2022/2';
+
+
+    // looking for difference of cohort
+    for(let i = 0; i < offerings.length; i++){
+      cohort = [];
+      cohort.push(i);
+      //look for same unitcode as i
+      for(let j = 0; j < offerings.length; j++){
+        if(i == j){
+          continue;
+        }
+        if (offerings[i].code == offerings[j].code){
+          cohort.push(j);
+        }
+      }
+      let target1 = 0;
+      let target2 = 0;
+      //get amount of cohorts of targetdate
+      for(let j = 0; j < cohort.length; j++){
+        if (offerings[j].semester == targetdate1){
+          target1 = offerings[j].estimatedEnrolments;
+        } else if  (offerings[j].semester == targetdate2){
+          target2 = offerings[j].estimatedEnrolments;
+        }
+      }
+      if( target1 ==0 | target2 == 0){
+        cohortchange.push({
+          unitCode: offerings[i].code,
+          cohort: 0,
+          percentage: 0
+        });    
+      } else{
+        cohortchange.push({
+          unitCode: offerings[i].code,
+          cohort: target1-target2,
+          percentage: target1/target2
+        });
+      }
+    }
+    return cohortchange;
+  }
+
+  fourlargestdiff(offerings){
+    const cohort = this.getCohortDifference(offerings);
+    // sort using cohort number
+    cohort.sort(
+      (a, b) => b.cohort - a.cohort
+    );
+    return [cohort[0],cohort[1],cohort[cohort.length - 1],cohort[cohort.length - 2]];
+  }
+
+}
 module.exports = DashboardController;
