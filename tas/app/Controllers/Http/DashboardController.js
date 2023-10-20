@@ -11,6 +11,7 @@ class DashboardController {
       // Fetch allocations and offerings data from the database
       const allocations = await Database.from('allocations');
       const offerings = await Database.from('offerings');
+      const preferences = await Database.from('preferences');
 
       // Convert "topAndBottom5AllocationsArray" into JSON string format
       const topAndBottom5AllocationsArray = this.generateTopAndBottom5Allocations(allocations, offerings);
@@ -24,18 +25,63 @@ class DashboardController {
       const topAndBottom5AllocationsString = JSON.stringify(
         topAndBottom5AllocationsObject
       );
-      
-      // const cohort =fourlargestdiff(offerings);
+      const willingnessAndExperienceJSON = JSON.stringify(
+        this.willingnessAndExperience(allocations, offerings, preferences),
+      );
+            // const cohort =fourlargestdiff(offerings);
       // console.log(cohort[0]);
-
       return view.render('dashboard', {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
         allocationFulfillment: allocationFulfillment,
-        allocationChartType: process.env.ALLOCATION_CHART_TYPE
+        allocationChartType: process.env.ALLOCATION_CHART_TYPE,
+        willingnessAndExpertise: willingnessAndExperienceJSON,
       });
     } catch (error) {
       Logger.error(error);
       throw new Exception();
+    }
+  }
+
+  willingnessAndExperience(allocations, offerings, preferences) {
+    try {
+      let codes = [],
+        willingness = [],
+        experience = [];
+      for (let offeringInd in offerings) {
+        let offering = offerings[offeringInd];
+        codes.push(offering['code'] + ' (' + offering['semester'] + ')');
+        for (let allocationInd in allocations) {
+          let allocation = allocations[allocationInd];
+          if (offering['id'] == allocation['id']) {
+            let countAssigned = 0,
+              avgWilling = 0,
+              avgExp = 0;
+            for (let preferenceInd in preferences) {
+              let preference = preferences[preferenceInd];
+              if (preference['id'] == allocation['academicId']) {
+                countAssigned++;
+                avgWilling += preference['desireToTeach'];
+                avgExp += preference['abilityToTeach'];
+              }
+            }
+            willingness.push(
+              countAssigned !== 0 ? avgWilling / countAssigned : 0,
+            );
+            experience.push(countAssigned !== 0 ? avgExp / countAssigned : 0);
+          }
+        }
+        if(willingness[offeringInd] === undefined || experience[offeringInd] === undefined) {
+          codes.pop();
+        }
+      }
+      return {
+        codes: codes,
+        willingness: willingness,
+        experience: experience,
+      };
+    } catch (error) {
+      Logger.error(error);
+      throw new Exception(error);
     }
   }
 
@@ -54,8 +100,10 @@ class DashboardController {
     console.log(
       `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
-    while (allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
-      iterator < allocationSummary.length - 1) {
+    while (
+      allocationSummary[iterator].totalAllocatedFraction > (1 + tol) &&
+      iterator < allocationSummary.length - 1
+    ) {
       over++;
       iterator++;
     }
@@ -63,8 +111,10 @@ class DashboardController {
       `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
     // Count the number of well-allocated units
-    while (allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
-      iterator < allocationSummary.length - 1) {
+    while (
+      allocationSummary[iterator].totalAllocatedFraction >= (1 - tol) &&
+      iterator < allocationSummary.length - 1
+    ) {
       equal++;
       iterator++;
     }
@@ -72,8 +122,10 @@ class DashboardController {
       `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
     );
     // Count the number of underallocated units
-    while (allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
-      iterator < allocationSummary.length - 1) {
+    while (
+      allocationSummary[iterator].totalAllocatedFraction < (1 - tol) &&
+      iterator < allocationSummary.length - 1
+    ) {
       under++;
       iterator++;
     }
