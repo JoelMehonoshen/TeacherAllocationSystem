@@ -31,12 +31,12 @@ class DashboardController {
       );
       const cohort = this.fourlargestdiff(offerings);
 
-      console.log(cohort);
       return view.render("dashboard", {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
         allocationFulfillment: allocationFulfillment,
         allocationChartType: process.env.ALLOCATION_CHART_TYPE,
         willingnessAndExpertise: willingnessAndExperienceJSON,
+        cohortdiffence: cohort,
       });
     } catch (error) {
       Logger.error(error);
@@ -267,6 +267,7 @@ class DashboardController {
     cohort = this.removeDuplicatesByKey(cohort, "unitCode");
     // sort using cohort number
     cohort.sort((a, b) => b.percentage - a.percentage);
+    // return cohort[0];
 
     return [
       cohort[0],
