@@ -16,6 +16,7 @@ export default class AutoAllocatorController {
     private expertiseWeight: number,
     private priorWeight: number,
   ) {}
+  
 
   /**
    *
