@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-const Database = use("Database");
-const Logger = use("Logger");
-const Exception = use("App/Exceptions/Handler");
+const Database = use('Database');
+const Logger = use('Logger');
+const Exception = use('App/Exceptions/Handler');
 
 class DashboardController {
   // Display the dashboard
   async displayDashboard({ view }) {
     try {
       // Fetch allocations and offerings data from the database
-      const allocations = await Database.from("allocations");
-      const offerings = await Database.from("offerings");
-      const preferences = await Database.from("preferences");
+      const allocations = await Database.from('allocations');
+      const offerings = await Database.from('offerings');
+      const preferences = await Database.from('preferences');
 
       // Convert "topAndBottom5AllocationsArray" into JSON string format
       const topAndBottom5AllocationsArray =
@@ -21,17 +21,17 @@ class DashboardController {
 
       const topAndBottom5AllocationsObject = Object.assign(
         {},
-        topAndBottom5AllocationsArray
+        topAndBottom5AllocationsArray,
       );
       const topAndBottom5AllocationsString = JSON.stringify(
-        topAndBottom5AllocationsObject
+        topAndBottom5AllocationsObject,
       );
       const willingnessAndExperienceJSON = JSON.stringify(
-        this.willingnessAndExperience(allocations, offerings, preferences)
+        this.willingnessAndExperience(allocations, offerings, preferences),
       );
       const cohort = this.fourlargestdiff(offerings);
 
-      return view.render("dashboard", {
+      return view.render('dashboard', {
         topAndBottom5Allocations: topAndBottom5AllocationsString,
         allocationFulfillment: allocationFulfillment,
         allocationChartType: process.env.ALLOCATION_CHART_TYPE,
@@ -51,23 +51,23 @@ class DashboardController {
         experience = [];
       for (let offeringInd in offerings) {
         let offering = offerings[offeringInd];
-        codes.push(offering["code"] + " (" + offering["semester"] + ")");
+        codes.push(offering['code'] + ' (' + offering['semester'] + ')');
         for (let allocationInd in allocations) {
           let allocation = allocations[allocationInd];
-          if (offering["id"] == allocation["id"]) {
+          if (offering['id'] == allocation['id']) {
             let countAssigned = 0,
               avgWilling = 0,
               avgExp = 0;
             for (let preferenceInd in preferences) {
               let preference = preferences[preferenceInd];
-              if (preference["id"] == allocation["academicId"]) {
+              if (preference['id'] == allocation['academicId']) {
                 countAssigned++;
-                avgWilling += preference["desireToTeach"];
-                avgExp += preference["abilityToTeach"];
+                avgWilling += preference['desireToTeach'];
+                avgExp += preference['abilityToTeach'];
               }
             }
             willingness.push(
-              countAssigned !== 0 ? avgWilling / countAssigned : 0
+              countAssigned !== 0 ? avgWilling / countAssigned : 0,
             );
             experience.push(countAssigned !== 0 ? avgExp / countAssigned : 0);
           }
@@ -101,12 +101,12 @@ class DashboardController {
     // Sort the allocations before we iterate through them.
     // This will reduce the number of times we need to go through the loop.
     allocationSummary.sort(
-      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
+      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction,
     );
-    console.log("Distribution cut-points:");
+    console.log('Distribution cut-points:');
     // Count the number of overallocated units
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
     );
     while (
       allocationSummary[iterator].totalAllocatedFraction > 1 + tol &&
@@ -116,7 +116,7 @@ class DashboardController {
       iterator++;
     }
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
     );
     // Count the number of well-allocated units
     while (
@@ -127,7 +127,7 @@ class DashboardController {
       iterator++;
     }
     console.log(
-      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`
+      `${allocationSummary[iterator].totalAllocatedFraction} @ ${iterator}`,
     );
     // Count the number of underallocated units
     while (
@@ -138,7 +138,7 @@ class DashboardController {
       iterator++;
     }
     console.log(
-      `Distribution:\nUnder: ${under},\nEqual: ${equal},\nOver: ${over}`
+      `Distribution:\nUnder: ${under},\nEqual: ${equal},\nOver: ${over}`,
     );
     return [under, equal, over];
   }
@@ -150,7 +150,7 @@ class DashboardController {
 
     // Sort "allocationSummary" in descending order using the value of "totalAllocatedFraction"
     allocationSummary.sort(
-      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction
+      (a, b) => b.totalAllocatedFraction - a.totalAllocatedFraction,
     );
 
     // Retrieve Top and Bottom 5 data in the value of "totalAllocatedFraction"
@@ -213,9 +213,9 @@ class DashboardController {
 
   getCohortDifference(offerings) {
     let cohortchange = [];
-    
-    const targetdate1 = "2022/1";
-    const targetdate2 = "2022/2";
+
+    const targetdate1 = '2022/1';
+    const targetdate2 = '2022/2';
 
     // looking for difference of cohort
     for (let i = 0; i < offerings.length; i++) {
@@ -236,7 +236,6 @@ class DashboardController {
       for (let k = 0; k < cohort.length; k++) {
         if (offerings[cohort[k]].semester == targetdate1) {
           target1 = offerings[cohort[k]].estimatedEnrolments;
-          
         } else if (offerings[cohort[k]].semester == targetdate2) {
           target2 = offerings[cohort[k]].estimatedEnrolments;
         }
@@ -251,20 +250,22 @@ class DashboardController {
         cohortchange.push({
           unitCode: offerings[i].code,
           cohort: Math.abs(target2 - target1),
-          percentage: Math.round(((target2 - target1)/target1*100)*10)/10,
+          percentage:
+            Math.round(((target2 - target1) / target1) * 100 * 10) / 10,
         });
       }
     }
     return cohortchange;
   }
   removeDuplicatesByKey(arr, key) {
-    return arr.filter((obj, index, self) =>
-      index === self.findIndex((o) => o[key] === obj[key])
+    return arr.filter(
+      (obj, index, self) =>
+        index === self.findIndex((o) => o[key] === obj[key]),
     );
   }
   fourlargestdiff(offerings) {
     let cohort = this.getCohortDifference(offerings);
-    cohort = this.removeDuplicatesByKey(cohort, "unitCode");
+    cohort = this.removeDuplicatesByKey(cohort, 'unitCode');
     // sort using cohort number
     cohort.sort((a, b) => b.percentage - a.percentage);
     // return cohort[0];

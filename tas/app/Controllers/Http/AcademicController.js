@@ -1,7 +1,7 @@
 'use strict';
+
 const Exception = use('App/Exceptions/Handler');
 const Logger = use('Logger');
-
 const Academic = use('App/Models/Academic');
 const Preference = use('App/Models/Preference');
 const Database = use('Database');
@@ -58,15 +58,50 @@ class AcademicController {
     }
   }
 
-  async addpreference({ request, response }) {
+  // Add academics' preference
+  async addPreference({ request, response }) {
     try {
-      console.log('making it here');
-      const newPreference = new Preference();
-      newPreference.id = request.input('id');
-      newPreference.code = request.input('code');
-      newPreference.desireToTeach = request.input('desireToTeach');
-      newPreference.abilityToTeach = request.input('abilityToTeach');
-      await newPreference.save();
+      // Update a certain record if it exists in the database,
+      // otherwise insert a new record to the database
+      const currentDate = new Date();
+      const doesRecordExist = await Database.from('preferences')
+        .where('id', request.body.id)
+        .where('code', request.body.code)
+        .where('preferredSemester', request.body.preferredSemester);
+      if (doesRecordExist.length == 1) {
+        // Check if an academic entered the value in "Years of Prior Work" in the form
+        let yearsOfPriorWork = doesRecordExist.yearsOfPriorWork;
+        if (!yearsOfPriorWork) {
+          yearsOfPriorWork = 0;
+        }
+        await Database.from('preferences')
+          .where('id', request.body.id)
+          .where('code', request.body.code)
+          .where('preferredSemester', request.body.preferredSemester)
+          .update({
+            preferredSemester: request.body.preferredSemester,
+            desireToTeach: request.body.desireToTeach,
+            abilityToTeach: request.body.abilityToTeach,
+            yearsOfPriorWork: yearsOfPriorWork,
+            updated_at: currentDate,
+          });
+      } else {
+        // Check if a user entered the value in "Years Of Prior Work" in the form
+        let yearsOfPriorWork = request.body.yearsOfPriorWork;
+        if (!yearsOfPriorWork) {
+          yearsOfPriorWork = 0;
+        }
+        await Database.table('preferences').insert({
+          id: request.body.id,
+          code: request.body.code,
+          preferredSemester: request.body.preferredSemester,
+          desireToTeach: request.body.desireToTeach,
+          abilityToTeach: request.body.abilityToTeach,
+          yearsOfPriorWork: yearsOfPriorWork,
+          created_at: currentDate,
+          updated_at: currentDate,
+        });
+      }
       return response.route('/academics', true);
     } catch (error) {
       Logger.error('Add Preferences' + error);
@@ -74,15 +109,19 @@ class AcademicController {
     }
   }
 
-  async updatepreference({ response, request }) {
+  // Update academics' preference
+  async updatePreference({ request, response }) {
     try {
       await Database.from('preferences')
-        .where('code', request.input('originalCode'))
-        .where('id', request.input('id'))
+        .where('code', request.body.originalCode)
+        .where('id', request.body.id)
+        .where('preferredSemester', request.body.originalPreferredSemester)
         .update({
-          code: request.input('code'),
-          desireToTeach: request.input('desireToTeach'),
-          abilityToTeach: request.input('abilityToTeach'),
+          code: request.body.code,
+          preferredSemester: request.body.preferredSemester,
+          desireToTeach: request.body.desireToTeach,
+          abilityToTeach: request.body.abilityToTeach,
+          yearsOfPriorWork: yearsOfPriorWork,
         });
       return response.route('/academics', true);
     } catch (error) {
@@ -91,11 +130,13 @@ class AcademicController {
     }
   }
 
-  async deletepreference({ response, request }) {
+  // Delete academics' preference
+  async deletePreference({ response, request }) {
     try {
       await Database.from('preferences')
-        .where('code', request.input('code'))
-        .where('id', request.input('id'))
+        .where('code', request.body.originalCode)
+        .where('id', request.body.id)
+        .where('preferredSemester', request.body.originalPreferredSemester)
         .delete();
       return response.route('/academics', true);
     } catch (error) {

@@ -1,5 +1,7 @@
 'use strict';
 
+const AcademicController = require('../app/Controllers/Http/AcademicController');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -13,13 +15,19 @@
 |
 */
 
+/** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
+
+const Helpers = use('Helpers');
 const Route = use('Route');
+const ExcelJS = require('exceljs');
+const ImportController = require('../app/Controllers/Http/ImportController');
+const ExportController = require('../app/Controllers/Http/ExportController');
 
 Route.get('/', ({ view }) => {
   return view.render('home');
 });
 
-// Allocations
+//allocations
 Route.get('/allocations', 'AllocationController.render').middleware(['auth']);
 Route.post('/allocations', 'AllocationController.render').middleware(['auth']);
 Route.post(
@@ -35,7 +43,7 @@ Route.post(
   'AllocationController.deleteallocation',
 ).middleware(['auth']);
 
-// Academics
+//academics
 Route.get('/academics', 'AcademicController.render').middleware(['auth']);
 Route.post('/academics', 'AcademicController.render').middleware(['auth']);
 Route.post(
@@ -51,19 +59,19 @@ Route.post(
   'AcademicController.deleteacademic',
 ).middleware(['auth']);
 Route.post(
-  '/academics/addpreference',
-  'AcademicController.addpreference',
+  '/academics/addPreference',
+  'AcademicController.addPreference',
 ).middleware(['auth']);
 Route.post(
-  '/academics/deletepreference',
-  'AcademicController.deletepreference',
+  '/academics/deletePreference',
+  'AcademicController.deletePreference',
 ).middleware(['auth']);
 Route.post(
-  '/academics/updatepreference',
-  'AcademicController.updatepreference',
+  '/academics/updatePreference',
+  'AcademicController.updatePreference',
 ).middleware(['auth']);
 
-// Units
+//units
 Route.get('/units', 'UnitController.render').middleware(['auth']);
 Route.post('/units', 'UnitController.render').middleware(['auth']);
 Route.post('/units/addunit', 'UnitController.addunit').middleware(['auth']);
@@ -96,6 +104,10 @@ Route.put('upload', 'ImportController.uploadFile');
 Route.get('/spreadsheetView', 'SpreadsheetViewController.render').middleware([
   'auth',
 ]);
+Route.post(
+  '/spreadsheetView',
+  'SpreadsheetViewController.updateTable',
+).middleware(['auth']);
 
 // UserController Routes
 Route.post('/auth/login', 'UserController.login');
@@ -120,10 +132,12 @@ Route.get('/preference_form', 'PreferenceFormController.displayForm');
 Route.post('/preference_form', 'PreferenceFormController.updatePreferences');
 Route.get(
   '/preference_form/success',
+
   'PreferenceFormController.displaySuccessPage',
 );
 Route.get(
   '/preference_form/failure',
+
   'PreferenceFormController.displayFailurePage',
 );
 
