@@ -250,7 +250,7 @@ class DashboardController {
       } else {
         cohortchange.push({
           unitCode: offerings[i].code,
-          cohort: target2 - target1,
+          cohort: Math.abs(target2 - target1),
           percentage: Math.round(((target2 - target1)/target1*100)*10)/10,
         });
       }
