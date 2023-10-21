@@ -19,38 +19,62 @@
           </div>
           <br/>
           <div class="row">
-            <div class="col-6">
+            <div class="col-7">
               <p id="willingnessAndExpertise" style="display: none;">{{willingnessAndExpertise}}</p>
               <canvas id="willingnessAndExpertiseBarChart"></canvas>
             </div>
             <div class="col">
-              <div style="font-size:150%;">Largest 4 Cohort Changes </div>
+              <div style="font-size:150%; margin-bottom:3%;">Largest 4 Cohort Changes </div>
               <div class="row" >
-                <div class="col card cohortgrid" >  
-                  <img class="image" src="increase.png">
-                  <div class="percent">+{{cohortdiffence[0].percentage}}%</div>
-                  <div class="unitcode"><b>{{cohortdiffence[0].unitCode}}</b></div>
-                  <div class="co">{{cohortdiffence[0].cohort}} New Students</div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-5">
+                      <img class="image" src="increase.png">
+                    </div>
+                    <div class="col percent">+{{cohortdiffence[0].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[0].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[0].cohort}} New Students</div>
+                  </div>  
                 </div>
-                <div class="col card cohortgrid">  
-                  <img class="image" src="decrease.png">
-                  <div class="percent"style="color:red;">{{cohortdiffence[3].percentage}}%</div>
-                  <div class="unitcode"><b>{{cohortdiffence[3].unitCode}}</b></div>
-                  <div class="co">{{cohortdiffence[3].cohort}} Fewer Students</div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-5">
+                      <img class="image" src="decrease.png">
+                    </div>
+                    <div class="col percent" style="color:red;">{{cohortdiffence[3].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[3].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[3].cohort}} New Students</div>
+                  </div>  
                 </div>
               </div>
               <div class="row">
-                <div class="col card cohortgrid">  
-                  <img class="image" src="increase.png">
-                  <div class="percent">+{{cohortdiffence[1].percentage}}%</div>
-                  <div class="unitcode"><b>{{cohortdiffence[1].unitCode}}</b></div>
-                  <div class="co">{{cohortdiffence[1].cohort}} New Students</div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-5">
+                      <img class="image" src="increase.png">
+                    </div>
+                    <div class="col percent">+{{cohortdiffence[1].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[1].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[1].cohort}} New Students</div>
+                  </div>  
                 </div>
-                <div class="col card cohortgrid">  
-                  <img class="image" src="decrease.png">
-                  <div class="percent"style="color:red;">{{cohortdiffence[2].percentage}}%</div>
-                  <div class="unitcode"><b>{{cohortdiffence[2].unitCode}}</b></div>
-                  <div class="co">{{cohortdiffence[2].cohort}} Fewer Students</div>
+                <div class="col card cohortgrid" >
+                  <div class="row">
+                    <div class="col-5">
+                      <img class="image" src="decrease.png">
+                    </div>
+                    <div class="col percent" style="color:red;">{{cohortdiffence[2].percentage}}%</div>
+                  </div>
+                  <div class="row">
+                    <div class="col unitcode"><b>{{cohortdiffence[2].unitCode}}</b></div>
+                    <div class="col co">{{cohortdiffence[2].cohort}} New Students</div>
+                  </div>  
                 </div>
               </div>
             </div>
