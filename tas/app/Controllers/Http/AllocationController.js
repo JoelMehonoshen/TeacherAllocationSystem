@@ -151,27 +151,35 @@ class AllocationController {
       //assigning part
       preferences.sort((a, b) => b.score - a.score);
 
+      //delete all records
+      await Database
+        .from('allocations')
+        .delete();
+
       // 3. Assign allocations based on sorted preferences
       for (let preference of preferences) {
+
         const offeringEntry = await Database.from("offerings")
           .where("code", preference.code)
-          .where("semester", preference.preferredSemester);
-
-        console.log("=====================test7==============");
-        console.log(offeringEntry);
-          
-        const fractionAllocatedData = await Database.from("allocations")
+          .where("semester", preference.preferredSemester)
+          .select("id")
+          .first();
+        
+        if (offeringEntry) {
+          console.log("=====================test7==============");
+          console.log(offeringEntry.id);
+          const fractionAllocatedData = await Database.from("allocations")
           .where("academicId", preference.id)
           .select("fractionAllocated")
           .first();
-        const fractionAllocatedValue = fractionAllocatedData ? fractionAllocatedData.fractionAllocated : 0;
 
-        const newAllocation = new Allocation();
-        newAllocation.academicId = preference.academicId;
-        // newAllocation.id = offeringEntry[0]['id'];
-        newAllocation.fractionAllocated = fractionAllocatedValue;
-        newAllocation.unitCoordinator = false;
-        await newAllocation.save();
+          const newAllocation = new Allocation();
+          newAllocation.academicId = preference.id;
+          newAllocation.id = offeringEntry.id;
+          newAllocation.fractionAllocated = fractionAllocatedData;
+          newAllocation.unitCoordinator = false;
+          await newAllocation.save();
+        }
       }
       return response.route("/allocations");
       // return response.json({ success: true, message: 'Allocations scored successfully!' });
