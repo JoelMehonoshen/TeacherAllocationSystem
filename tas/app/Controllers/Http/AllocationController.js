@@ -6,8 +6,6 @@ const Allocation = use("App/Models/Allocation");
 const Offering = use("App/Models/Offering");
 Database.query();
 
-// import Test from "./Test";
-
 // Update the database with new allocations and academics
 class AllocationController {
   async deleteallocation({ response, request }) {
@@ -91,40 +89,37 @@ class AllocationController {
     }
   }
 
-  //auto Allocation
+  // Auto Allocation
   async scoreAllocation({ response, request }) {
     try {
-      console.log("================test1=============");
-      //Assuming all wight are 1
+      // Delete all records
+      await Database.from("allocations").delete();
+
       const autoAllocator = new AutoAllocatorController(
         process.env.WEIGHT_WILLINGNESS,
         process.env.WEIGHT_EXPERIENCE,
         process.env.WEIGHT_PRIOR
       );
 
+      // Scoring based on preferences result
       let preferences = await Database.from("preferences");
 
-      console.log("================test2=============");
-
       for (let preference of preferences) {
-        const fractionAllocatedData = await Database.from("allocations")
-          // .where("academicId", "kellyw");
-          .where("academicId", preference.id)
-          .select("fractionAllocated")
+        const teachingFractionData = await Database.from("academics")
+          .where("id", preference.id)
+          .select("teachingFraction")
           .first();
 
-        const fractionAllocated = fractionAllocatedData ? fractionAllocatedData.fractionAllocated : 0;
-      
         const offeringData = await Database.from("offerings")
           .where("code", preference.code)
           .where("semester", preference.preferredSemester)
           .select("estimatedEnrolments")
           .first();
-      
-        const estimatedEnrolments = (offeringData ? offeringData.estimatedEnrolments :  500) / 100;
 
+        const estimatedEnrolments =
+          (offeringData ? offeringData.estimatedEnrolments : 500) / 100;
 
-        if (estimatedEnrolments - fractionAllocated <= 0) {
+        if (estimatedEnrolments - teachingFractionData.teachingFraction <= 0) {
           continue;
         }
 
@@ -134,11 +129,11 @@ class AllocationController {
             expertise: preference.abilityToTeach,
             priorYears: preference.yearsOfPriorWork,
           },
-          fractionAllocated,
+          teachingFractionData.teachingFraction,
           estimatedEnrolments
         );
 
-        //Update the preference score in the database
+        // Update the preference score in the database
         await Database.from("preferences")
           .where("id", preference.id)
           .where("code", preference.code)
@@ -146,43 +141,50 @@ class AllocationController {
           .update({ score: allocationScore });
       }
 
-      console.log("==============test5===========");
-
-      //assigning part
+      // Assigned academics to units
       preferences.sort((a, b) => b.score - a.score);
 
-      //delete all records
-      await Database
-        .from('allocations')
-        .delete();
-
-      // 3. Assign allocations based on sorted preferences
+      // Assign allocations based on sorted preferences
       for (let preference of preferences) {
-
         const offeringEntry = await Database.from("offerings")
           .where("code", preference.code)
           .where("semester", preference.preferredSemester)
           .select("id")
           .first();
-        
+
         if (offeringEntry) {
-          console.log("=====================test7==============");
-          console.log(offeringEntry.id);
-          const fractionAllocatedData = await Database.from("allocations")
-          .where("academicId", preference.id)
-          .select("fractionAllocated")
-          .first();
+          const teachingFractionData = await Database.from("academics")
+            .where("id", preference.id)
+            .select("teachingFraction")
+            .first();
 
           const newAllocation = new Allocation();
           newAllocation.academicId = preference.id;
           newAllocation.id = offeringEntry.id;
-          newAllocation.fractionAllocated = fractionAllocatedData;
+          newAllocation.fractionAllocated =
+            teachingFractionData.teachingFraction;
           newAllocation.unitCoordinator = false;
           await newAllocation.save();
         }
       }
+
+      //Fix fraction allocated score by the num of assigned units
+      let academics = await Database.from("academics");
+
+      for (const academic of academics) {
+        const allocationData = await Database.from("allocations").where(
+          "academicId",
+          academic.id
+        );
+
+        const newTeachingFraction =
+          academic.teachingFraction / allocationData.length;
+
+        await Database.from("allocations")
+          .where("academicId", academic.id)
+          .update("fractionAllocated", newTeachingFraction);
+      }
       return response.route("/allocations");
-      // return response.json({ success: true, message: 'Allocations scored successfully!' });
     } catch (error) {
       Logger.error(`Score Allocation Error: ${error.message}`);
       return response.json({
@@ -415,27 +417,13 @@ class AutoAllocatorController {
   scoreAllocation(allocationScores, timeAvailable, timeRequired) {
     const timeFitRatio = timeAvailable / timeRequired;
 
-    // Return the weighted sum of the factors scaled according to how well the academic's availability matches the class's requirements.
+    // Return the weighted sum of the factors scaled according to how well the academic's availability matches the class's requirements
     return (
       (this.willingWeight * allocationScores.willingness +
         this.expertiseWeight * allocationScores.expertise +
         this.priorWeight * allocationScores.priorYears) *
       timeFitRatio
     );
-  }
-
-  assignAllocation(preferences) {
-    preferences.sort((a,b) => b.score - a.score);
-
-    for (const preference of preferences) {
-
-      assignedAcademics.push({
-        academicsId: preference.academicId,
-        id: preference.offeringId,
-        fractionAllocated: preference.fractionAllocated
-      });
-    }
-    timeRequired -= timeAvailable;
   }
 }
 

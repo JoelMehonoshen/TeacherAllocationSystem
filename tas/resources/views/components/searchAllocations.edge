@@ -1,12 +1,16 @@
 <div class="searchbar-wrapper">
-  <form method="GET" action="{{ route }}">
-    {{csrf}}
-    <div class="flex-container data-tool-container">
-      <div class="data-row data-tool-row-1 flex-container">
-        <h1 class="title">Allocations</h1>
-      </div>
-      <div class="data-row data-tool-row-2 flex-container">
-        <div>
+  <div class="flex-container data-tool-container">
+    <div class="data-row data-tool-row-1 flex-container">
+      <h1 class="title">Allocations</h1>
+      <form action="{{route2}}" method="POST" style="margin-left: auto;">
+        {{csrf}}
+        <input type="submit" value="Auto Allocation" class="dd-button--round button-blue-fill">
+      </form>
+    </div>
+    <form method="GET" action="{{ route }}">
+      {{csrf}}
+    <div class="data-row data-tool-row-2 flex-container">
+      <div>
           <div class="field has-addons">
             <p class="control">
               <div class="">
@@ -118,10 +122,6 @@
         </div>
       </form>
       
-        <form action="{{route2}}" method="POST" style="display:inline;">
-          {{csrf}}
-          <input type="submit" value="Auto Allocation" class="dd-button--round button-blue-fill">
-    </form>
   
   {{--
     <div class="dashboard-col">
