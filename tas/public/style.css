@@ -927,4 +927,36 @@ table td {
   display: inline;
 }
 
+.cohortgrid {
+  grid-template-columns: 100px 150px;
+  grid-template-rows: 40px 40px 20px;
+  border: 1px solid rgba(156, 156, 156, 0.6);
+  display: grid;
+  width: 250px;
+}
+
+.unitcode {
+  grid-column: 2;
+  grid-row: 1 ;
+  font-size:150%;
+  text-align: center;
+}
+.image {
+  grid-column: 1 / 3;
+  grid-row: 1 /  3;
+  width: 100px; 
+  height: 100px;
+}
+.percent {
+  grid-column: 2;
+  grid-row: 2;
+  color:green;
+  font-size:200%;
+  text-align: center;
+}
+.co {
+  grid-column: 2;
+  grid-row: 3;
+  text-align: center;
+}
 /*END*/
