@@ -590,15 +590,15 @@ table td {
   border-collapse: collapse;
 }
 
-.cell{
-    background-color: white;
-    border: 0.5px solid rgb(210, 210, 210);
-    color: rgb(119, 119, 119);
-    padding-left: 4px;
-    width:fit-content;
-    overflow: visible;
-    vertical-align: middle;
-    height: 30px;
+.cell {
+  background-color: white;
+  border: 0.5px solid rgb(210, 210, 210);
+  color: rgb(119, 119, 119);
+  padding-left: 4px;
+  width: fit-content;
+  overflow: visible;
+  vertical-align: middle;
+  height: 30px;
 }
 
 .heading-cell {
@@ -757,23 +757,23 @@ table td {
 }
 
 .save-spreadsheet-button {
-    display: inline;
-    width: 200px;
-    background-color: #2396fc;
-    color: white;
-    padding:6px 24px 6px 24px;
-    margin-bottom: 15px;
-    border:none;
-    cursor: pointer;
-    font-size: medium;
-    font-family: Inter, Arial, Helvetica, sans-serif;
-    text-align: center;
-    border-radius: 10px;
+  display: inline;
+  width: 200px;
+  background-color: #2396fc;
+  color: white;
+  padding: 6px 24px 6px 24px;
+  margin-bottom: 15px;
+  border: none;
+  cursor: pointer;
+  font-size: medium;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  text-align: center;
+  border-radius: 10px;
 }
 
-.table-cell{
-    border:0.5px solid lightgrey;
-    padding:6px 12px;
+.table-cell {
+  border: 0.5px solid lightgrey;
+  padding: 6px 12px;
 }
 
 .table-outter {
@@ -944,4 +944,25 @@ table td {
   display: inline;
 }
 
+.cohortgrid {
+  border: 1px solid rgba(156, 156, 156, 0.6);
+  display: grid;
+  margin: 1%;
+}
+
+.unitcode {
+  font-size: 150%;
+  text-align: center;
+}
+.image {
+  width: 10vw;
+}
+.percent {
+  color: green;
+  font-size: 200%;
+  text-align: center;
+}
+.co {
+  text-align: center;
+}
 /*END*/

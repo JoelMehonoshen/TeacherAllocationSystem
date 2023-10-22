@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use("Schema");
+const Schema = use('Schema');
 
 class PreferencesSchema extends Schema {
   up() {
@@ -19,7 +19,7 @@ class PreferencesSchema extends Schema {
   }
 
   down() {
-    this.drop("preferences");
+    this.drop('preferences');
   }
 }
 
